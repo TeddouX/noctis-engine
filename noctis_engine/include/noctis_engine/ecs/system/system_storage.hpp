@@ -10,7 +10,6 @@
 namespace NoctisEngine
 {
 
-
 template<
     template<typename...> class ISystem_Base_, 
     typename System_, 
@@ -21,67 +20,105 @@ struct InheritedArgs;
 template<
     template<typename...> class ISystem_Base_, 
     typename System_, 
-    typename... Args_
+    typename... OwnedComponents_,
+    typename... GetComponents_,
+    typename... ExcludeComponents_
 >
-struct InheritedArgs<ISystem_Base_, System_, ISystem_Base_<Args_...>> {
-    using args_tuple = std::tuple<Args_...>;
+struct InheritedArgs<
+    ISystem_Base_, 
+    System_, 
+    ISystem_Base_<
+        OwnedComponents<OwnedComponents_...>, 
+        GetComponents<GetComponents_...>, 
+        ExcludeComponents<ExcludeComponents_...>
+    >
+> {
+    using owned_components_tuple = std::tuple<OwnedComponents_...>;
+    using get_components_tuple = std::tuple<GetComponents_...>;
+    using exclude_components_tuple = std::tuple<ExcludeComponents_...>;
 };
-
 
 class NCENG_API SystemStorage {
 public:
-    using SystemRegistry = std::unordered_map<std::string, std::shared_ptr<ISystemBase>>;
-    using UpdateFuncStorage = std::vector<std::function<void(float, entt::registry &)>>;
+    using Systems = std::vector<std::shared_ptr<ISystemBase>>;
+    using UpdateFuncStorage = std::vector<std::function<void (float)>>;
 
     SystemStorage() = default;
     ~SystemStorage() = default;
 
     template <typename System_, typename... Args_>
     requires(std::is_base_of_v<ISystemBase, System_>)
-    auto add_system(Args_ &&...args) -> void;
+    auto add_system(
+        entt::registry &reg, 
+        Args_ &&...args
+    ) -> void;
 
     auto get_update_functions() -> UpdateFuncStorage &;
 
 private:
-    SystemRegistry systemRegistry_;
+    Systems systems_;
     UpdateFuncStorage updateFunctions_;
 
-    template <typename System_, typename... Components_>
-    auto call_update(
-        std::shared_ptr<System_> system, 
-        float dt, 
-        entt::registry &reg, 
-        std::tuple<Components_...>) -> void;
+    template <
+        typename System_, 
+        typename... OwnedComponents_, 
+        typename... GetComponents_, 
+        typename... ExcludeComponents_
+    >
+    auto register_system(
+        entt::registry &reg,
+        std::shared_ptr<System_> system,
+        std::tuple<OwnedComponents_...>,
+        std::tuple<GetComponents_...>,
+        std::tuple<ExcludeComponents_...>
+    ) -> void;
 };
 
 
 template <typename System_, typename... Args_>
 requires(std::is_base_of_v<ISystemBase, System_>)
-auto SystemStorage::add_system(Args_ &&...args) -> void {
-    using ComponentsTuple = typename InheritedArgs<ISystem, System_>::args_tuple;
+auto SystemStorage::add_system(
+    entt::registry &reg, 
+    Args_ &&...args
+) -> void {
+    using OwnedComponentsTuple = typename InheritedArgs<ISystem, System_>::owned_components_tuple;
+    using GetComponentsTuple = typename InheritedArgs<ISystem, System_>::get_components_tuple;
+    using ExcludeComponentsTuple = typename InheritedArgs<ISystem, System_>::exclude_components_tuple;
 
-    std::string systemName = typeid(System_).name();
+    auto system = std::make_shared<System_>(std::forward<Args_>(args)...);
+    register_system(
+        reg, system, 
+        OwnedComponentsTuple{}, 
+        GetComponentsTuple{}, 
+        ExcludeComponentsTuple{}
+    );
+}
 
-    systemRegistry_.emplace(systemName, std::make_shared<System_>(std::forward<Args_>(args)...));
+template <
+    typename System_, 
+    typename... OwnedComponents_, 
+    typename... GetComponents_, 
+    typename... ExcludeComponents_
+>
+auto SystemStorage::register_system(
+    entt::registry &reg,
+    std::shared_ptr<System_> system,
+    std::tuple<OwnedComponents_...>,
+    std::tuple<GetComponents_...>,
+    std::tuple<ExcludeComponents_...>
+) -> void {
+    auto group = reg.group<OwnedComponents_...>(
+        entt::get_t<GetComponents_...>{},
+        entt::exclude_t<ExcludeComponents_...>{}
+    );
 
-    auto updateFunc = [&, systemName](float dt, entt::registry &reg) -> void {
-        auto system = std::dynamic_pointer_cast<System_>(systemRegistry_.at(systemName));
-        call_update(system, dt, reg, ComponentsTuple{});
+    systems_.push_back(system);
+
+    auto updateFunc = [system, group](float dt) -> void {
+        system->update(dt, group);
     };
 
     updateFunctions_.push_back(updateFunc);
 }
-
-
-template <typename System_, typename... Components_>
-auto SystemStorage::call_update(
-    std::shared_ptr<System_> system, 
-    float dt, 
-    entt::registry &reg, 
-    std::tuple<Components_...>) -> void {
-
-    system->update(dt, reg.view<Components_...>());
-}
-
 
 } // namespace NoctisEngine

@@ -42,13 +42,15 @@ Transform::Transform(const glm::vec2 &position, const glm::vec2 &scale, const gl
 }
 
 auto Transform::set_position(const glm::vec3 &pos) -> void {
+    if (pos_ != pos)
+        dirty_ = true;
     pos_ = pos;
-    dirty_ = true;
 }
 
 auto Transform::set_scale(const glm::vec3 &scale) -> void {
+    if (scale_ != scale)
+        dirty_ = true;
     scale_ = scale;
-    dirty_ = true;
 }
 
 auto Transform::set_position(const glm::vec2 &pos) -> void {
@@ -60,8 +62,9 @@ auto Transform::set_scale(const glm::vec2 &scale) -> void {
 }
 
 auto Transform::set_rotation(const glm::quat &rot) -> void {
+    if (rotation_ != rot)
+        dirty_ = true;
     rotation_ = rot;
-    dirty_ = true;
 }
 
 auto Transform::set_euler_angles(const glm::vec3 &rot) -> void {
@@ -86,9 +89,40 @@ auto Transform::get_euler_angles() const -> glm::vec3 {
 
 auto Transform::model_matrix() const -> const glm::mat4 & {
     if (dirty_) {
-        cachedModelMatrix_ = glm::translate(glm::mat4{1}, pos_)
-            * glm::toMat4(rotation_)
-            * glm::scale(glm::mat4{1}, scale_);
+        // cachedModelMatrix_ = glm::translate(glm::mat4{1}, pos_)
+        //     * glm::toMat4(rotation_)
+        //     * glm::scale(glm::mat4{1}, scale_);
+
+        const float x = rotation_.x;
+        const float y = rotation_.y;
+        const float z = rotation_.z;
+        const float w = rotation_.w;
+
+        const float x2 = x + x;
+        const float y2 = y + y;
+        const float z2 = z + z;
+
+        const float xx = x * x2;
+        const float yy = y * y2;
+        const float zz = z * z2;
+        const float xy = x * y2;
+        const float xz = x * z2;
+        const float yz = y * z2;
+        const float wx = w * x2;
+        const float wy = w * y2;
+        const float wz = w * z2;
+
+        const float scaleX = scale_.x;
+        const float scaleY = scale_.y;
+        const float scaleZ = scale_.z;
+
+        cachedModelMatrix_ = glm::mat4{
+            { (1.0f - (yy + zz)) * scaleX,   (xy + wz) * scaleX,             (xz - wy) * scaleX,             0.0f },
+            { (xy - wz) * scaleY,            (1.0f - (xx + zz)) * scaleY,    (yz + wx) * scaleY,             0.0f },
+            { (xz + wy) * scaleZ,            (yz - wx) * scaleZ,             (1.0f - (xx + yy)) * scaleZ,    0.0f },
+            { pos_.x,                        pos_.y,                         pos_.z,                         1.0f }
+        };
+
         dirty_ = false;
     }
 

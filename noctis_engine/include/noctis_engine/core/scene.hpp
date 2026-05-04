@@ -38,7 +38,7 @@ private:
 template <typename System_, typename... Args_>
 requires(std::is_base_of_v<ISystemBase, System_>)
 auto Scene::add_update_system(Args_ &&...args) -> void {
-    updateSystems_.add_system<System_>(std::forward<Args_>(args)...);
+    updateSystems_.add_system<System_>(reg_, std::forward<Args_>(args)...);
 }
 
 } // namespace NoctisEngine

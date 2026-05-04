@@ -18,11 +18,6 @@ Scene::Scene() {
         entt::get_t<Transform, MeshView, MaterialKey>{},
         entt::exclude_t<InstanceRenderedGroup>{}
     );
-
-    reg_.group<>(
-        entt::get_t<Transform, MaterialKey, InstanceRenderedGroup>{},
-        entt::exclude_t<>{}
-    );
 }
 
 auto Scene::create_entity() -> Entity {
@@ -36,7 +31,7 @@ auto Scene::get_entity(entt::entity &rawEntity) -> Entity {
 
 auto Scene::update(float dt) -> void {
     for (const auto &fun : updateSystems_.get_update_functions())
-        fun(dt, reg_);
+        fun(dt);
 }
 
 } // namespace NoctisEngine

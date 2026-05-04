@@ -78,13 +78,12 @@ auto Renderer::render_entities(entt::registry &reg) -> void {
         entt::exclude_t<InstanceRenderedGroup>{}
     );
 
-    auto irGroup = reg.group<>(
-        entt::get_t<Transform, MaterialKey, InstanceRenderedGroup>{},
-        entt::exclude_t<>{}
-    );
+    size_t numIrEntities = 0;
+    for (auto &entitiesData : irEntitiesData_)
+        numIrEntities += entitiesData.size();
 
     size_t numCommands = nonIrGroup.size() + irEntitiesData_.size();
-    size_t numObjects = nonIrGroup.size() + irGroup.size();
+    size_t numObjects = nonIrGroup.size() + numIrEntities;
 
     resize_buffer(commandBuf_, numCommands * sizeof(DrawElementsIndirectCommand));
     resize_buffer(objectsSSBO_, numObjects * sizeof(ObjectData));
@@ -133,7 +132,6 @@ auto Renderer::render_entities(entt::registry &reg) -> void {
 
             std::uint32_t instanceCount = 0;
             for (auto &entityData : entitiesData) {
-                // const auto &[transform, matKey] = irGroup.get<Transform, MaterialKey>(entity);
                 const auto *matKey = entityData.matKey;
                 auto *transform = entityData.transform;
 
