@@ -18,7 +18,7 @@ auto MaterialManager::upload(const MaterialData &data) -> MaterialKey {
 
     if (resize_buffer(materialsSSBO_, materialsCPU_)) {
         materialsSSBO_.write(get_cpu_buffer_view(materialsCPU_, 0, materialsCPU_.size()), 0);
-        materialsSSBO_.bind_buffer_base(BufferTarget::SHADER_STORAGE_BUFFER, 2);
+        materialsSSBO_.bind_buffer_base(BufferTarget::SHADER_STORAGE_BUFFER, ShaderBindings::MATERIALS_BUFFER_SSBO);
     }
     
     return MaterialKey{currKey_++};
@@ -27,7 +27,7 @@ auto MaterialManager::upload(const MaterialData &data) -> MaterialKey {
 
 auto MaterialManager::update_material(MaterialKey key, const MaterialData &newData) -> void {
     size_t offsetBytes = key.get() * sizeof(MaterialData);
-    if (offsetBytes > materialsSSBO_.size())
+    if (offsetBytes > materialsSSBO_.size_bytes())
         throw Exception("Key {} is invalid", key.get());
 
     materialsSSBO_.write(get_cpu_buffer_view(newData), offsetBytes);

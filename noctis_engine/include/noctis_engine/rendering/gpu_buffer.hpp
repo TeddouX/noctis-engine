@@ -39,6 +39,8 @@ enum class BufferFlag : std::uint32_t {
     CLIENT_STORAGE_BIT = 0x0200,
 };
 
+NCENG_API BufferFlag operator |(BufferFlag left, BufferFlag right);
+
 enum class GPUBufMapAccess : std::uint32_t {
     READ_ONLY = 0x88B8,
     WRITE_ONLY = 0x88B9,
@@ -57,7 +59,7 @@ public:
 
     auto copy_to(GPUBuffer &other) -> void;
     auto write(CPUBufferReadView data, size_t offset) const -> void;
-    auto size() const -> size_t;
+    auto size_bytes() const -> size_t;
     auto gl_handle() const -> std::uint32_t;
 
     auto delete_gpu() -> void;
@@ -68,23 +70,26 @@ public:
 
     // Returns a pointer to the mapped buffer, can be cast to any type.
     // GPUBuffer::mapped_write should be used instead of writing the raw pointer if performance isn't that important because it is more memory safe.
-    auto map(GPUBufMapAccess access) -> void *;
+    auto map() -> void *;
     auto unmap() -> void;
     auto mapped_write(CPUBufferReadView data, size_t offset) -> void;
     auto is_mapped() const -> bool;
-    auto get_map_access() const -> GPUBufMapAccess;
+    // The pointer shouldn't be kept and used after calling resize_buffer(), nullptr if the buffer is unmapped
+    auto get_mapped_ptr() -> void *;
 
     auto get_data(std::size_t offset, CPUBufferWriteView data) const -> void;
+
+    auto get_flags() const -> BufferFlag;
 
     auto get_name() const -> std::string_view;
 
 private:
-    uint32_t id_{};
-    size_t   size_{};
-    void     *map_ = nullptr;
-    GPUBufMapAccess mapAccess_;
+    uint32_t            id_;
+    size_t              size_;
+    void               *map_;
+    BufferFlag          flags_;
 
-    std::string_view name_;
+    std::string_view    name_;
 };
 
 struct GPUBufferBlock {

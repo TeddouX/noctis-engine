@@ -5,22 +5,22 @@ namespace NoctisEngine
 {
     
 inline auto resize_buffer(GPUBuffer &buf, size_t cpuBufSize) -> bool {
-    if (buf.size() >= cpuBufSize) 
+    if (buf.size_bytes() >= cpuBufSize) 
         return false;
 
-    size_t newBufSize = std::max(buf.size() * 2, 1zu);
+    size_t newBufSize = std::max(buf.size_bytes() * 2, 1zu);
     while (newBufSize < cpuBufSize)
         newBufSize *= 2;
     
-    Log::Info("Resizing buffer '{}', {} => {}", buf.get_name(), buf.size(), newBufSize);
+    Log::Info("Resizing buffer '{}', {} => {}", buf.get_name(), buf.size_bytes(), newBufSize);
 
     buf.delete_gpu();
 
-    GPUBuffer newBuf{newBufSize, buf.get_name()};
+    GPUBuffer newBuf{newBufSize, buf.get_name(), buf.get_flags()};
     
     if (buf.is_mapped()) {
         Log::Info("Remapping buffer '{}'", buf.get_name());
-        newBuf.map(buf.get_map_access());
+        newBuf.map();
     }
 
     buf = newBuf;

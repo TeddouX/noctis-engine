@@ -15,9 +15,18 @@ namespace NoctisEngine
     
 static auto is_bindable_to_index(BufferTarget type) -> bool;
 
+NCENG_API BufferFlag operator |(BufferFlag left, BufferFlag right) {
+    return static_cast<BufferFlag>(
+        static_cast<std::uint32_t>(left) | static_cast<std::uint32_t>(right)
+    );
+}
+
 GPUBuffer::GPUBuffer(size_t size, std::string_view name, BufferFlag flags)
-    : size_(size)
-    , name_(name)
+    : size_{size}
+    , name_{name}
+    , flags_{flags}
+    , map_{nullptr}
+    , id_{}
 {
     glCreateBuffers(1, &id_);
     glNamedBufferStorage(id_, size, nullptr, static_cast<GLbitfield>(flags));
@@ -68,7 +77,7 @@ auto GPUBuffer::bind_buffer_range(BufferTarget type, uint32_t bindPoint, size_t 
     glBindBufferRange(static_cast<GLenum>(type), bindPoint, id_, offset, size);
 }
 
-auto GPUBuffer::size() const -> size_t {
+auto GPUBuffer::size_bytes() const -> size_t {
     return size_;
 }
 
@@ -82,12 +91,11 @@ auto GPUBuffer::delete_gpu() -> void {
     glDeleteBuffers(1, &id_);
 }
 
-auto GPUBuffer::map(GPUBufMapAccess access) -> void * {
-    map_ = glMapNamedBuffer(id_, static_cast<GLenum>(access));
+auto GPUBuffer::map() -> void * {
+    map_ = glMapNamedBufferRange(id_, 0, size_, static_cast<GLbitfield>(flags_));
     if (!map_)
         throw Exception("Failed to map buffer.");
 
-    mapAccess_ = access;
     return map_;
 }
 
@@ -119,8 +127,8 @@ auto GPUBuffer::is_mapped() const -> bool {
     return map_ != nullptr;
 }
 
-auto GPUBuffer::get_map_access() const -> GPUBufMapAccess {
-    return mapAccess_;
+auto GPUBuffer::get_mapped_ptr() -> void * {
+    return map_;
 }
 
 auto GPUBuffer::get_data(std::size_t offset, CPUBufferWriteView data) const -> void {
@@ -136,6 +144,10 @@ auto GPUBuffer::get_data(std::size_t offset, CPUBufferWriteView data) const -> v
         data.size_bytes(), 
         data.data()
     );
+}
+
+auto GPUBuffer::get_flags() const -> BufferFlag {
+    return flags_;
 }
 
 auto GPUBuffer::get_name() const -> std::string_view {

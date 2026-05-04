@@ -25,8 +25,12 @@ Renderer::Renderer(std::shared_ptr<MeshManager> meshManager)
 
     glDebugMessageCallback((GLDEBUGPROC)OpenGLDbgMessCallback, this);
 
-    commandBuf_ = GPUBuffer(1, "renderer_command_buffer");
-    objectsSSBO_ = GPUBuffer(1, "renderer_object_buffer");
+    BufferFlag mappedBufFlags = BufferFlag::MAP_PERSISTENT_BIT | BufferFlag::MAP_WRITE_BIT;
+    commandBuf_ = GPUBuffer(1, "renderer_command_buffer", mappedBufFlags);
+    objectsSSBO_ = GPUBuffer(1, "renderer_object_buffer", mappedBufFlags);
+
+    commandBuf_.map();
+    objectsSSBO_.map();
 }
 
 auto Renderer::set_backface_culling(bool b) const -> void {
@@ -67,6 +71,8 @@ auto Renderer::set_blend_func(BlendFunc sFactor, BlendFunc dFactor) -> void {
 }
 
 auto Renderer::render_entities(entt::registry &reg) -> void {
+    renderFence_.wait_sync();
+
     auto nonIrGroup = reg.group<>(
         entt::get_t<Transform, MeshView, MaterialKey>{},
         entt::exclude_t<InstanceRenderedGroup>{}
@@ -77,85 +83,90 @@ auto Renderer::render_entities(entt::registry &reg) -> void {
         entt::exclude_t<>{}
     );
 
-    std::vector<DrawElementsIndirectCommand> commands;
-    std::vector<ObjectData> objects;
+    size_t numCommands = nonIrGroup.size() + irEntitiesData_.size();
+    size_t numObjects = nonIrGroup.size() + irGroup.size();
 
-    commands.reserve(nonIrGroup.size() + irEntities_.size());
-    objects.reserve(nonIrGroup.size() + irGroup.size());
+    resize_buffer(commandBuf_, numCommands * sizeof(DrawElementsIndirectCommand));
+    resize_buffer(objectsSSBO_, numObjects * sizeof(ObjectData));
 
-    resize_buffer(commandBuf_, nonIrGroup.size() + irEntities_.size());
-    resize_buffer(objectsSSBO_, nonIrGroup.size() + irGroup.size());
+    auto commandBufPtr = static_cast<DrawElementsIndirectCommand *>(commandBuf_.get_mapped_ptr());
+    auto objectSSBOPtr = static_cast<ObjectData *>(objectsSSBO_.get_mapped_ptr());
 
+    size_t commandIdx = 0;
+    size_t objectIdx = 0;
+    
     nonIrGroup.each([&](auto &transform, auto &mv, auto &matKey) -> void {
-        commands.push_back(DrawElementsIndirectCommand{
+        commandBufPtr[commandIdx++] = DrawElementsIndirectCommand{
             .count = static_cast<GLuint>(mv.indicesCount),
             .instanceCount = 1u,
             .firstIndex = static_cast<GLuint>(mv.indicesOffset),
             .baseVertex = static_cast<GLint>(mv.verticesOffset),
-            .baseInstance = static_cast<GLuint>(objects.size()),
-        });
+            .baseInstance = static_cast<GLuint>(objectIdx),
+        };
 
-        objects.push_back(ObjectData{
+        objectSSBOPtr[objectIdx++] = ObjectData{
             .modelMat = transform.model_matrix(),
             .materialIdx = static_cast<GLuint>(matKey.get()),
-        });
+        };
     });
 
     // Instanced rendered entities
-    if (!irEntities_.empty()) {
-        if (irEntities_.size() != irgMeshViews_.size())
+    if (!irEntitiesData_.empty()) {
+        if (irEntitiesData_.size() != irgMeshViews_.size())
             throw Exception("There isn't a mesh view set for every IRG. Make sure to call Renderer::set_irg_mesh_view for every IRG.");
 
-        std::vector<DrawElementsIndirectCommand> irCommands;
         for (auto &meshView : irgMeshViews_) {
-            irCommands.push_back(DrawElementsIndirectCommand{
+            commandBufPtr[commandIdx++] = DrawElementsIndirectCommand{
                 .count         = static_cast<GLuint>(meshView.indicesCount),
                 .instanceCount = 0u,
                 .firstIndex    = static_cast<GLuint>(meshView.indicesOffset),
                 .baseVertex    = static_cast<GLint>(meshView.verticesOffset),
                 .baseInstance  = 0, 
-            });
+            };
         }
 
-        auto idx = 0;
-        for (auto &entities : irEntities_) {
-            irCommands[idx].baseInstance = objects.size();
+        commandIdx -= irgMeshViews_.size();
 
-            for (auto &entity : entities) {
-                const auto &[transform, matKey] = irGroup.get<Transform, MaterialKey>(entity);
+        size_t idx = commandIdx;
+        for (auto &entitiesData : irEntitiesData_) {
+            commandBufPtr[idx].baseInstance = objectIdx;
 
-                irCommands[idx].instanceCount++;
-                objects.push_back(ObjectData{
-                    .modelMat    = transform.model_matrix(),
-                    .materialIdx = static_cast<GLuint>(matKey.get()),
-                });
+            std::uint32_t instanceCount = 0;
+            for (auto &entityData : entitiesData) {
+                // const auto &[transform, matKey] = irGroup.get<Transform, MaterialKey>(entity);
+                const auto *matKey = entityData.matKey;
+                auto *transform = entityData.transform;
+
+                instanceCount++;
+
+                objectSSBOPtr[objectIdx++] = ObjectData{
+                    .modelMat    = transform->model_matrix(),
+                    .materialIdx = static_cast<GLuint>(matKey->get()),
+                };
             }
 
+            commandBufPtr[idx].instanceCount = instanceCount;
             idx++;
         }
 
-        commands.insert_range(commands.end(), irCommands);
     }
 
-    resize_buffer(commandBuf_, commands);
-    resize_buffer(objectsSSBO_, objects);
-
-    // TODO: Map them and write to them using a pointer
-    commandBuf_.write(get_cpu_buffer_view(commands, 0, commands.size()), 0);
-    objectsSSBO_.write(get_cpu_buffer_view(objects, 0, objects.size()), 0);
     objectsSSBO_.bind_buffer_base(BufferTarget::SHADER_STORAGE_BUFFER, ShaderBindings::OBJECTS_BUFFER_SSBO);
 
     meshManager_->bind_vertex_array();
 
     commandBuf_.bind_as(BufferTarget::DRAW_INDIRECT_BUFFER);
 
+    glMemoryBarrier(GL_CLIENT_MAPPED_BUFFER_BARRIER_BIT);
     glMultiDrawElementsIndirect(
         GL_TRIANGLES,
         GL_UNSIGNED_INT,
         (void*)0,
-        commands.size(),
+        numCommands,
         0
-    ); 
+    );
+
+    renderFence_.sync();
 }
 
 auto Renderer::create_irg() -> InstanceRenderedGroup {
@@ -168,23 +179,39 @@ auto Renderer::set_irg_mesh_view(InstanceRenderedGroup group, MeshView mesh) -> 
     irgMeshViews_[group.get()] = mesh;
 }
 
-auto Renderer::register_ir_entity(const Entity &entity) -> void {
+auto Renderer::register_ir_entity(Entity &entity) -> void {
     const auto *irg = entity.try_get_component<InstanceRenderedGroup>();
+    const auto *matKey = entity.try_get_component<MaterialKey>();
+    auto *transform = entity.try_get_component<Transform>();
+
     if (irg == nullptr) {
-        Log::Warn("Called Renderer::register_ir_entity with an entity that doesn't have an to an InstanceRenderedGroup");
+        Log::Warn("Called Renderer::register_ir_entity with an entity that doesn't have an InstanceRenderedGroup");
+        return;
+    }
+
+    if (transform == nullptr) {
+        Log::Warn("Called Renderer::register_ir_entity with an entity that doesn't have an Transform");
+        return;
+    }
+
+    if (matKey == nullptr) {
+        Log::Warn("Called Renderer::register_ir_entity with an entity that doesn't have an MaterialKey");
         return;
     }
 
     if (!irg->is_valid()) {
-        Log::Error("Tried to call Renderer::register_ir_entity with an entity that has and invalid IRG");
+        Log::Error("Tried to call Renderer::register_ir_entity with an entity that has an invalid IRG");
         return;
     }
 
     auto idx = irg->get();
-    if (idx >= irEntities_.size())
-        irEntities_.resize(idx + 1);
+    if (idx >= irEntitiesData_.size())
+        irEntitiesData_.resize(idx + 1);
 
-    irEntities_[idx].push_back(entity.get_raw());
+    irEntitiesData_[idx].push_back(IRObjectData{
+        .matKey = matKey, 
+        .transform = transform
+    });
 }
 
 

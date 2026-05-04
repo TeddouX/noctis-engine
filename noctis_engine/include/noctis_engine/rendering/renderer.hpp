@@ -1,6 +1,8 @@
 #pragma once
 #include "mesh/mesh_manager.hpp"
+#include "../ecs/component/transform.hpp"
 #include "material/material_manager.hpp"
+#include "fence.hpp"
 #include "../ecs/ecs.hpp"
 #include "../ecs/entity.hpp"
 
@@ -66,7 +68,6 @@ private:
     int num_;
 };
 
-
 class NCENG_API Renderer {
 public:
     Renderer(std::shared_ptr<MeshManager> meshManager);
@@ -86,7 +87,7 @@ public:
     auto create_irg() -> InstanceRenderedGroup;
     // set_instanced_rendered_group_mesh_view
     auto set_irg_mesh_view(InstanceRenderedGroup group, MeshView mesh) -> void;
-    auto register_ir_entity(const Entity &entity) -> void;
+    auto register_ir_entity(Entity &entity) -> void;
 
     auto render_entities(entt::registry &reg) -> void;
 
@@ -98,7 +99,15 @@ private:
     ObjectData                  *mappedObjectsSSBO_ = nullptr;
     DrawElementsIndirectCommand *mappedCommandBuf_  = nullptr;
 
-    std::vector<std::vector<entt::entity>> irEntities_;
+    Fence renderFence_;
+
+    struct IRObjectData {
+        const MaterialKey *matKey;
+        Transform *transform;
+    };
+
+    std::vector<std::vector<IRObjectData>> irEntitiesData_;
+
     std::vector<MeshView> irgMeshViews_;
     std::uint32_t numInstanceRenderedGroups_ = 0;
 
