@@ -71,8 +71,20 @@ auto Transform::set_euler_angles(const glm::vec3 &rot) -> void {
     set_rotation(glm::quat{rot});
 }
 
+auto Transform::translate(const glm::vec3 &translation) -> void {
+    set_position(pos_ + translation);
+}
+
+auto Transform::translate(const glm::vec2 &translation) -> void {
+    set_position(pos_ + glm::vec3(translation, 0));
+}
+
 auto Transform::get_position() const -> const glm::vec3 & {
     return pos_;
+}
+
+auto Transform::get_position_2D() const -> glm::vec2 {
+    return glm::vec2(pos_.x, pos_.y);
 }
 
 auto Transform::get_scale() const -> const glm::vec3 & {
@@ -86,6 +98,11 @@ auto Transform::get_rotation() const -> const glm::quat & {
 auto Transform::get_euler_angles() const -> glm::vec3 {
     return glm::eulerAngles(rotation_);
 }
+
+auto Transform::distance_to(const Transform &other) -> float {
+    return glm::distance(pos_, other.get_position());
+}
+
 
 auto Transform::model_matrix() const -> const glm::mat4 & {
     if (dirty_) {

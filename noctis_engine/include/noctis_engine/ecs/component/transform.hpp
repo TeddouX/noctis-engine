@@ -23,10 +23,16 @@ public:
     auto set_rotation(const glm::quat &rot) -> void;
     auto set_euler_angles(const glm::vec3 &eulerAngles) -> void;
 
+    auto translate(const glm::vec3 &translation) -> void;
+    auto translate(const glm::vec2 &translation) -> void;
+
     auto get_position() const -> const glm::vec3 &;
+    auto get_position_2D() const -> glm::vec2;
     auto get_scale() const -> const glm::vec3 &;
     auto get_rotation() const -> const glm::quat &;
     auto get_euler_angles() const -> glm::vec3;
+
+    auto distance_to(const Transform &other) -> float;
 
     auto model_matrix() const -> const glm::mat4 &;
 

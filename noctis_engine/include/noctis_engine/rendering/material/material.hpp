@@ -6,7 +6,7 @@
 namespace NoctisEngine
 {
     
-struct MaterialData {
+struct alignas(16) MaterialData {
     glm::vec3 baseColor{1};
     float alpha = 1.f;
 

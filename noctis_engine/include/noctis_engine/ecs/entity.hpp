@@ -26,7 +26,7 @@ public:
     }
 
     template <typename T>
-    auto add_component_or_replace(T &&comp) -> void {
+    auto add_component_or_replace(T &comp) -> void {
         using ComponentType = std::decay_t<T>;
         reg_->emplace_or_replace<ComponentType>(entity_, std::move(comp));
     }
@@ -64,6 +64,11 @@ public:
     template <typename T>
     auto remove_component() -> void {
         reg_->remove<T>(entity_);
+    }
+
+    template <typename T>
+    auto replace_component(T &comp) -> void {
+        reg_->replace<T>(entity_, std::move(comp));
     }
 
     auto get_raw() const -> const entt::entity & {

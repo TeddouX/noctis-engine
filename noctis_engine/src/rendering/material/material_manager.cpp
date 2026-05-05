@@ -16,10 +16,11 @@ MaterialManager::MaterialManager()
 auto MaterialManager::upload(const MaterialData &data) -> MaterialKey {
     materialsCPU_.push_back(data);
 
-    if (resize_buffer(materialsSSBO_, materialsCPU_)) {
-        materialsSSBO_.write(get_cpu_buffer_view(materialsCPU_, 0, materialsCPU_.size()), 0);
+    bool resized = resize_buffer(materialsSSBO_, materialsCPU_);
+    materialsSSBO_.write(get_cpu_buffer_view(materialsCPU_, 0, materialsCPU_.size()), 0);
+    
+    if (resized)
         materialsSSBO_.bind_buffer_base(BufferTarget::SHADER_STORAGE_BUFFER, ShaderBindings::MATERIALS_BUFFER_SSBO);
-    }
     
     return MaterialKey{currKey_++};
 }
