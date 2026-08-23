@@ -3,7 +3,7 @@
 #include <format>
 #include <string>
 
-// Copied from: https://github.com/nathan-baggs/ufps/blob/main/src/utils/formatter.h
+// Copied from: https://github.com/nathan-baggs/ufps
 //
 // Boost Software License - Version 1.0 - August 17th, 2003
 // 

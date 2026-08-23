@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD          23)
 set(CMAKE_CXX_STANDARD_REQUIRED true)
 
 option(NCENG_BUILD_SHARED   "Build as a shared lib" OFF)
+option(NCENG_BUILD_TEST     "Build tests"           ON)
 option(NCENG_DEBUG          "Build as debug"        OFF)
 
 add_subdirectory(thirdparty/glad)
@@ -17,3 +18,8 @@ add_subdirectory(thirdparty/imgui)
 set(NCENG_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include")
 
 add_subdirectory(src)
+
+if(NCENG_BUILD_TEST)
+    enable_testing()
+    add_subdirectory(tests)
+endif()
