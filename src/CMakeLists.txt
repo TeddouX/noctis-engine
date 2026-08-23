@@ -1,18 +1,36 @@
+cmake_minimum_required(VERSION 3.10)
+
 set(NCENG_SOURCES
+    "core/window.cpp"
 )
 
-if(NCSC_BUILD_SHARED)
-    add_library(noctis_script SHARED ${NCENG_SOURCES})
+if(NCENG_BUILD_SHARED)
+    message("Building shared noctis_engine library")
+    add_library(noctis_engine SHARED ${NCENG_SOURCES})
 else()
-    add_library(noctis_script STATIC ${NCENG_SOURCES})
+    message("Building static noctis_engine library")
+    add_library(noctis_engine STATIC ${NCENG_SOURCES})
+endif()
+
+if (NCENG_DEBUG)
+    message("Building noctis_engine as debug")
+    add_compile_definitions(NCENG_DEBUG)
 endif()
 
 add_library(noctis_engine::noctis_engine ALIAS noctis_engine)
 
+target_link_libraries(noctis_engine
+    EnTT::EnTT
+    glm::glm
+    ImGui
+    glfw
+    Glad
+    stb
+)
+
 target_include_directories(noctis_engine
     PUBLIC
-        ${CMAKE_SOURCE_DIR}/include
+        ${NCENG_INCLUDE_DIR}
     PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}
-        ${CMAKE_SOURCE_DIR}/include/noctis_engine
+        ${NCENG_INCLUDE_DIR}/noctis_engine
 )
