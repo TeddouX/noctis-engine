@@ -6,7 +6,7 @@
 struct GLFWwindow;
 
 
-namespace NoctisEngine
+namespace NoctisEngine::Core
 {
     
 class Window
@@ -26,4 +26,4 @@ private:
     GLFWwindow *glfwWindow_;
 };
 
-} // namespace NoctisEngine
+} // namespace NoctisEngine::Core

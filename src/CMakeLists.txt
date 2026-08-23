@@ -2,6 +2,11 @@ cmake_minimum_required(VERSION 3.10)
 
 set(NCENG_SOURCES
     "core/window.cpp"
+    "rendering/bindless_texture.cpp"
+    "rendering/gpu_buffer.cpp"
+    "rendering/material_manager.cpp"
+    "rendering/shader.cpp"
+    "rendering/texture.cpp"
 )
 
 if(NCENG_BUILD_SHARED)
@@ -16,6 +21,8 @@ if (NCENG_DEBUG)
     message("Building noctis_engine as debug")
     add_compile_definitions(NCENG_DEBUG)
 endif()
+
+add_compile_definitions(GLM_ENABLE_EXPERIMENTAL)
 
 add_library(noctis_engine::noctis_engine ALIAS noctis_engine)
 

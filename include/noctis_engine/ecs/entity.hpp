@@ -2,7 +2,7 @@
 #include <cstdint>
 
 
-namespace NoctisEngine
+namespace NoctisEngine::ECS
 {
     
 class Entity
@@ -16,7 +16,7 @@ public:
     auto id() -> std::uint32_t { return id_; }
 
 private:
-    friend class ECSWorld;
+    friend class World;
 
     std::int32_t id_;
 
@@ -25,4 +25,4 @@ private:
     {}
 };
 
-} // namespace NoctisEngine
+} // namespace NoctisEngine::ECS

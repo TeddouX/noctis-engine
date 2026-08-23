@@ -7,7 +7,7 @@
 #include "entity.hpp"
 
 
-namespace NoctisEngine
+namespace NoctisEngine::ECS
 {
     
 template <typename ComponentType_>

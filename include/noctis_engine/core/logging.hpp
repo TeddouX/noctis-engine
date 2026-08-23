@@ -11,7 +11,8 @@
 namespace NoctisEngine
 {
     
-enum class LogLevel {
+enum class LogLevel 
+{
     DEBUG,
     INFO,
     WARN,
@@ -19,7 +20,8 @@ enum class LogLevel {
     CRITICAL,
 };
 
-inline auto to_string(LogLevel level) -> std::string {
+inline auto to_string(LogLevel level) -> std::string 
+{
     switch (level) {
         using enum LogLevel;
         case DEBUG:     return "DEBUG"; 
@@ -32,7 +34,8 @@ inline auto to_string(LogLevel level) -> std::string {
 }
 
 template<class... Args>
-struct format_with_location {
+struct format_with_location 
+{
     std::format_string<Args...> fmt;
     std::source_location loc;
 
@@ -41,7 +44,8 @@ struct format_with_location {
         : fmt(f), loc(l) {}
 };
 
-class Logger {
+class Logger 
+{
 public:
     Logger(const std::string &directory, const std::string &subDirectory)
         : _directory{directory}
@@ -81,7 +85,8 @@ private:
         _Args &&...args
     ) const -> void;
 
-    auto get_time_string() const -> std::string {
+    auto get_time_string() const -> std::string 
+    {
         using namespace std::chrono;
 
         system_clock::time_point now = system_clock::now();
@@ -100,19 +105,22 @@ private:
 
 
 template <typename ..._Args>
-auto Logger::debug(std::format_string<_Args...> fmt, _Args &&...args) const -> void {
+auto Logger::debug(std::format_string<_Args...> fmt, _Args &&...args) const -> void 
+{
 #ifdef NCENG_DEBUG
     this->log(LogLevel::DEBUG, fmt, std::nullopt, std::forward<_Args>(args)...);
 #endif
 }
 
 template <typename ..._Args>
-auto Logger::info(std::format_string<_Args...> fmt, _Args &&...args) const -> void {
+auto Logger::info(std::format_string<_Args...> fmt, _Args &&...args) const -> void 
+{
     this->log(LogLevel::INFO, fmt, std::nullopt, std::forward<_Args>(args)...);
 }
 
 template <typename ..._Args>
-auto Logger::warn(std::format_string<_Args...> fmt, _Args &&...args) const -> void {
+auto Logger::warn(std::format_string<_Args...> fmt, _Args &&...args) const -> void 
+{
     this->log(LogLevel::WARN, fmt, std::nullopt, std::forward<_Args>(args)...);
 }
 
@@ -120,7 +128,8 @@ template <typename ..._Args>
 auto Logger::error(
     format_with_location<std::type_identity_t<_Args>...> fmt, 
     _Args &&...args
-) const -> void {
+) const -> void 
+{
     this->log(LogLevel::ERROR, fmt.fmt, fmt.loc, std::forward<_Args>(args)...);
 }
 
@@ -128,8 +137,11 @@ template <typename ..._Args>
 auto Logger::critical(
     format_with_location<std::type_identity_t<_Args>...> fmt,
     _Args &&...args
-) const -> void {
+) const -> void 
+{
     this->log(LogLevel::CRITICAL, fmt.fmt, fmt.loc, std::forward<_Args>(args)...);
+    
+    std::exit(EXIT_FAILURE);
 }
 
 template <typename... _Args>
@@ -138,12 +150,14 @@ auto Logger::log(
     std::format_string<_Args...> fmt,
     std::optional<const std::source_location> sourceLocation,
     _Args &&...args
-) const -> void {
+) const -> void 
+{
     std::string timeStr = get_time_string();
     std::string formattedMsg = std::format(fmt, std::forward<_Args>(args)...);
 
 #ifdef NCENG_DEBUG
-    if (sourceLocation.has_value()) {
+    if (sourceLocation.has_value()) 
+    {
         std::filesystem::path file{sourceLocation->file_name()};
         std::println("[{}] [{}] ({}/{}) in {}({}:{}) (function {}): {}",
             timeStr, 
@@ -159,10 +173,8 @@ auto Logger::log(
     else 
 #endif
     {
-        std::ostream stream = std::cout;
-        if (static_cast<int>(level) >= static_cast<int>(LogLevel::ERROR))
-            stream = std::cerr;
-        
+        std::ostream &stream = (level >= LogLevel::ERROR) ? std::cerr : std::cout;
+
         std::println(stream, "[{}] [{}] ({}/{}): {}", 
             timeStr, 
             to_string(level), 

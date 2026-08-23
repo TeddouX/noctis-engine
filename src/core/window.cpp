@@ -6,7 +6,7 @@
 #include <noctis_engine.hpp>
 
 
-namespace NoctisEngine
+namespace NoctisEngine::Core
 {
  
 Window::Window(std::uint32_t width, std::uint32_t height, std::string_view title)
@@ -82,4 +82,4 @@ auto Window::swap_buffers() -> void
     glfwSwapBuffers(glfwWindow_);
 }
  
-} // namespace NoctisEngine
+} // namespace NoctisEngine::Core

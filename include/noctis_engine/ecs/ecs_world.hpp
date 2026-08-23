@@ -5,17 +5,17 @@
 #include "component_storage.hpp"
 
 
-namespace NoctisEngine
+namespace NoctisEngine::ECS
 {
     
-class ECSWorld
+class World
 {
 public:
-    ECSWorld()
+    World()
         : next_entity_id_{1}
     {}
 
-    ~ECSWorld() = default;
+    ~World() = default;
 
     auto create_entity() -> Entity
     {
@@ -114,4 +114,4 @@ private:
     }
 };
 
-} // namespace NoctisEngine
+} // namespace NoctisEngine::ECS
