@@ -4,9 +4,3 @@
 [submodule "thirdparty/glfw"]
 	path = thirdparty/glfw
 	url = https://github.com/glfw/glfw
-[submodule "thirdparty/entt"]
-	path = thirdparty/entt
-	url = https://github.com/skypjack/entt.git
-[submodule "thirdparty/imgui"]
-    path = thirdparty/imgui
-    url = https://github.com/ocornut/imgui.git
