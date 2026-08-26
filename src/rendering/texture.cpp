@@ -44,19 +44,9 @@ Texture::Texture(TextureInfo texInfo)
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-auto Texture::bind(int bindPoint, const Shader *shader) const -> void 
+auto Texture::use(DrawList &draw_list, std::uint32_t bind_point) const -> void 
 {
-    if (!shader)
-        return;
-
-    shader->set_uniform(UniformInfo{
-        .type = UniformType::INT,
-        .name = name_,
-        .val = bindPoint,
-    });
-
-    glActiveTexture(GL_TEXTURE0 + bindPoint);
-    glBindTexture(GL_TEXTURE_2D, texID_);
+    draw_list.bind_texture(texID_, bind_point);
 }
 
 auto Texture::set_min_function(MinifyingFunction param) const -> void 

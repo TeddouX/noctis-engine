@@ -49,8 +49,7 @@ public:
 
     Texture(TextureInfo texInfo);
 
-    // The shader must be bound before calling this function!!
-    auto bind(int bindPoint, const Shader *shader) const -> void;
+    auto use(DrawList &draw_list, std::uint32_t bind_point) const -> void;
 
     auto set_min_function(MinifyingFunction param) const -> void;
     auto set_mag_function(MagnifyingFunction param) const -> void;
@@ -62,5 +61,13 @@ private:
     std::uint32_t   texID_;
     std::string     name_;
 };
+
+namespace TextureSlots
+{
+    
+constexpr std::uint32_t ALBEDO = 0;
+
+} // namespace TextureSlots
+
 
 } // namespace NoctisEngine::Rendering

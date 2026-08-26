@@ -8,7 +8,7 @@
 #include <filesystem>
 
 
-namespace NoctisEngine
+namespace NoctisEngine::Core
 {
     
 enum class LogLevel 
@@ -67,6 +67,7 @@ public:
         _Args &&...args
     ) const -> void;
 
+    // Also exits the program
     template <typename ..._Args>
     auto critical(
         format_with_location<std::type_identity_t<_Args>...> fmt, 
@@ -159,7 +160,7 @@ auto Logger::log(
     if (sourceLocation.has_value()) 
     {
         std::filesystem::path file{sourceLocation->file_name()};
-        std::println("[{}] [{}] ({}/{}) in {}({}:{}) (function {}): {}",
+        std::println("[{}] [{}] ({}/{}) in {}({}:{}) {}: {}",
             timeStr, 
             to_string(level), 
             _directory, _subDirectory,
@@ -184,4 +185,4 @@ auto Logger::log(
     }
 }
 
-} // namespace Firework
+} // namespace NoctisEngine::Core

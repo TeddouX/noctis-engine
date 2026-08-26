@@ -90,11 +90,6 @@ public:
         return nullptr;
     }
 
-private:
-    std::unordered_map<std::type_index, std::shared_ptr<void>> storages_;
-    std::int32_t next_entity_id_;
-    std::vector<std::int32_t> free_ids_;
-
     template <typename T>
     auto get_storage() -> ComponentStorage<T> &
     {
@@ -112,6 +107,11 @@ private:
             return nullptr;
         return static_cast<ComponentStorage<T> *>(storages_.at(type_idx).get());
     }
+
+private:
+    std::unordered_map<std::type_index, std::shared_ptr<void>> storages_;
+    std::int32_t next_entity_id_;
+    std::vector<std::int32_t> free_ids_;
 };
 
 } // namespace NoctisEngine::ECS

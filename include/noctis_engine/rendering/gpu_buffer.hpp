@@ -59,24 +59,23 @@ class GPUBuffer
 {
 public:
     GPUBuffer() = default;
-    GPUBuffer(std::size_t size, std::string_view name, BufferFlag flags = BufferFlag::DYNAMIC_STORAGE_BIT);
+    GPUBuffer(std::int64_t size, std::string_view name, BufferFlag flags = BufferFlag::DYNAMIC_STORAGE_BIT);
 
     auto copy_to(GPUBuffer &other) -> void;
-    auto write(CPUBufferReadView data, std::size_t offset) const -> void;
+    auto write(CPUBufferReadView data, std::int64_t offset) const -> void;
     auto size_bytes() const -> std::size_t;
     auto gl_handle() const -> std::uint32_t;
 
     auto delete_gpu() -> void;
 
-    auto bind_as(BufferTarget type) const -> void;
-    auto bind_buffer_base(BufferTarget type, std::uint32_t bindPoint) const -> void;
-    auto bind_buffer_range(BufferTarget type, std::uint32_t bindPoint, std::size_t offset, std::size_t size) const -> void;
+    // auto bind_as(BufferTarget type) const -> void;
+    // auto bind_buffer_base(BufferTarget type, std::uint32_t bindPoint) const -> void;
+    // auto bind_buffer_range(BufferTarget type, std::uint32_t bindPoint, std::size_t offset, std::size_t size) const -> void;
 
     // Returns a pointer to the mapped buffer, can be cast to any type.
     // GPUBuffer::mapped_write should be used instead of writing the raw pointer if performance isn't that important because it is more memory safe.
     auto map() -> void *;
     auto unmap() -> void;
-    auto mapped_write(CPUBufferReadView data, std::size_t offset) -> void;
     auto is_mapped() const -> bool;
     // The pointer shouldn't be kept and used after calling resize_buffer(), nullptr if the buffer is unmapped
     auto get_mapped_ptr() -> void *;
@@ -89,7 +88,7 @@ public:
 
 private:
     std::uint32_t       id_;
-    std::size_t         size_;
+    std::int64_t        size_;
     void               *map_;
     BufferFlag          flags_;
 

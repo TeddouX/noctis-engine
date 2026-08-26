@@ -1,13 +1,11 @@
 #include <noctis_engine/rendering/gpu_buffer.hpp>
 
-#include <stdexcept>
 #include <format>
 #include <cstring>
-
 #include <GL/gl.h>
 
-#include <core/logging.hpp>
-#include <core/format.hpp>
+#include <noctis_engine/core/logging.hpp>
+#include <noctis_engine/core/format.hpp>
 
 
 namespace NoctisEngine::Rendering
@@ -22,7 +20,7 @@ BufferFlag operator |(BufferFlag left, BufferFlag right)
     );
 }
 
-GPUBuffer::GPUBuffer(std::size_t size, std::string_view name, BufferFlag flags)
+GPUBuffer::GPUBuffer(std::int64_t size, std::string_view name, BufferFlag flags)
     : size_{size}
     , name_{name}
     , flags_{flags}
@@ -34,7 +32,7 @@ GPUBuffer::GPUBuffer(std::size_t size, std::string_view name, BufferFlag flags)
     glObjectLabel(GL_BUFFER, id_, name.size(), name.data());
 }
 
-auto GPUBuffer::write(CPUBufferReadView data, std::size_t offset) const -> void 
+auto GPUBuffer::write(CPUBufferReadView data, GLintptr offset) const -> void 
 {
     if (offset + data.size_bytes() > size_)
     {
@@ -56,39 +54,6 @@ auto GPUBuffer::copy_to(GPUBuffer &other) -> void
         );
 
     glCopyNamedBufferSubData(id_, other.id_, 0, 0, size_);
-}
-
-auto GPUBuffer::bind_as(BufferTarget type) const -> void 
-{
-    glBindBuffer(static_cast<GLenum>(type), id_);
-}
-
-auto GPUBuffer::bind_buffer_base(BufferTarget type, std::uint32_t bindPoint) const -> void 
-{
-    if (!is_bindable_to_index(type))
-    {
-        RENDERING_LOGGER.warn("BufferType '{}' is not bindable to an index.", type);
-        return;
-    }
-
-    glBindBufferBase(static_cast<GLenum>(type), bindPoint, id_);
-}
-
-auto GPUBuffer::bind_buffer_range(BufferTarget type, std::uint32_t bindPoint, std::size_t offset, std::size_t size) const -> void 
-{
-    if (!is_bindable_to_index(type))
-    {
-        RENDERING_LOGGER.warn("BufferType '{}' is not bindable to an index.", type);
-        return;
-    }
-
-    if (offset + size > size_)
-        RENDERING_LOGGER.critical(
-            "Failed to bind buffer range at offset {} with length {} because it exceeds the buffer's size ({})" ,
-            size, offset, size_
-        );
-
-    glBindBufferRange(static_cast<GLenum>(type), bindPoint, id_, offset, size);
 }
 
 auto GPUBuffer::size_bytes() const -> std::size_t 
@@ -121,27 +86,6 @@ auto GPUBuffer::unmap() -> void
 {
     glUnmapNamedBuffer(id_);
     map_ = nullptr;
-}
-
-auto GPUBuffer::mapped_write(CPUBufferReadView data, std::size_t offset) -> void 
-{
-    if (offset + data.size_bytes() > size_)
-        RENDERING_LOGGER.critical(
-            "Failed to mapped_write {} bytes at offset {} into a buffer that is {} bytes long." ,
-            data.size_bytes(), offset, size_
-        );
-
-    if (!map_) 
-    {
-        RENDERING_LOGGER.warn("Tried to call GPUBuffer::mapped_write on an unmmapped buffer.");
-        return;
-    }
-
-    std::memcpy(
-        reinterpret_cast<std::byte *>(map_) + offset, 
-        data.data(), 
-        data.size_bytes()
-    );
 }
 
 auto GPUBuffer::is_mapped() const -> bool 

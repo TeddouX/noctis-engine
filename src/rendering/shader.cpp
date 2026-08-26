@@ -10,7 +10,7 @@
 namespace NoctisEngine::Rendering
 {
     
-Shader::Shader(const std::string &code, const std::string &name) 
+Shader::Shader(const char *code, const std::string &name) 
 {
     vert_shader_ = glCreateShader(GL_VERTEX_SHADER);
     frag_shader_ = glCreateShader(GL_FRAGMENT_SHADER);
@@ -24,20 +24,20 @@ R"(#extension GL_ARB_gpu_shader_int64 : enable
 #extension GL_ARB_shader_draw_parameters : require
 #define )";
 
-    const std::string vertCodeStr = header + "VERTEX\n" + code;
-    const std::string fragCodeStr = header + "FRAGMENT\n" + code;
+    const std::string vert_code_str = header + "VERTEX\n" + code;
+    const std::string frag_code_str = header + "FRAGMENT\n" + code;
 
-    const char* vertCode = vertCodeStr.c_str();
-    const char* fragCode = fragCodeStr.c_str();
+    const char *vert_code = vert_code_str.c_str();
+    const char *frag_code = frag_code_str.c_str();
     
-    glShaderSource(vert_shader_, 1, &vertCode, nullptr);
-    glShaderSource(frag_shader_, 1, &fragCode, nullptr);
+    glShaderSource(vert_shader_, 1, &vert_code, nullptr);
+    glShaderSource(frag_shader_, 1, &frag_code, nullptr);
     
     programID_ = glCreateProgram();
     glObjectLabel(GL_PROGRAM, programID_, -1, name.c_str());
 }
 
-auto Shader::compile() -> void 
+auto Shader::compile() -> bool 
 {
     int success;
     char infolog[1024];
@@ -49,7 +49,7 @@ auto Shader::compile() -> void
     {
         glGetShaderInfoLog(vert_shader_, sizeof(infolog), nullptr, infolog);
         RENDERING_LOGGER.error("Vertex shader compilation failed: {}", infolog);
-        return;
+        return false;
     }
 
     glCompileShader(frag_shader_);
@@ -59,7 +59,7 @@ auto Shader::compile() -> void
     {
         glGetShaderInfoLog(frag_shader_, sizeof(infolog), nullptr, infolog);
         RENDERING_LOGGER.error("Fragment shader compilation failed: {}", infolog);
-        return;
+        return false;
     }
 
     glAttachShader(programID_, vert_shader_);
@@ -71,37 +71,25 @@ auto Shader::compile() -> void
     {
         glGetProgramInfoLog(programID_, sizeof(infolog), nullptr, infolog);
         RENDERING_LOGGER.error("Program Linking failed: {}", infolog);
-        return;
+        return false;
     }
 
     // Cleanup
     glDeleteShader(vert_shader_);
     glDeleteShader(frag_shader_);
-}
-
-void Shader::bind() 
-{
-    glUseProgram(programID_);
-}
-
-auto Shader::set_uniform(const UniformInfo &info) const -> bool 
-{
-    int loc = glGetUniformLocation(programID_, info.name.c_str());
-    
-    if (loc < 0) 
-    {
-        RENDERING_LOGGER.warn("Uniform {} couldn't be found", info.name);
-        return false;
-    }
-
-    switch (info.type) 
-    {
-        case UniformType::BOOL:  glUniform1i(loc, std::get<bool>(info.val)); break;
-        case UniformType::INT:   glUniform1i(loc, std::get<int>(info.val)); break;
-        case UniformType::FLOAT: glUniform1f(loc, std::get<float>(info.val)); break;
-    }
 
     return true;
 }
+
+void Shader::use(DrawList &draw_list) 
+{
+    draw_list.bind_program(programID_);
+}
+
+auto Shader::gl_handle() -> std::uint32_t
+{
+    return programID_;
+}
+
 
 } // namespace NoctisEngine::Rendering

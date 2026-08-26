@@ -13,7 +13,7 @@ namespace Core
 
 namespace Rendering 
 {
-    inline static Logger RENDERING_LOGGER{"Noctis Engine", "Rendering"};
+    inline static Core::Logger RENDERING_LOGGER{"Noctis Engine", "Rendering"};
      
     constexpr std::string_view OPENGL_VERSION = "#version 460 core";
 }
