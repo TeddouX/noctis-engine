@@ -1,13 +1,12 @@
 #include <noctis_engine/rendering/gpu_buffer.hpp>
 
-#include <stdexcept>
 #include <format>
 #include <cstring>
-
 #include <GL/gl.h>
 
-#include <core/logging.hpp>
-#include <core/format.hpp>
+#include <noctis_engine/core/logging.hpp>
+#include <noctis_engine/core/exit.hpp>
+#include <noctis_engine/core/format.hpp>
 
 
 namespace NoctisEngine::Rendering
@@ -22,7 +21,7 @@ BufferFlag operator |(BufferFlag left, BufferFlag right)
     );
 }
 
-GPUBuffer::GPUBuffer(std::size_t size, std::string_view name, BufferFlag flags)
+GPUBuffer::GPUBuffer(std::int64_t size, std::string_view name, BufferFlag flags)
     : size_{size}
     , name_{name}
     , flags_{flags}
@@ -34,14 +33,16 @@ GPUBuffer::GPUBuffer(std::size_t size, std::string_view name, BufferFlag flags)
     glObjectLabel(GL_BUFFER, id_, name.size(), name.data());
 }
 
-auto GPUBuffer::write(CPUBufferReadView data, std::size_t offset) const -> void 
+auto GPUBuffer::write(CPUBufferReadView data, GLintptr offset) const -> void 
 {
     if (offset + data.size_bytes() > size_)
     {
-        RENDERING_LOGGER.critical(
+        RENDERING_LOGGER.error(
             "Tried to write {} bytes at offset {} into a buffer that is {} bytes long.", 
             data.size_bytes(), offset, size_
         );
+
+        return;
     }
 
     glNamedBufferSubData(id_, offset, data.size_bytes(), data.data());
@@ -50,45 +51,16 @@ auto GPUBuffer::write(CPUBufferReadView data, std::size_t offset) const -> void
 auto GPUBuffer::copy_to(GPUBuffer &other) -> void 
 {
     if (size_ > other.size_)
-        RENDERING_LOGGER.critical(
+    {
+        RENDERING_LOGGER.error(
             "Tried copying from a buffer that is {} bytes long to a buffer that is {} bytes long",
             size_, other.size_
         );
 
+        return;
+    }
+
     glCopyNamedBufferSubData(id_, other.id_, 0, 0, size_);
-}
-
-auto GPUBuffer::bind_as(BufferTarget type) const -> void 
-{
-    glBindBuffer(static_cast<GLenum>(type), id_);
-}
-
-auto GPUBuffer::bind_buffer_base(BufferTarget type, std::uint32_t bindPoint) const -> void 
-{
-    if (!is_bindable_to_index(type))
-    {
-        RENDERING_LOGGER.warn("BufferType '{}' is not bindable to an index.", type);
-        return;
-    }
-
-    glBindBufferBase(static_cast<GLenum>(type), bindPoint, id_);
-}
-
-auto GPUBuffer::bind_buffer_range(BufferTarget type, std::uint32_t bindPoint, std::size_t offset, std::size_t size) const -> void 
-{
-    if (!is_bindable_to_index(type))
-    {
-        RENDERING_LOGGER.warn("BufferType '{}' is not bindable to an index.", type);
-        return;
-    }
-
-    if (offset + size > size_)
-        RENDERING_LOGGER.critical(
-            "Failed to bind buffer range at offset {} with length {} because it exceeds the buffer's size ({})" ,
-            size, offset, size_
-        );
-
-    glBindBufferRange(static_cast<GLenum>(type), bindPoint, id_, offset, size);
 }
 
 auto GPUBuffer::size_bytes() const -> std::size_t 
@@ -112,7 +84,10 @@ auto GPUBuffer::map() -> void *
 {
     map_ = glMapNamedBufferRange(id_, 0, size_, static_cast<GLbitfield>(flags_));
     if (!map_)
-        RENDERING_LOGGER.critical("Failed to map buffer.");
+    {
+        RENDERING_LOGGER.critical("Failed to map buffer {}.", name_);
+        Core::exit_program_failure();
+    }
 
     return map_;
 }
@@ -121,27 +96,6 @@ auto GPUBuffer::unmap() -> void
 {
     glUnmapNamedBuffer(id_);
     map_ = nullptr;
-}
-
-auto GPUBuffer::mapped_write(CPUBufferReadView data, std::size_t offset) -> void 
-{
-    if (offset + data.size_bytes() > size_)
-        RENDERING_LOGGER.critical(
-            "Failed to mapped_write {} bytes at offset {} into a buffer that is {} bytes long." ,
-            data.size_bytes(), offset, size_
-        );
-
-    if (!map_) 
-    {
-        RENDERING_LOGGER.warn("Tried to call GPUBuffer::mapped_write on an unmmapped buffer.");
-        return;
-    }
-
-    std::memcpy(
-        reinterpret_cast<std::byte *>(map_) + offset, 
-        data.data(), 
-        data.size_bytes()
-    );
 }
 
 auto GPUBuffer::is_mapped() const -> bool 
@@ -157,10 +111,14 @@ auto GPUBuffer::get_mapped_ptr() -> void *
 auto GPUBuffer::get_data(std::size_t offset, CPUBufferWriteView data) const -> void 
 {
     if (offset + data.size_bytes() > size_)
-        RENDERING_LOGGER.critical(
+    {
+        RENDERING_LOGGER.error(
             "Failed to read data at offset {} with an object size of {} bytes because it exceeds the buffer's size ({} bytes)" ,
             offset, data.size_bytes(), size_
         );
+
+        return;
+    }
 
     glGetNamedBufferSubData(
         id_, 

@@ -11,6 +11,9 @@
 namespace NoctisEngine
 {
     
+namespace Core
+{
+    
 enum class LogLevel 
 {
     DEBUG,
@@ -102,8 +105,6 @@ private:
     }
 };
 
-
-
 template <typename ..._Args>
 auto Logger::debug(std::format_string<_Args...> fmt, _Args &&...args) const -> void 
 {
@@ -140,8 +141,6 @@ auto Logger::critical(
 ) const -> void 
 {
     this->log(LogLevel::CRITICAL, fmt.fmt, fmt.loc, std::forward<_Args>(args)...);
-    
-    std::exit(EXIT_FAILURE);
 }
 
 template <typename... _Args>
@@ -159,7 +158,7 @@ auto Logger::log(
     if (sourceLocation.has_value()) 
     {
         std::filesystem::path file{sourceLocation->file_name()};
-        std::println("[{}] [{}] ({}/{}) in {}({}:{}) (function {}): {}",
+        std::println("[{}] [{}] ({}/{}) in {}({}:{}) {}: {}",
             timeStr, 
             to_string(level), 
             _directory, _subDirectory,
@@ -184,4 +183,16 @@ auto Logger::log(
     }
 }
 
-} // namespace Firework
+inline static Logger CORE_LOGGER{"Noctis Engine", "Core"};
+
+} // namespace Core
+
+namespace Rendering 
+{ 
+
+inline static Core::Logger RENDERING_LOGGER{"Noctis Engine", "Rendering"}; 
+
+} // namespace Rendering
+
+} // namespace NoctisEngine
+

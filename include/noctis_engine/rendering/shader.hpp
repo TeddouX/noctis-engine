@@ -1,32 +1,24 @@
 #pragma once
-#include <variant>
 #include <string>
 #include <cstdint>
 
 #include "../noctis_engine.hpp"
+#include "draw_list.hpp"
 
 
 namespace NoctisEngine::Rendering
 {
-    
-enum class UniformType { BOOL, INT, FLOAT };
-
-struct UniformInfo 
-{
-    UniformType type;
-    std::string name;
-    std::variant<bool, int, float> val;
-};
 
 class Shader 
 {
 public:
-    Shader(const std::string &code, const std::string &name);
+    Shader(const char *code, const std::string &name);
     ~Shader() = default;
 
-    auto compile() -> void;
-    auto bind() -> void;
-    auto set_uniform(const UniformInfo &info) const -> bool;
+    auto compile() -> bool;
+    auto use(DrawList &draw_list) -> void;
+
+    auto gl_handle() -> std::uint32_t;
 
 private:
     std::uint32_t programID_;

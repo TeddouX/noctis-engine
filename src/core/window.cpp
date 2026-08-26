@@ -4,6 +4,7 @@
 #include <GLFW/glfw3.h>
 
 #include <noctis_engine.hpp>
+#include <core/logging.hpp>
 
 
 namespace NoctisEngine::Core

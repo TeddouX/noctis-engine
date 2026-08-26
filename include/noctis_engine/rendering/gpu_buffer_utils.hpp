@@ -4,13 +4,13 @@
 namespace NoctisEngine::Rendering
 {
     
-inline auto resize_buffer(GPUBuffer &buf, std::size_t cpu_buf_size) -> bool 
+inline auto resize_buffer(GPUBuffer &buf, std::int64_t buf_size) -> bool 
 {
-    if (buf.size_bytes() >= cpu_buf_size) 
+    if (buf.size_bytes() >= buf_size) 
         return false;
 
-    std::size_t new_buf_size = std::max(buf.size_bytes() * 2, 1zu);
-    while (new_buf_size < cpu_buf_size)
+    std::int64_t new_buf_size = std::max(buf.size_bytes() * 2, 1zu);
+    while (new_buf_size < buf_size)
         new_buf_size *= 2;
     
     RENDERING_LOGGER.debug("Resizing buffer '{}', {} => {}", buf.get_name(), buf.size_bytes(), new_buf_size);
@@ -33,7 +33,7 @@ inline auto resize_buffer(GPUBuffer &buf, std::size_t cpu_buf_size) -> bool
 template <typename T>
 auto resize_buffer(GPUBuffer &buf, const std::vector<T> &cpu_buf) -> bool 
 {
-    std::size_t cpuBufSize = cpu_buf.size() * sizeof(T);
+    std::int64_t cpuBufSize = cpu_buf.size() * sizeof(T);
     return resize_buffer(buf, cpuBufSize);
 }
 
@@ -41,10 +41,14 @@ template <typename T>
 auto get_cpu_buffer_view(const std::vector<T> &buf, std::size_t offset, std::size_t size) -> CPUBufferReadView 
 {
     if (size + offset > buf.size())
+    {
         RENDERING_LOGGER.critical(
             "Can't create cpu buffer view, invalid offset and/or size (off {} + size {} > buf {}).", 
             offset, size, buf.size()
         );
+
+        return {};
+    }
 
     return std::as_bytes(std::span{buf.data() + offset, size});
 }

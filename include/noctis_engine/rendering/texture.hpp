@@ -47,20 +47,33 @@ public:
         MIRROR_CLAMP_TO_EDGE = 0x8743,
     };
 
-    Texture(TextureInfo texInfo);
+    Texture(TextureInfo tex_info);
 
-    // The shader must be bound before calling this function!!
-    auto bind(int bindPoint, const Shader *shader) const -> void;
+    auto use(DrawList &draw_list, std::uint32_t bind_point) const -> void;
 
     auto set_min_function(MinifyingFunction param) const -> void;
     auto set_mag_function(MagnifyingFunction param) const -> void;
     auto set_wrap_function(WrapParam paramU, WrapParam paramV) const -> void;
+
+    auto width() const -> int;
+    auto height() const -> int;
 
     auto gl_handle() const -> std::uint32_t;
 
 private:
     std::uint32_t   texID_;
     std::string     name_;
+
+    int             width_, 
+                    height_;
 };
+
+namespace TextureSlots
+{
+    
+constexpr std::uint32_t ALBEDO = 0;
+
+} // namespace TextureSlots
+
 
 } // namespace NoctisEngine::Rendering
