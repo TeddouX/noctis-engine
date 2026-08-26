@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 
 set(NCENG_SOURCES
     "asset/loaders.cpp"
+    "core/exit.cpp"
     "core/window.cpp"
     "ecs/component/transform.cpp"
     "rendering/mesh/mesh_manager.cpp"
