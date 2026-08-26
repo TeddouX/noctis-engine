@@ -3,6 +3,12 @@
 
 namespace NoctisEngine::ECS
 {
+Transform::Transform()
+{
+    set_position(glm::vec3{0});
+    set_scale(glm::vec3{1});
+    set_rotation(glm::vec3{0});
+}
     
 Transform::Transform(const glm::vec3 &position, const glm::vec3 &scale, const glm::vec3 &eulerAngles) 
     : cached_model_matrix_{1}

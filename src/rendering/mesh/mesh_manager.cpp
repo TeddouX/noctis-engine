@@ -61,8 +61,8 @@ auto MeshManager::upload(const MeshInfo &mesh) -> MeshView
 
 auto MeshManager::use(DrawList &draw_list) -> void 
 {
-    draw_list.bind_vao(VAO_);
     draw_list.bind_buffer(indices_gpu_buf_, BufferTarget::ELEMENT_ARRAY_BUFFER);
+    draw_list.bind_vao(VAO_);
 }
 
 auto MeshManager::create_vao() -> void 

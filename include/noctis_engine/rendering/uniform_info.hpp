@@ -11,7 +11,7 @@ enum class UniformType { BOOL, INT, FLOAT };
 struct UniformInfo 
 {
     UniformType type;
-    std::string name;
+    std::string_view name;
     std::variant<bool, int, float> val;
 };
 

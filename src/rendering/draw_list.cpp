@@ -11,6 +11,12 @@ auto DrawList::bind_texture(std::uint32_t tex, std::uint32_t bind_point) -> void
 {
     write_cmd_type(DrawCommandType::BIND_TEXTURE);
     write(BindTextureCmd{ tex, bind_point });
+    
+    set_uniform(UniformInfo{ 
+        UniformType::INT, 
+        "albedo", 
+        static_cast<int>(bind_point) 
+    });
 }
 
 auto DrawList::bind_buffer(const GPUBuffer &buffer, BufferTarget target) -> void

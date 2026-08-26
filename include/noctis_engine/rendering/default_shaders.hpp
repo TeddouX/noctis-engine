@@ -22,7 +22,6 @@ layout (std140, binding = 0) uniform CameraBuffer {
 
 struct Object {
     mat4 modelMat;
-    sampler2D tex;
 };
 
 layout (std430, binding = 1) buffer Objects {
@@ -31,15 +30,15 @@ layout (std430, binding = 1) buffer Objects {
 
 
 layout (location = 0) out vec2 fsTexCoord;
-layout (location = 1) out flat sampler2D fsSpriteTex;
 
 void main()
 {
-    Object obj = objects.objects[gl_DrawID];
+    uint objectIndex = gl_BaseInstance + gl_InstanceID;
+    Object obj = objects.objects[objectIndex];
 
-    gl_Position = camera.projMat * camera.viewMat * obj.modelMat * vec4(aPos, 1.0);
+    // gl_Position = camera.projMat * camera.viewMat * obj.modelMat * vec4(aPos, 1.0);
+    gl_Position = vec4(aPos, 1.0);
     fsTexCoord = aTexCoord;
-    fsSpriteTex = obj.tex;
 }
 
 #endif
@@ -49,13 +48,14 @@ void main()
 #ifdef FRAGMENT
 
 layout (location = 0) in vec2 fsTexCoord;
-layout (location = 1) in flat sampler2D fsSpriteTex;
+
+layout (location = 0) uniform sampler2D albedo;
 
 layout (location = 0) out vec4 FragColor;
 
 void main()
 {
-    FragColor = texture(fsSpriteTex, fsTexCoord);
+    FragColor = texture(albedo, fsTexCoord);
 }
 
 #endif

@@ -7,7 +7,7 @@ namespace NoctisEngine::ECS
 class Transform 
 {
 public:
-    Transform() = default;
+    Transform();
     Transform(const glm::vec3 &position, const glm::vec3 &scale, const glm::vec3 &eulerAngles);
     Transform(const glm::vec2 &position, const glm::vec2 &scale, const glm::vec3 &eulerAngles);
 

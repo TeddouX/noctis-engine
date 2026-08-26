@@ -41,7 +41,7 @@ Renderer::Renderer()
 
     glDebugMessageCallback((GLDEBUGPROC)opengl_debug_message_callback, this);
 
-    BufferFlag mappedBufFlags = BufferFlag::MAP_PERSISTENT_BIT | BufferFlag::MAP_WRITE_BIT;
+    BufferFlag mappedBufFlags = BufferFlag::MAP_PERSISTENT_BIT | BufferFlag::MAP_COHERENT_BIT | BufferFlag::MAP_WRITE_BIT;
     command_buffer_ = GPUBuffer(1, "renderer_command_buffer", mappedBufFlags);
     objectsSSBO_ = GPUBuffer(1, "renderer_object_buffer", mappedBufFlags);
 
@@ -135,6 +135,12 @@ auto Renderer::render(DrawList &draw_list) -> void
         {
             case DrawCommandType::BIND_TEXTURE:
             {
+                if (last_program_id <= 0)
+                {
+                    RENDERING_LOGGER.error("Shader must be bound to use a texture. Shader binding should be done before anything else in the draw list");
+                    return;
+                }
+
                 auto texture_cmd = reinterpret_cast<const BindTextureCmd *>(curr_cmd.base());
                 
                 flush_commands();
@@ -197,11 +203,17 @@ auto Renderer::render(DrawList &draw_list) -> void
             
             case DrawCommandType::SET_UNIFORM:
             {
+                if (last_program_id <= 0)
+                {
+                    RENDERING_LOGGER.error("Shader must be bound to set a uniform. Shader binding should be done before anything else in the draw list");
+                    return;
+                }
+
                 auto uniform_cmd = reinterpret_cast<const SetUniformCmd *>(curr_cmd.base());
                 const UniformInfo &info = uniform_cmd->info;
 
                 flush_commands();
-                int loc = glGetUniformLocation(last_program_id, info.name.c_str());
+                int loc = glGetUniformLocation(last_program_id, info.name.data());
                 if (loc < 0) 
                 {
                     RENDERING_LOGGER.warn("Uniform {} couldn't be found", info.name);
@@ -221,6 +233,12 @@ auto Renderer::render(DrawList &draw_list) -> void
             
             case DrawCommandType::DRAW_MESH:
             {
+                if (last_program_id <= 0)
+                {
+                    RENDERING_LOGGER.error("Shader must be bound to draw a mesh. Shader binding should be done before anything else in the draw list");
+                    return;
+                }
+
                 auto draw_mesh_cmd = reinterpret_cast<const DrawMeshCmd *>(curr_cmd.base());
                 const MeshView &mv = draw_mesh_cmd->mesh_view;
 
