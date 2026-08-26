@@ -41,10 +41,14 @@ template <typename T>
 auto get_cpu_buffer_view(const std::vector<T> &buf, std::size_t offset, std::size_t size) -> CPUBufferReadView 
 {
     if (size + offset > buf.size())
+    {
         RENDERING_LOGGER.critical(
             "Can't create cpu buffer view, invalid offset and/or size (off {} + size {} > buf {}).", 
             offset, size, buf.size()
         );
+
+        return {};
+    }
 
     return std::as_bytes(std::span{buf.data() + offset, size});
 }

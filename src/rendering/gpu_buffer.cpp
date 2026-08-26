@@ -5,6 +5,7 @@
 #include <GL/gl.h>
 
 #include <noctis_engine/core/logging.hpp>
+#include <noctis_engine/core/exit.hpp>
 #include <noctis_engine/core/format.hpp>
 
 
@@ -36,10 +37,12 @@ auto GPUBuffer::write(CPUBufferReadView data, GLintptr offset) const -> void
 {
     if (offset + data.size_bytes() > size_)
     {
-        RENDERING_LOGGER.critical(
+        RENDERING_LOGGER.error(
             "Tried to write {} bytes at offset {} into a buffer that is {} bytes long.", 
             data.size_bytes(), offset, size_
         );
+
+        return;
     }
 
     glNamedBufferSubData(id_, offset, data.size_bytes(), data.data());
@@ -48,10 +51,14 @@ auto GPUBuffer::write(CPUBufferReadView data, GLintptr offset) const -> void
 auto GPUBuffer::copy_to(GPUBuffer &other) -> void 
 {
     if (size_ > other.size_)
-        RENDERING_LOGGER.critical(
+    {
+        RENDERING_LOGGER.error(
             "Tried copying from a buffer that is {} bytes long to a buffer that is {} bytes long",
             size_, other.size_
         );
+
+        return;
+    }
 
     glCopyNamedBufferSubData(id_, other.id_, 0, 0, size_);
 }
@@ -77,7 +84,10 @@ auto GPUBuffer::map() -> void *
 {
     map_ = glMapNamedBufferRange(id_, 0, size_, static_cast<GLbitfield>(flags_));
     if (!map_)
-        RENDERING_LOGGER.critical("Failed to map buffer.");
+    {
+        RENDERING_LOGGER.critical("Failed to map buffer {}.", name_);
+        Core::exit_program_failure();
+    }
 
     return map_;
 }
@@ -101,10 +111,14 @@ auto GPUBuffer::get_mapped_ptr() -> void *
 auto GPUBuffer::get_data(std::size_t offset, CPUBufferWriteView data) const -> void 
 {
     if (offset + data.size_bytes() > size_)
-        RENDERING_LOGGER.critical(
+    {
+        RENDERING_LOGGER.error(
             "Failed to read data at offset {} with an object size of {} bytes because it exceeds the buffer's size ({} bytes)" ,
             offset, data.size_bytes(), size_
         );
+
+        return;
+    }
 
     glGetNamedBufferSubData(
         id_, 

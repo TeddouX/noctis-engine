@@ -4,8 +4,9 @@
 #include <GL/gl.h>
 #include <GLFW/glfw3.h>
 
-#include <rendering/shader_bindings.hpp>
-#include <rendering/gpu_buffer_utils.hpp>
+#include <noctis_engine/core/exit.hpp>
+#include <noctis_engine/rendering/shader_bindings.hpp>
+#include <noctis_engine/rendering/gpu_buffer_utils.hpp>
 
 
 namespace NoctisEngine::Rendering
@@ -310,11 +311,14 @@ void Renderer::opengl_debug_message_callback(uint32_t source, uint32_t type, uin
     {
         auto gh = static_cast<const Renderer *>(userParam);
 
-        RENDERING_LOGGER.error("OpenGL: {}", message);
-        RENDERING_LOGGER.error("Stacktrace:\n{}", std::stacktrace::current(1));
+        RENDERING_LOGGER.critical("OpenGL: {}", message);
+        RENDERING_LOGGER.critical("Stacktrace:\n{}", std::stacktrace::current(1));
 
-        if (gh->throw_on_err_) 
+        if (gh->throw_on_err_)
+        {
             RENDERING_LOGGER.critical("An OpenGL error was encountered, and throw_on_err is enabled.", std::stacktrace::current(1));
+            Core::exit_program_failure();
+        }
     }
 }
 

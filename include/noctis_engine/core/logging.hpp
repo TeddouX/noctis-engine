@@ -8,7 +8,10 @@
 #include <filesystem>
 
 
-namespace NoctisEngine::Core
+namespace NoctisEngine
+{
+    
+namespace Core
 {
     
 enum class LogLevel 
@@ -67,7 +70,6 @@ public:
         _Args &&...args
     ) const -> void;
 
-    // Also exits the program
     template <typename ..._Args>
     auto critical(
         format_with_location<std::type_identity_t<_Args>...> fmt, 
@@ -102,8 +104,6 @@ private:
         return std::format("{:02}:{:02}:{:02}", h, m, s);
     }
 };
-
-
 
 template <typename ..._Args>
 auto Logger::debug(std::format_string<_Args...> fmt, _Args &&...args) const -> void 
@@ -141,8 +141,6 @@ auto Logger::critical(
 ) const -> void 
 {
     this->log(LogLevel::CRITICAL, fmt.fmt, fmt.loc, std::forward<_Args>(args)...);
-    
-    std::exit(EXIT_FAILURE);
 }
 
 template <typename... _Args>
@@ -185,4 +183,16 @@ auto Logger::log(
     }
 }
 
-} // namespace NoctisEngine::Core
+inline static Logger CORE_LOGGER{"Noctis Engine", "Core"};
+
+} // namespace Core
+
+namespace Rendering 
+{ 
+
+inline static Core::Logger RENDERING_LOGGER{"Noctis Engine", "Rendering"}; 
+
+} // namespace Rendering
+
+} // namespace NoctisEngine
+
