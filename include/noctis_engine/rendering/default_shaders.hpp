@@ -36,8 +36,8 @@ void main()
     uint objectIndex = gl_BaseInstance + gl_InstanceID;
     Object obj = objects.objects[objectIndex];
 
-    // gl_Position = camera.projMat * camera.viewMat * obj.modelMat * vec4(aPos, 1.0);
-    gl_Position = vec4(aPos, 1.0);
+    gl_Position = camera.projMat * camera.viewMat * obj.modelMat * vec4(aPos, 1.0);
+    // gl_Position = vec4(aPos, 1.0);
     fsTexCoord = aTexCoord;
 }
 
