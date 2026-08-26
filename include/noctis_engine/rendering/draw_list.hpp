@@ -29,7 +29,7 @@ public:
 
     auto bind_vao(std::uint32_t vao) -> void;
 
-    auto draw_mesh(MeshView mesh_view, const ECS::Transform &transform) -> void;
+    auto draw_mesh(MeshView mesh_view, const glm::mat4 &model_mat) -> void;
     auto draw_sprite_entity(ECS::Entity entity, const ECS::World &world) -> void;
 
     auto clear_screen(const Color &color, double depth = 1.0, bool clear_color = true, bool clear_depth = true) -> void;

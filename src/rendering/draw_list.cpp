@@ -49,10 +49,10 @@ auto DrawList::set_uniform(UniformInfo info) -> void
     write(SetUniformCmd{ info });
 }
 
-auto DrawList::draw_mesh(MeshView mesh_view, const ECS::Transform &transform) -> void
+auto DrawList::draw_mesh(MeshView mesh_view, const glm::mat4 &model_mat) -> void
 {
     write_cmd_type(DrawCommandType::DRAW_MESH);
-    write(DrawMeshCmd{ mesh_view, transform.model_matrix() });
+    write(DrawMeshCmd{ mesh_view, model_mat });
 
     req_indirect_draw_cmds++;
 }
@@ -65,8 +65,14 @@ auto DrawList::draw_sprite_entity(ECS::Entity entity, const ECS::World &world) -
     auto *transform = world.get_component<ECS::Transform>(entity);
     if (not transform) return;
 
-    bind_texture(sprite->texture.gl_handle(), TextureSlots::ALBEDO);
-    draw_mesh(DefaultMeshes::QUAD_MESH_VIEW, *transform);
+    const Texture &tex = sprite->texture;
+    const glm::mat4 &model_mat = transform->model_matrix();
+
+    bind_texture(tex.gl_handle(), TextureSlots::ALBEDO);
+    draw_mesh(
+        DefaultMeshes::QUAD_MESH_VIEW, 
+        glm::scale(model_mat, glm::vec3(tex.width(), tex.height(), 1))
+    );
 }
 
 auto DrawList::clear_screen(const Color &color, double depth, bool clear_color, bool clear_depth) -> void

@@ -6,8 +6,10 @@
 namespace NoctisEngine::Rendering
 {
     
-Texture::Texture(TextureInfo texInfo)
-    : name_(texInfo.name)
+Texture::Texture(TextureInfo tex_info)
+    : name_(tex_info.name)
+    , width_{tex_info.width}
+    , height_{tex_info.height}
 {
     glGenTextures(1, &texID_);
     glBindTexture(GL_TEXTURE_2D, texID_);
@@ -16,12 +18,12 @@ Texture::Texture(TextureInfo texInfo)
     GLenum internalFormat = GL_RGBA8;
     GLenum dataFormat = GL_RGBA;
 
-    if (texInfo.nr_channels == 1)
+    if (tex_info.nr_channels == 1)
     {
         internalFormat = GL_R8;
         dataFormat = GL_RED;
     }
-    else if (texInfo.nr_channels == 3)
+    else if (tex_info.nr_channels == 3)
     {
         internalFormat = GL_RGB8;
         dataFormat = GL_RGB;
@@ -31,12 +33,12 @@ Texture::Texture(TextureInfo texInfo)
 		GL_TEXTURE_2D, 
 		0, 
 		internalFormat, 
-		texInfo.width, 
-		texInfo.height, 
+		tex_info.width, 
+		tex_info.height, 
 		0, 
 		dataFormat,
 		GL_UNSIGNED_BYTE, 
-		texInfo.data
+		tex_info.data
 	);
 
 	glGenerateMipmap(GL_TEXTURE_2D);
@@ -69,6 +71,16 @@ auto Texture::set_wrap_function(WrapParam paramU, WrapParam paramV) const -> voi
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, static_cast<GLint>(paramU));
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, static_cast<GLint>(paramV));
     glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+auto Texture::width() const -> int
+{
+    return width_;
+}
+
+auto Texture::height() const -> int
+{
+    return height_;
 }
 
 auto Texture::gl_handle() const -> std::uint32_t 
