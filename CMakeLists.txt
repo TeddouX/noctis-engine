@@ -12,7 +12,6 @@ add_subdirectory(thirdparty/glad)
 add_subdirectory(thirdparty/glfw)
 add_subdirectory(thirdparty/glm)
 add_subdirectory(thirdparty/stb)
-add_subdirectory(thirdparty/entt)
 add_subdirectory(thirdparty/imgui)
 
 set(NCENG_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include")

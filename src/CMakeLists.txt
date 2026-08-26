@@ -33,7 +33,6 @@ target_compile_definitions(noctis_engine PUBLIC GLM_ENABLE_EXPERIMENTAL)
 add_library(noctis_engine::noctis_engine ALIAS noctis_engine)
 
 target_link_libraries(noctis_engine
-    EnTT::EnTT
     glm::glm
     ImGui
     glfw
