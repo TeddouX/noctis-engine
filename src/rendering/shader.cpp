@@ -15,12 +15,14 @@ Shader::Shader(const char *code, const std::string &name)
     vert_shader_ = glCreateShader(GL_VERTEX_SHADER);
     frag_shader_ = glCreateShader(GL_FRAGMENT_SHADER);
 
-    glObjectLabel(GL_SHADER, vert_shader_, -1, name.c_str());
-    glObjectLabel(GL_SHADER, frag_shader_, -1, name.c_str());
+    std::string vertex_shader_name = name + "_vertex";
+    std::string frag_shader_name = name + "_frag";
+
+    glObjectLabel(GL_SHADER, vert_shader_, -1, vertex_shader_name.c_str());
+    glObjectLabel(GL_SHADER, frag_shader_, -1, frag_shader_name.c_str());
 
     const std::string header = std::string(OPENGL_VERSION) + "\n" + 
 R"(#extension GL_ARB_gpu_shader_int64 : enable
-#extension GL_ARB_bindless_texture : require
 #extension GL_ARB_shader_draw_parameters : require
 #define )";
 

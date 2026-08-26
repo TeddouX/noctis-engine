@@ -84,11 +84,19 @@ auto Renderer::set_blend_func(BlendFunc sFactor, BlendFunc dFactor) const -> voi
 
 auto Renderer::render(DrawList &draw_list) -> void
 {
-    draw_list.bind_buffer_base(objectsSSBO_, BufferTarget::SHADER_STORAGE_BUFFER, ShaderBindings::OBJECTS_SSBO);
-    draw_list.bind_buffer(command_buffer_, BufferTarget::DRAW_INDIRECT_BUFFER);
+    resize_buffer(command_buffer_, draw_list.required_indirect_draw_cmds() * sizeof(DrawElementsIndirectCommand));
+    resize_buffer(objectsSSBO_, draw_list.required_indirect_draw_cmds() * sizeof(ObjectData));
 
-    resize_buffer(command_buffer_, draw_list.required_indirect_draw_cmds());
-    resize_buffer(objectsSSBO_, draw_list.required_indirect_draw_cmds());
+    glBindBufferBase(
+        GL_SHADER_STORAGE_BUFFER, 
+        ShaderBindings::OBJECTS_SSBO, 
+        objectsSSBO_.gl_handle()
+    );
+
+    glBindBuffer(
+        GL_DRAW_INDIRECT_BUFFER, 
+        command_buffer_.gl_handle()
+    );
 
     auto command_buf_ptr = static_cast<DrawElementsIndirectCommand *>(command_buffer_.get_mapped_ptr());
     auto object_ssbo_ptr = static_cast<ObjectData *>(objectsSSBO_.get_mapped_ptr());
@@ -107,11 +115,10 @@ auto Renderer::render(DrawList &draw_list) -> void
         if (count == 0)
             return;
 
-
         glMultiDrawElementsIndirect(
             GL_TRIANGLES,
             GL_UNSIGNED_INT,
-            (void*)(command_batch_start * sizeof(DrawElementsIndirectCommand)),
+            (void *)(command_batch_start * sizeof(DrawElementsIndirectCommand)),
             count,
             0
         );
@@ -295,10 +302,6 @@ void Renderer::opengl_debug_message_callback(uint32_t source, uint32_t type, uin
 
 auto Renderer::check_ogl_extensions() -> void
 {
-    RENDERING_LOGGER.debug("GLAD_GL_ARB_bindless_texture = {}", GLAD_GL_ARB_bindless_texture);
-    if (not GLAD_GL_ARB_bindless_texture)
-        RENDERING_LOGGER.critical("GPU driver is missing the GL_ARB_bindless_texture OpenGL extension");
 }
-
 
 } // namespace NoctisEngine::Rendering

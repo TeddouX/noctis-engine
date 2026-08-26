@@ -14,9 +14,7 @@ Camera2D::Camera2D(float frustumWidth, float frustumHeight, float near, float fa
     : proj_mat_{glm::ortho(0.f, frustumWidth, frustumHeight, 0.f, near, far)}
     , uniform_buffer_{sizeof(CameraData), "camera2D_ubo"}
     , pos_{0}
-{
-    
-}
+{}
 
 auto Camera2D::upload_data() -> void 
 {

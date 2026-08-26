@@ -4,13 +4,13 @@
 namespace NoctisEngine::Rendering
 {
     
-inline auto resize_buffer(GPUBuffer &buf, std::int64_t cpu_buf_size) -> bool 
+inline auto resize_buffer(GPUBuffer &buf, std::int64_t buf_size) -> bool 
 {
-    if (buf.size_bytes() >= cpu_buf_size) 
+    if (buf.size_bytes() >= buf_size) 
         return false;
 
     std::int64_t new_buf_size = std::max(buf.size_bytes() * 2, 1zu);
-    while (new_buf_size < cpu_buf_size)
+    while (new_buf_size < buf_size)
         new_buf_size *= 2;
     
     RENDERING_LOGGER.debug("Resizing buffer '{}', {} => {}", buf.get_name(), buf.size_bytes(), new_buf_size);
