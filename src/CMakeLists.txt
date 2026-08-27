@@ -25,7 +25,7 @@ endif()
 
 if (NCENG_DEBUG)
     message("Building noctis_engine as debug")
-    add_compile_definitions(noctis_engine PUBLIC NCENG_DEBUG)
+    target_compile_definitions(noctis_engine PUBLIC NCENG_DEBUG)
 endif()
 
 target_compile_definitions(noctis_engine PUBLIC GLM_ENABLE_EXPERIMENTAL)
