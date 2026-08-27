@@ -1,12 +1,13 @@
 #pragma once
 #include <cstdint>
 
+#include "../component/physics_body_2d.hpp"
 #include "../../math/color.hpp"
 
 
 namespace NoctisEngine::ECS
 {
-    
+
 /// @brief Describes the physical properties of a collision shape
 struct PhysicsMaterial2D
 {
@@ -24,6 +25,53 @@ struct PhysicsMaterial2D
 
     /// @brief The tangent speed.
     float tangent_speed;
+};
+
+/// @brief Describes the contact points between colliding shapes
+struct CollisionManifold2D
+{
+    /// @brief The unit normal vector in world space, 
+    /// points from this shape to the other body.
+    glm::vec2 normal;
+
+    /// @brief Describes a manifold point
+    struct Point
+    {
+        /// @brief Location of the contact point relative to shape A's origin in world space.
+        glm::vec2 anchor_a;
+
+        /// @brief Location of the contact point relative to shape B's origin in world space.
+        glm::vec2 anchor_b;
+
+        /// @brief The impulse along the manifold normal vector.
+        float normal_impulse;
+
+        /// @brief Relative normal velocity pre-solve.
+        /// Used for hit events. If the normal impulse is zero then there was no hit. Negative means shapes are approaching.
+        float normal_velocity;
+        
+        /// @brief Did this contact point exist the previous step?
+        bool persisted;
+
+        /// @brief Location of the contact point in world space. Subject to precision loss at large coordinates.
+        glm::vec2 point;
+
+        /// @brief The separation of the contact point, negative if penetrating.
+        float separation;
+
+        /// @brief The friction impulse.
+        float tangent_impulse;
+
+        /// @brief The total normal impulse applied across sub-stepping and restitution.
+        /// This is important to identify speculative contact points that had an interaction in the time step.
+        float tangent_normal_impulse;
+    };
+
+    /// @brief The manifold points, up to two are possible in 2D.
+    std::array<Point, 2> points;
+
+    /// @brief Angular impulse applied for rolling resistance. N*m*s = kg*m^2/s.
+    float rolling_impulse;
 };
 
 /// @brief Used to create a physics object
@@ -135,11 +183,48 @@ struct CollisionShape2D
     /// Must match the shape_type
     Shapes shape;
 
+    /// @brief Describes all the callbacks that relate to collision
+    struct Callbacks
+    {
+        /// @brief Called when a collision begins and if enable_collision_events is set to `true`
+        /// @param 1 entity A (the one bearing this collision shape)
+        /// @param 2 entity B (the one that collided)
+        /// @param 3 the collision manifold
+        std::function<void (Entity &, Entity &, CollisionManifold2D &)> on_collision_begin;
+
+        /// @brief Called when a collision ends and if enable_collision_events is set to `true`
+        /// @param 1 entity A (the one bearing this collision shape)
+        /// @param 2 entity B (the one that collided)
+        std::function<void (Entity &, Entity &)> on_collision_end;
+        
+        /// @brief Called when a hit collision is triggered.
+        /// The hit event threshold can be set in the PhysicsSystem2D.
+        /// @param 1 entity A (the one bearing this collision shape)
+        /// @param 2 entity B (the one that collided)
+        /// @param 3 Normal vector pointing from shape A to shape B. 
+        /// @param 4 Point where the shapes hit.
+        /// @param 5 The speed the shapes are approaching. Always positive. Typically in m/s. 
+        std::function<void (Entity &, Entity &, glm::vec2 &, glm::vec2, float)> on_hit;
+        
+        /// @brief Called when a collision begins and is_sensor is set to `true`
+        /// @param 1 entity A (the sensor)
+        /// @param 2 entity B (the visitor)
+        std::function<void (Entity &, Entity &)> on_sensor_begin_touch;
+
+        /// @brief Called when a collision ends and is_sensor is set to `true`
+        /// @param 1 entity A (the sensor)
+        /// @param 2 entity B (the visitor)
+        std::function<void (Entity &, Entity &)> on_sensor_end_touch;
+    };
+
+    /// @brief This collision shape's callbacks
+    Callbacks callbacks;
+
     /// @brief The density of this collision shape, in kg/m^2
     float density = 1.0f;
 
-    /// @brief Enables contact events for this collision shape
-    bool enable_contact_events = false;
+    /// @brief Enables collision events for this collision shape
+    bool enable_collision_events = false;
 
     /// @brief Enables hit events for this collision shape.
     /// The hit event threshold can be set in the PhysicsSystem2D

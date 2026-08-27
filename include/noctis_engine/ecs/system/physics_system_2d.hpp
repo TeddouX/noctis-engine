@@ -20,7 +20,6 @@ public:
         const ECS::Transform2D &transform = ECS::Transform2D{}
     ) -> Entity;
 
-
 private:
     std::shared_ptr<World> world_;
 };
