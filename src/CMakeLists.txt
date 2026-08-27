@@ -5,7 +5,7 @@ set(NCENG_SOURCES
     "core/exit.cpp"
     "core/window.cpp"
     "ecs/component/transform_2d.cpp"
-    "ecs/component/transform_3d.cpp"
+    "ecs/system/physics_system_2d.cpp"
     "rendering/mesh/mesh_manager.cpp"
     "rendering/camera_2d.cpp"
     "rendering/draw_list.cpp"
@@ -39,6 +39,7 @@ target_link_libraries(noctis_engine
     glfw
     Glad
     stb
+    box2d::box2d
     stdc++exp
 )
 

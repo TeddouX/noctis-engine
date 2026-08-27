@@ -40,6 +40,14 @@ public:
     constexpr auto blue_f() const -> float { return (float)m_b / 255; }
     constexpr auto alpha_f() const -> float { return (float)m_a / 255; }
 
+    constexpr auto to_RGBA_int() const -> std::uint32_t
+    {
+        return (static_cast<std::uint32_t>(m_r) << 24)
+             | (static_cast<std::uint32_t>(m_g) << 16)
+             | (static_cast<std::uint32_t>(m_b) << 8)
+             | (static_cast<std::uint32_t>(m_a));
+    }
+
     constexpr auto to_floats() const -> glm::vec4 
     { 
         return glm::vec4{red_f(), green_f(), blue_f(), alpha_f()};
