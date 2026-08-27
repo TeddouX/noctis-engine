@@ -21,8 +21,9 @@ enum class DrawCommandType
     
 struct BindTextureCmd
 {
-    std::uint32_t tex;
-    std::uint32_t bind_point;
+    std::uint32_t       tex;
+    std::uint32_t       bind_point;
+    std::string_view    tex_name;
 };
 
 struct BindProgramCmd

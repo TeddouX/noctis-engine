@@ -48,7 +48,7 @@ Texture::Texture(TextureInfo tex_info)
 
 auto Texture::use(DrawList &draw_list, std::uint32_t bind_point) const -> void 
 {
-    draw_list.bind_texture(texID_, bind_point);
+    draw_list.bind_texture(texID_, bind_point, name_);
 }
 
 auto Texture::set_min_function(MinifyingFunction param) const -> void 
@@ -86,6 +86,11 @@ auto Texture::height() const -> int
 auto Texture::gl_handle() const -> std::uint32_t 
 {
     return texID_; 
+}
+
+auto Texture::name() const -> const std::string &
+{
+    return name_;
 }
 
 } // namespace NoctisEngine::Rendering

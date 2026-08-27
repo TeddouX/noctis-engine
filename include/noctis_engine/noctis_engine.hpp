@@ -1,6 +1,13 @@
 #pragma once
 #include <string_view>
 
+#if __linux__
+#   define NCENG_LINUX 1
+#else
+#   define NCENG_LINUX 0
+#endif
+
+
 namespace NoctisEngine
 {
 

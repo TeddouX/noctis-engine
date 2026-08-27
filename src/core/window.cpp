@@ -13,6 +13,15 @@ namespace NoctisEngine::Core
 Window::Window(std::uint32_t width, std::uint32_t height, std::string_view title)
     : glfwWindow_{nullptr}
 {
+#ifdef NCENG_LINUX
+    glfwInitHint(GLFW_PLATFORM, GLFW_PLATFORM_X11);
+#endif
+
+    glfwSetErrorCallback([](int error, const char* description) 
+    {
+        CORE_LOGGER.error("GLFW error {}: {}", error, description);
+    });
+
     if (!glfwInit())
     {
         CORE_LOGGER.error("Failed to initialize GLFW");
@@ -23,10 +32,6 @@ Window::Window(std::uint32_t width, std::uint32_t height, std::string_view title
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
-
-    glfwSetErrorCallback([](int error, const char* description) {
-        CORE_LOGGER.error("GLFW error {}: {}", error, description);
-    });
 
     glfwWindow_ = glfwCreateWindow(
         static_cast<int>(width), 

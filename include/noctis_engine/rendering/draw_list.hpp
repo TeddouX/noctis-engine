@@ -18,7 +18,7 @@ public:
     DrawList() = default;
     ~DrawList() = default;
 
-    auto bind_texture(std::uint32_t tex, std::uint32_t bind_point) -> void;
+    auto bind_texture(std::uint32_t tex, std::uint32_t bind_point, std::string_view tex_name) -> void;
 
     auto bind_buffer(const GPUBuffer &buffer, BufferTarget target) -> void;
     auto bind_buffer_base(const GPUBuffer &buffer, BufferTarget target, std::uint32_t bind_point) -> void;
@@ -28,7 +28,7 @@ public:
 
     auto bind_vao(std::uint32_t vao) -> void;
 
-    auto draw_mesh(MeshView mesh_view, const glm::mat4 &model_mat) -> void;
+    auto draw_mesh(MeshView mesh_view, const glm::mat4 &model_mat = glm::mat4{1}) -> void;
     auto draw_sprite_entity(ECS::Entity entity, const ECS::World &world) -> void;
 
     auto clear_screen(const Color &color, double depth = 1.0, bool clear_color = true, bool clear_depth = true) -> void;
