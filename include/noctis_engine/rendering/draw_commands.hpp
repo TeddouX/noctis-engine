@@ -2,7 +2,6 @@
 #include "uniform_info.hpp"
 #include "mesh/mesh_view.hpp"
 #include "../math/color.hpp"
-#include "../ecs/component/transform.hpp"
 
 
 namespace NoctisEngine::Rendering

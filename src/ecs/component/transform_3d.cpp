@@ -1,16 +1,17 @@
-#include <ecs/component/transform.hpp>
+#include <ecs/component/transform_3d.hpp>
 
 
 namespace NoctisEngine::ECS
 {
-Transform::Transform()
+
+Transform3D::Transform3D()
 {
     set_position(glm::vec3{0});
     set_scale(glm::vec3{1});
     set_rotation(glm::vec3{0});
 }
     
-Transform::Transform(const glm::vec3 &position, const glm::vec3 &scale, const glm::vec3 &eulerAngles) 
+Transform3D::Transform3D(const glm::vec3 &position, const glm::vec3 &scale, const glm::vec3 &eulerAngles) 
     : cached_model_matrix_{1}
     , dirty_{false}
 {
@@ -19,7 +20,7 @@ Transform::Transform(const glm::vec3 &position, const glm::vec3 &scale, const gl
     set_euler_angles(eulerAngles);
 }
 
-Transform::Transform(const glm::vec3 &position, const glm::vec3 &scale, const glm::quat &rotation) 
+Transform3D::Transform3D(const glm::vec3 &position, const glm::vec3 &scale, const glm::quat &rotation) 
     : cached_model_matrix_{1}
     , dirty_{false}
 {
@@ -28,102 +29,64 @@ Transform::Transform(const glm::vec3 &position, const glm::vec3 &scale, const gl
     set_rotation(rotation);
 }
 
-Transform::Transform(const glm::vec2 &position, const glm::vec2 &scale, const glm::vec3 &eulerAngles) 
-    : cached_model_matrix_{1}
-    , dirty_{false}
-{
-    set_position(position);
-    set_scale(scale);
-    set_euler_angles(eulerAngles);
-}
-
-Transform::Transform(const glm::vec2 &position, const glm::vec2 &scale, const glm::quat &rotation) 
-    : cached_model_matrix_{1}
-    , dirty_{false}
-{
-    set_position(position);
-    set_scale(scale);
-    set_rotation(rotation);
-}
-
-auto Transform::set_position(const glm::vec3 &pos) -> void 
+auto Transform3D::set_position(const glm::vec3 &pos) -> void 
 {
     if (pos_ != pos)
         dirty_ = true;
     pos_ = pos;
 }
 
-auto Transform::set_scale(const glm::vec3 &scale) -> void 
+auto Transform3D::set_scale(const glm::vec3 &scale) -> void 
 {
     if (scale_ != scale)
         dirty_ = true;
     scale_ = scale;
 }
 
-auto Transform::set_position(const glm::vec2 &pos) -> void 
-{
-    set_position(glm::vec3(pos, 0));
-}
-
-auto Transform::set_scale(const glm::vec2 &scale) -> void 
-{
-    set_scale(glm::vec3(scale, 1));
-}
-
-auto Transform::set_rotation(const glm::quat &rot) -> void 
+auto Transform3D::set_rotation(const glm::quat &rot) -> void 
 {
     if (rotation_ != rot)
         dirty_ = true;
     rotation_ = rot;
 }
 
-auto Transform::set_euler_angles(const glm::vec3 &rot) -> void 
+auto Transform3D::set_euler_angles(const glm::vec3 &rot) -> void 
 {
     set_rotation(glm::quat{rot});
 }
 
-auto Transform::translate(const glm::vec3 &translation) -> void 
+auto Transform3D::translate(const glm::vec3 &translation) -> void 
 {
     set_position(pos_ + translation);
 }
 
-auto Transform::translate(const glm::vec2 &translation) -> void 
-{
-    set_position(pos_ + glm::vec3(translation, 0));
-}
-
-auto Transform::position() const -> const glm::vec3 & 
+auto Transform3D::position() const -> const glm::vec3 & 
 {
     return pos_;
 }
 
-auto Transform::position_2D() const -> glm::vec2 
-{
-    return glm::vec2(pos_.x, pos_.y);
-}
-
-auto Transform::scale() const -> const glm::vec3 & 
+auto Transform3D::scale() const -> const glm::vec3 & 
 {
     return scale_;
 }
 
-auto Transform::rotation() const -> const glm::quat & 
+auto Transform3D::rotation() const -> const glm::quat & 
 {
     return rotation_;
 }
 
-auto Transform::euler_angles() const -> glm::vec3 
+auto Transform3D::euler_angles() const -> glm::vec3 
 {
     return glm::eulerAngles(rotation_);
 }
 
-auto Transform::distance_to(const Transform &other) -> float 
+auto Transform3D::distance_to(const Transform3D &other) -> float 
 {
     return glm::distance(pos_, other.position());
 }
 
 
-auto Transform::model_matrix() const -> const glm::mat4 & 
+auto Transform3D::model_matrix() const -> const glm::mat4 & 
 {
     if (dirty_) 
     {

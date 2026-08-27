@@ -1,6 +1,7 @@
 #include <noctis_engine/rendering/draw_list.hpp>
 
 #include <noctis_engine/ecs/component/sprite.hpp>
+#include <noctis_engine/ecs/component/transform_2d.hpp>
 #include <noctis_engine/rendering/mesh/default_meshes.hpp>
 
 
@@ -62,7 +63,7 @@ auto DrawList::draw_sprite_entity(ECS::Entity entity, const ECS::World &world) -
     auto *sprite = world.get_component<ECS::Sprite>(entity);
     if (not sprite) return;
 
-    auto *transform = world.get_component<ECS::Transform>(entity);
+    auto *transform = world.get_component<ECS::Transform2D>(entity);
     if (not transform) return;
 
     const Texture &tex = sprite->texture;

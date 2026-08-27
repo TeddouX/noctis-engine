@@ -4,7 +4,6 @@
 
 #include "draw_commands.hpp"
 #include "gpu_buffer.hpp"
-#include "../ecs/component/transform.hpp"
 #include "../ecs/entity.hpp"
 #include "../ecs/ecs_world.hpp"
 #include "../math/color.hpp"
