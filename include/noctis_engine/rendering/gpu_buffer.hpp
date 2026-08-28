@@ -50,8 +50,6 @@ enum class GPUBufMapAccess : std::uint32_t
     READ_WRITE = 0x88BA,
 };
 
-auto to_string(BufferTarget type) -> std::string;
-
 using CPUBufferReadView = const std::span<const std::byte>;
 using CPUBufferWriteView = std::span<std::byte>;
 

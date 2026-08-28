@@ -57,11 +57,11 @@ public:
 
     /// @brief Gets the physics body type
     /// @return The physics body type
-    auto rb_type() -> Type;
+    auto phys_body_type() -> Type;
 
     /// @brief Sets the physics body type
     /// @param type The physics body type
-    auto set_rb_type(Type type) -> void;
+    auto set_phys_body_type(Type type) -> void;
 
     /// @brief Gets the linear velocity of the physics body
     /// @return The linear velocity
@@ -191,6 +191,9 @@ public:
     /// @brief Gets the motion locks on this physics body
     /// @return The motion locks
     auto motion_locks() -> MotionLocks;
+
+    /// @return This physics body's mass in kg 
+    auto mass() -> float;
 };
 
 } // namespace NoctisEngine::ECS

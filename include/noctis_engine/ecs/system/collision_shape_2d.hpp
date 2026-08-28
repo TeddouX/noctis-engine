@@ -1,6 +1,8 @@
 #pragma once
 #include <cstdint>
+#include <variant>
 
+#include "../entity.hpp"
 #include "../component/physics_body_2d.hpp"
 #include "../../math/color.hpp"
 
@@ -178,7 +180,7 @@ struct CollisionShape2D
         Capsule,
         Segment,
         Polygon,
-        Chain,
+        Chain
     >;
 
     /// @brief This collision shape's shape type
@@ -226,7 +228,7 @@ struct CollisionShape2D
     Callbacks callbacks;
 
     /// @brief The density of this collision shape, in kg/m^2
-    float density = 1.0f;
+    float density{1.0f};
 
     /// @brief Enables collision events for this collision shape
     bool enable_collision_events = false;

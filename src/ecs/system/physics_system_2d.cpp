@@ -40,6 +40,7 @@ auto entity_from_shape(b2ShapeId shape_id) -> Entity
 
 PhysicsSystem2D::PhysicsSystem2D(std::shared_ptr<World> world)
     : world_{world}
+    , accumulator_{0.0f}
 {
     b2WorldDef world_def    = b2DefaultWorldDef();
     b2WorldId world_id      = b2CreateWorld(&world_def);
@@ -69,7 +70,8 @@ auto PhysicsSystem2D::set_hit_event_threshold(float threshold) -> void
 }
 
 auto PhysicsSystem2D::create_physics_entity(
-    const std::vector<CollisionShape2D> &collision_shapes, 
+    const std::vector<CollisionShape2D> &collision_shapes,
+    PhysicsBody2D::Type physics_body_type,
     const ECS::Transform2D &transform,
     std::string_view name
 ) -> Entity
@@ -80,8 +82,9 @@ auto PhysicsSystem2D::create_physics_entity(
     b2BodyDef body_def = b2DefaultBodyDef();
     body_def.position = b2Vec2{transform.position().x, transform.position().y};
     body_def.rotation = b2MakeRot(transform.rotation());
+    body_def.type = static_cast<b2BodyType>(physics_body_type);
     body_def.name = name.data();
-    body_def.userData = (void *)entity.id();
+    body_def.userData = (void *)(std::uintptr_t)entity.id();
 
     b2BodyId body_id = b2CreateBody(b2LoadWorldId(physics_world_), &body_def);
     physics_body.body_id = b2StoreBodyId(body_id);
@@ -128,6 +131,7 @@ auto PhysicsSystem2D::create_physics_entity(
                 {
                     PHYSICS_LOGGER.error("Failed to create box shape for rigidbody \"{}\"", name);
                     world_->destroy_entity(entity);
+                    b2DestroyBody(body_id);
 
                     return Entity{};
                 }
@@ -152,6 +156,7 @@ auto PhysicsSystem2D::create_physics_entity(
                 {
                     PHYSICS_LOGGER.error("Failed to create capsule shape for rigidbody \"{}\"", name);
                     world_->destroy_entity(entity);
+                    b2DestroyBody(body_id);
 
                     return Entity{};
                 }
@@ -181,9 +186,9 @@ auto PhysicsSystem2D::create_physics_entity(
                 b2ChainDef chain_def{
                     .userData = &collision_callbacks_.back(),
                     .points = b2_points.data(),
-                    .count = b2_points.size(),
+                    .count = static_cast<int>(b2_points.size()),
                     .materials = surface_materials.data(),
-                    .materialCount = surface_materials.size(),
+                    .materialCount = static_cast<int>(surface_materials.size()),
                     .filter = shape_def.filter,
                     .isLoop = chain_shape.is_loop,
                     .enableSensorEvents = chain_shape.enable_sensor_events,
@@ -194,6 +199,7 @@ auto PhysicsSystem2D::create_physics_entity(
                 {
                     PHYSICS_LOGGER.error("Failed to create chain shape for rigidbody \"{}\"", name);
                     world_->destroy_entity(entity);
+                    b2DestroyBody(body_id);
 
                     return Entity{};
                 }
@@ -218,6 +224,7 @@ auto PhysicsSystem2D::create_physics_entity(
                 {
                     PHYSICS_LOGGER.error("Failed to create circle shape for rigidbody \"{}\"", name);
                     world_->destroy_entity(entity);
+                    b2DestroyBody(body_id);
 
                     return Entity{};
                 }
@@ -240,6 +247,7 @@ auto PhysicsSystem2D::create_physics_entity(
                 {
                     PHYSICS_LOGGER.error("Failed to create polygon shape for rigidbody \"{}\"", name);
                     world_->destroy_entity(entity);
+                    b2DestroyBody(body_id);
 
                     return Entity{};
                 }
@@ -266,6 +274,7 @@ auto PhysicsSystem2D::create_physics_entity(
                 {
                     PHYSICS_LOGGER.error("Failed to create segment shape for rigidbody \"{}\"", name);
                     world_->destroy_entity(entity);
+                    b2DestroyBody(body_id);
 
                     return Entity{};
                 }
@@ -285,6 +294,10 @@ auto PhysicsSystem2D::create_physics_entity(
 
     world_->add_component(entity, physics_body);
     world_->add_component(entity, transform);
+
+    physics_entities_.push_back(entity);
+
+    return entity;
 }
 
 auto PhysicsSystem2D::sync_physics_engine_to_ecs() -> void
@@ -299,6 +312,9 @@ auto PhysicsSystem2D::sync_physics_engine_to_ecs() -> void
         if (not e_pb)
             continue;
 
+        if (e_pb->phys_body_type() != PhysicsBody2D::Type::KINEMATIC)
+            continue;
+
         b2Body_SetTransform(
             b2LoadBodyId(e_pb->body_id), 
             b2Vec2{e_transform->position().x, e_transform->position().y}, 
@@ -309,11 +325,11 @@ auto PhysicsSystem2D::sync_physics_engine_to_ecs() -> void
 
 auto PhysicsSystem2D::update_physics(float dt, float time_step, std::uint16_t substep_count) -> void
 {
-    float acc = dt;
-    while (acc >= time_step)
+    accumulator_ += dt;
+    while (accumulator_ >= time_step)
     {
         b2World_Step(b2LoadWorldId(physics_world_), time_step, substep_count);
-        acc -= time_step;
+        accumulator_ -= time_step;
     }
 }
 
@@ -335,6 +351,11 @@ auto PhysicsSystem2D::sync_ecs_to_physics_engine() -> void
 
         e_transform->set_position(glm::vec2{body_transform.p.x, body_transform.p.y});
         e_transform->set_rotation(b2Rot_GetAngle(body_transform.q));
+
+        PHYSICS_LOGGER.debug("pos: {} {}, rot: {}", 
+            body_transform.p.x, body_transform.p.y, 
+            b2Rot_GetAngle(body_transform.q)
+        );
     }
 
     process_contact_events();

@@ -6,13 +6,13 @@
 namespace NoctisEngine::ECS
 {
     
-auto PhysicsBody2D::rb_type() -> PhysicsBody2D::Type
+auto PhysicsBody2D::phys_body_type() -> PhysicsBody2D::Type
 {
     b2BodyType type = b2Body_GetType(b2LoadBodyId(body_id)); 
     return static_cast<PhysicsBody2D::Type>(type);
 }
 
-auto PhysicsBody2D::set_rb_type(PhysicsBody2D::Type type) -> void
+auto PhysicsBody2D::set_phys_body_type(PhysicsBody2D::Type type) -> void
 {
     b2BodyType b2_type = static_cast<b2BodyType>(type); 
     b2Body_SetType(b2LoadBodyId(body_id), b2_type);
@@ -42,7 +42,7 @@ auto PhysicsBody2D::set_angular_velocity(float vel) -> void
     b2Body_SetAngularVelocity(b2LoadBodyId(body_id), vel);
 }
 
-auto PhysicsBody2D::apply_force(const glm::vec2 &force, const glm::vec2 &point, bool wake = true) -> void
+auto PhysicsBody2D::apply_force(const glm::vec2 &force, const glm::vec2 &point, bool wake) -> void
 {
     b2Body_ApplyForce(
         b2LoadBodyId(body_id),
@@ -52,7 +52,7 @@ auto PhysicsBody2D::apply_force(const glm::vec2 &force, const glm::vec2 &point, 
     );
 }
 
-auto PhysicsBody2D::apply_force_to_center(const glm::vec2 &force, bool wake = true) -> void
+auto PhysicsBody2D::apply_force_to_center(const glm::vec2 &force, bool wake) -> void
 {
     b2Body_ApplyForceToCenter(
         b2LoadBodyId(body_id),
@@ -61,7 +61,7 @@ auto PhysicsBody2D::apply_force_to_center(const glm::vec2 &force, bool wake = tr
     );
 }
 
-auto PhysicsBody2D::apply_torque(float torque, bool wake = true) -> void
+auto PhysicsBody2D::apply_torque(float torque, bool wake) -> void
 {
     b2Body_ApplyTorque(
         b2LoadBodyId(body_id),
@@ -70,7 +70,7 @@ auto PhysicsBody2D::apply_torque(float torque, bool wake = true) -> void
     );
 }
 
-auto PhysicsBody2D::apply_linear_impulse(const glm::vec2 &impulse, const glm::vec2 &point, bool wake = true) -> void
+auto PhysicsBody2D::apply_linear_impulse(const glm::vec2 &impulse, const glm::vec2 &point, bool wake) -> void
 {
     b2Body_ApplyLinearImpulse(
         b2LoadBodyId(body_id),
@@ -80,7 +80,7 @@ auto PhysicsBody2D::apply_linear_impulse(const glm::vec2 &impulse, const glm::ve
     );
 }
 
-auto PhysicsBody2D::apply_linear_impulse_to_center(const glm::vec2 &impulse, bool wake = true) -> void
+auto PhysicsBody2D::apply_linear_impulse_to_center(const glm::vec2 &impulse, bool wake) -> void
 {
     b2Body_ApplyLinearImpulseToCenter(
         b2LoadBodyId(body_id),
@@ -89,7 +89,7 @@ auto PhysicsBody2D::apply_linear_impulse_to_center(const glm::vec2 &impulse, boo
     );
 }
 
-auto PhysicsBody2D::apply_angular_impulse(float impulse, bool wake = true) -> void
+auto PhysicsBody2D::apply_angular_impulse(float impulse, bool wake) -> void
 {
     b2Body_ApplyAngularImpulse(
         b2LoadBodyId(body_id),
@@ -195,6 +195,11 @@ auto PhysicsBody2D::motion_locks() -> PhysicsBody2D::MotionLocks
 {
     b2MotionLocks locks = b2Body_GetMotionLocks(b2LoadBodyId(body_id));
     return MotionLocks{ locks.linearX, locks.linearY, locks.angularZ };
+}
+
+auto PhysicsBody2D::mass() -> float
+{
+    return b2Body_GetMass(b2LoadBodyId(body_id));
 }
     
 } // namespace NoctisEngine::ECS

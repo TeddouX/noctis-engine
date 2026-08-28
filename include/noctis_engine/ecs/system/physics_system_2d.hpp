@@ -1,10 +1,12 @@
 #pragma once
 #include <memory>
 #include <vector>
+#include <deque>
 
 #include "collision_shape_2d.hpp"
 #include "../ecs_world.hpp"
 #include "../component/transform_2d.hpp"
+#include "../component/physics_body_2d.hpp"
 #include "../../rendering/draw_list.hpp"
 
 
@@ -17,7 +19,7 @@ class PhysicsSystem2D
 public:
     /// @brief Default amount of time to simulate for physics update
     static constexpr float DEFAULT_TIMESTEP = 1.0f / 60.0f;
-    static constexpr glm::vec2 DEFAULT_GRAVITY{0, -9.81};
+    static constexpr glm::vec2 DEFAULT_GRAVITY{0, 9.81};
 
     /// @param world Your game's ECS world, used to create physics entities
     PhysicsSystem2D(std::shared_ptr<World> world);
@@ -32,19 +34,21 @@ public:
     auto set_hit_event_threshold(float threshold) -> void;
 
     /// @brief Creates a physics entity
-    /// @param collision_shapes The physics entity's collision shapes 
+    /// @param collision_shapes The physics entity's collision shapes
+    /// @param physics_body_type The physics body's type 
     /// @param transform The physics entity's default transform 
     /// @param name The physics entity's name, used for debugging 
     /// @return The created physics entity.
     /// The created entity is invalid if something went wrong during creation
     auto create_physics_entity(
-        const std::vector<CollisionShape2D> &collision_shapes, 
+        const std::vector<CollisionShape2D> &collision_shapes,
+        PhysicsBody2D::Type physics_body_type = PhysicsBody2D::Type::STATIC,
         const ECS::Transform2D &transform = ECS::Transform2D{},
         std::string_view name = "no_name"
     ) -> Entity;
 
     /// @brief Updates the physics engine's transforms
-    /// @important Call this before any calls to physics_step()
+    /// This should be called before calling to update_physics()
     auto sync_physics_engine_to_ecs() -> void;
     
     /// @brief Updates the physics engine
@@ -60,7 +64,7 @@ public:
     /// @brief Updates the transforms according to what 
     /// the physics engine calculated.
     /// Also processes contact and sensor events.
-    /// This should be called after update_physics().
+    /// This should be called after calling update_physics().
     auto sync_ecs_to_physics_engine() -> void;
 
     /// @brief Draws wireframes to the screen to debug colliders
@@ -71,7 +75,9 @@ private:
     std::shared_ptr<World>                      world_;
     std::vector<Entity>                         physics_entities_;
     std::uint32_t                               physics_world_;
-    std::vector<CollisionShape2D::Callbacks>    collision_callbacks_;
+    std::deque<CollisionShape2D::Callbacks>     collision_callbacks_;
+    float                                       accumulator_;
+
   
     /// @brief This is called in sync_ecs_to_physics_engine().
     /// Calls callbacks in colliding collision shapes

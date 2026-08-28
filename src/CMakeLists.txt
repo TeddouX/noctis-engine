@@ -4,6 +4,7 @@ set(NCENG_SOURCES
     "asset/loaders.cpp"
     "core/exit.cpp"
     "core/window.cpp"
+    "ecs/component/physics_body_2d.cpp"
     "ecs/component/transform_2d.cpp"
     "ecs/system/physics_system_2d.cpp"
     "rendering/mesh/mesh_manager.cpp"
