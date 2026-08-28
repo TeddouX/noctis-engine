@@ -420,12 +420,12 @@ auto PhysicsSystem2D::draw_debug(Rendering::DrawList &draw_list, const DebugDraw
             b2Vec2 world_next = b2TransformPoint(transform, vertices[next]);
 
             ctx->lines_vertices.push_back(Rendering::DebugVertex{ 
-                glm::vec3{ world_curr.x, world_curr.y, 0 }, 
+                glm::vec3{ world_curr.x, world_curr.y, 0 } * METERS_TO_PIXELS, 
                 color_floats
             });
 
             ctx->lines_vertices.push_back(Rendering::DebugVertex{ 
-                glm::vec3{ world_next.x, world_next.y, 0 }, 
+                glm::vec3{ world_next.x, world_next.y, 0 } * METERS_TO_PIXELS, 
                 color_floats
             });
         }
@@ -454,7 +454,7 @@ auto PhysicsSystem2D::draw_debug(Rendering::DrawList &draw_list, const DebugDraw
         for (int i = 0; i < vertexCount; i++)
         {
             b2Vec2 world = b2TransformPoint(transform, vertices[i]);
-            world_verts[i] = glm::vec3{ world.x, world.y, 0 };
+            world_verts[i] = glm::vec3{ world.x, world.y, 0 } * METERS_TO_PIXELS;
         }
 
         for (int i = 1; i + 1 < vertexCount; i++)
@@ -494,8 +494,8 @@ auto PhysicsSystem2D::draw_debug(Rendering::DrawList &draw_list, const DebugDraw
                 center.y + radius * glm::sin(angle_b), 0 
             };
 
-            ctx->lines_vertices.push_back(Rendering::DebugVertex{ point_a, color_floats });
-            ctx->lines_vertices.push_back(Rendering::DebugVertex{ point_b, color_floats });
+            ctx->lines_vertices.push_back(Rendering::DebugVertex{ point_a * METERS_TO_PIXELS, color_floats });
+            ctx->lines_vertices.push_back(Rendering::DebugVertex{ point_b * METERS_TO_PIXELS, color_floats });
         }
     };
 
@@ -529,10 +529,11 @@ auto PhysicsSystem2D::draw_debug(Rendering::DrawList &draw_list, const DebugDraw
 
             b2Vec2 world = b2TransformPoint(transform, local);
             
-            rim[i] = glm::vec3{ world.x, world.y, 0 };
+            rim[i] = glm::vec3{ world.x, world.y, 0 } * METERS_TO_PIXELS;
         }
 
         glm::vec3 center_world{ center_pos.x, center_pos.y, 0 };
+        center_world *= METERS_TO_PIXELS;
 
         for (int i = 0; i < SEGMENTS; i++)
         {
@@ -583,7 +584,7 @@ auto PhysicsSystem2D::draw_debug(Rendering::DrawList &draw_list, const DebugDraw
                 p2.x + radius * glm::cos(angle),
                 p2.y + radius * glm::sin(angle),
                 0
-            });
+            } * METERS_TO_PIXELS);
         }
 
         for (int i = 0; i <= CAP_SEGMENTS; i++)
@@ -595,12 +596,13 @@ auto PhysicsSystem2D::draw_debug(Rendering::DrawList &draw_list, const DebugDraw
                 p1.x + radius * glm::cos(angle),
                 p1.y + radius * glm::sin(angle),
                 0
-            });
+            } * METERS_TO_PIXELS);
         }
 
         glm::vec3 hub{ (p1.x + p2.x) * 0.5f, (p1.y + p2.y) * 0.5f, 0 };
-        int n = (int)outline.size();
+        hub *= METERS_TO_PIXELS;
 
+        int n = (int)outline.size();
         for (int i = 0; i < n; i++)
         {
             int next = (i + 1) % n;
@@ -622,8 +624,15 @@ auto PhysicsSystem2D::draw_debug(Rendering::DrawList &draw_list, const DebugDraw
         glm::vec4 color_floats4 = RGBA_to_floats(static_cast<std::uint32_t>(color));
         glm::vec3 color_floats{ color_floats4.r, color_floats4.g, color_floats4.b };
 
-        ctx->lines_vertices.push_back(Rendering::DebugVertex{ glm::vec3{ p1.x, p1.y, 0 }, color_floats });
-        ctx->lines_vertices.push_back(Rendering::DebugVertex{ glm::vec3{ p2.x, p2.y, 0 }, color_floats });
+        ctx->lines_vertices.push_back(Rendering::DebugVertex{ 
+            glm::vec3{ p1.x, p1.y, 0  } * METERS_TO_PIXELS, 
+            color_floats 
+        });
+
+        ctx->lines_vertices.push_back(Rendering::DebugVertex{ 
+            glm::vec3{ p2.x, p2.y, 0  } * METERS_TO_PIXELS, 
+            color_floats 
+        });
     };
 
     debug_draw.DrawBoundsFcn = [](
@@ -640,10 +649,10 @@ auto PhysicsSystem2D::draw_debug(Rendering::DrawList &draw_list, const DebugDraw
         constexpr int NUM_CORNERS = 4;
 
         glm::vec3 corners[NUM_CORNERS] = {
-            { bounds.lowerBound.x, bounds.lowerBound.y, 0 },
-            { bounds.upperBound.x, bounds.lowerBound.y, 0 },
-            { bounds.upperBound.x, bounds.upperBound.y, 0 },
-            { bounds.lowerBound.x, bounds.upperBound.y, 0 },
+            glm::vec3{ bounds.lowerBound.x, bounds.lowerBound.y, 0 } * METERS_TO_PIXELS,
+            glm::vec3{ bounds.upperBound.x, bounds.lowerBound.y, 0 } * METERS_TO_PIXELS,
+            glm::vec3{ bounds.upperBound.x, bounds.upperBound.y, 0 } * METERS_TO_PIXELS,
+            glm::vec3{ bounds.lowerBound.x, bounds.upperBound.y, 0 } * METERS_TO_PIXELS,
         };
 
         for (int i = 0; i < NUM_CORNERS; i++)
