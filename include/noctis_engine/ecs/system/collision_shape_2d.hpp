@@ -82,48 +82,49 @@ struct CollisionShape2D
     /// @brief Describes a box collision collision shape
     struct Box
     {
-        /// @brief The size of the box
+        /// @brief The size of the box, in pixels
         glm::vec2 half_extents;
 
-        /// @brief The local center of the box
+        /// @brief The local center of the box, in pixels
         glm::vec2 center{0};
 
         /// @brief The local rotation of the box
         float rotation_deg{0};
         
-        /// @brief The radius of the rounded corners
+        /// @brief The radius of the rounded corners, in pixels
         float corner_radius{0};
     };
 
     /// @brief Describes a circle collision shape
     struct Circle
     {
-        /// @brief The radius of the circle
+        /// @brief The radius of the circle, in pixels
         float radius;
 
-        /// @brief The local center of the circle
+        /// @brief The local center of the circle, in pixels
         glm::vec2 center{0};
     };
 
     /// @brief Describes a capsule collision shape
     struct Capsule
     {
-        /// @brief The local center of the first semicircle
+        /// @brief The local center of the first semicircle, in pixels
         glm::vec2 center_1;
         
-        /// @brief The local center of the second semicircle
+        /// @brief The local center of the second semicircle, in pixels
         glm::vec2 center_2;
 
-        /// @brief The radius of the semicircles
+        /// @brief The radius of the semicircles, in pixels
         float radius;
     };
 
     /// @brief Describes a line segment with two sided collision
     struct Segment
     {
-        /// @brief The first point
+        /// @brief The first point, in pixels
         glm::vec2 point_1;
-        /// @brief The second point
+
+        /// @brief The second point, in pixels
         glm::vec2 point_2;
     };
 
@@ -134,6 +135,7 @@ struct CollisionShape2D
         /// - Points must be decently far away from each other.
         /// - Points mustn't be on the same line.
         /// - There should be more than 2 points.
+        /// - Points are should use pixels as units
         std::vector<glm::vec2> points;
 
         float corner_radius{0.0f};
@@ -150,9 +152,10 @@ struct CollisionShape2D
     /// last three points to get smooth collision
     struct Chain
     {
-        /// @brief Points should be a CCW (counter-clockwise) order
+        /// - Points should be a CCW (counter-clockwise) order
+        /// - Points are should use pixels as units
         std::vector<glm::vec2> points;
-        /// @brief 
+        
         /// @brief `true` if the chain's points form a loop
         bool is_loop;
         

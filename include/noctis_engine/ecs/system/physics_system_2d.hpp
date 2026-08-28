@@ -21,12 +21,14 @@ class PhysicsSystem2D
 public:
     struct DebugDrawSettings
     {
-        /// @brief World space coordinates that define the lower bound of the area that should be drawn. 
-        /// Every thing outside this area will be culled (not drawn)
+        /// @brief World space coordinates (in pixels) that define the lower bound of 
+        /// the area that should be drawn. Every thing outside this area will be culled (not drawn)
+        /// It is recommended to use a margin of +100 pixels.
         glm::vec2 lower_draw_bound;
 
-        /// @brief World space coordinates that define the upper bound of the area that should be drawn. 
-        /// Every thing outside this area will be culled (not drawn)
+        /// @brief World space coordinates (in pixels) that define the upper bound of 
+        /// the area that should be drawn. Every thing outside this area will be culled (not drawn)
+        /// It is recommended to use a margin of +100 pixels.
         glm::vec2 upper_draw_bound;
 
         /// @brief Scale to use when drawing forces
@@ -95,15 +97,15 @@ public:
     /// @brief Creates a physics entity
     /// @param collision_shapes The physics entity's collision shapes
     /// @param physics_body_type The physics body's type 
-    /// @param transform The physics entity's default transform 
+    /// @param transform The physics entity's default transform, in pixels
     /// @param name The physics entity's name, used for debugging 
     /// @return The created physics entity.
     /// The created entity is invalid if something went wrong during creation
     auto create_physics_entity(
-        const std::vector<CollisionShape2D> &collision_shapes,
-        PhysicsBody2D::Type physics_body_type = PhysicsBody2D::Type::STATIC,
-        const ECS::Transform2D &transform = ECS::Transform2D{},
-        std::string_view name = "no_name"
+        const std::vector<CollisionShape2D>    &collision_shapes,
+        PhysicsBody2D::Type                     physics_body_type = PhysicsBody2D::Type::STATIC,
+        const ECS::Transform2D                 &transform = ECS::Transform2D{},
+        std::string_view                        name = "no_name"
     ) -> Entity;
 
     /// @brief Updates the physics engine's transforms

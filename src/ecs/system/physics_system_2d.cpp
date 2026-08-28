@@ -69,17 +69,21 @@ auto PhysicsSystem2D::set_hit_event_threshold(float threshold) -> void
 }
 
 auto PhysicsSystem2D::create_physics_entity(
-    const std::vector<CollisionShape2D> &collision_shapes,
-    PhysicsBody2D::Type physics_body_type,
-    const ECS::Transform2D &transform,
-    std::string_view name
+    const std::vector<CollisionShape2D>    &collision_shapes,
+    PhysicsBody2D::Type                     physics_body_type,
+    const ECS::Transform2D                 &transform,
+    std::string_view                        name
 ) -> Entity
 {
     Entity entity = world_->create_entity();
     PhysicsBody2D physics_body{};
 
     b2BodyDef body_def = b2DefaultBodyDef();
-    body_def.position = b2Vec2{transform.position().x, transform.position().y};
+    body_def.position = b2Vec2{
+        transform.position().x * PIXELS_TO_METERS, 
+        transform.position().y * PIXELS_TO_METERS
+    };
+
     body_def.rotation = b2MakeRot(transform.rotation());
     body_def.type = static_cast<b2BodyType>(physics_body_type);
     body_def.name = name.data();
@@ -119,10 +123,10 @@ auto PhysicsSystem2D::create_physics_entity(
                 const auto &box_shape = std::get<CollisionShape2D::Box>(collision_shape.shape);
 
                 b2Polygon box_polygon = b2MakeOffsetRoundedBox(
-                    box_shape.half_extents.x, box_shape.half_extents.y, 
-                    b2Vec2{box_shape.center.x, box_shape.center.y}, 
+                    box_shape.half_extents.x * PIXELS_TO_METERS, box_shape.half_extents.y * PIXELS_TO_METERS, 
+                    b2Vec2{box_shape.center.x * PIXELS_TO_METERS, box_shape.center.y * PIXELS_TO_METERS}, 
                     b2MakeRot(glm::radians(box_shape.rotation_deg)), 
-                    box_shape.corner_radius
+                    box_shape.corner_radius * PIXELS_TO_METERS
                 );
 
                 b2ShapeId shape_id = b2CreatePolygonShape(body_id, &shape_def, &box_polygon);
@@ -145,9 +149,15 @@ auto PhysicsSystem2D::create_physics_entity(
                 const auto &capsule_shape = std::get<CollisionShape2D::Capsule>(collision_shape.shape);
 
                 b2Capsule capsule{
-                    .center1 = b2Vec2{capsule_shape.center_1.x, capsule_shape.center_1.y},
-                    .center2 = b2Vec2{capsule_shape.center_2.x, capsule_shape.center_2.y},
-                    .radius = capsule_shape.radius,
+                    .center1 = b2Vec2{
+                        capsule_shape.center_1.x * PIXELS_TO_METERS, 
+                        capsule_shape.center_1.y * PIXELS_TO_METERS
+                    },
+                    .center2 = b2Vec2{
+                        capsule_shape.center_2.x * PIXELS_TO_METERS, 
+                        capsule_shape.center_2.y * PIXELS_TO_METERS
+                    },
+                    .radius = capsule_shape.radius * PIXELS_TO_METERS,
                 };
 
                 b2ShapeId  shape_id = b2CreateCapsuleShape(body_id, &shape_def, &capsule);
@@ -214,8 +224,11 @@ auto PhysicsSystem2D::create_physics_entity(
                 const auto &circle_shape = std::get<CollisionShape2D::Circle>(collision_shape.shape);
                 
                 b2Circle circle{
-                    .center = b2Vec2{circle_shape.center.x, circle_shape.center.y},
-                    .radius = circle_shape.radius,
+                    .center = b2Vec2{
+                        circle_shape.center.x * PIXELS_TO_METERS, 
+                        circle_shape.center.y * PIXELS_TO_METERS
+                    },
+                    .radius = circle_shape.radius * PIXELS_TO_METERS,
                 };
 
                 b2ShapeId shape_id = b2CreateCircleShape(body_id, &shape_def, &circle);
@@ -251,7 +264,7 @@ auto PhysicsSystem2D::create_physics_entity(
                     return Entity{};
                 }
                 
-                b2Polygon polygon = b2MakePolygon(&hull, polygon_shape.corner_radius);
+                b2Polygon polygon = b2MakePolygon(&hull, polygon_shape.corner_radius * PIXELS_TO_METERS);
 
                 b2ShapeId shape_id = b2CreatePolygonShape(body_id, &shape_def, &polygon);
                 shape_store = b2StoreShapeId(shape_id);
@@ -264,8 +277,14 @@ auto PhysicsSystem2D::create_physics_entity(
                 const auto &seg_shape = std::get<CollisionShape2D::Segment>(collision_shape.shape);
 
                 b2Segment seg{
-                    .point1 = b2Vec2{seg_shape.point_1.x, seg_shape.point_1.y},
-                    .point2 = b2Vec2{seg_shape.point_2.x, seg_shape.point_2.y},
+                    .point1 = b2Vec2{
+                        seg_shape.point_1.x * PIXELS_TO_METERS, 
+                        seg_shape.point_1.y * PIXELS_TO_METERS
+                    },
+                    .point2 = b2Vec2{
+                        seg_shape.point_2.x * PIXELS_TO_METERS, 
+                        seg_shape.point_2.y * PIXELS_TO_METERS
+                    },
                 };
 
                 b2ShapeId shape_id = b2CreateSegmentShape(body_id, &shape_def, &seg);
@@ -371,8 +390,14 @@ auto PhysicsSystem2D::draw_debug(Rendering::DrawList &draw_list, const DebugDraw
 
     b2DebugDraw debug_draw = b2DefaultDebugDraw();
 	debug_draw.drawingBounds = b2AABB{
-        .lowerBound = b2Vec2{settings.lower_draw_bound.x, settings.lower_draw_bound.y},
-	    .upperBound = b2Vec2{settings.upper_draw_bound.x, settings.upper_draw_bound.y},
+        .lowerBound = b2Vec2{
+            settings.lower_draw_bound.x * PIXELS_TO_METERS, 
+            settings.lower_draw_bound.y * PIXELS_TO_METERS
+        },
+	    .upperBound = b2Vec2{
+            settings.upper_draw_bound.x * PIXELS_TO_METERS, 
+            settings.upper_draw_bound.y * PIXELS_TO_METERS
+        },
     };
 
 	debug_draw.forceScale           = settings.force_scale;
@@ -780,7 +805,7 @@ auto glm_points_to_b2_points(const std::vector<glm::vec2> &glm_points) -> std::v
     b2_points.reserve(glm_points.size());
 
     for (const auto &glm_point : glm_points)
-        b2_points.push_back(b2Vec2{glm_point.x, glm_point.y});
+        b2_points.push_back(b2Vec2{glm_point.x * PIXELS_TO_METERS, glm_point.y * PIXELS_TO_METERS});
 
     return b2_points;
 }
