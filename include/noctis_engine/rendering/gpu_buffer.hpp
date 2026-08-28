@@ -61,6 +61,7 @@ public:
 
     auto copy_to(GPUBuffer &other) -> void;
     auto write(CPUBufferReadView data, std::int64_t offset) const -> void;
+    auto write(const void *data, std::int64_t size, std::int64_t offset) const -> void;
     auto size_bytes() const -> std::size_t;
     auto gl_handle() const -> std::uint32_t;
 

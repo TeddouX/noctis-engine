@@ -34,17 +34,22 @@ GPUBuffer::GPUBuffer(std::int64_t size, std::string_view name, BufferFlag flags)
 
 auto GPUBuffer::write(CPUBufferReadView data, GLintptr offset) const -> void 
 {
-    if (offset + data.size_bytes() > size_)
+    write(data.data(), data.size_bytes(), offset);
+}
+
+auto GPUBuffer::write(const void *data, std::int64_t size, std::int64_t offset) const -> void
+{
+    if (offset + size > size_)
     {
         RENDERING_LOGGER.error(
             "Tried to write {} bytes at offset {} into a buffer that is {} bytes long.", 
-            data.size_bytes(), offset, size_
+            size, offset, size_
         );
 
         return;
     }
 
-    glNamedBufferSubData(id_, offset, data.size_bytes(), data.data());
+    glNamedBufferSubData(id_, offset, size, data);
 }
 
 auto GPUBuffer::copy_to(GPUBuffer &other) -> void 
