@@ -5,30 +5,42 @@
 #include "collision_shape_2d.hpp"
 #include "../ecs_world.hpp"
 #include "../component/transform_2d.hpp"
+#include "../../rendering/draw_list.hpp"
 
 
 namespace NoctisEngine::ECS
 {
 
-/// @brief You should use this system if you want physics in your game
+/// @brief Use this system if you want physics in your game
 class PhysicsSystem2D
 {
 public:
     /// @brief Default amount of time to simulate for physics update
     static constexpr float DEFAULT_TIMESTEP = 1.0f / 60.0f;
+    static constexpr glm::vec2 DEFAULT_GRAVITY{0, -9.81};
 
     /// @param world Your game's ECS world, used to create physics entities
     PhysicsSystem2D(std::shared_ptr<World> world);
-    ~PhysicsSystem2D() = default;
+    ~PhysicsSystem2D();
+
+    /// @brief Set the gravity vector for the physics world
+    /// @param gravity The gravity vector
+    auto set_gravity(glm::vec2 gravity) -> void;
+
+    /// @brief This controls the collision speed needed to generate a hit even. Usually in m/s.
+    /// @param threshold The speed necessary
+    auto set_hit_event_threshold(float threshold) -> void;
 
     /// @brief Creates a physics entity
     /// @param collision_shapes The physics entity's collision shapes 
     /// @param transform The physics entity's default transform 
+    /// @param name The physics entity's name, used for debugging 
     /// @return The created physics entity.
     /// The created entity is invalid if something went wrong during creation
     auto create_physics_entity(
         const std::vector<CollisionShape2D> &collision_shapes, 
-        const ECS::Transform2D &transform = ECS::Transform2D{}
+        const ECS::Transform2D &transform = ECS::Transform2D{},
+        std::string_view name = "no_name"
     ) -> Entity;
 
     /// @brief Updates the physics engine's transforms
@@ -36,24 +48,37 @@ public:
     auto sync_physics_engine_to_ecs() -> void;
     
     /// @brief Updates the physics engine
+    /// @param dt The frame delta time
     /// @param time_step The amount of time to simulate, this should be a fixed number 
     /// for better stability. Default 1/60
     /// @param substep_count The number of sub-steps, increasing this number may 
     /// increase accuracy, but at the cost of performance.
     /// @important sync_physics_engine_to_ecs() should be called before 
     /// calling this function
-    auto update_physics(float time_step = DEFAULT_TIMESTEP, std::uint16_t substep_count = 4) -> void;
+    auto update_physics(float dt, float time_step = DEFAULT_TIMESTEP, std::uint16_t substep_count = 4) -> void;
 
     /// @brief Updates the transforms according to what 
     /// the physics engine calculated.
-    /// This should be called after 
+    /// Also processes contact and sensor events.
+    /// This should be called after update_physics().
     auto sync_ecs_to_physics_engine() -> void;
 
+    /// @brief Draws wireframes to the screen to debug colliders
+    /// @param draw_list The draw list that should be used to draw the wireframes
+    auto draw_debug(Rendering::DrawList &draw_list) -> void;
+
 private:
-    std::shared_ptr<World>  world_;
-    std::vector<Entity>     physics_entities_;
+    std::shared_ptr<World>                      world_;
+    std::vector<Entity>                         physics_entities_;
+    std::uint32_t                               physics_world_;
+    std::vector<CollisionShape2D::Callbacks>    collision_callbacks_;
   
+    /// @brief This is called in sync_ecs_to_physics_engine().
+    /// Calls callbacks in colliding collision shapes
     auto process_contact_events() -> void;
+
+    /// @brief This is called in sync_ecs_to_physics_engine().
+    /// Calls callbacks in colliding collision shapes
     auto process_sensor_events() -> void;
 };
 

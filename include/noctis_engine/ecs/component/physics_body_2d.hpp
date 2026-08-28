@@ -18,6 +18,21 @@ private:
     std::uint64_t               body_id;
 
 public:
+    /// @brief This is a runtime collision shape, it can be deleted, modified etc...
+    /// Do not confuse with NoctisEngine::ECS::CollisionShape2D
+    struct CollisionShape
+    {
+    private:
+        friend class PhysicsSystem2D;
+        bool is_chain = false;
+        std::uint64_t shape_id;
+    
+    public:
+        
+    };
+
+    std::vector<CollisionShape> collision_shapes;
+
     /// @brief Enum used to describe the type of a physics body
     enum class Type
     {

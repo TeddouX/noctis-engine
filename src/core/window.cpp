@@ -11,7 +11,7 @@ namespace NoctisEngine::Core
 {
  
 Window::Window(std::uint32_t width, std::uint32_t height, std::string_view title)
-    : glfwWindow_{nullptr}
+    : glfw_window_{nullptr}
 {
 #ifdef NCENG_LINUX
     glfwInitHint(GLFW_PLATFORM, GLFW_PLATFORM_X11);
@@ -33,20 +33,20 @@ Window::Window(std::uint32_t width, std::uint32_t height, std::string_view title
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
 
-    glfwWindow_ = glfwCreateWindow(
+    glfw_window_ = glfwCreateWindow(
         static_cast<int>(width), 
         static_cast<int>(height), 
         title.data(), 
         nullptr, nullptr
     );
 
-    if (!glfwWindow_)
+    if (!glfw_window_)
         return;
     
     CORE_LOGGER.debug("Created window \"{}\"", title);
 
-    glfwSetWindowUserPointer(glfwWindow_, this);
-    glfwMakeContextCurrent(glfwWindow_);
+    glfwSetWindowUserPointer(glfw_window_, this);
+    glfwMakeContextCurrent(glfw_window_);
 
     if (!gladLoadGL(glfwGetProcAddress))
     {
@@ -61,7 +61,7 @@ Window::Window(std::uint32_t width, std::uint32_t height, std::string_view title
 
 Window::~Window()
 {
-    glfwDestroyWindow(glfwWindow_);
+    glfwDestroyWindow(glfw_window_);
     CORE_LOGGER.debug("Destroyed window");
 
     glfwTerminate();
@@ -70,12 +70,12 @@ Window::~Window()
 
 auto Window::is_valid() -> bool
 {
-    return glfwWindow_ != nullptr;
+    return glfw_window_ != nullptr;
 }
 
 auto Window::should_close() -> bool
 {
-    return glfwWindowShouldClose(glfwWindow_);   
+    return glfwWindowShouldClose(glfw_window_);   
 }
 
 auto Window::poll_events() -> void
@@ -85,7 +85,26 @@ auto Window::poll_events() -> void
 
 auto Window::swap_buffers() -> void
 {
-    glfwSwapBuffers(glfwWindow_);
+    glfwSwapBuffers(glfw_window_);
+
+    double curr_frame = glfwGetTime();
+	delta_time_ = curr_frame - last_frame_;
+	last_frame_ = curr_frame;
+}
+
+auto Window::time() -> float
+{
+    return glfwGetTime(); 
+}
+
+auto Window::delta_time() -> float
+{
+    return delta_time_;
+}
+
+auto Window::set_vsync(VSyncMethod method) -> void
+{
+    glfwSwapInterval(static_cast<int>(method));
 }
  
 } // namespace NoctisEngine::Core

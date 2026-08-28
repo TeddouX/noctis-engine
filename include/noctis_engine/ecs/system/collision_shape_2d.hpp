@@ -90,7 +90,7 @@ struct CollisionShape2D
         float rotation_deg{0};
         
         /// @brief The radius of the rounded corners
-        float rounded_radius{0};
+        float corner_radius{0};
     };
 
     /// @brief Describes a circle collision shape
@@ -126,13 +126,15 @@ struct CollisionShape2D
     };
 
     /// @brief Describes a convex poligon shape
-    struct Poligon
+    struct Polygon
     {
         /// - Points should be a CCW (counter-clockwise) order
         /// - Points must be decently far away from each other.
         /// - Points mustn't be on the same line.
         /// - There should be more than 2 points.
         std::vector<glm::vec2> points;
+
+        float corner_radius{0.0f};
     };
 
     /// This is designed to eliminate ghost collisions with some limitations:
@@ -155,6 +157,9 @@ struct CollisionShape2D
         /// @brief Either 0 physics materials or the number of points. If 0, the CollisionShape2D's 
         /// physics material will be used
         std::vector<PhysicsMaterial2D> physics_materials;
+
+        /// @brief Enable sensors to detect this chain. False by default.
+        bool enable_sensor_events = false;
     };
 
     enum class ShapeType
@@ -163,7 +168,7 @@ struct CollisionShape2D
         CIRCLE,
         CAPSULE,
         SEGMENT,
-        POLIGON,
+        POLYGON,
         CHAIN,
     };
 
@@ -172,7 +177,7 @@ struct CollisionShape2D
         Circle,
         Capsule,
         Segment,
-        Poligon,
+        Polygon,
         Chain,
     >;
 
@@ -190,12 +195,12 @@ struct CollisionShape2D
         /// @param 1 entity A (the one bearing this collision shape)
         /// @param 2 entity B (the one that collided)
         /// @param 3 the collision manifold
-        std::function<void (Entity &, Entity &, CollisionManifold2D &)> on_collision_begin;
+        std::function<void (Entity, Entity)> on_collision_begin;
 
         /// @brief Called when a collision ends and if enable_collision_events is set to `true`
         /// @param 1 entity A (the one bearing this collision shape)
         /// @param 2 entity B (the one that collided)
-        std::function<void (Entity &, Entity &)> on_collision_end;
+        std::function<void (Entity, Entity)> on_collision_end;
         
         /// @brief Called when a hit collision is triggered.
         /// The hit event threshold can be set in the PhysicsSystem2D.
@@ -204,17 +209,17 @@ struct CollisionShape2D
         /// @param 3 Normal vector pointing from shape A to shape B. 
         /// @param 4 Point where the shapes hit.
         /// @param 5 The speed the shapes are approaching. Always positive. Typically in m/s. 
-        std::function<void (Entity &, Entity &, glm::vec2 &, glm::vec2, float)> on_hit;
+        std::function<void (Entity, Entity, glm::vec2 &, glm::vec2, float)> on_hit;
         
         /// @brief Called when a collision begins and is_sensor is set to `true`
         /// @param 1 entity A (the sensor)
         /// @param 2 entity B (the visitor)
-        std::function<void (Entity &, Entity &)> on_sensor_begin_touch;
+        std::function<void (Entity, Entity)> on_sensor_begin_touch;
 
         /// @brief Called when a collision ends and is_sensor is set to `true`
         /// @param 1 entity A (the sensor)
         /// @param 2 entity B (the visitor)
-        std::function<void (Entity &, Entity &)> on_sensor_end_touch;
+        std::function<void (Entity, Entity)> on_sensor_end_touch;
     };
 
     /// @brief This collision shape's callbacks
@@ -234,6 +239,9 @@ struct CollisionShape2D
     /// Sensors do not have continuous collision. Instead, use a ray or shape cast for those scenarios. 
     /// Sensors still contribute to the body mass if they have non-zero density.
     bool is_sensor = false;
+
+    /// @brief This collision shape's physics material
+    PhysicsMaterial2D physics_material;
 
     /// @brief This represents the collision shape's category
     std::uint64_t type_bit;
