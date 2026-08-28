@@ -364,7 +364,11 @@ auto PhysicsSystem2D::sync_ecs_to_physics_engine() -> void
 
 auto PhysicsSystem2D::draw_debug(Rendering::DrawList &draw_list) -> void
 {
-    // TODO
+    b2DebugDraw debug_draw = b2DefaultDebugDraw();
+
+    debug_draw.context = &draw_list;
+
+    b2World_Draw(b2LoadWorldId(physics_world_), &debug_draw);
 }
 
 auto PhysicsSystem2D::process_contact_events() -> void

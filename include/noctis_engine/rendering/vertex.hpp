@@ -15,4 +15,10 @@ struct Vertex
         : pos(pos), normal(normal), tangent(tangent), tex_coords(tex_coords) {}
 };
 
+struct DebugVertex
+{
+    glm::vec3 pos;
+    glm::vec3 color;
+};
+
 } // namespace NoctisEngine::Rendering
