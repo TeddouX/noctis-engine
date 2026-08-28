@@ -8,6 +8,8 @@
 #include "../component/transform_2d.hpp"
 #include "../component/physics_body_2d.hpp"
 #include "../../rendering/draw_list.hpp"
+#include "../../rendering/vertex_array.hpp"
+#include "../../rendering/shader.hpp"
 
 
 namespace NoctisEngine::ECS
@@ -17,6 +19,59 @@ namespace NoctisEngine::ECS
 class PhysicsSystem2D
 {
 public:
+    struct DebugDrawSettings
+    {
+        /// @brief World space coordinates that define the lower bound of the area that should be drawn. 
+        /// Every thing outside this area will be culled (not drawn)
+        glm::vec2 lower_draw_bound;
+
+        /// @brief World space coordinates that define the upper bound of the area that should be drawn. 
+        /// Every thing outside this area will be culled (not drawn)
+        glm::vec2 upper_draw_bound;
+
+        /// @brief Scale to use when drawing forces
+        float force_scale;
+
+        /// @brief Scale to use when drawing joints
+        float joint_scale;
+
+	    /// @brief Option to draw contact points
+        bool draw_contacts : 1;
+
+        /// @brief Draw anchor A for contact points (instead of anchor B)
+        bool draw_anchor_A : 1;
+
+        /// @brief Option to draw shapes
+        bool draw_shapes : 1;
+
+        /// @brief Option to draw chain normals
+        bool draw_chain_normals : 1;
+
+        /// @brief Option to draw joints
+        bool draw_joints : 1;
+
+        /// @brief Option to draw additional information for joints
+        bool draw_joint_extras : 1;
+
+        /// @brief Option to draw bounding boxes for shapes
+        bool draw_bounds : 1;
+
+        /// @brief Option to draw the mass and center of mass of dynamic bodies
+        bool draw_mass : 1;
+
+        /// @brief Option to draw contact normals
+        bool draw_contact_normals : 1;
+
+        /// @brief Option to draw contact forces
+        bool draw_contact_forces : 1;
+
+        /// @brief Option to draw friction forces
+        bool draw_friction_forces : 1;
+
+        /// @brief Option to draw islands as bounding boxes
+        bool draw_islands : 1;
+    };
+
     /// @brief Default amount of time to simulate for physics update
     static constexpr float DEFAULT_TIMESTEP = 1.0f / 60.0f;
     static constexpr glm::vec2 DEFAULT_GRAVITY{0, 9.81};
@@ -24,6 +79,10 @@ public:
     /// @param world Your game's ECS world, used to create physics entities
     PhysicsSystem2D(std::shared_ptr<World> world);
     ~PhysicsSystem2D();
+
+    /// @brief Enables debug rendering by creating required buffers.
+    /// Do not call except if you want to draw debug shapes
+    auto enable_debug_rendering() -> void;
 
     /// @brief Set the gravity vector for the physics world
     /// @param gravity The gravity vector
@@ -69,7 +128,11 @@ public:
 
     /// @brief Draws wireframes to the screen to debug colliders
     /// @param draw_list The draw list that should be used to draw the wireframes
-    auto draw_debug(Rendering::DrawList &draw_list) -> void;
+    /// @param settings The draw settings
+    /// @warning enable_debug_rendering() should be called before.
+    /// Overrides previously bound VAOs and shaders, so be careful to when in your 
+    /// rendering loop you call this function
+    auto draw_debug(Rendering::DrawList &draw_list, const DebugDrawSettings &settings) -> void;
 
 private:
     std::shared_ptr<World>                      world_;
@@ -77,6 +140,10 @@ private:
     std::uint32_t                               physics_world_;
     std::deque<CollisionShape2D::Callbacks>     collision_callbacks_;
     float                                       accumulator_;
+
+    Rendering::VertexArray                      line_vertex_array_;
+    Rendering::VertexArray                      tri_vertex_array_;
+    Rendering::Shader                           dbg_shader_;
 
   
     /// @brief This is called in sync_ecs_to_physics_engine().

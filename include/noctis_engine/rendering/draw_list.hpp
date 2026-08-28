@@ -65,49 +65,16 @@ public:
     /// @warning The entity is required to have a Sprite and a Transform2D components
     auto draw_sprite_entity(ECS::Entity entity, const ECS::World &world) -> void;
 
-    /// @brief Draws a poligon outline to the screen
-    /// @param vertices The poligon's vertices, in world space coordinates (pixels)
-    /// @param color The poligon's color
-    auto draw_debug_poligon_outline(const std::vector<glm::vec3> &vertices, Color color);
+    /// @brief Draws triandles from a previously bound VAO
+    /// @param first The starting index in the bound VAO. 
+    /// @param count The number of vertices to be rendered.
+    auto draw_triangles(std::size_t first, std::size_t count) -> void;
 
-    /// @brief Draws a filled poligon to the screen
-    /// @param vertices The poligon's vertices, in world space coordinates (pixels)
-    /// @param color The poligon's color
-    auto draw_debug_poligon_filled(const std::vector<glm::vec3> &vertices, Color color);
-
-    /// @brief Draws a circle outline
-    /// @param center The circle's center, in world space coordinates (pixels)
-    /// @param rotation The circle's rotation, in radians
-    /// @param radius The circle's radius, in pixels
-    /// @param color The circle's color
-    auto draw_debug_cirle_outline(const glm::vec2 &center, float rotation, float radius, Color color);
-
-    /// @brief Draws a filled circle
-    /// @param center The circle's center, in world space coordinates (pixels)
-    /// @param rotation The circle's rotation, in radians
-    /// @param radius The circle's radius, in pixels
-    /// @param color The circle's color
-    auto draw_debug_cirle_filled(const glm::vec2 &center, float rotation, float radius, Color color);
-
-    /// @brief Draws a filled capsule
-    /// @param center_1 The first circle's center
-    /// @param center_2 The second circle's center
-    /// @param radius The circles' radius
-    /// @param color The capsule's color
-    auto draw_debug_capsule_filled(const glm::vec2 &center_1, const glm::vec2 &center_2, float radius, Color color);
+    /// @brief Draws lines from a previously bound VAO
+    /// @param first The starting index in the bound VAO. 
+    /// @param count The number of vertices to be rendered.
+    auto draw_lines(std::size_t first, std::size_t count) -> void;
     
-    /// @brief Draws a segment
-    /// @param p_1 The first point
-    /// @param p_2 The second point
-    /// @param color The segment's color
-    auto draw_debug_segment(const glm::vec2 &p_1, const glm::vec2 &p_2, Color color);
-    
-    /// @brief Draws a point
-    /// @param pos The point's center, in world space coordinates (pixels)
-    /// @param radius The point's radius
-    /// @param color The point's color
-    auto draw_debug_point(const glm::vec2 &pos, float radius, Color color);
-
     /// @brief Clears the screen
     /// @param color The screen clear's color
     /// @param depth The depth that should be erased from the depth buffer, usually 1.0

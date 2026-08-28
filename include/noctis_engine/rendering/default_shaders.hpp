@@ -1,10 +1,10 @@
 #pragma once
 #include <string_view>
 
-namespace NoctisEngine::Rendering::Shaders
+namespace NoctisEngine::Rendering::DefaultShaders
 {
     
-constexpr std::string_view DEFAULT_SHADER_2D = 
+constexpr std::string_view SHADER_2D = 
 R"(
 #ifdef VERTEX
 
@@ -61,4 +61,40 @@ void main()
 #endif
 )";
 
-} // namespace NoctisEngine::Rendering::Shaders
+constexpr std::string_view DEBUG_SHADER_2D = R"(
+#ifdef VERTEX
+
+layout (location = 0) in vec3 aWorldPos;
+layout (location = 1) in vec3 aColor;
+
+layout (std140, binding = 0) uniform CameraBuffer {
+    mat4 projMat;
+    mat4 viewMat;
+    vec3 pos;
+} camera;
+
+layout (location = 0) out vec3 fsColor;
+
+void main()
+{
+    gl_Position = camera.projMat * camera.viewMat * vec4(aWorldPos, 1.0);
+    fsColor = aColor;
+}
+
+#endif 
+
+#ifdef FRAGMENT
+
+layout (location = 0) in vec3 fsColor;
+
+layout (location = 0) out vec4 FragColor;
+
+void main()
+{
+    FragColor = vec4(fsColor, 0);
+}
+
+#endif
+)";
+
+} // namespace NoctisEngine::Rendering::DefaultShaders

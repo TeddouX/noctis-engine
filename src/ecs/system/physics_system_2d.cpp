@@ -2,40 +2,17 @@
 
 #include <box2d/box2d.h>
 
+#include <noctis_engine/rendering/default_shaders.hpp>
+
 
 namespace NoctisEngine::ECS
 {
 
 Core::Logger PHYSICS_LOGGER{"Noctis Engine", "Physics"};
 
-auto phys_mat_to_b2_surface_mat(const PhysicsMaterial2D &phys_mat) -> b2SurfaceMaterial
-{
-    return b2SurfaceMaterial{
-        .friction = phys_mat.friction,
-        .restitution = phys_mat.bounciness,
-        .rollingResistance = phys_mat.rolling_resistance,
-        .tangentSpeed = phys_mat.tangent_speed,
-        .customColor = phys_mat.debug_draw_color.to_RGBA_int(),
-    };
-}
-
-auto glm_points_to_b2_points(const std::vector<glm::vec2> &glm_points) -> std::vector<b2Vec2>
-{
-    std::vector<b2Vec2> b2_points{};
-    b2_points.reserve(glm_points.size());
-
-    for (const auto &glm_point : glm_points)
-        b2_points.push_back(b2Vec2{glm_point.x, glm_point.y});
-
-    return b2_points;
-}
-
-auto entity_from_shape(b2ShapeId shape_id) -> Entity
-{
-    b2BodyId body_id = b2Shape_GetBody(shape_id);
-    // my bad
-    return *reinterpret_cast<Entity *>(b2Body_GetUserData(body_id));
-}
+auto phys_mat_to_b2_surface_mat(const PhysicsMaterial2D &phys_mat) -> b2SurfaceMaterial;
+auto glm_points_to_b2_points(const std::vector<glm::vec2> &glm_points) -> std::vector<b2Vec2>;
+auto entity_from_shape(b2ShapeId shape_id) -> Entity;
 
 
 PhysicsSystem2D::PhysicsSystem2D(std::shared_ptr<World> world)
@@ -52,6 +29,28 @@ PhysicsSystem2D::~PhysicsSystem2D()
     b2DestroyWorld(b2LoadWorldId(physics_world_));
 }
 
+auto PhysicsSystem2D::enable_debug_rendering() -> void
+{
+    line_vertex_array_ = Rendering::VertexArray{
+        Rendering::DEBUG_VERTEX_ATTRIBUTES,
+        "physics_line_vertex_array",
+        true,
+        true // false
+    };
+
+    tri_vertex_array_ = Rendering::VertexArray{
+        Rendering::DEBUG_VERTEX_ATTRIBUTES,
+        "physics_tri_vertex_array",
+        true,
+        true // false
+    };
+
+    dbg_shader_ = Rendering::Shader{
+        Rendering::DefaultShaders::DEBUG_SHADER_2D.data(),
+        "phys_shader"
+    };
+    dbg_shader_.compile();
+}
 
 auto PhysicsSystem2D::set_gravity(glm::vec2 gravity) -> void
 {
@@ -362,13 +361,322 @@ auto PhysicsSystem2D::sync_ecs_to_physics_engine() -> void
     process_sensor_events();
 }
 
-auto PhysicsSystem2D::draw_debug(Rendering::DrawList &draw_list) -> void
+auto PhysicsSystem2D::draw_debug(Rendering::DrawList &draw_list, const DebugDrawSettings &settings) -> void
 {
-    b2DebugDraw debug_draw = b2DefaultDebugDraw();
+    struct Context
+    {
+        std::vector<Rendering::DebugVertex> lines_vertices{};
+        std::vector<Rendering::DebugVertex> tris_vertices{};
+    } ctx;
 
-    debug_draw.context = &draw_list;
+    b2DebugDraw debug_draw = b2DefaultDebugDraw();
+	debug_draw.drawingBounds = b2AABB{
+        .lowerBound = b2Vec2{settings.lower_draw_bound.x, settings.lower_draw_bound.y},
+	    .upperBound = b2Vec2{settings.upper_draw_bound.x, settings.upper_draw_bound.y},
+    };
+
+	debug_draw.forceScale           = settings.force_scale;
+	debug_draw.jointScale           = settings.joint_scale;
+	debug_draw.drawContacts         = settings.draw_contacts;
+	debug_draw.drawAnchorA          = settings.draw_anchor_A;
+	debug_draw.drawShapes           = settings.draw_shapes;
+	debug_draw.drawChainNormals     = settings.draw_chain_normals;
+	debug_draw.drawJoints           = settings.draw_joints;
+	debug_draw.drawJointExtras      = settings.draw_joint_extras;
+	debug_draw.drawBounds           = settings.draw_bounds;
+	debug_draw.drawMass             = settings.draw_mass;
+	debug_draw.drawBodyNames        = false;
+	debug_draw.drawGraphColors      = false;
+	debug_draw.drawContactFeatures  = false;
+	debug_draw.drawContactNormals   = settings.draw_contact_normals;
+	debug_draw.drawContactForces    = settings.draw_contact_forces;
+	debug_draw.drawFrictionForces   = settings.draw_friction_forces;
+
+	/// Option to draw islands as bounding boxes
+	bool drawIslands;
+
+    debug_draw.DrawPolygonFcn = [](
+        b2WorldTransform    transform, 
+        const b2Vec2       *vertices, 
+        int                 vertexCount, 
+        b2HexColor          color,
+        void               *context
+    ) -> void
+    {
+        auto ctx = reinterpret_cast<Context *>(context);
+
+        glm::vec4 color_floats4 = RGBA_to_floats(static_cast<std::uint32_t>(color));
+        glm::vec3 color_floats{ color_floats4.r, color_floats4.g, color_floats4.b };
+
+        if (vertexCount < 3)
+            return;
+
+        for (int i = 0; i < vertexCount; i++)
+        {
+            // Wrap back around
+            int next = (i + 1) % vertexCount;
+
+            b2Vec2 world_curr = b2TransformPoint(transform, vertices[i]);
+            b2Vec2 world_next = b2TransformPoint(transform, vertices[next]);
+
+            ctx->lines_vertices.push_back(Rendering::DebugVertex{ 
+                glm::vec3{ world_curr.x, world_curr.y, 0 }, 
+                color_floats
+            });
+
+            ctx->lines_vertices.push_back(Rendering::DebugVertex{ 
+                glm::vec3{ world_next.x, world_next.y, 0 }, 
+                color_floats
+            });
+        }
+    };
+
+    debug_draw.DrawSolidPolygonFcn = [](
+        b2WorldTransform    transform, 
+        const b2Vec2       *vertices, 
+        int                 vertexCount, 
+        float               radius,
+		b2HexColor          color, 
+        void               *context
+    ) -> void
+    {
+        auto ctx = reinterpret_cast<Context *>(context);
+        
+        glm::vec4 color_floats4 = RGBA_to_floats(static_cast<std::uint32_t>(color));
+        glm::vec3 color_floats{ color_floats4.r, color_floats4.g, color_floats4.b };
+
+        if (vertexCount < 3)
+            return;
+
+        std::vector<glm::vec3> world_verts{};
+        world_verts.resize(vertexCount);
+
+        for (int i = 0; i < vertexCount; i++)
+        {
+            b2Vec2 world = b2TransformPoint(transform, vertices[i]);
+            world_verts[i] = glm::vec3{ world.x, world.y, 0 };
+        }
+
+        for (int i = 1; i + 1 < vertexCount; i++)
+        {
+            ctx->tris_vertices.push_back(Rendering::DebugVertex{ world_verts[0],     color_floats });
+            ctx->tris_vertices.push_back(Rendering::DebugVertex{ world_verts[i],     color_floats });
+            ctx->tris_vertices.push_back(Rendering::DebugVertex{ world_verts[i + 1], color_floats });
+        }
+    };
+
+    debug_draw.DrawCircleFcn = [](
+        b2Pos       center, 
+        float       radius, 
+        b2HexColor  color, 
+        void       *context
+    ) -> void
+    {
+        auto ctx = reinterpret_cast<Context *>(context);
+
+        glm::vec4 color_floats4 = RGBA_to_floats(static_cast<std::uint32_t>(color));
+        glm::vec3 color_floats{ color_floats4.r, color_floats4.g, color_floats4.b };
+
+        constexpr int SEGMENTS = 24;
+        constexpr float TAU = glm::tau<float>();
+
+        for (int i = 0; i < SEGMENTS; i++)
+        {
+            float angle_a = TAU * (float)i / SEGMENTS;
+            glm::vec3 point_a{
+                center.x + radius * glm::cos(angle_a), 
+                center.y + radius * glm::sin(angle_a), 0 
+            };
+
+            float angle_b = TAU * (float)(i + 1) / SEGMENTS;
+            glm::vec3 point_b{
+                center.x + radius * glm::cos(angle_b), 
+                center.y + radius * glm::sin(angle_b), 0 
+            };
+
+            ctx->lines_vertices.push_back(Rendering::DebugVertex{ point_a, color_floats });
+            ctx->lines_vertices.push_back(Rendering::DebugVertex{ point_b, color_floats });
+        }
+    };
+
+    debug_draw.DrawSolidCircleFcn = [](
+        b2WorldTransform    transform, 
+        b2Vec2              center, 
+        float               radius, 
+        b2HexColor          color, 
+        void               *context
+    ) -> void
+    {
+        auto ctx = reinterpret_cast<Context *>(context);
+
+        glm::vec4 color_floats4 = RGBA_to_floats(static_cast<std::uint32_t>(color));
+        glm::vec3 color_floats{ color_floats4.r, color_floats4.g, color_floats4.b };
+
+        constexpr int SEGMENTS = 24;
+        constexpr float TAU = glm::tau<float>();
+
+        b2Vec2 center_pos = transform.p;
+
+        std::vector<glm::vec3> rim(SEGMENTS);
+        for (int i = 0; i < SEGMENTS; i++)
+        {
+            float angle = TAU * (float)i / SEGMENTS;
+
+            b2Vec2 local{ 
+                radius * glm::cos(angle), 
+                radius * glm::sin(angle) 
+            };
+
+            b2Vec2 world = b2TransformPoint(transform, local);
+            
+            rim[i] = glm::vec3{ world.x, world.y, 0 };
+        }
+
+        glm::vec3 center_world{ center_pos.x, center_pos.y, 0 };
+
+        for (int i = 0; i < SEGMENTS; i++)
+        {
+            int next = (i + 1) % SEGMENTS;
+
+            ctx->tris_vertices.push_back(Rendering::DebugVertex{ center_world, color_floats });
+            ctx->tris_vertices.push_back(Rendering::DebugVertex{ rim[i],       color_floats });
+            ctx->tris_vertices.push_back(Rendering::DebugVertex{ rim[next],    color_floats });
+        }
+
+        // Draw a line so its easier to see rotation
+        ctx->lines_vertices.push_back(Rendering::DebugVertex{ center_world, color_floats });
+        ctx->lines_vertices.push_back(Rendering::DebugVertex{ rim[0],       color_floats });
+    };
+
+    debug_draw.DrawSolidCapsuleFcn = [](
+        b2Vec2      p1, 
+        b2Vec2      p2, 
+        float       radius, 
+        b2HexColor  color, 
+        void       *context
+    ) -> void
+    {
+        auto ctx = reinterpret_cast<Context *>(context);
+
+        glm::vec4 color_floats4 = RGBA_to_floats(static_cast<std::uint32_t>(color));
+        glm::vec3 color_floats{ color_floats4.r, color_floats4.g, color_floats4.b };
+
+        b2Vec2 axis = { p2.x - p1.x, p2.y - p1.y };
+        float length = glm::sqrt(axis.x * axis.x + axis.y * axis.y);
+
+        if (length < 1e-6f)
+            return;
+
+        float base_angle = glm::atan(axis.y, axis.x);
+        constexpr int CAP_SEGMENTS = 12;
+        constexpr float PI = glm::pi<float>();
+
+        std::vector<glm::vec3> outline;
+        outline.reserve(CAP_SEGMENTS * 2 + 2);
+
+        for (int i = 0; i <= CAP_SEGMENTS; i++)
+        {
+            float t = (float)i / CAP_SEGMENTS;
+            float angle = base_angle - PI * 0.5f + PI * t;
+
+            outline.push_back(glm::vec3{
+                p2.x + radius * glm::cos(angle),
+                p2.y + radius * glm::sin(angle),
+                0
+            });
+        }
+
+        for (int i = 0; i <= CAP_SEGMENTS; i++)
+        {
+            float t = (float)i / CAP_SEGMENTS;
+            float angle = base_angle + PI * 0.5f + PI * t;
+
+            outline.push_back(glm::vec3{
+                p1.x + radius * glm::cos(angle),
+                p1.y + radius * glm::sin(angle),
+                0
+            });
+        }
+
+        glm::vec3 hub{ (p1.x + p2.x) * 0.5f, (p1.y + p2.y) * 0.5f, 0 };
+        int n = (int)outline.size();
+
+        for (int i = 0; i < n; i++)
+        {
+            int next = (i + 1) % n;
+            ctx->tris_vertices.push_back(Rendering::DebugVertex{ hub,            color_floats });
+            ctx->tris_vertices.push_back(Rendering::DebugVertex{ outline[i],     color_floats });
+            ctx->tris_vertices.push_back(Rendering::DebugVertex{ outline[next],  color_floats });
+        }
+    };
+
+    debug_draw.DrawLineFcn = [](
+        b2Vec2      p1, 
+        b2Vec2      p2, 
+        b2HexColor  color, 
+        void       *context
+    ) -> void
+    {
+        auto ctx = reinterpret_cast<Context *>(context);
+
+        glm::vec4 color_floats4 = RGBA_to_floats(static_cast<std::uint32_t>(color));
+        glm::vec3 color_floats{ color_floats4.r, color_floats4.g, color_floats4.b };
+
+        ctx->lines_vertices.push_back(Rendering::DebugVertex{ glm::vec3{ p1.x, p1.y, 0 }, color_floats });
+        ctx->lines_vertices.push_back(Rendering::DebugVertex{ glm::vec3{ p2.x, p2.y, 0 }, color_floats });
+    };
+
+    debug_draw.DrawBoundsFcn = [](
+        b2AABB      bounds, 
+        b2HexColor  color, 
+        void       *context
+    ) -> void
+    {
+        auto ctx = reinterpret_cast<Context *>(context);
+
+        glm::vec4 color_floats4 = RGBA_to_floats(static_cast<std::uint32_t>(color));
+        glm::vec3 color_floats{ color_floats4.r, color_floats4.g, color_floats4.b };
+
+        constexpr int NUM_CORNERS = 4;
+
+        glm::vec3 corners[NUM_CORNERS] = {
+            { bounds.lowerBound.x, bounds.lowerBound.y, 0 },
+            { bounds.upperBound.x, bounds.lowerBound.y, 0 },
+            { bounds.upperBound.x, bounds.upperBound.y, 0 },
+            { bounds.lowerBound.x, bounds.upperBound.y, 0 },
+        };
+
+        for (int i = 0; i < NUM_CORNERS; i++)
+        {
+            int next = (i + 1) % NUM_CORNERS;
+            ctx->lines_vertices.push_back(Rendering::DebugVertex{ corners[i],    color_floats });
+            ctx->lines_vertices.push_back(Rendering::DebugVertex{ corners[next], color_floats });
+        }
+    };
+
+    debug_draw.context = &ctx;
 
     b2World_Draw(b2LoadWorldId(physics_world_), &debug_draw);
+
+    line_vertex_array_.upload_vertices(
+        ctx.lines_vertices.data(), 
+        ctx.lines_vertices.size() * sizeof(Rendering::DebugVertex), 
+        sizeof(Rendering::DebugVertex)
+    ); 
+
+    tri_vertex_array_.upload_vertices(
+        ctx.tris_vertices.data(), 
+        ctx.tris_vertices.size() * sizeof(Rendering::DebugVertex), 
+        sizeof(Rendering::DebugVertex)
+    );
+
+    dbg_shader_.use(draw_list);
+    
+    line_vertex_array_.use(draw_list);
+    draw_list.draw_lines(0, ctx.lines_vertices.size());
+
+    tri_vertex_array_.use(draw_list);
+    draw_list.draw_lines(0, ctx.tris_vertices.size());
 }
 
 auto PhysicsSystem2D::process_contact_events() -> void
@@ -444,6 +752,35 @@ auto PhysicsSystem2D::process_sensor_events() -> void
             entity_from_shape(ev.visitorShapeId)
         );
     }
+}
+
+auto phys_mat_to_b2_surface_mat(const PhysicsMaterial2D &phys_mat) -> b2SurfaceMaterial
+{
+    return b2SurfaceMaterial{
+        .friction = phys_mat.friction,
+        .restitution = phys_mat.bounciness,
+        .rollingResistance = phys_mat.rolling_resistance,
+        .tangentSpeed = phys_mat.tangent_speed,
+        .customColor = phys_mat.debug_draw_color.to_RGBA_int(),
+    };
+}
+
+auto glm_points_to_b2_points(const std::vector<glm::vec2> &glm_points) -> std::vector<b2Vec2>
+{
+    std::vector<b2Vec2> b2_points{};
+    b2_points.reserve(glm_points.size());
+
+    for (const auto &glm_point : glm_points)
+        b2_points.push_back(b2Vec2{glm_point.x, glm_point.y});
+
+    return b2_points;
+}
+
+auto entity_from_shape(b2ShapeId shape_id) -> Entity
+{
+    b2BodyId body_id = b2Shape_GetBody(shape_id);
+    // my bad
+    return *reinterpret_cast<Entity *>(b2Body_GetUserData(body_id));
 }
 
 } // namespace NoctisEngine::ECS

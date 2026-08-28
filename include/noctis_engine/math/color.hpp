@@ -57,6 +57,20 @@ private:
     std::uint8_t m_r{}, m_g{}, m_b{}, m_a{};
 };
 
+/// @brief Converts a RGBA color to 4 floats (red, green, blue and alpha) in the range [0, 1]
+/// @param color The RGBA color
+/// @return The 4 floats
+constexpr auto RGBA_to_floats(std::uint32_t color) -> glm::vec4
+{
+    float r = static_cast<float>((color >> 24)  & 0xFF) / 255.0f;
+    float g = static_cast<float>((color >> 16)  & 0xFF) / 255.0f;
+    float b = static_cast<float>((color >> 8)   & 0xFF) / 255.0f;
+    float a = static_cast<float>((color)        & 0xFF) / 255.0f;
+
+    return glm::vec4{ r, g, b, a };
+
+}
+
 inline const Color Color::BLACK{0, 0, 0, 255};
 
 } // namespace NoctisEngine

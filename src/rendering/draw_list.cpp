@@ -79,6 +79,18 @@ auto DrawList::draw_sprite_entity(ECS::Entity entity, const ECS::World &world) -
     );
 }
 
+auto DrawList::draw_triangles(std::size_t first, std::size_t count) -> void
+{
+    write_cmd_type(DrawCommandType::DRAW_TRIANGLES);
+    write(DrawTrianglesCommand{ first, count });
+}
+
+auto DrawList::draw_lines(std::size_t first, std::size_t count) -> void
+{
+    write_cmd_type(DrawCommandType::DRAW_LINES);
+    write(DrawLinesCommand{ first, count });
+}
+
 auto DrawList::clear_screen(const Color &color, double depth, bool clear_color, bool clear_depth) -> void
 {
     write_cmd_type(DrawCommandType::CLEAR);

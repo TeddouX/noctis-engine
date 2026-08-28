@@ -17,6 +17,8 @@ enum class DrawCommandType
     SET_UNIFORM,
     DRAW_MESH,
     CLEAR,
+    DRAW_LINES,
+    DRAW_TRIANGLES,
 };
     
 struct BindTextureCmd
@@ -66,6 +68,18 @@ struct ClearCmd
     double depth;
     bool clear_color;
     bool clear_depth;
+};
+
+struct DrawTrianglesCommand
+{
+    std::size_t first;
+    std::size_t count;
+};
+
+struct DrawLinesCommand
+{
+    std::size_t first;
+    std::size_t count;
 };
 
 } // namespace NoctisEngine::Rendering

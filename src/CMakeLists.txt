@@ -14,6 +14,7 @@ set(NCENG_SOURCES
     "rendering/renderer.cpp"
     "rendering/shader.cpp"
     "rendering/texture.cpp"
+    "rendering/vertex_array.cpp"
 )
 
 

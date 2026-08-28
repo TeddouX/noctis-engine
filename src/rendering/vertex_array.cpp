@@ -1,4 +1,4 @@
-#include <noctis_engine/rendering/vertex_array_obj.hpp>
+#include <noctis_engine/rendering/vertex_array.hpp>
 
 #include <GL/gl.h>
 
@@ -8,13 +8,14 @@
 namespace NoctisEngine::Rendering
 {
     
-auto attrib_type_size_bytes(VertexAttribute::Type type) -> std::size_t;
-    
+auto attrib_type_size_bytes(VertexAttribute::ComponentType type) -> std::size_t;
 
-VertexArrayObject::VertexArrayObject(
+
+VertexArray::VertexArray(
     const std::vector<VertexAttribute> &vertex_attribs, 
-    std::string_view name, 
-    bool create_buffers)
+    std::string_view                    name, 
+    bool                                create_buffers,
+    bool                                use_ebo)
 {
     glGenVertexArrays(1, &vao_);
     glBindVertexArray(vao_);
@@ -23,7 +24,9 @@ VertexArrayObject::VertexArrayObject(
     if (create_buffers)
     {
         vbo_ = GPUBuffer(1, name);
-        ebo_ = GPUBuffer(1, name);
+
+        if (use_ebo)
+            ebo_ = GPUBuffer(1, name);
     }
 
     std::uint32_t attrib_idx{0};
@@ -31,31 +34,33 @@ VertexArrayObject::VertexArrayObject(
 
     for (const auto &vertex_attrib : vertex_attribs)
     {
-        GLuint attrib_idx = vertex_attrib.index < 0 ? attrib_idx : vertex_attrib.index;
+        GLuint gl_attrib_idx = vertex_attrib.index < 0 ? attrib_idx : vertex_attrib.index;
 
         glVertexAttribFormat(
-            attrib_idx,
+            gl_attrib_idx,
             vertex_attrib.num_components, 
-            static_cast<GLenum>(vertex_attrib.type), 
+            static_cast<GLenum>(vertex_attrib.component_type), 
             vertex_attrib.normalized ? GL_TRUE : GL_FALSE, 
             offset
         );
-        glVertexAttribBinding(attrib_idx, 0);
-        glEnableVertexAttribArray(attrib_idx);
+        glVertexAttribBinding(gl_attrib_idx, 0);
+        glEnableVertexAttribArray(gl_attrib_idx);
     
         attrib_idx++;
-        offset += attrib_type_size_bytes(vertex_attrib.type);
+        offset += attrib_type_size_bytes(vertex_attrib.component_type);
     }
 
     if (create_buffers)
     {
         // Offset should have the total size of one vertex by now
         link_vbo(vbo_, offset);
-        link_ebo(ebo_);
+
+        if (use_ebo)
+            link_ebo(ebo_);
     }
 }
 
-auto VertexArrayObject::upload_vertices(void *vertices, std::size_t size, std::size_t vertex_size) -> void
+auto VertexArray::upload_vertices(void *vertices, std::size_t size, std::size_t vertex_size) -> void
 {
     bool resized = resize_buffer(vbo_, size);
     vbo_.write(vertices, size, 0);
@@ -65,8 +70,14 @@ auto VertexArrayObject::upload_vertices(void *vertices, std::size_t size, std::s
         link_vbo(vbo_, vertex_size, 0);
 }
 
-auto VertexArrayObject::upload_indices(const std::vector<std::uint32_t> &indices) -> void
+auto VertexArray::upload_indices(const std::vector<std::uint32_t> &indices) -> void
 {
+    if (not use_ebo_)
+    {
+        RENDERING_LOGGER.error("Can't upload indices to a vertex array that doesn't use an EBO");
+        return;
+    }
+
     bool resized = resize_buffer(ebo_, indices.size());
     ebo_.write(get_cpu_buffer_view(indices), 0);
 
@@ -75,44 +86,52 @@ auto VertexArrayObject::upload_indices(const std::vector<std::uint32_t> &indices
         link_ebo(ebo_);
 }
 
-auto VertexArrayObject::link_vbo(const GPUBuffer &vbo_buf, std::size_t vertex_size, std::size_t first_el_off) -> void
+auto VertexArray::link_vbo(const GPUBuffer &vbo_buf, std::size_t vertex_size, std::size_t first_el_off) -> void
 {
     glVertexArrayVertexBuffer(vao_, 0, vbo_buf.gl_handle(), first_el_off, vertex_size);
 }
 
-auto VertexArrayObject::link_ebo(const GPUBuffer &ebo_buf) -> void
+auto VertexArray::link_ebo(const GPUBuffer &ebo_buf) -> void
 {
     glVertexArrayElementBuffer(vao_, ebo_buf.gl_handle());
+    use_ebo_ = true;
 }
 
-auto VertexArrayObject::delete_gpu() -> void
+auto VertexArray::delete_gpu() -> void
 {
     glDeleteVertexArrays(1, &vao_);
     vbo_.delete_gpu();
     ebo_.delete_gpu();
 }
 
-auto VertexArrayObject::vao_gl_handle() -> std::uint32_t
+auto VertexArray::use(DrawList &draw_list) -> void
+{
+    draw_list.bind_vao(vao_);
+    if (use_ebo_)
+        draw_list.bind_buffer(ebo_, BufferTarget::ELEMENT_ARRAY_BUFFER);
+}
+
+auto VertexArray::vao_gl_handle() -> std::uint32_t
 {
     return vao_;
 }
 
-auto VertexArrayObject::ebo_gl_handle() -> std::uint32_t
+auto VertexArray::ebo() -> GPUBuffer &
 {
-    return ebo_.gl_handle();
+    return ebo_;
 }
 
-auto VertexArrayObject::vbo_gl_handle() -> std::uint32_t
+auto VertexArray::vbo() -> GPUBuffer &
 {
-    return vbo_.gl_handle();
+    return vbo_;
 }
 
 
-auto attrib_type_size_bytes(VertexAttribute::Type type) -> std::size_t
+auto attrib_type_size_bytes(VertexAttribute::ComponentType type) -> std::size_t
 {
     switch (type)
     {
-        using enum VertexAttribute::Type;
+        using enum VertexAttribute::ComponentType;
         case BYTE: 
             return 1;
 
@@ -129,6 +148,9 @@ auto attrib_type_size_bytes(VertexAttribute::Type type) -> std::size_t
 
         case DOUBLE:
             return 8;
+
+        default:
+            return 0;
     }
 }
 

@@ -15,20 +15,47 @@ namespace NoctisEngine::Rendering
 
 enum class BufferTarget : std::uint32_t 
 {
-    ARRAY_BUFFER = 0x8892,               // Vertex attributes
-    ATOMIC_COUNTER_BUFFER = 0x92C0,      // Atomic counter storage
-    COPY_READ_BUFFER = 0x8F36,           // Buffer copy source
-    COPY_WRITE_BUFFER = 0x8F37,          // Buffer copy destination
-    DISPATCH_INDIRECT_BUFFER = 0x90EE,   // Indirect compute dispatch commands
-    DRAW_INDIRECT_BUFFER = 0x8F3F,       // Indirect command arguments
-    ELEMENT_ARRAY_BUFFER = 0x8893,       // Vertex array indices
-    PIXEL_PACK_BUFFER = 0x88EB,          // Pixel read target
-    PIXEL_UNPACK_BUFFER = 0x88EC,        // Texture data source
-    QUERY_BUFFER = 0x9192,               // Query result buffer
-    SHADER_STORAGE_BUFFER = 0x90D2,      // Read-write storage for shaders
-    TEXTURE_BUFFER = 0x8C2A,             // Texture data buffer
-    TRANSFORM_FEEDBACK_BUFFER = 0x8C8E,  // Transform feedback buffer
-    UNIFORM_BUFFER = 0x8A11,             // Uniform block storage
+    /// @brief Vertex attributes
+    ARRAY_BUFFER = 0x8892,
+
+    /// @brief Atomic counter storage
+    ATOMIC_COUNTER_BUFFER = 0x92C0,
+
+    /// @brief Buffer copy source
+    COPY_READ_BUFFER = 0x8F36,
+
+    /// @brief Buffer copy destination
+    COPY_WRITE_BUFFER = 0x8F37,
+
+    /// @brief Indirect compute dispatch commands
+    DISPATCH_INDIRECT_BUFFER = 0x90EE,
+
+    /// @brief Indirect command arguments
+    DRAW_INDIRECT_BUFFER = 0x8F3F,
+
+    /// @brief Vertex array indices
+    ELEMENT_ARRAY_BUFFER = 0x8893,
+
+    /// @brief Pixel read target
+    PIXEL_PACK_BUFFER = 0x88EB,
+
+    /// @brief Texture data source
+    PIXEL_UNPACK_BUFFER = 0x88EC,
+
+    /// @brief Query result buffer
+    QUERY_BUFFER = 0x9192,
+
+    /// @brief Read-write storage for shaders
+    SHADER_STORAGE_BUFFER = 0x90D2,
+
+    /// @brief Texture data buffer
+    TEXTURE_BUFFER = 0x8C2A,
+
+    /// @brief Transform feedback buffer
+    TRANSFORM_FEEDBACK_BUFFER = 0x8C8E,
+
+    /// @brief Uniform block storage
+    UNIFORM_BUFFER = 0x8A11,
 };
 
 enum class BufferFlag : std::uint32_t 
@@ -66,10 +93,6 @@ public:
     auto gl_handle() const -> std::uint32_t;
 
     auto delete_gpu() -> void;
-
-    // auto bind_as(BufferTarget type) const -> void;
-    // auto bind_buffer_base(BufferTarget type, std::uint32_t bindPoint) const -> void;
-    // auto bind_buffer_range(BufferTarget type, std::uint32_t bindPoint, std::size_t offset, std::size_t size) const -> void;
 
     // Returns a pointer to the mapped buffer, can be cast to any type.
     // GPUBuffer::mapped_write should be used instead of writing the raw pointer if performance isn't that important because it is more memory safe.

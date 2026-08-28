@@ -27,7 +27,6 @@ struct ObjectData
 };
 
 
-
 static auto glad_enable_disable(bool b, GLenum name) -> void 
 {
     if (b) glEnable(name);
@@ -312,6 +311,26 @@ auto Renderer::render(DrawList &draw_list) -> void
                 glClear(mask);
 
                 curr_cmd += sizeof(ClearCmd);
+                break;
+            }
+
+            case DrawCommandType::DRAW_LINES:
+            {
+                auto draw_lines_cmd = reinterpret_cast<const DrawLinesCommand *>(curr_cmd.base());
+
+                glDrawArrays(GL_LINES, draw_lines_cmd->first, draw_lines_cmd->count);
+
+                curr_cmd += sizeof(DrawLinesCommand);
+                break;
+            }
+
+            case DrawCommandType::DRAW_TRIANGLES:
+            {
+                auto draw_tris_cmd = reinterpret_cast<const DrawTrianglesCommand *>(curr_cmd.base());
+                
+                glDrawArrays(GL_TRIANGLES, draw_tris_cmd->first, draw_tris_cmd->count);
+
+                curr_cmd += sizeof(DrawTrianglesCommand);
                 break;
             }
         }
