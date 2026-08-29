@@ -1,0 +1,171 @@
+\doxysection{collision\+\_\+shape\+\_\+2d.\+hpp}
+\hypertarget{collision__shape__2d_8hpp_source}{}\label{collision__shape__2d_8hpp_source}\index{/home/Victor/Programming/Noctis-\/Engine-\/Test-\/Game/noctis-\/engine/include/noctis\_engine/ecs/system/collision\_shape\_2d.hpp@{/home/Victor/Programming/Noctis-\/Engine-\/Test-\/Game/noctis-\/engine/include/noctis\_engine/ecs/system/collision\_shape\_2d.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <variant>}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}../entity.hpp"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}../component/physics\_body\_2d.hpp"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}../../math/color.hpp"{}}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{keyword}{namespace\ }NoctisEngine::ECS}
+\DoxyCodeLine{00011\ \{}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1PhysicsMaterial2D}{PhysicsMaterial2D}}}
+\DoxyCodeLine{00015\ \{}
+\DoxyCodeLine{00017\ \ \ \ \ \mbox{\hyperlink{classNoctisEngine_1_1Color}{Color}}\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1PhysicsMaterial2D_a2e8d0d571f4fa12eddedbfe1bb5da291}{debug\_draw\_color}}\{0,\ 255,\ 0\};}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1PhysicsMaterial2D_aa562b9841d1926295e37e3c798bf088c}{friction}};}
+\DoxyCodeLine{00021\ \ \ \ \ }
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1PhysicsMaterial2D_a19465fa9b1950b06b5cc13b6cfbcc714}{bounciness}};}
+\DoxyCodeLine{00024\ \ \ \ \ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1PhysicsMaterial2D_ad0467baf4d7b43a981a72c753d7393a6}{rolling\_resistance}};}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1PhysicsMaterial2D_aadc7c97dd51e35b286da1e037bafd142}{tangent\_speed}};}
+\DoxyCodeLine{00030\ \};}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00033\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionManifold2D}{CollisionManifold2D}}}
+\DoxyCodeLine{00034\ \{}
+\DoxyCodeLine{00037\ \ \ \ \ glm::vec2\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionManifold2D_ac520c7f64cfc97f46e51d893333baaa6}{normal}};}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionManifold2D_1_1Point}{Point}}}
+\DoxyCodeLine{00041\ \ \ \ \ \{}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ glm::vec2\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionManifold2D_1_1Point_ab3f546768fa8e8ffb2288e59b0ef8dee}{anchor\_a}};}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ glm::vec2\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionManifold2D_1_1Point_a3dd153bbf5763c8dac7d773b944a81a9}{anchor\_b}};}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionManifold2D_1_1Point_aa2ed43302b5ca6b241a2a21e3cd38908}{normal\_impulse}};}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionManifold2D_1_1Point_aae2cfc0c4c1e34d5e6ae0494e1715c62}{normal\_velocity}};}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionManifold2D_1_1Point_a05f2a21dfcd3a274a5026074dc583246}{persisted}};}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ glm::vec2\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionManifold2D_1_1Point_aca7130a135f44d7555b23d4839d84e09}{point}};}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionManifold2D_1_1Point_aa9d67e1904d329f256451cf9166d05f0}{separation}};}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionManifold2D_1_1Point_a5206a5fbd5a98665055f7a40a33c474c}{tangent\_impulse}};}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionManifold2D_1_1Point_a1274af0b15359fd95d00c1265ef2bac6}{tangent\_normal\_impulse}};}
+\DoxyCodeLine{00070\ \ \ \ \ \};}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00073\ \ \ \ \ std::array<Point,\ 2>\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionManifold2D_a5c87ed6d8f5338c908995a961403b5dc}{points}};}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionManifold2D_a10175f35e6a1457ca73425a29bdfdbb5}{rolling\_impulse}};}
+\DoxyCodeLine{00077\ \};}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00080\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionShape2D}{CollisionShape2D}}}
+\DoxyCodeLine{00081\ \{}
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Box}{Box}}}
+\DoxyCodeLine{00084\ \ \ \ \ \{}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ glm::vec2\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Box_a048e11b02291869c8884d2eee94f5b35}{half\_extents}};}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ glm::vec2\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Box_afeeb7947963693ee748efc7deca2344c}{center}}\{0\};}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Box_a5d559714135f8d65d2723e7fd881e47c}{rotation\_deg}}\{0\};}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Box_a34a54d7ac644643021d0c2ac32abf492}{corner\_radius}}\{0\};}
+\DoxyCodeLine{00096\ \ \ \ \ \};}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Circle}{Circle}}}
+\DoxyCodeLine{00100\ \ \ \ \ \{}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Circle_a883a63f8b42371f8dfe9d991184702ad}{radius}};}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ glm::vec2\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Circle_a78a1bf2e335777e0c6f49411310259b4}{center}}\{0\};}
+\DoxyCodeLine{00106\ \ \ \ \ \};}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Capsule}{Capsule}}}
+\DoxyCodeLine{00110\ \ \ \ \ \{}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ glm::vec2\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Capsule_a1f8b24dc04376bcbddbce66e6eeb8a9c}{center\_1}};}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ glm::vec2\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Capsule_a535936277abf5862693f50a3e7d2d7f3}{center\_2}};}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Capsule_af28860d6c9cb0c0ce1bd7c2824a2337b}{radius}};}
+\DoxyCodeLine{00119\ \ \ \ \ \};}
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Segment}{Segment}}}
+\DoxyCodeLine{00123\ \ \ \ \ \{}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ glm::vec2\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Segment_a6997f169f10f98efefa782bd09de6fa1}{point\_1}};}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ glm::vec2\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Segment_ac958082aac57b6897d71be901728aba3}{point\_2}};}
+\DoxyCodeLine{00129\ \ \ \ \ \};}
+\DoxyCodeLine{00130\ }
+\DoxyCodeLine{00132\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Polygon}{Polygon}}}
+\DoxyCodeLine{00133\ \ \ \ \ \{}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ std::vector<glm::vec2>\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Polygon_a67316e16fdac47fb617979212758c365}{points}};}
+\DoxyCodeLine{00140\ }
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ corner\_radius\{0.0f\};}
+\DoxyCodeLine{00142\ \ \ \ \ \};}
+\DoxyCodeLine{00143\ }
+\DoxyCodeLine{00153\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Chain}{Chain}}}
+\DoxyCodeLine{00154\ \ \ \ \ \{}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ std::vector<glm::vec2>\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Chain_a11e6946010580323a7c2461edcecbaca}{points}};}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Chain_ab850495212dc5aae3e81adb7360189e8}{is\_loop}};}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ std::vector<PhysicsMaterial2D>\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Chain_a6522a39d482d40e29b780e07ad9d8d4a}{physics\_materials}};}
+\DoxyCodeLine{00165\ }
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Chain_a01906aa1477b8f011fe40f61d385bb70}{enable\_sensor\_events}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00168\ \ \ \ \ \};}
+\DoxyCodeLine{00169\ }
+\DoxyCodeLine{00170\ \ \ \ \ \textcolor{keyword}{enum\ class}\ ShapeType}
+\DoxyCodeLine{00171\ \ \ \ \ \{}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ BOX,}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ CIRCLE,}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ CAPSULE,}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ SEGMENT,}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ POLYGON,}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ CHAIN,}
+\DoxyCodeLine{00178\ \ \ \ \ \};}
+\DoxyCodeLine{00179\ }
+\DoxyCodeLine{00180\ \ \ \ \ \textcolor{keyword}{using\ }Shapes\ =\ std::variant<}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ Box,}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ Circle,}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ Capsule,}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ Segment,}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ Polygon,}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ Chain}
+\DoxyCodeLine{00187\ \ \ \ \ >;}
+\DoxyCodeLine{00188\ }
+\DoxyCodeLine{00190\ \ \ \ \ ShapeType\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionShape2D_ac374ddb6a8e5f6e6af812f3fbe229f00}{shape\_type}};}
+\DoxyCodeLine{00191\ }
+\DoxyCodeLine{00194\ \ \ \ \ Shapes\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionShape2D_a709e020d887cb8e826457dac7bde1c88}{shape}};}
+\DoxyCodeLine{00195\ }
+\DoxyCodeLine{00197\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Callbacks}{Callbacks}}}
+\DoxyCodeLine{00198\ \ \ \ \ \{}
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ std::function<void\ (\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}},\ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}})>\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Callbacks_aa8244cdbba40418255ca9b38993bb4c2}{on\_collision\_begin}};}
+\DoxyCodeLine{00204\ }
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ std::function<void\ (\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}},\ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}})>\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Callbacks_af7051b643749acca3903c9fc0c4af9be}{on\_collision\_end}};}
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ std::function<void\ (\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}},\ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}},\ glm::vec2\ \&,\ glm::vec2,\ \textcolor{keywordtype}{float})>\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Callbacks_af0e44eae0757de8ffc3c9f5dca65a021}{on\_hit}};}
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ std::function<void\ (\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}},\ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}})>\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Callbacks_abd147bfef109a42be14c6ae4c482edbf}{on\_sensor\_begin\_touch}};}
+\DoxyCodeLine{00223\ }
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ std::function<void\ (\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}},\ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}})>\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Callbacks_a2a3f072d32538732b641d95e26882032}{on\_sensor\_end\_touch}};}
+\DoxyCodeLine{00228\ \ \ \ \ \};}
+\DoxyCodeLine{00229\ }
+\DoxyCodeLine{00231\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionShape2D_a1eca1287a6cd2548acfd97a2ddc1b58b}{density}}\{1.0f\};}
+\DoxyCodeLine{00232\ }
+\DoxyCodeLine{00234\ \ \ \ \ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1PhysicsMaterial2D}{PhysicsMaterial2D}}\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionShape2D_a5a88317c3a55d12431d0ae050e3ec915}{physics\_material}};}
+\DoxyCodeLine{00235\ }
+\DoxyCodeLine{00237\ \ \ \ \ std::uint64\_t\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionShape2D_a099352fe0d3cc210ab34fb4f3438c1d0}{type\_bit}}\ =\ 0x1;}
+\DoxyCodeLine{00238\ }
+\DoxyCodeLine{00239\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ std::uint64\_t\ ALL\_CATEGORIES\ =\ std::numeric\_limits<std::uint64\_t>::max();}
+\DoxyCodeLine{00240\ }
+\DoxyCodeLine{00242\ \ \ \ \ std::uint64\_t\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionShape2D_a00b6e7bacd1ca4077456a0e3a31780b5}{collision\_mask\_bits}}\ =\ ALL\_CATEGORIES;}
+\DoxyCodeLine{00243\ }
+\DoxyCodeLine{00245\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionShape2D_aaca2ba0c24797fe84ed8a19be6730501}{enable\_collision\_events}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00246\ }
+\DoxyCodeLine{00249\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionShape2D_a754ade58a99bf6f779ca6b210c138221}{enable\_hit\_events}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00250\ }
+\DoxyCodeLine{00254\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionShape2D_a8441682f7e6e5d14101b6a603727b927}{is\_sensor}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00255\ }
+\DoxyCodeLine{00257\ \ \ \ \ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Callbacks}{Callbacks}}\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionShape2D_ac31d06d8dfc0d1cd7e1a60275e8f240d}{callbacks}};}
+\DoxyCodeLine{00258\ \};}
+\DoxyCodeLine{00259\ }
+\DoxyCodeLine{00260\ \}\ \textcolor{comment}{//\ namespace\ NoctisEngine::ECS}}
+
+\end{DoxyCode}

@@ -1,0 +1,132 @@
+\doxysection{Noctis\+Engine\+::Color Class Reference}
+\hypertarget{classNoctisEngine_1_1Color}{}\label{classNoctisEngine_1_1Color}\index{NoctisEngine::Color@{NoctisEngine::Color}}
+
+
+A class representing a RGBA color.  
+
+
+
+
+{\ttfamily \#include $<$color.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classNoctisEngine_1_1Color_af0175cdcaa8e67e1115cf2fb83caab5e}\label{classNoctisEngine_1_1Color_af0175cdcaa8e67e1115cf2fb83caab5e} 
+constexpr {\bfseries Color} ()
+\begin{DoxyCompactList}\small\item\em Default constructor, all components are set to 0. \end{DoxyCompactList}\item 
+constexpr \mbox{\hyperlink{classNoctisEngine_1_1Color_a0a9983716bce9956560f6c82a40dd895}{Color}} (std\+::uint8\+\_\+t \mbox{\hyperlink{classNoctisEngine_1_1Color_a89789591ae35191977bf38d61976037e}{red}}, std\+::uint8\+\_\+t \mbox{\hyperlink{classNoctisEngine_1_1Color_a91fd1e5b26cdfafd8c6900dc695aeef7}{green}}, std\+::uint8\+\_\+t \mbox{\hyperlink{classNoctisEngine_1_1Color_a6143be0b8613e9a0f2fcfd30cbaede27}{blue}}, std\+::uint8\+\_\+t \mbox{\hyperlink{classNoctisEngine_1_1Color_a849a1836dd488cd0714e766302e6d7cd}{alpha}}=255)
+\begin{DoxyCompactList}\small\item\em Creates a color. \end{DoxyCompactList}\item 
+\Hypertarget{classNoctisEngine_1_1Color_a89789591ae35191977bf38d61976037e}\label{classNoctisEngine_1_1Color_a89789591ae35191977bf38d61976037e} 
+constexpr auto {\bfseries red} () const -\/$>$ std\+::uint8\+\_\+t
+\begin{DoxyCompactList}\small\item\em Gets this color\textquotesingle{}s red component. \end{DoxyCompactList}\item 
+\Hypertarget{classNoctisEngine_1_1Color_a91fd1e5b26cdfafd8c6900dc695aeef7}\label{classNoctisEngine_1_1Color_a91fd1e5b26cdfafd8c6900dc695aeef7} 
+constexpr auto {\bfseries green} () const -\/$>$ std\+::uint8\+\_\+t
+\begin{DoxyCompactList}\small\item\em Gets this color\textquotesingle{}s green component. \end{DoxyCompactList}\item 
+\Hypertarget{classNoctisEngine_1_1Color_a6143be0b8613e9a0f2fcfd30cbaede27}\label{classNoctisEngine_1_1Color_a6143be0b8613e9a0f2fcfd30cbaede27} 
+constexpr auto {\bfseries blue} () const -\/$>$ std\+::uint8\+\_\+t
+\begin{DoxyCompactList}\small\item\em Gets this color\textquotesingle{}s blue component. \end{DoxyCompactList}\item 
+\Hypertarget{classNoctisEngine_1_1Color_a849a1836dd488cd0714e766302e6d7cd}\label{classNoctisEngine_1_1Color_a849a1836dd488cd0714e766302e6d7cd} 
+constexpr auto {\bfseries alpha} () const -\/$>$ std\+::uint8\+\_\+t
+\begin{DoxyCompactList}\small\item\em Gets this color\textquotesingle{}s alpha component. \end{DoxyCompactList}\item 
+\Hypertarget{classNoctisEngine_1_1Color_a45c29b48986cac83777419b61e6d58b4}\label{classNoctisEngine_1_1Color_a45c29b48986cac83777419b61e6d58b4} 
+constexpr auto {\bfseries red\+\_\+f} () const -\/$>$ float
+\begin{DoxyCompactList}\small\item\em Gets this color\textquotesingle{}s red component as a float in the \mbox{[}0, 1\mbox{]} range. \end{DoxyCompactList}\item 
+\Hypertarget{classNoctisEngine_1_1Color_ad308bd7c9a189de654149ffc8132fc2a}\label{classNoctisEngine_1_1Color_ad308bd7c9a189de654149ffc8132fc2a} 
+constexpr auto {\bfseries green\+\_\+f} () const -\/$>$ float
+\begin{DoxyCompactList}\small\item\em Gets this color\textquotesingle{}s green component as a float in the \mbox{[}0, 1\mbox{]} range. \end{DoxyCompactList}\item 
+\Hypertarget{classNoctisEngine_1_1Color_ab31e3ffa929833059912699565870962}\label{classNoctisEngine_1_1Color_ab31e3ffa929833059912699565870962} 
+constexpr auto {\bfseries blue\+\_\+f} () const -\/$>$ float
+\begin{DoxyCompactList}\small\item\em Gets this color\textquotesingle{}s blue component as a float in the \mbox{[}0, 1\mbox{]} range. \end{DoxyCompactList}\item 
+\Hypertarget{classNoctisEngine_1_1Color_a1f2e44bb7d9c888301a3e80aa229fc29}\label{classNoctisEngine_1_1Color_a1f2e44bb7d9c888301a3e80aa229fc29} 
+constexpr auto {\bfseries alpha\+\_\+f} () const -\/$>$ float
+\begin{DoxyCompactList}\small\item\em Gets this color\textquotesingle{}s alpha component as a float in the \mbox{[}0, 1\mbox{]} range. \end{DoxyCompactList}\item 
+constexpr auto \mbox{\hyperlink{classNoctisEngine_1_1Color_a6c39fe18c05853a6918705e593d753b7}{to\+\_\+\+RGBA\+\_\+int}} () const -\/$>$ std\+::uint32\+\_\+t
+\begin{DoxyCompactList}\small\item\em Converts this color to a uint32. \end{DoxyCompactList}\item 
+constexpr auto \mbox{\hyperlink{classNoctisEngine_1_1Color_a5c5d19b4e5a90a108c5ffc653e58f93f}{to\+\_\+floats}} () const -\/$>$ glm\+::vec4
+\begin{DoxyCompactList}\small\item\em Converts this color to a glm\+::vec4 containing all the components\textquotesingle{} floating point values. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr auto \mbox{\hyperlink{classNoctisEngine_1_1Color_a29ab0af665f12c14cb79d50f1a52e972}{Color\+::\+RGBA\+\_\+to\+\_\+floats}} (std\+::uint32\+\_\+t color) -\/$>$ glm\+::vec4
+\begin{DoxyCompactList}\small\item\em Converts a RGBA color to 4 floats (red, green, blue and alpha) in the range \mbox{[}0, 1\mbox{]}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A class representing a RGBA color. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classNoctisEngine_1_1Color_a0a9983716bce9956560f6c82a40dd895}\label{classNoctisEngine_1_1Color_a0a9983716bce9956560f6c82a40dd895} 
+\index{NoctisEngine::Color@{NoctisEngine::Color}!Color@{Color}}
+\index{Color@{Color}!NoctisEngine::Color@{NoctisEngine::Color}}
+\doxysubsubsection{\texorpdfstring{Color()}{Color()}}
+{\footnotesize\ttfamily constexpr Noctis\+Engine\+::\+Color\+::\+Color (\begin{DoxyParamCaption}\item[{std\+::uint8\+\_\+t}]{red,  }\item[{std\+::uint8\+\_\+t}]{green,  }\item[{std\+::uint8\+\_\+t}]{blue,  }\item[{std\+::uint8\+\_\+t}]{alpha = {\ttfamily 255} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}}
+
+
+
+Creates a color. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em red} & The color\textquotesingle{}s red component \\
+\hline
+{\em green} & The color\textquotesingle{}s green component \\
+\hline
+{\em blue} & The color\textquotesingle{}s blue component \\
+\hline
+{\em alpha} & The color\textquotesingle{}s alpha component. Default 255 \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classNoctisEngine_1_1Color_a29ab0af665f12c14cb79d50f1a52e972}\label{classNoctisEngine_1_1Color_a29ab0af665f12c14cb79d50f1a52e972} 
+\index{NoctisEngine::Color@{NoctisEngine::Color}!Color::RGBA\_to\_floats@{Color::RGBA\_to\_floats}}
+\index{Color::RGBA\_to\_floats@{Color::RGBA\_to\_floats}!NoctisEngine::Color@{NoctisEngine::Color}}
+\doxysubsubsection{\texorpdfstring{Color::RGBA\_to\_floats()}{Color::RGBA\_to\_floats()}}
+{\footnotesize\ttfamily static constexpr auto Noctis\+Engine\+::\+Color\+::\+Color\+::\+RGBA\+\_\+to\+\_\+floats (\begin{DoxyParamCaption}\item[{std\+::uint32\+\_\+t}]{color }\end{DoxyParamCaption}) -\/$>$ glm\+::vec4     \hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Converts a RGBA color to 4 floats (red, green, blue and alpha) in the range \mbox{[}0, 1\mbox{]}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em color} & The RGBA color \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The 4 floats 
+\end{DoxyReturn}
+\Hypertarget{classNoctisEngine_1_1Color_a5c5d19b4e5a90a108c5ffc653e58f93f}\label{classNoctisEngine_1_1Color_a5c5d19b4e5a90a108c5ffc653e58f93f} 
+\index{NoctisEngine::Color@{NoctisEngine::Color}!to\_floats@{to\_floats}}
+\index{to\_floats@{to\_floats}!NoctisEngine::Color@{NoctisEngine::Color}}
+\doxysubsubsection{\texorpdfstring{to\_floats()}{to\_floats()}}
+{\footnotesize\ttfamily constexpr auto Noctis\+Engine\+::\+Color\+::to\+\_\+floats (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const -\/$>$ glm\+::vec4      \hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}}
+
+
+
+Converts this color to a glm\+::vec4 containing all the components\textquotesingle{} floating point values. 
+
+\begin{DoxyReturn}{Returns}
+The glm\+::vec4 ~\newline
+ 
+\end{DoxyReturn}
+\Hypertarget{classNoctisEngine_1_1Color_a6c39fe18c05853a6918705e593d753b7}\label{classNoctisEngine_1_1Color_a6c39fe18c05853a6918705e593d753b7} 
+\index{NoctisEngine::Color@{NoctisEngine::Color}!to\_RGBA\_int@{to\_RGBA\_int}}
+\index{to\_RGBA\_int@{to\_RGBA\_int}!NoctisEngine::Color@{NoctisEngine::Color}}
+\doxysubsubsection{\texorpdfstring{to\_RGBA\_int()}{to\_RGBA\_int()}}
+{\footnotesize\ttfamily constexpr auto Noctis\+Engine\+::\+Color\+::to\+\_\+\+RGBA\+\_\+int (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const -\/$>$ std\+::uint32\+\_\+t     \hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}}
+
+
+
+Converts this color to a uint32. 
+
+\begin{DoxyReturn}{Returns}
+The uint32 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/\+Victor/\+Programming/\+Noctis-\/\+Engine-\/\+Test-\/\+Game/noctis-\/engine/include/noctis\+\_\+engine/math/color.\+hpp\end{DoxyCompactItemize}

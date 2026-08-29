@@ -1,0 +1,342 @@
+\doxysection{Noctis\+Engine\+::ECS\+::World Class Reference}
+\hypertarget{classNoctisEngine_1_1ECS_1_1World}{}\label{classNoctisEngine_1_1ECS_1_1World}\index{NoctisEngine::ECS::World@{NoctisEngine::ECS::World}}
+
+
+This function holds references to all components and entities that were created.  
+
+
+
+
+{\ttfamily \#include $<$ecs\+\_\+world.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classNoctisEngine_1_1ECS_1_1World_a1033a69b55ec7816f8f881a791a82079}\label{classNoctisEngine_1_1ECS_1_1World_a1033a69b55ec7816f8f881a791a82079} 
+{\bfseries World} ()
+\begin{DoxyCompactList}\small\item\em Creates a world. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1World_a9f8e064a6c5378fc904b2ed4d1ff8214}{create\+\_\+entity}} () -\/$>$ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}}
+\begin{DoxyCompactList}\small\item\em Creates an entity in this world. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1World_a3f554bd765bb7b9ae5a5edb6909682b0}{destroy\+\_\+entity}} (\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}} entity) -\/$>$ void
+\begin{DoxyCompactList}\small\item\em Destroys an entity, and its associated components. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\auto \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1World_a7ba725537eca578ce609f352ed29da7e}{add\+\_\+component}} (\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}} entity, T component) -\/$>$ void
+\begin{DoxyCompactList}\small\item\em Adds a component to an entity. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\auto \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1World_ae66fd1d82ae46c0e21e69aff1f23a575}{get\+\_\+component}} (\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}} entity) -\/$>$ T \texorpdfstring{$\ast$}{*}
+\begin{DoxyCompactList}\small\item\em Gets a component from an entity. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\auto \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1World_a36c53819faa31d84590e1b20be2ebf46}{get\+\_\+component}} (\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}} entity) const -\/$>$ const T \texorpdfstring{$\ast$}{*}
+\begin{DoxyCompactList}\small\item\em Gets a constant component from an entity. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\auto \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1World_ad81efc63d52add42abae44852053c403}{remove\+\_\+component}} (\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}} entity) -\/$>$ void
+\begin{DoxyCompactList}\small\item\em Removes a component from an\+Reference entity. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\auto \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1World_a545da80e64d2cd64efd4fbc20c816add}{has\+\_\+component}} (\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}} entity) const -\/$>$ bool
+\begin{DoxyCompactList}\small\item\em Checks if an entity has a component. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\auto \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1World_a04fca7c4ab22a6c463a3256233efba9b}{all\+\_\+entities}} () const -\/$>$ const std\+::vector$<$ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}} $>$ \texorpdfstring{$\ast$}{*}
+\begin{DoxyCompactList}\small\item\em Gets all entities that have a component. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\auto \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1World_ae961bf74191b25c69db56de2f64dba4f}{all}} () -\/$>$ std\+::vector$<$ T $>$ \&
+\begin{DoxyCompactList}\small\item\em Gets all components of one type. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\auto \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1World_ada9a26a7eb3f695153c930862e38e96e}{all}} () const -\/$>$ const std\+::vector$<$ T $>$ \texorpdfstring{$\ast$}{*}
+\begin{DoxyCompactList}\small\item\em Gets a constant pointer to all components of one type. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\auto \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1World_aeb4a4a3b79066203123d830743ea2dc5}{get\+\_\+storage}} () -\/$>$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1ComponentStorage}{Component\+Storage}}$<$ T $>$ $>$
+\begin{DoxyCompactList}\small\item\em Gets a component storage as a shared\+\_\+ptr for one type of component. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\auto \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1World_ae6937bce6f7aa35fa51e67fe2016550d}{get\+\_\+const\+\_\+storage}} () const -\/$>$ const std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1ComponentStorage}{Component\+Storage}}$<$ T $>$ $>$
+\begin{DoxyCompactList}\small\item\em Gets a component storage as a constant shared\+\_\+ptr for one type of component. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename... Components\+\_\+$>$ }\\auto \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1World_ad1352deede9e0977f58903461b42f9e9}{query}} () -\/$>$ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1View}{View}}$<$ Components\+\_\+... $>$
+\begin{DoxyCompactList}\small\item\em Creates a view of all components provided in the template argument. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename... Components\+\_\+$>$ }\\auto \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1World_a8565750bb40f77e9881d74842b17bb92}{smallest\+\_\+storage}} () const -\/$>$ const std\+::vector$<$ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}} $>$ \texorpdfstring{$\ast$}{*}
+\begin{DoxyCompactList}\small\item\em Gets the smallest storage\textquotesingle{}s entities among multiple component storages. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This function holds references to all components and entities that were created. 
+
+\begin{DoxyWarning}{Warning}
+Any references or pointers returned by the member functions of this class shouldn\textquotesingle{}t be stored as they can be invalidated when the world is modified ~\newline
+ 
+\end{DoxyWarning}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classNoctisEngine_1_1ECS_1_1World_a7ba725537eca578ce609f352ed29da7e}\label{classNoctisEngine_1_1ECS_1_1World_a7ba725537eca578ce609f352ed29da7e} 
+\index{NoctisEngine::ECS::World@{NoctisEngine::ECS::World}!add\_component@{add\_component}}
+\index{add\_component@{add\_component}!NoctisEngine::ECS::World@{NoctisEngine::ECS::World}}
+\doxysubsubsection{\texorpdfstring{add\_component()}{add\_component()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+auto Noctis\+Engine\+::\+ECS\+::\+World\+::add\+\_\+component (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}}}]{entity,  }\item[{T}]{component }\end{DoxyParamCaption}) -\/$>$ void     \hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Adds a component to an entity. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The component\textquotesingle{}s type \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em entity} & The entity the component should be added to \\
+\hline
+{\em component} & The component \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classNoctisEngine_1_1ECS_1_1World_ae961bf74191b25c69db56de2f64dba4f}\label{classNoctisEngine_1_1ECS_1_1World_ae961bf74191b25c69db56de2f64dba4f} 
+\index{NoctisEngine::ECS::World@{NoctisEngine::ECS::World}!all@{all}}
+\index{all@{all}!NoctisEngine::ECS::World@{NoctisEngine::ECS::World}}
+\doxysubsubsection{\texorpdfstring{all()}{all()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+auto Noctis\+Engine\+::\+ECS\+::\+World\+::all (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) -\/$>$ std\+::vector$<$T$>$ \&     \hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets all components of one type. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The component\textquotesingle{}s type \\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxyReturn}{Returns}
+A vector containing all the components of that type, can be empty 
+\end{DoxyReturn}
+\Hypertarget{classNoctisEngine_1_1ECS_1_1World_ada9a26a7eb3f695153c930862e38e96e}\label{classNoctisEngine_1_1ECS_1_1World_ada9a26a7eb3f695153c930862e38e96e} 
+\index{NoctisEngine::ECS::World@{NoctisEngine::ECS::World}!all@{all}}
+\index{all@{all}!NoctisEngine::ECS::World@{NoctisEngine::ECS::World}}
+\doxysubsubsection{\texorpdfstring{all()}{all()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+auto Noctis\+Engine\+::\+ECS\+::\+World\+::all (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const -\/$>$ const std\+::vector$<$T$>$ \texorpdfstring{$\ast$}{*}     \hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets a constant pointer to all components of one type. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The component\textquotesingle{}s type \\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxyReturn}{Returns}
+A constant pointer to the vector containing all the components of that type 
+\end{DoxyReturn}
+\Hypertarget{classNoctisEngine_1_1ECS_1_1World_a04fca7c4ab22a6c463a3256233efba9b}\label{classNoctisEngine_1_1ECS_1_1World_a04fca7c4ab22a6c463a3256233efba9b} 
+\index{NoctisEngine::ECS::World@{NoctisEngine::ECS::World}!all\_entities@{all\_entities}}
+\index{all\_entities@{all\_entities}!NoctisEngine::ECS::World@{NoctisEngine::ECS::World}}
+\doxysubsubsection{\texorpdfstring{all\_entities()}{all\_entities()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+auto Noctis\+Engine\+::\+ECS\+::\+World\+::all\+\_\+entities (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const -\/$>$ const std\+::vector$<$\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}}$>$ \texorpdfstring{$\ast$}{*}     \hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets all entities that have a component. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The component\textquotesingle{}s type \\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxyReturn}{Returns}
+nullptr if no entities have that component, a constant pointer to all the entities that have this component 
+\end{DoxyReturn}
+\Hypertarget{classNoctisEngine_1_1ECS_1_1World_a9f8e064a6c5378fc904b2ed4d1ff8214}\label{classNoctisEngine_1_1ECS_1_1World_a9f8e064a6c5378fc904b2ed4d1ff8214} 
+\index{NoctisEngine::ECS::World@{NoctisEngine::ECS::World}!create\_entity@{create\_entity}}
+\index{create\_entity@{create\_entity}!NoctisEngine::ECS::World@{NoctisEngine::ECS::World}}
+\doxysubsubsection{\texorpdfstring{create\_entity()}{create\_entity()}}
+{\footnotesize\ttfamily auto Noctis\+Engine\+::\+ECS\+::\+World\+::create\+\_\+entity (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) -\/$>$ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}}     \hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Creates an entity in this world. 
+
+\begin{DoxyReturn}{Returns}
+The created entity 
+\end{DoxyReturn}
+\Hypertarget{classNoctisEngine_1_1ECS_1_1World_a3f554bd765bb7b9ae5a5edb6909682b0}\label{classNoctisEngine_1_1ECS_1_1World_a3f554bd765bb7b9ae5a5edb6909682b0} 
+\index{NoctisEngine::ECS::World@{NoctisEngine::ECS::World}!destroy\_entity@{destroy\_entity}}
+\index{destroy\_entity@{destroy\_entity}!NoctisEngine::ECS::World@{NoctisEngine::ECS::World}}
+\doxysubsubsection{\texorpdfstring{destroy\_entity()}{destroy\_entity()}}
+{\footnotesize\ttfamily auto Noctis\+Engine\+::\+ECS\+::\+World\+::destroy\+\_\+entity (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}}}]{entity }\end{DoxyParamCaption}) -\/$>$ void     \hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Destroys an entity, and its associated components. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em entity} & The entity that should be destroyed \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+This can be expensive, so use sparringly 
+\end{DoxyWarning}
+\Hypertarget{classNoctisEngine_1_1ECS_1_1World_ae66fd1d82ae46c0e21e69aff1f23a575}\label{classNoctisEngine_1_1ECS_1_1World_ae66fd1d82ae46c0e21e69aff1f23a575} 
+\index{NoctisEngine::ECS::World@{NoctisEngine::ECS::World}!get\_component@{get\_component}}
+\index{get\_component@{get\_component}!NoctisEngine::ECS::World@{NoctisEngine::ECS::World}}
+\doxysubsubsection{\texorpdfstring{get\_component()}{get\_component()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+auto Noctis\+Engine\+::\+ECS\+::\+World\+::get\+\_\+component (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}}}]{entity }\end{DoxyParamCaption}) -\/$>$ T \texorpdfstring{$\ast$}{*}     \hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets a component from an entity. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The component\textquotesingle{}s type \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em entity} & The entity the component should gotten from \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+nullptr if the entity doesn\textquotesingle{}t have that component, a pointer to the component otherwise 
+\end{DoxyReturn}
+\Hypertarget{classNoctisEngine_1_1ECS_1_1World_a36c53819faa31d84590e1b20be2ebf46}\label{classNoctisEngine_1_1ECS_1_1World_a36c53819faa31d84590e1b20be2ebf46} 
+\index{NoctisEngine::ECS::World@{NoctisEngine::ECS::World}!get\_component@{get\_component}}
+\index{get\_component@{get\_component}!NoctisEngine::ECS::World@{NoctisEngine::ECS::World}}
+\doxysubsubsection{\texorpdfstring{get\_component()}{get\_component()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+auto Noctis\+Engine\+::\+ECS\+::\+World\+::get\+\_\+component (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}}}]{entity }\end{DoxyParamCaption}) const -\/$>$ const T \texorpdfstring{$\ast$}{*}     \hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets a constant component from an entity. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The component\textquotesingle{}s type \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em entity} & The entity the component should gotten from \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+nullptr if the entity doesn\textquotesingle{}t have that component, a constant pointer to the component otherwise 
+\end{DoxyReturn}
+\Hypertarget{classNoctisEngine_1_1ECS_1_1World_ae6937bce6f7aa35fa51e67fe2016550d}\label{classNoctisEngine_1_1ECS_1_1World_ae6937bce6f7aa35fa51e67fe2016550d} 
+\index{NoctisEngine::ECS::World@{NoctisEngine::ECS::World}!get\_const\_storage@{get\_const\_storage}}
+\index{get\_const\_storage@{get\_const\_storage}!NoctisEngine::ECS::World@{NoctisEngine::ECS::World}}
+\doxysubsubsection{\texorpdfstring{get\_const\_storage()}{get\_const\_storage()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+auto Noctis\+Engine\+::\+ECS\+::\+World\+::get\+\_\+const\+\_\+storage (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const -\/$>$ const std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1ComponentStorage}{Component\+Storage}}$<$T$>$$>$     \hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets a component storage as a constant shared\+\_\+ptr for one type of component. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The component\textquotesingle{}s type \\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxyReturn}{Returns}
+A shared pointer to the component storage. This one can be stored 
+\end{DoxyReturn}
+\Hypertarget{classNoctisEngine_1_1ECS_1_1World_aeb4a4a3b79066203123d830743ea2dc5}\label{classNoctisEngine_1_1ECS_1_1World_aeb4a4a3b79066203123d830743ea2dc5} 
+\index{NoctisEngine::ECS::World@{NoctisEngine::ECS::World}!get\_storage@{get\_storage}}
+\index{get\_storage@{get\_storage}!NoctisEngine::ECS::World@{NoctisEngine::ECS::World}}
+\doxysubsubsection{\texorpdfstring{get\_storage()}{get\_storage()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+auto Noctis\+Engine\+::\+ECS\+::\+World\+::get\+\_\+storage (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) -\/$>$ std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1ComponentStorage}{Component\+Storage}}$<$T$>$$>$     \hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets a component storage as a shared\+\_\+ptr for one type of component. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The component\textquotesingle{}s type \\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxyReturn}{Returns}
+A shared pointer to the component storage. This one can be stored 
+\end{DoxyReturn}
+\Hypertarget{classNoctisEngine_1_1ECS_1_1World_a545da80e64d2cd64efd4fbc20c816add}\label{classNoctisEngine_1_1ECS_1_1World_a545da80e64d2cd64efd4fbc20c816add} 
+\index{NoctisEngine::ECS::World@{NoctisEngine::ECS::World}!has\_component@{has\_component}}
+\index{has\_component@{has\_component}!NoctisEngine::ECS::World@{NoctisEngine::ECS::World}}
+\doxysubsubsection{\texorpdfstring{has\_component()}{has\_component()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+auto Noctis\+Engine\+::\+ECS\+::\+World\+::has\+\_\+component (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}}}]{entity }\end{DoxyParamCaption}) const -\/$>$ bool     \hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Checks if an entity has a component. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The component\textquotesingle{}s type \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em entity} & The entity that should be checked \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the entity has that component, false otherwise 
+\end{DoxyReturn}
+\Hypertarget{classNoctisEngine_1_1ECS_1_1World_ad1352deede9e0977f58903461b42f9e9}\label{classNoctisEngine_1_1ECS_1_1World_ad1352deede9e0977f58903461b42f9e9} 
+\index{NoctisEngine::ECS::World@{NoctisEngine::ECS::World}!query@{query}}
+\index{query@{query}!NoctisEngine::ECS::World@{NoctisEngine::ECS::World}}
+\doxysubsubsection{\texorpdfstring{query()}{query()}}
+{\footnotesize\ttfamily template$<$typename... Components\+\_\+$>$ \\
+auto Noctis\+Engine\+::\+ECS\+::\+World\+::query (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) -\/$>$ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1View}{View}}$<$Components\+\_\+...$>$      \hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Creates a view of all components provided in the template argument. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em ...\+Components\+\_\+} & All the components this view will access \\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxyReturn}{Returns}
+The created view 
+\end{DoxyReturn}
+\Hypertarget{classNoctisEngine_1_1ECS_1_1World_ad81efc63d52add42abae44852053c403}\label{classNoctisEngine_1_1ECS_1_1World_ad81efc63d52add42abae44852053c403} 
+\index{NoctisEngine::ECS::World@{NoctisEngine::ECS::World}!remove\_component@{remove\_component}}
+\index{remove\_component@{remove\_component}!NoctisEngine::ECS::World@{NoctisEngine::ECS::World}}
+\doxysubsubsection{\texorpdfstring{remove\_component()}{remove\_component()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+auto Noctis\+Engine\+::\+ECS\+::\+World\+::remove\+\_\+component (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}}}]{entity }\end{DoxyParamCaption}) -\/$>$ void     \hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Removes a component from an\+Reference entity. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The component\textquotesingle{}s type \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em entity} & The entity the component should be removed from \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classNoctisEngine_1_1ECS_1_1World_a8565750bb40f77e9881d74842b17bb92}\label{classNoctisEngine_1_1ECS_1_1World_a8565750bb40f77e9881d74842b17bb92} 
+\index{NoctisEngine::ECS::World@{NoctisEngine::ECS::World}!smallest\_storage@{smallest\_storage}}
+\index{smallest\_storage@{smallest\_storage}!NoctisEngine::ECS::World@{NoctisEngine::ECS::World}}
+\doxysubsubsection{\texorpdfstring{smallest\_storage()}{smallest\_storage()}}
+{\footnotesize\ttfamily template$<$typename... Components\+\_\+$>$ \\
+auto Noctis\+Engine\+::\+ECS\+::\+World\+::smallest\+\_\+storage (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const -\/$>$ const std\+::vector$<$\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}}$>$ \texorpdfstring{$\ast$}{*}     \hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets the smallest storage\textquotesingle{}s entities among multiple component storages. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em ...\+Components\+\_\+} & The components\textquotesingle{} types \\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxyReturn}{Returns}
+The smallest storage\textquotesingle{}s entities 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/\+Victor/\+Programming/\+Noctis-\/\+Engine-\/\+Test-\/\+Game/noctis-\/engine/include/noctis\+\_\+engine/ecs/ecs\+\_\+world.\+hpp\end{DoxyCompactItemize}

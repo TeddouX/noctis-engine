@@ -1,0 +1,166 @@
+\doxysection{Noctis\+Engine\+::Rendering\+::Vertex\+Array Class Reference}
+\hypertarget{classNoctisEngine_1_1Rendering_1_1VertexArray}{}\label{classNoctisEngine_1_1Rendering_1_1VertexArray}\index{NoctisEngine::Rendering::VertexArray@{NoctisEngine::Rendering::VertexArray}}
+
+
+This class is used to store vertices for drawing on the GPU.  
+
+
+
+
+{\ttfamily \#include $<$vertex\+\_\+array.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classNoctisEngine_1_1Rendering_1_1VertexArray_a3d8a74e98e44be13384cd40feb130962}\label{classNoctisEngine_1_1Rendering_1_1VertexArray_a3d8a74e98e44be13384cd40feb130962} 
+{\bfseries Vertex\+Array} ()=default
+\begin{DoxyCompactList}\small\item\em Default constructor. Doesn\textquotesingle{}t create anything on the GPU. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1VertexArray_ab8461548086982c3d2b492fea0af7733}{Vertex\+Array}} (const std\+::vector$<$ \mbox{\hyperlink{structNoctisEngine_1_1Rendering_1_1VertexAttribute}{Vertex\+Attribute}} $>$ \&vertex\+\_\+attribs, std\+::string\+\_\+view name="{}vertex\+\_\+array"{}, bool create\+\_\+buffers=true, bool use\+\_\+ebo=true)
+\begin{DoxyCompactList}\small\item\em Creates a VAO on the GPU. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1VertexArray_aa47e5823d31fd02cc8ed0f486b04901d}{upload\+\_\+vertices}} (void \texorpdfstring{$\ast$}{*}vertices, std\+::size\+\_\+t size, std\+::size\+\_\+t vertex\+\_\+size) -\/$>$ void
+\begin{DoxyCompactList}\small\item\em Uploads vertices to this vertex array. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1VertexArray_a90c1cf89066bc873d00f53013ef4764e}{upload\+\_\+indices}} (const std\+::vector$<$ std\+::uint32\+\_\+t $>$ \&indices) -\/$>$ void
+\begin{DoxyCompactList}\small\item\em Uploads indices linked to this vertex array. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1VertexArray_af659e0b3e2d0ef4701058df7bee16a41}{link\+\_\+vbo}} (const \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1GPUBuffer}{GPUBuffer}} \&vbo\+\_\+bu, std\+::size\+\_\+t vertex\+\_\+size, std\+::size\+\_\+t first\+\_\+el\+\_\+off=0) -\/$>$ void
+\begin{DoxyCompactList}\small\item\em Links a vertex buffer object to this vertex array. Use this if you want precise memory control over your vertex buffer. The VBO should be relinked when it gets resized. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1VertexArray_a3a75000482f41b789c818c3b4333a066}{link\+\_\+ebo}} (const \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1GPUBuffer}{GPUBuffer}} \&ebo\+\_\+buf) -\/$>$ void
+\begin{DoxyCompactList}\small\item\em Links a element buffer object (indices) to this vertex array. Use this if you want precise memory control over your element buffer. The EBO should be relinked when it gets resized. \end{DoxyCompactList}\item 
+\Hypertarget{classNoctisEngine_1_1Rendering_1_1VertexArray_a08a882fa5c42e64e560ad19d83db4b07}\label{classNoctisEngine_1_1Rendering_1_1VertexArray_a08a882fa5c42e64e560ad19d83db4b07} 
+auto {\bfseries delete\+\_\+gpu} () -\/$>$ void
+\begin{DoxyCompactList}\small\item\em Deletes the object from the GPU. This vertex array shouldn\textquotesingle{}t be used after calling this function. Also deletes linked buffers. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1VertexArray_ae1dec9bd02a06f5fef5aad8791d0703d}{bind}} (\mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1DrawList}{Draw\+List}} \&draw\+\_\+list) -\/$>$ void
+\begin{DoxyCompactList}\small\item\em Binds this vertex array and its linked EBO to a draw list. \end{DoxyCompactList}\item 
+\Hypertarget{classNoctisEngine_1_1Rendering_1_1VertexArray_ae51428261e6f7dec81c7e297b5a9111a}\label{classNoctisEngine_1_1Rendering_1_1VertexArray_ae51428261e6f7dec81c7e297b5a9111a} 
+auto {\bfseries vao\+\_\+gl\+\_\+handle} () -\/$>$ std\+::uint32\+\_\+t
+\begin{DoxyCompactList}\small\item\em Gets this vertex array\textquotesingle{}s Open\+GL handle ~\newline
+ \end{DoxyCompactList}\item 
+\Hypertarget{classNoctisEngine_1_1Rendering_1_1VertexArray_a6702e3441ccb58ab848f8b4bff913f2a}\label{classNoctisEngine_1_1Rendering_1_1VertexArray_a6702e3441ccb58ab848f8b4bff913f2a} 
+auto {\bfseries ebo} () -\/$>$ \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1GPUBuffer}{GPUBuffer}} \&
+\begin{DoxyCompactList}\small\item\em Gets the linked EBO. \end{DoxyCompactList}\item 
+\Hypertarget{classNoctisEngine_1_1Rendering_1_1VertexArray_ad1a7de1e1da7cb9d8b1c34b8078be7c0}\label{classNoctisEngine_1_1Rendering_1_1VertexArray_ad1a7de1e1da7cb9d8b1c34b8078be7c0} 
+auto {\bfseries vbo} () -\/$>$ \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1GPUBuffer}{GPUBuffer}} \&
+\begin{DoxyCompactList}\small\item\em Gets the linked VBO. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This class is used to store vertices for drawing on the GPU. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classNoctisEngine_1_1Rendering_1_1VertexArray_ab8461548086982c3d2b492fea0af7733}\label{classNoctisEngine_1_1Rendering_1_1VertexArray_ab8461548086982c3d2b492fea0af7733} 
+\index{NoctisEngine::Rendering::VertexArray@{NoctisEngine::Rendering::VertexArray}!VertexArray@{VertexArray}}
+\index{VertexArray@{VertexArray}!NoctisEngine::Rendering::VertexArray@{NoctisEngine::Rendering::VertexArray}}
+\doxysubsubsection{\texorpdfstring{VertexArray()}{VertexArray()}}
+{\footnotesize\ttfamily Noctis\+Engine\+::\+Rendering\+::\+Vertex\+Array\+::\+Vertex\+Array (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ \mbox{\hyperlink{structNoctisEngine_1_1Rendering_1_1VertexAttribute}{Vertex\+Attribute}} $>$ \&}]{vertex\+\_\+attribs,  }\item[{std\+::string\+\_\+view}]{name = {\ttfamily "{}vertex\+\_\+array"{}},  }\item[{bool}]{create\+\_\+buffers = {\ttfamily true},  }\item[{bool}]{use\+\_\+ebo = {\ttfamily true} }\end{DoxyParamCaption})}
+
+
+
+Creates a VAO on the GPU. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em vertex\+\_\+attribs} & This vertex array\textquotesingle{}s vertex attributes \\
+\hline
+{\em name} & This vertex array\textquotesingle{}s name. Default "{}vertex\+\_\+array"{} \\
+\hline
+{\em create\+\_\+buffers} & Specifies if the vertex array should create the VBO and, possibly (see use\+\_\+ebo), EBO buffers and link them. True by default \\
+\hline
+{\em use\+\_\+ebo} & Specifies if the vertex array should use an EBO buffer. Doesn\textquotesingle{}t do anything if create buffers is set to false. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classNoctisEngine_1_1Rendering_1_1VertexArray_ae1dec9bd02a06f5fef5aad8791d0703d}\label{classNoctisEngine_1_1Rendering_1_1VertexArray_ae1dec9bd02a06f5fef5aad8791d0703d} 
+\index{NoctisEngine::Rendering::VertexArray@{NoctisEngine::Rendering::VertexArray}!bind@{bind}}
+\index{bind@{bind}!NoctisEngine::Rendering::VertexArray@{NoctisEngine::Rendering::VertexArray}}
+\doxysubsubsection{\texorpdfstring{bind()}{bind()}}
+{\footnotesize\ttfamily auto Noctis\+Engine\+::\+Rendering\+::\+Vertex\+Array\+::bind (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1DrawList}{Draw\+List}} \&}]{draw\+\_\+list }\end{DoxyParamCaption}) -\/$>$  void}
+
+
+
+Binds this vertex array and its linked EBO to a draw list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em draw\+\_\+list} & The draw list this vertex array should be bound to \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classNoctisEngine_1_1Rendering_1_1VertexArray_a3a75000482f41b789c818c3b4333a066}\label{classNoctisEngine_1_1Rendering_1_1VertexArray_a3a75000482f41b789c818c3b4333a066} 
+\index{NoctisEngine::Rendering::VertexArray@{NoctisEngine::Rendering::VertexArray}!link\_ebo@{link\_ebo}}
+\index{link\_ebo@{link\_ebo}!NoctisEngine::Rendering::VertexArray@{NoctisEngine::Rendering::VertexArray}}
+\doxysubsubsection{\texorpdfstring{link\_ebo()}{link\_ebo()}}
+{\footnotesize\ttfamily auto Noctis\+Engine\+::\+Rendering\+::\+Vertex\+Array\+::link\+\_\+ebo (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1GPUBuffer}{GPUBuffer}} \&}]{ebo\+\_\+buf }\end{DoxyParamCaption}) -\/$>$  void}
+
+
+
+Links a element buffer object (indices) to this vertex array. Use this if you want precise memory control over your element buffer. The EBO should be relinked when it gets resized. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ebo\+\_\+buf} & The element buffer \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classNoctisEngine_1_1Rendering_1_1VertexArray_af659e0b3e2d0ef4701058df7bee16a41}\label{classNoctisEngine_1_1Rendering_1_1VertexArray_af659e0b3e2d0ef4701058df7bee16a41} 
+\index{NoctisEngine::Rendering::VertexArray@{NoctisEngine::Rendering::VertexArray}!link\_vbo@{link\_vbo}}
+\index{link\_vbo@{link\_vbo}!NoctisEngine::Rendering::VertexArray@{NoctisEngine::Rendering::VertexArray}}
+\doxysubsubsection{\texorpdfstring{link\_vbo()}{link\_vbo()}}
+{\footnotesize\ttfamily auto Noctis\+Engine\+::\+Rendering\+::\+Vertex\+Array\+::link\+\_\+vbo (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1GPUBuffer}{GPUBuffer}} \&}]{vbo\+\_\+bu,  }\item[{std\+::size\+\_\+t}]{vertex\+\_\+size,  }\item[{std\+::size\+\_\+t}]{first\+\_\+el\+\_\+off = {\ttfamily 0} }\end{DoxyParamCaption}) -\/$>$  void}
+
+
+
+Links a vertex buffer object to this vertex array. Use this if you want precise memory control over your vertex buffer. The VBO should be relinked when it gets resized. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em vbo\+\_\+buf} & The vertex buffer \\
+\hline
+{\em vertex\+\_\+size} & The size of one vertex \\
+\hline
+{\em first\+\_\+el\+\_\+off} & The offset of the first element of the buffer. Default 0 \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classNoctisEngine_1_1Rendering_1_1VertexArray_a90c1cf89066bc873d00f53013ef4764e}\label{classNoctisEngine_1_1Rendering_1_1VertexArray_a90c1cf89066bc873d00f53013ef4764e} 
+\index{NoctisEngine::Rendering::VertexArray@{NoctisEngine::Rendering::VertexArray}!upload\_indices@{upload\_indices}}
+\index{upload\_indices@{upload\_indices}!NoctisEngine::Rendering::VertexArray@{NoctisEngine::Rendering::VertexArray}}
+\doxysubsubsection{\texorpdfstring{upload\_indices()}{upload\_indices()}}
+{\footnotesize\ttfamily auto Noctis\+Engine\+::\+Rendering\+::\+Vertex\+Array\+::upload\+\_\+indices (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ std\+::uint32\+\_\+t $>$ \&}]{indices }\end{DoxyParamCaption}) -\/$>$  void}
+
+
+
+Uploads indices linked to this vertex array. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em indices} & The indices \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+For this function to work, use\+\_\+ebo should be set to true in the construct, or an ebo should be linked 
+\end{DoxyWarning}
+\Hypertarget{classNoctisEngine_1_1Rendering_1_1VertexArray_aa47e5823d31fd02cc8ed0f486b04901d}\label{classNoctisEngine_1_1Rendering_1_1VertexArray_aa47e5823d31fd02cc8ed0f486b04901d} 
+\index{NoctisEngine::Rendering::VertexArray@{NoctisEngine::Rendering::VertexArray}!upload\_vertices@{upload\_vertices}}
+\index{upload\_vertices@{upload\_vertices}!NoctisEngine::Rendering::VertexArray@{NoctisEngine::Rendering::VertexArray}}
+\doxysubsubsection{\texorpdfstring{upload\_vertices()}{upload\_vertices()}}
+{\footnotesize\ttfamily auto Noctis\+Engine\+::\+Rendering\+::\+Vertex\+Array\+::upload\+\_\+vertices (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{vertices,  }\item[{std\+::size\+\_\+t}]{size,  }\item[{std\+::size\+\_\+t}]{vertex\+\_\+size }\end{DoxyParamCaption}) -\/$>$  void}
+
+
+
+Uploads vertices to this vertex array. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em vertices} & The type erased vertices \\
+\hline
+{\em size} & The size in bytes of the vertices \\
+\hline
+{\em vertex\+\_\+size} & The size of one vertex \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+This should match vertex attributes provided in the constructor. Failure to do so will result in weird crashes or undefined behaviour. 
+\end{DoxyWarning}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/\+Victor/\+Programming/\+Noctis-\/\+Engine-\/\+Test-\/\+Game/noctis-\/engine/include/noctis\+\_\+engine/rendering/vertex\+\_\+array.\+hpp\end{DoxyCompactItemize}

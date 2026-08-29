@@ -1,0 +1,159 @@
+\doxysection{Noctis\+Engine\+::Rendering\+::Texture Class Reference}
+\hypertarget{classNoctisEngine_1_1Rendering_1_1Texture}{}\label{classNoctisEngine_1_1Rendering_1_1Texture}\index{NoctisEngine::Rendering::Texture@{NoctisEngine::Rendering::Texture}}
+
+
+This class represents a texture stored on the GPU.  
+
+
+
+
+{\ttfamily \#include $<$texture.\+hpp$>$}
+
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structNoctisEngine_1_1Rendering_1_1Texture_1_1Data}{Data}}
+\begin{DoxyCompactList}\small\item\em Describes a texture\textquotesingle{}s data, do not use this directly, except if you know what you\textquotesingle{}re doing, instead use \doxylink{namespaceNoctisEngine_1_1Asset_ad89ba9e670b4f9fae35ddb792165c077}{Asset\+::load\+\_\+texture}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1Texture_a4eecf903ec139a8f967e4586e5ebbe0d}{Texture}} (const \mbox{\hyperlink{structNoctisEngine_1_1Rendering_1_1Texture_1_1Data}{Data}} \&texture\+\_\+data)
+\begin{DoxyCompactList}\small\item\em Creates a texture and uploads its data to the GPU. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1Texture_ad635d0104e960bcebda54b4a06c43046}{set\+\_\+minifying\+\_\+function}} (\mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_abbea7d911da74c7d4b5aa2e8d2ec4897}{Minifying\+Function}} func) const -\/$>$ void
+\begin{DoxyCompactList}\small\item\em Sets the texture\textquotesingle{}s minifying function. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1Texture_a857a6d178010441b2cfe37bc4d86b413}{set\+\_\+magnifying\+\_\+function}} (\mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_a762e44b49464fe6d7979ba15bbe052ef}{Magnifying\+Function}} func) const -\/$>$ void
+\begin{DoxyCompactList}\small\item\em Sets the texture\textquotesingle{}s magnifying function. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1Texture_a0870a6e9a144f9275fa9b97662c4bdc9}{set\+\_\+wrap\+\_\+params}} (\mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_aa2cf3bfbd0e13a00a570d9b7358bd94e}{Wrap\+Param}} u\+\_\+param, \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_aa2cf3bfbd0e13a00a570d9b7358bd94e}{Wrap\+Param}} v\+\_\+param) const -\/$>$ void
+\begin{DoxyCompactList}\small\item\em Sets the texture\textquotesingle{}s wrap parameters. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1Texture_abde7d0f4a1977028a52ed6102c9a51b8}{set\+\_\+border\+\_\+color}} (const \mbox{\hyperlink{classNoctisEngine_1_1Color}{Color}} \&color) const -\/$>$ void
+\begin{DoxyCompactList}\small\item\em Sets the texture\textquotesingle{}s border color. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1Texture_a345b8883ad6acd542a54b14f73e74c5f}{bind}} (\mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1DrawList}{Draw\+List}} \&draw\+\_\+list, std\+::uint32\+\_\+t bind\+\_\+point) const -\/$>$ void
+\begin{DoxyCompactList}\small\item\em Sets this texture to be bound in a draw list. \end{DoxyCompactList}\item 
+\Hypertarget{classNoctisEngine_1_1Rendering_1_1Texture_a062f99027aa064d76b5b3cea947adf8b}\label{classNoctisEngine_1_1Rendering_1_1Texture_a062f99027aa064d76b5b3cea947adf8b} 
+auto {\bfseries delete\+\_\+gpu} () const -\/$>$ void
+\begin{DoxyCompactList}\small\item\em Removes this texture from the GPU, it shouldn\textquotesingle{}t be used after deletion. \end{DoxyCompactList}\item 
+\Hypertarget{classNoctisEngine_1_1Rendering_1_1Texture_a18890a9ceb79bc522dc53b3cebe61b92}\label{classNoctisEngine_1_1Rendering_1_1Texture_a18890a9ceb79bc522dc53b3cebe61b92} 
+auto {\bfseries gl\+\_\+handle} () const -\/$>$ std\+::uint32\+\_\+t
+\begin{DoxyCompactList}\small\item\em Gets this texture\textquotesingle{}s Open\+GL handle. \end{DoxyCompactList}\item 
+\Hypertarget{classNoctisEngine_1_1Rendering_1_1Texture_af2c998508a0d2a449b828de0d3cba86e}\label{classNoctisEngine_1_1Rendering_1_1Texture_af2c998508a0d2a449b828de0d3cba86e} 
+auto {\bfseries width} () const -\/$>$ int
+\begin{DoxyCompactList}\small\item\em Gets this texture\textquotesingle{}s width. \end{DoxyCompactList}\item 
+\Hypertarget{classNoctisEngine_1_1Rendering_1_1Texture_a897929954d5315b54639a5eb37fad701}\label{classNoctisEngine_1_1Rendering_1_1Texture_a897929954d5315b54639a5eb37fad701} 
+auto {\bfseries height} () const -\/$>$ int
+\begin{DoxyCompactList}\small\item\em Gets this texture\textquotesingle{}s height. \end{DoxyCompactList}\item 
+\Hypertarget{classNoctisEngine_1_1Rendering_1_1Texture_aad75445393bc3beadf6a6a2184f9bf12}\label{classNoctisEngine_1_1Rendering_1_1Texture_aad75445393bc3beadf6a6a2184f9bf12} 
+auto {\bfseries name} () const -\/$>$ std\+::string
+\begin{DoxyCompactList}\small\item\em Gets this texture\textquotesingle{}s name. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This class represents a texture stored on the GPU. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classNoctisEngine_1_1Rendering_1_1Texture_a4eecf903ec139a8f967e4586e5ebbe0d}\label{classNoctisEngine_1_1Rendering_1_1Texture_a4eecf903ec139a8f967e4586e5ebbe0d} 
+\index{NoctisEngine::Rendering::Texture@{NoctisEngine::Rendering::Texture}!Texture@{Texture}}
+\index{Texture@{Texture}!NoctisEngine::Rendering::Texture@{NoctisEngine::Rendering::Texture}}
+\doxysubsubsection{\texorpdfstring{Texture()}{Texture()}}
+{\footnotesize\ttfamily Noctis\+Engine\+::\+Rendering\+::\+Texture\+::\+Texture (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structNoctisEngine_1_1Rendering_1_1Texture_1_1Data}{Data}} \&}]{texture\+\_\+data }\end{DoxyParamCaption})}
+
+
+
+Creates a texture and uploads its data to the GPU. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em texture\+\_\+data} & The texture\textquotesingle{}s data \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classNoctisEngine_1_1Rendering_1_1Texture_a345b8883ad6acd542a54b14f73e74c5f}\label{classNoctisEngine_1_1Rendering_1_1Texture_a345b8883ad6acd542a54b14f73e74c5f} 
+\index{NoctisEngine::Rendering::Texture@{NoctisEngine::Rendering::Texture}!bind@{bind}}
+\index{bind@{bind}!NoctisEngine::Rendering::Texture@{NoctisEngine::Rendering::Texture}}
+\doxysubsubsection{\texorpdfstring{bind()}{bind()}}
+{\footnotesize\ttfamily auto Noctis\+Engine\+::\+Rendering\+::\+Texture\+::bind (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1DrawList}{Draw\+List}} \&}]{draw\+\_\+list,  }\item[{std\+::uint32\+\_\+t}]{bind\+\_\+point }\end{DoxyParamCaption}) const -\/$>$  void}
+
+
+
+Sets this texture to be bound in a draw list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em draw\+\_\+list} & The draw list \\
+\hline
+{\em bind\+\_\+point} & The point the texture should be bound to in the shader \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classNoctisEngine_1_1Rendering_1_1Texture_abde7d0f4a1977028a52ed6102c9a51b8}\label{classNoctisEngine_1_1Rendering_1_1Texture_abde7d0f4a1977028a52ed6102c9a51b8} 
+\index{NoctisEngine::Rendering::Texture@{NoctisEngine::Rendering::Texture}!set\_border\_color@{set\_border\_color}}
+\index{set\_border\_color@{set\_border\_color}!NoctisEngine::Rendering::Texture@{NoctisEngine::Rendering::Texture}}
+\doxysubsubsection{\texorpdfstring{set\_border\_color()}{set\_border\_color()}}
+{\footnotesize\ttfamily auto Noctis\+Engine\+::\+Rendering\+::\+Texture\+::set\+\_\+border\+\_\+color (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classNoctisEngine_1_1Color}{Color}} \&}]{color }\end{DoxyParamCaption}) const -\/$>$  void}
+
+
+
+Sets the texture\textquotesingle{}s border color. 
+
+\begin{DoxyWarning}{Warning}
+Only useful if you use the CLAMP\+\_\+\+TO\+\_\+\+BORDER wrap parameter 
+\end{DoxyWarning}
+
+\begin{DoxyParams}{Parameters}
+{\em color} & The texture\textquotesingle{}s border color \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classNoctisEngine_1_1Rendering_1_1Texture_a857a6d178010441b2cfe37bc4d86b413}\label{classNoctisEngine_1_1Rendering_1_1Texture_a857a6d178010441b2cfe37bc4d86b413} 
+\index{NoctisEngine::Rendering::Texture@{NoctisEngine::Rendering::Texture}!set\_magnifying\_function@{set\_magnifying\_function}}
+\index{set\_magnifying\_function@{set\_magnifying\_function}!NoctisEngine::Rendering::Texture@{NoctisEngine::Rendering::Texture}}
+\doxysubsubsection{\texorpdfstring{set\_magnifying\_function()}{set\_magnifying\_function()}}
+{\footnotesize\ttfamily auto Noctis\+Engine\+::\+Rendering\+::\+Texture\+::set\+\_\+magnifying\+\_\+function (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_a762e44b49464fe6d7979ba15bbe052ef}{Magnifying\+Function}}}]{func }\end{DoxyParamCaption}) const -\/$>$  void}
+
+
+
+Sets the texture\textquotesingle{}s magnifying function. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em func} & The magnifying function ~\newline
+ \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classNoctisEngine_1_1Rendering_1_1Texture_ad635d0104e960bcebda54b4a06c43046}\label{classNoctisEngine_1_1Rendering_1_1Texture_ad635d0104e960bcebda54b4a06c43046} 
+\index{NoctisEngine::Rendering::Texture@{NoctisEngine::Rendering::Texture}!set\_minifying\_function@{set\_minifying\_function}}
+\index{set\_minifying\_function@{set\_minifying\_function}!NoctisEngine::Rendering::Texture@{NoctisEngine::Rendering::Texture}}
+\doxysubsubsection{\texorpdfstring{set\_minifying\_function()}{set\_minifying\_function()}}
+{\footnotesize\ttfamily auto Noctis\+Engine\+::\+Rendering\+::\+Texture\+::set\+\_\+minifying\+\_\+function (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_abbea7d911da74c7d4b5aa2e8d2ec4897}{Minifying\+Function}}}]{func }\end{DoxyParamCaption}) const -\/$>$  void}
+
+
+
+Sets the texture\textquotesingle{}s minifying function. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em func} & The minifying function ~\newline
+ \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classNoctisEngine_1_1Rendering_1_1Texture_a0870a6e9a144f9275fa9b97662c4bdc9}\label{classNoctisEngine_1_1Rendering_1_1Texture_a0870a6e9a144f9275fa9b97662c4bdc9} 
+\index{NoctisEngine::Rendering::Texture@{NoctisEngine::Rendering::Texture}!set\_wrap\_params@{set\_wrap\_params}}
+\index{set\_wrap\_params@{set\_wrap\_params}!NoctisEngine::Rendering::Texture@{NoctisEngine::Rendering::Texture}}
+\doxysubsubsection{\texorpdfstring{set\_wrap\_params()}{set\_wrap\_params()}}
+{\footnotesize\ttfamily auto Noctis\+Engine\+::\+Rendering\+::\+Texture\+::set\+\_\+wrap\+\_\+params (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_aa2cf3bfbd0e13a00a570d9b7358bd94e}{Wrap\+Param}}}]{u\+\_\+param,  }\item[{\mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_aa2cf3bfbd0e13a00a570d9b7358bd94e}{Wrap\+Param}}}]{v\+\_\+param }\end{DoxyParamCaption}) const -\/$>$  void}
+
+
+
+Sets the texture\textquotesingle{}s wrap parameters. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em u\+\_\+param} & Horizontal wrap parameter \\
+\hline
+{\em v\+\_\+param} & Vertical wrap parameter \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/\+Victor/\+Programming/\+Noctis-\/\+Engine-\/\+Test-\/\+Game/noctis-\/engine/include/noctis\+\_\+engine/rendering/texture.\+hpp\end{DoxyCompactItemize}

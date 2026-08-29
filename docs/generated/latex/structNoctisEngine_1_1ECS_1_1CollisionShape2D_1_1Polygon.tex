@@ -1,0 +1,52 @@
+\doxysection{Noctis\+Engine\+::ECS\+::Collision\+Shape2D\+::Polygon Struct Reference}
+\hypertarget{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Polygon}{}\label{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Polygon}\index{NoctisEngine::ECS::CollisionShape2D::Polygon@{NoctisEngine::ECS::CollisionShape2D::Polygon}}
+
+
+Describes a convex poligon shape.  
+
+
+
+
+{\ttfamily \#include $<$collision\+\_\+shape\+\_\+2d.\+hpp$>$}
+
+
+
+Collaboration diagram for Noctis\+Engine\+::ECS\+::Collision\+Shape2D\+::Polygon\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=227pt]{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Polygon__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ glm\+::vec2 $>$ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Polygon_a67316e16fdac47fb617979212758c365}{points}}
+\item 
+\Hypertarget{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Polygon_a287cc40c0cde2d5822d2f5bfcc7f7fae}\label{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Polygon_a287cc40c0cde2d5822d2f5bfcc7f7fae} 
+float {\bfseries corner\+\_\+radius} \{0.\+0f\}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Describes a convex poligon shape. 
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Polygon_a67316e16fdac47fb617979212758c365}\label{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Polygon_a67316e16fdac47fb617979212758c365} 
+\index{NoctisEngine::ECS::CollisionShape2D::Polygon@{NoctisEngine::ECS::CollisionShape2D::Polygon}!points@{points}}
+\index{points@{points}!NoctisEngine::ECS::CollisionShape2D::Polygon@{NoctisEngine::ECS::CollisionShape2D::Polygon}}
+\doxysubsubsection{\texorpdfstring{points}{points}}
+{\footnotesize\ttfamily std\+::vector$<$glm\+::vec2$>$ Noctis\+Engine\+::\+ECS\+::\+Collision\+Shape2\+D\+::\+Polygon\+::points}
+
+
+\begin{DoxyItemize}
+\item Points should be a CCW (counter-\/clockwise) order
+\item Points must be decently far away from each other.
+\item Points mustn\textquotesingle{}t be on the same line.
+\item There should be more than 2 points.
+\item Points are should use pixels as units 
+\end{DoxyItemize}
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/\+Victor/\+Programming/\+Noctis-\/\+Engine-\/\+Test-\/\+Game/noctis-\/engine/include/noctis\+\_\+engine/ecs/system/collision\+\_\+shape\+\_\+2d.\+hpp\end{DoxyCompactItemize}

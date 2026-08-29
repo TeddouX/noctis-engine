@@ -1,0 +1,5 @@
+<map id="NoctisEngine::ECS::PhysicsMaterial2D" name="NoctisEngine::ECS::PhysicsMaterial2D">
+<area shape="rect" id="Node000001" title="Describes the physical properties of a collision shape." alt="" coords="6,93,154,133"/>
+<area shape="rect" id="Node000002" href="$classNoctisEngine_1_1Color.html" title="A class representing a RGBA color." alt="" coords="5,5,155,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="83,44,83,93,77,93,77,44"/>
+</map>

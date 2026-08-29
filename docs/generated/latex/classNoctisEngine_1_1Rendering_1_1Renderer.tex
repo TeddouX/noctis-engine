@@ -1,0 +1,149 @@
+\doxysection{Noctis\+Engine\+::Rendering\+::Renderer Class Reference}
+\hypertarget{classNoctisEngine_1_1Rendering_1_1Renderer}{}\label{classNoctisEngine_1_1Rendering_1_1Renderer}\index{NoctisEngine::Rendering::Renderer@{NoctisEngine::Rendering::Renderer}}
+
+
+Use this class to render draw lists and to parameterize your rendering.  
+
+
+
+
+{\ttfamily \#include $<$renderer.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classNoctisEngine_1_1Rendering_1_1Renderer_a22cad2a95d6c64722dd3a903c3e0daed}\label{classNoctisEngine_1_1Rendering_1_1Renderer_a22cad2a95d6c64722dd3a903c3e0daed} 
+{\bfseries Renderer} ()
+\begin{DoxyCompactList}\small\item\em Default constructor that initialises required buffers. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1Renderer_af28c70efac4226d7df2bbdd6aeb9d7e9}{set\+\_\+backface\+\_\+culling}} (bool b) const -\/$>$ void
+\begin{DoxyCompactList}\small\item\em Backface culling skips rendering triangles whose face is pointing away from the camera (based on vertex winding order) \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1Renderer_a7f41bee7705c425c5d3e03e8da869788}{set\+\_\+depth\+\_\+testing}} (bool b) const -\/$>$ void
+\begin{DoxyCompactList}\small\item\em Depth testing compares each new pixels\textquotesingle{}s depth (distance from the camera) against the value already stored in the depth buffer at that pixel, and discards the pixel if it\textquotesingle{}s farther away, so closer objects correctly draw over farther ones regardless of render order. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1Renderer_afd97660c807a606d89528f4a0d5ddca4}{set\+\_\+throw\+\_\+on\+\_\+err}} (bool b) -\/$>$ void
+\begin{DoxyCompactList}\small\item\em Enables the application to crash if an Open\+GL error is encountered. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1Renderer_a75fc0f973c9ac468b83654d648354b58}{set\+\_\+blend}} (bool b) const -\/$>$ void
+\begin{DoxyCompactList}\small\item\em Enables blending. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1Renderer_a56e6bcbb4cc66bc791b4b7702acd82a3}{set\+\_\+blend\+\_\+color}} (const \mbox{\hyperlink{classNoctisEngine_1_1Color}{Color}} \&col)
+\begin{DoxyCompactList}\small\item\em Sets the blending color, used by {\itshape CONSTANT\+\_\+\+COLOR} blending functions. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1Renderer_a63158311abe9fd65c2cb41300e7931d9}{set\+\_\+blend\+\_\+func}} (\mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_a3ef1b69e4ce9d797ca3f08395dd204ce}{Blend\+Func}} source, \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_a3ef1b69e4ce9d797ca3f08395dd204ce}{Blend\+Func}} dest) const -\/$>$ void
+\begin{DoxyCompactList}\small\item\em Sets the two multiplier factors\+: one for the incoming (source) pixel and one for the already drawn (destination) framebuffer pixel that get combined to produce the final blended color when blending is enabled. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1Renderer_a11ef6e905c649e683f1bb04e27d3452d}{render}} (\mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1DrawList}{Draw\+List}} \&draw\+\_\+list) -\/$>$ void
+\begin{DoxyCompactList}\small\item\em Renders the contents of a draw list on screen. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Use this class to render draw lists and to parameterize your rendering. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classNoctisEngine_1_1Rendering_1_1Renderer_a11ef6e905c649e683f1bb04e27d3452d}\label{classNoctisEngine_1_1Rendering_1_1Renderer_a11ef6e905c649e683f1bb04e27d3452d} 
+\index{NoctisEngine::Rendering::Renderer@{NoctisEngine::Rendering::Renderer}!render@{render}}
+\index{render@{render}!NoctisEngine::Rendering::Renderer@{NoctisEngine::Rendering::Renderer}}
+\doxysubsubsection{\texorpdfstring{render()}{render()}}
+{\footnotesize\ttfamily auto Noctis\+Engine\+::\+Rendering\+::\+Renderer\+::render (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1DrawList}{Draw\+List}} \&}]{draw\+\_\+list }\end{DoxyParamCaption}) -\/$>$  void}
+
+
+
+Renders the contents of a draw list on screen. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em draw\+\_\+list} & The draw list that should be rendered \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classNoctisEngine_1_1Rendering_1_1Renderer_af28c70efac4226d7df2bbdd6aeb9d7e9}\label{classNoctisEngine_1_1Rendering_1_1Renderer_af28c70efac4226d7df2bbdd6aeb9d7e9} 
+\index{NoctisEngine::Rendering::Renderer@{NoctisEngine::Rendering::Renderer}!set\_backface\_culling@{set\_backface\_culling}}
+\index{set\_backface\_culling@{set\_backface\_culling}!NoctisEngine::Rendering::Renderer@{NoctisEngine::Rendering::Renderer}}
+\doxysubsubsection{\texorpdfstring{set\_backface\_culling()}{set\_backface\_culling()}}
+{\footnotesize\ttfamily auto Noctis\+Engine\+::\+Rendering\+::\+Renderer\+::set\+\_\+backface\+\_\+culling (\begin{DoxyParamCaption}\item[{bool}]{b }\end{DoxyParamCaption}) const -\/$>$  void}
+
+
+
+Backface culling skips rendering triangles whose face is pointing away from the camera (based on vertex winding order) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em b} & true if it should be enabled, false otherwise \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classNoctisEngine_1_1Rendering_1_1Renderer_a75fc0f973c9ac468b83654d648354b58}\label{classNoctisEngine_1_1Rendering_1_1Renderer_a75fc0f973c9ac468b83654d648354b58} 
+\index{NoctisEngine::Rendering::Renderer@{NoctisEngine::Rendering::Renderer}!set\_blend@{set\_blend}}
+\index{set\_blend@{set\_blend}!NoctisEngine::Rendering::Renderer@{NoctisEngine::Rendering::Renderer}}
+\doxysubsubsection{\texorpdfstring{set\_blend()}{set\_blend()}}
+{\footnotesize\ttfamily auto Noctis\+Engine\+::\+Rendering\+::\+Renderer\+::set\+\_\+blend (\begin{DoxyParamCaption}\item[{bool}]{b }\end{DoxyParamCaption}) const -\/$>$  void}
+
+
+
+Enables blending. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em b} & true if it should be enabled, false otherwise \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classNoctisEngine_1_1Rendering_1_1Renderer_a56e6bcbb4cc66bc791b4b7702acd82a3}\label{classNoctisEngine_1_1Rendering_1_1Renderer_a56e6bcbb4cc66bc791b4b7702acd82a3} 
+\index{NoctisEngine::Rendering::Renderer@{NoctisEngine::Rendering::Renderer}!set\_blend\_color@{set\_blend\_color}}
+\index{set\_blend\_color@{set\_blend\_color}!NoctisEngine::Rendering::Renderer@{NoctisEngine::Rendering::Renderer}}
+\doxysubsubsection{\texorpdfstring{set\_blend\_color()}{set\_blend\_color()}}
+{\footnotesize\ttfamily auto Noctis\+Engine\+::\+Rendering\+::\+Renderer\+::set\+\_\+blend\+\_\+color (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classNoctisEngine_1_1Color}{Color}} \&}]{col }\end{DoxyParamCaption})}
+
+
+
+Sets the blending color, used by {\itshape CONSTANT\+\_\+\+COLOR} blending functions. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em col} & The blending color \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classNoctisEngine_1_1Rendering_1_1Renderer_a63158311abe9fd65c2cb41300e7931d9}\label{classNoctisEngine_1_1Rendering_1_1Renderer_a63158311abe9fd65c2cb41300e7931d9} 
+\index{NoctisEngine::Rendering::Renderer@{NoctisEngine::Rendering::Renderer}!set\_blend\_func@{set\_blend\_func}}
+\index{set\_blend\_func@{set\_blend\_func}!NoctisEngine::Rendering::Renderer@{NoctisEngine::Rendering::Renderer}}
+\doxysubsubsection{\texorpdfstring{set\_blend\_func()}{set\_blend\_func()}}
+{\footnotesize\ttfamily auto Noctis\+Engine\+::\+Rendering\+::\+Renderer\+::set\+\_\+blend\+\_\+func (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_a3ef1b69e4ce9d797ca3f08395dd204ce}{Blend\+Func}}}]{source,  }\item[{\mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_a3ef1b69e4ce9d797ca3f08395dd204ce}{Blend\+Func}}}]{dest }\end{DoxyParamCaption}) const -\/$>$  void}
+
+
+
+Sets the two multiplier factors\+: one for the incoming (source) pixel and one for the already drawn (destination) framebuffer pixel that get combined to produce the final blended color when blending is enabled. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The source pixel \\
+\hline
+{\em dest} & The destination framebuffer pixel \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classNoctisEngine_1_1Rendering_1_1Renderer_a7f41bee7705c425c5d3e03e8da869788}\label{classNoctisEngine_1_1Rendering_1_1Renderer_a7f41bee7705c425c5d3e03e8da869788} 
+\index{NoctisEngine::Rendering::Renderer@{NoctisEngine::Rendering::Renderer}!set\_depth\_testing@{set\_depth\_testing}}
+\index{set\_depth\_testing@{set\_depth\_testing}!NoctisEngine::Rendering::Renderer@{NoctisEngine::Rendering::Renderer}}
+\doxysubsubsection{\texorpdfstring{set\_depth\_testing()}{set\_depth\_testing()}}
+{\footnotesize\ttfamily auto Noctis\+Engine\+::\+Rendering\+::\+Renderer\+::set\+\_\+depth\+\_\+testing (\begin{DoxyParamCaption}\item[{bool}]{b }\end{DoxyParamCaption}) const -\/$>$  void}
+
+
+
+Depth testing compares each new pixels\textquotesingle{}s depth (distance from the camera) against the value already stored in the depth buffer at that pixel, and discards the pixel if it\textquotesingle{}s farther away, so closer objects correctly draw over farther ones regardless of render order. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em b} & true if it should be enabled, false otherwise \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classNoctisEngine_1_1Rendering_1_1Renderer_afd97660c807a606d89528f4a0d5ddca4}\label{classNoctisEngine_1_1Rendering_1_1Renderer_afd97660c807a606d89528f4a0d5ddca4} 
+\index{NoctisEngine::Rendering::Renderer@{NoctisEngine::Rendering::Renderer}!set\_throw\_on\_err@{set\_throw\_on\_err}}
+\index{set\_throw\_on\_err@{set\_throw\_on\_err}!NoctisEngine::Rendering::Renderer@{NoctisEngine::Rendering::Renderer}}
+\doxysubsubsection{\texorpdfstring{set\_throw\_on\_err()}{set\_throw\_on\_err()}}
+{\footnotesize\ttfamily auto Noctis\+Engine\+::\+Rendering\+::\+Renderer\+::set\+\_\+throw\+\_\+on\+\_\+err (\begin{DoxyParamCaption}\item[{bool}]{b }\end{DoxyParamCaption}) -\/$>$  void}
+
+
+
+Enables the application to crash if an Open\+GL error is encountered. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em b} & true if it should be enabled, false otherwise \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/\+Victor/\+Programming/\+Noctis-\/\+Engine-\/\+Test-\/\+Game/noctis-\/engine/include/noctis\+\_\+engine/rendering/renderer.\+hpp\end{DoxyCompactItemize}

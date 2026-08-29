@@ -1,0 +1,33 @@
+\doxysection{ecs\+\_\+fwd.\+hpp}
+\hypertarget{ecs__fwd_8hpp_source}{}\label{ecs__fwd_8hpp_source}\index{/home/Victor/Programming/Noctis-\/Engine-\/Test-\/Game/noctis-\/engine/include/noctis\_engine/ecs/ecs\_fwd.hpp@{/home/Victor/Programming/Noctis-\/Engine-\/Test-\/Game/noctis-\/engine/include/noctis\_engine/ecs/ecs\_fwd.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{keyword}{namespace\ }NoctisEngine::ECS}
+\DoxyCodeLine{00006\ \{}
+\DoxyCodeLine{00007\ \ \ \ \ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{class\ }Entity;}
+\DoxyCodeLine{00009\ \textcolor{keyword}{class\ }World;}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}...\ Components\_>}
+\DoxyCodeLine{00014\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1View}{View}}}
+\DoxyCodeLine{00015\ \{}
+\DoxyCodeLine{00016\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1View_a05c7dc13fc56e08cd812794d8676c55b}{each}}(std::function<\textcolor{keywordtype}{void}(\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}},\ Components\_\ \&...)>\ func)\ -\/>\ void;}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00023\ \ \ \ \ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1World}{World}}\ \&world\_;}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1World}{World}};}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1View}{View}}(\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1World}{World}}\ \&world)}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ :\ world\_\{world\}}
+\DoxyCodeLine{00031\ \ \ \ \ \{\}}
+\DoxyCodeLine{00032\ \};}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \}\ \textcolor{comment}{//\ namespace\ NoctisEngine::ECS}}
+
+\end{DoxyCode}

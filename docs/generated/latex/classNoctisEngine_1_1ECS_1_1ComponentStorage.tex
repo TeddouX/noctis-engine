@@ -1,0 +1,181 @@
+\doxysection{Noctis\+Engine\+::ECS\+::Component\+Storage\texorpdfstring{$<$}{<} Component\+Type\+\_\+ \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{classNoctisEngine_1_1ECS_1_1ComponentStorage}{}\label{classNoctisEngine_1_1ECS_1_1ComponentStorage}\index{NoctisEngine::ECS::ComponentStorage$<$ ComponentType\_ $>$@{NoctisEngine::ECS::ComponentStorage$<$ ComponentType\_ $>$}}
+
+
+Inheritance diagram for Noctis\+Engine\+::ECS\+::Component\+Storage\texorpdfstring{$<$}{<} Component\+Type\+\_\+ \texorpdfstring{$>$}{>}\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=258pt]{classNoctisEngine_1_1ECS_1_1ComponentStorage__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Noctis\+Engine\+::ECS\+::Component\+Storage\texorpdfstring{$<$}{<} Component\+Type\+\_\+ \texorpdfstring{$>$}{>}\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=258pt]{classNoctisEngine_1_1ECS_1_1ComponentStorage__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classNoctisEngine_1_1ECS_1_1ComponentStorage_a4568466364ca4bfc5becbf06cbe90fcc}\label{classNoctisEngine_1_1ECS_1_1ComponentStorage_a4568466364ca4bfc5becbf06cbe90fcc} 
+{\bfseries Component\+Storage} ()=default
+\begin{DoxyCompactList}\small\item\em Default constructor. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1ComponentStorage_a502546730c9e9301600ebf890132586e}{add}} (\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}} entity, Component\+Type\+\_\+ component) -\/$>$ void
+\begin{DoxyCompactList}\small\item\em Adds an entity with a component to this storage. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1ComponentStorage_aa89fcedd39aeb25e2eebcfa29e67a2d5}{remove}} (\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}} entity) -\/$>$ void override
+\begin{DoxyCompactList}\small\item\em Removes an entity from this storage. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1ComponentStorage_ac2af6ee5e901139458ba07e34010d8c1}{get}} (\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}} entity) -\/$>$ Component\+Type\+\_\+ \texorpdfstring{$\ast$}{*}
+\begin{DoxyCompactList}\small\item\em Gets an entity\textquotesingle{}s component. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1ComponentStorage_ae1ade816c95290a04fc4f31b3fbf1678}{get}} (\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}} entity) const -\/$>$ const Component\+Type\+\_\+ \texorpdfstring{$\ast$}{*}
+\begin{DoxyCompactList}\small\item\em Gets an entity\textquotesingle{}s component as a constant value. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1ComponentStorage_aa9c149fa9af230e3e611d7a4daeb94d3}{has}} (\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}} entity) const -\/$>$ bool override
+\begin{DoxyCompactList}\small\item\em Checks if an entity exists in this storage. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1ComponentStorage_ae906c541ad688f024b9af75805ea605d}{data}} () -\/$>$ std\+::vector$<$ Component\+Type\+\_\+ $>$ \&
+\item 
+auto \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1ComponentStorage_a4b57bd12027ed315965c37e2a1fc795a}{data}} () const -\/$>$ const std\+::vector$<$ Component\+Type\+\_\+ $>$ \&
+\item 
+auto \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1ComponentStorage_a256456cf799da05617cc060819a0a0d1}{entities}} () const -\/$>$ const std\+::vector$<$ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}} $>$ \&
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classNoctisEngine_1_1ECS_1_1ComponentStorage_a502546730c9e9301600ebf890132586e}\label{classNoctisEngine_1_1ECS_1_1ComponentStorage_a502546730c9e9301600ebf890132586e} 
+\index{NoctisEngine::ECS::ComponentStorage$<$ ComponentType\_ $>$@{NoctisEngine::ECS::ComponentStorage$<$ ComponentType\_ $>$}!add@{add}}
+\index{add@{add}!NoctisEngine::ECS::ComponentStorage$<$ ComponentType\_ $>$@{NoctisEngine::ECS::ComponentStorage$<$ ComponentType\_ $>$}}
+\doxysubsubsection{\texorpdfstring{add()}{add()}}
+{\footnotesize\ttfamily template$<$typename Component\+Type\+\_\+ $>$ \\
+auto \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1ComponentStorage}{Noctis\+Engine\+::\+ECS\+::\+Component\+Storage}}$<$ Component\+Type\+\_\+ $>$\+::add (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}}}]{entity,  }\item[{Component\+Type\+\_\+}]{component }\end{DoxyParamCaption}) -\/$>$ void     \hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Adds an entity with a component to this storage. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em entity} & The entity \\
+\hline
+{\em component} & The component \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classNoctisEngine_1_1ECS_1_1ComponentStorage_ae906c541ad688f024b9af75805ea605d}\label{classNoctisEngine_1_1ECS_1_1ComponentStorage_ae906c541ad688f024b9af75805ea605d} 
+\index{NoctisEngine::ECS::ComponentStorage$<$ ComponentType\_ $>$@{NoctisEngine::ECS::ComponentStorage$<$ ComponentType\_ $>$}!data@{data}}
+\index{data@{data}!NoctisEngine::ECS::ComponentStorage$<$ ComponentType\_ $>$@{NoctisEngine::ECS::ComponentStorage$<$ ComponentType\_ $>$}}
+\doxysubsubsection{\texorpdfstring{data()}{data()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename Component\+Type\+\_\+ $>$ \\
+auto \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1ComponentStorage}{Noctis\+Engine\+::\+ECS\+::\+Component\+Storage}}$<$ Component\+Type\+\_\+ $>$\+::data (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) -\/$>$ std\+::vector$<$Component\+Type\+\_\+$>$ \&     \hspace{0.3cm}{\ttfamily [inline]}}
+
+\begin{DoxyReturn}{Returns}
+All this storage\textquotesingle{}s components 
+\end{DoxyReturn}
+\Hypertarget{classNoctisEngine_1_1ECS_1_1ComponentStorage_a4b57bd12027ed315965c37e2a1fc795a}\label{classNoctisEngine_1_1ECS_1_1ComponentStorage_a4b57bd12027ed315965c37e2a1fc795a} 
+\index{NoctisEngine::ECS::ComponentStorage$<$ ComponentType\_ $>$@{NoctisEngine::ECS::ComponentStorage$<$ ComponentType\_ $>$}!data@{data}}
+\index{data@{data}!NoctisEngine::ECS::ComponentStorage$<$ ComponentType\_ $>$@{NoctisEngine::ECS::ComponentStorage$<$ ComponentType\_ $>$}}
+\doxysubsubsection{\texorpdfstring{data()}{data()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename Component\+Type\+\_\+ $>$ \\
+auto \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1ComponentStorage}{Noctis\+Engine\+::\+ECS\+::\+Component\+Storage}}$<$ Component\+Type\+\_\+ $>$\+::data (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const -\/$>$ const std\+::vector$<$Component\+Type\+\_\+$>$ \&     \hspace{0.3cm}{\ttfamily [inline]}}
+
+\begin{DoxyReturn}{Returns}
+All this storage\textquotesingle{}s components as a const reference 
+\end{DoxyReturn}
+\Hypertarget{classNoctisEngine_1_1ECS_1_1ComponentStorage_a256456cf799da05617cc060819a0a0d1}\label{classNoctisEngine_1_1ECS_1_1ComponentStorage_a256456cf799da05617cc060819a0a0d1} 
+\index{NoctisEngine::ECS::ComponentStorage$<$ ComponentType\_ $>$@{NoctisEngine::ECS::ComponentStorage$<$ ComponentType\_ $>$}!entities@{entities}}
+\index{entities@{entities}!NoctisEngine::ECS::ComponentStorage$<$ ComponentType\_ $>$@{NoctisEngine::ECS::ComponentStorage$<$ ComponentType\_ $>$}}
+\doxysubsubsection{\texorpdfstring{entities()}{entities()}}
+{\footnotesize\ttfamily template$<$typename Component\+Type\+\_\+ $>$ \\
+auto \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1ComponentStorage}{Noctis\+Engine\+::\+ECS\+::\+Component\+Storage}}$<$ Component\+Type\+\_\+ $>$\+::entities (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const -\/$>$ const std\+::vector$<$\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}}$>$ \&     \hspace{0.3cm}{\ttfamily [inline]}}
+
+\begin{DoxyReturn}{Returns}
+All the entities stored in this storage 
+\end{DoxyReturn}
+\Hypertarget{classNoctisEngine_1_1ECS_1_1ComponentStorage_ac2af6ee5e901139458ba07e34010d8c1}\label{classNoctisEngine_1_1ECS_1_1ComponentStorage_ac2af6ee5e901139458ba07e34010d8c1} 
+\index{NoctisEngine::ECS::ComponentStorage$<$ ComponentType\_ $>$@{NoctisEngine::ECS::ComponentStorage$<$ ComponentType\_ $>$}!get@{get}}
+\index{get@{get}!NoctisEngine::ECS::ComponentStorage$<$ ComponentType\_ $>$@{NoctisEngine::ECS::ComponentStorage$<$ ComponentType\_ $>$}}
+\doxysubsubsection{\texorpdfstring{get()}{get()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename Component\+Type\+\_\+ $>$ \\
+auto \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1ComponentStorage}{Noctis\+Engine\+::\+ECS\+::\+Component\+Storage}}$<$ Component\+Type\+\_\+ $>$\+::get (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}}}]{entity }\end{DoxyParamCaption}) -\/$>$ Component\+Type\+\_\+ \texorpdfstring{$\ast$}{*}     \hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets an entity\textquotesingle{}s component. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em entity} & The entity \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+nullptr if the entity isn\textquotesingle{}t stored in this storage, the component otherwise ~\newline
+ 
+\end{DoxyReturn}
+\Hypertarget{classNoctisEngine_1_1ECS_1_1ComponentStorage_ae1ade816c95290a04fc4f31b3fbf1678}\label{classNoctisEngine_1_1ECS_1_1ComponentStorage_ae1ade816c95290a04fc4f31b3fbf1678} 
+\index{NoctisEngine::ECS::ComponentStorage$<$ ComponentType\_ $>$@{NoctisEngine::ECS::ComponentStorage$<$ ComponentType\_ $>$}!get@{get}}
+\index{get@{get}!NoctisEngine::ECS::ComponentStorage$<$ ComponentType\_ $>$@{NoctisEngine::ECS::ComponentStorage$<$ ComponentType\_ $>$}}
+\doxysubsubsection{\texorpdfstring{get()}{get()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename Component\+Type\+\_\+ $>$ \\
+auto \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1ComponentStorage}{Noctis\+Engine\+::\+ECS\+::\+Component\+Storage}}$<$ Component\+Type\+\_\+ $>$\+::get (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}}}]{entity }\end{DoxyParamCaption}) const -\/$>$ const Component\+Type\+\_\+ \texorpdfstring{$\ast$}{*}     \hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets an entity\textquotesingle{}s component as a constant value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em entity} & The entity \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+nullptr if the entity isn\textquotesingle{}t stored in this storage, the component otherwise as a const pointer ~\newline
+ 
+\end{DoxyReturn}
+\Hypertarget{classNoctisEngine_1_1ECS_1_1ComponentStorage_aa9c149fa9af230e3e611d7a4daeb94d3}\label{classNoctisEngine_1_1ECS_1_1ComponentStorage_aa9c149fa9af230e3e611d7a4daeb94d3} 
+\index{NoctisEngine::ECS::ComponentStorage$<$ ComponentType\_ $>$@{NoctisEngine::ECS::ComponentStorage$<$ ComponentType\_ $>$}!has@{has}}
+\index{has@{has}!NoctisEngine::ECS::ComponentStorage$<$ ComponentType\_ $>$@{NoctisEngine::ECS::ComponentStorage$<$ ComponentType\_ $>$}}
+\doxysubsubsection{\texorpdfstring{has()}{has()}}
+{\footnotesize\ttfamily template$<$typename Component\+Type\+\_\+ $>$ \\
+auto \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1ComponentStorage}{Noctis\+Engine\+::\+ECS\+::\+Component\+Storage}}$<$ Component\+Type\+\_\+ $>$\+::has (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}}}]{entity }\end{DoxyParamCaption}) const -\/$>$ bool\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Checks if an entity exists in this storage. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em entity} & The entity \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if it exists, false otherwise 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1IComponentStorage}{Noctis\+Engine\+::\+ECS\+::\+IComponent\+Storage}}.
+
+\Hypertarget{classNoctisEngine_1_1ECS_1_1ComponentStorage_aa89fcedd39aeb25e2eebcfa29e67a2d5}\label{classNoctisEngine_1_1ECS_1_1ComponentStorage_aa89fcedd39aeb25e2eebcfa29e67a2d5} 
+\index{NoctisEngine::ECS::ComponentStorage$<$ ComponentType\_ $>$@{NoctisEngine::ECS::ComponentStorage$<$ ComponentType\_ $>$}!remove@{remove}}
+\index{remove@{remove}!NoctisEngine::ECS::ComponentStorage$<$ ComponentType\_ $>$@{NoctisEngine::ECS::ComponentStorage$<$ ComponentType\_ $>$}}
+\doxysubsubsection{\texorpdfstring{remove()}{remove()}}
+{\footnotesize\ttfamily template$<$typename Component\+Type\+\_\+ $>$ \\
+auto \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1ComponentStorage}{Noctis\+Engine\+::\+ECS\+::\+Component\+Storage}}$<$ Component\+Type\+\_\+ $>$\+::remove (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}}}]{entity }\end{DoxyParamCaption}) -\/$>$ void\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Removes an entity from this storage. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em entity} & The entity that should be removed \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1IComponentStorage}{Noctis\+Engine\+::\+ECS\+::\+IComponent\+Storage}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/\+Victor/\+Programming/\+Noctis-\/\+Engine-\/\+Test-\/\+Game/noctis-\/engine/include/noctis\+\_\+engine/ecs/component\+\_\+storage.\+hpp\end{DoxyCompactItemize}

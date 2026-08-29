@@ -1,0 +1,59 @@
+\doxysection{Noctis\+Engine\+::ECS\+::Collision\+Shape2D\+::Chain Struct Reference}
+\hypertarget{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Chain}{}\label{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Chain}\index{NoctisEngine::ECS::CollisionShape2D::Chain@{NoctisEngine::ECS::CollisionShape2D::Chain}}
+
+
+{\ttfamily \#include $<$collision\+\_\+shape\+\_\+2d.\+hpp$>$}
+
+
+
+Collaboration diagram for Noctis\+Engine\+::ECS\+::Collision\+Shape2D\+::Chain\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Chain__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ glm\+::vec2 $>$ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Chain_a11e6946010580323a7c2461edcecbaca}{points}}
+\item 
+\Hypertarget{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Chain_ab850495212dc5aae3e81adb7360189e8}\label{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Chain_ab850495212dc5aae3e81adb7360189e8} 
+bool {\bfseries is\+\_\+loop}
+\begin{DoxyCompactList}\small\item\em true if the chain\textquotesingle{}s points form a loop \end{DoxyCompactList}\item 
+\Hypertarget{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Chain_a6522a39d482d40e29b780e07ad9d8d4a}\label{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Chain_a6522a39d482d40e29b780e07ad9d8d4a} 
+std\+::vector$<$ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1PhysicsMaterial2D}{Physics\+Material2D}} $>$ {\bfseries physics\+\_\+materials}
+\begin{DoxyCompactList}\small\item\em Either 0 physics materials or the number of points. If 0, the \doxylink{structNoctisEngine_1_1ECS_1_1CollisionShape2D}{Collision\+Shape2D}\textquotesingle{}s physics material will be used. \end{DoxyCompactList}\item 
+\Hypertarget{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Chain_a01906aa1477b8f011fe40f61d385bb70}\label{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Chain_a01906aa1477b8f011fe40f61d385bb70} 
+bool {\bfseries enable\+\_\+sensor\+\_\+events} = false
+\begin{DoxyCompactList}\small\item\em Enable sensors to detect this chain. False by default. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This is designed to eliminate ghost collisions with some limitations\+:
+\begin{DoxyItemize}
+\item Chains are one-\/sided
+\item Chains have no mass and should be used on static bodies
+\item Chains are either a loop or open
+\item A chain must have at least 4 points
+\item A chain shape should not self intersect (this is not validated)
+\item An open chain shape has NO COLLISION on the first and final edge
+\item You may overlap two open chains on their first three and/or last three points to get smooth collision 
+\end{DoxyItemize}
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Chain_a11e6946010580323a7c2461edcecbaca}\label{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Chain_a11e6946010580323a7c2461edcecbaca} 
+\index{NoctisEngine::ECS::CollisionShape2D::Chain@{NoctisEngine::ECS::CollisionShape2D::Chain}!points@{points}}
+\index{points@{points}!NoctisEngine::ECS::CollisionShape2D::Chain@{NoctisEngine::ECS::CollisionShape2D::Chain}}
+\doxysubsubsection{\texorpdfstring{points}{points}}
+{\footnotesize\ttfamily std\+::vector$<$glm\+::vec2$>$ Noctis\+Engine\+::\+ECS\+::\+Collision\+Shape2\+D\+::\+Chain\+::points}
+
+
+\begin{DoxyItemize}
+\item Points should be a CCW (counter-\/clockwise) order
+\item Points are should use pixels as units 
+\end{DoxyItemize}
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/\+Victor/\+Programming/\+Noctis-\/\+Engine-\/\+Test-\/\+Game/noctis-\/engine/include/noctis\+\_\+engine/ecs/system/collision\+\_\+shape\+\_\+2d.\+hpp\end{DoxyCompactItemize}

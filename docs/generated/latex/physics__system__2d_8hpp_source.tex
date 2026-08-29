@@ -1,0 +1,106 @@
+\doxysection{physics\+\_\+system\+\_\+2d.\+hpp}
+\hypertarget{physics__system__2d_8hpp_source}{}\label{physics__system__2d_8hpp_source}\index{/home/Victor/Programming/Noctis-\/Engine-\/Test-\/Game/noctis-\/engine/include/noctis\_engine/ecs/system/physics\_system\_2d.hpp@{/home/Victor/Programming/Noctis-\/Engine-\/Test-\/Game/noctis-\/engine/include/noctis\_engine/ecs/system/physics\_system\_2d.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <deque>}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}collision\_shape\_2d.hpp"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}../ecs\_world.hpp"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}../component/transform\_2d.hpp"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}../component/physics\_body\_2d.hpp"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}../../rendering/draw\_list.hpp"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}../../rendering/vertex\_array.hpp"{}}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}../../rendering/graphics\_program.hpp"{}}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{namespace\ }NoctisEngine::ECS}
+\DoxyCodeLine{00016\ \{}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1PhysicsSystem2D}{PhysicsSystem2D}}}
+\DoxyCodeLine{00020\ \{}
+\DoxyCodeLine{00021\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1PhysicsSystem2D_1_1DebugDrawSettings}{DebugDrawSettings}}}
+\DoxyCodeLine{00023\ \ \ \ \ \{}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ glm::vec2\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1PhysicsSystem2D_1_1DebugDrawSettings_a98b4727295084d14b5e8408c23a15ef0}{lower\_draw\_bound}};}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ glm::vec2\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1PhysicsSystem2D_1_1DebugDrawSettings_a1d4aa83260bb998be2518f09a4fbfaa1}{upper\_draw\_bound}};}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1PhysicsSystem2D_1_1DebugDrawSettings_a1380b733c8e243e0a1cc2d7e64422dce}{force\_scale}};}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1PhysicsSystem2D_1_1DebugDrawSettings_a19767acc19686532da3e890bde57c621}{joint\_scale}};}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1PhysicsSystem2D_1_1DebugDrawSettings_ac35187dd6dd3d9bf1bcdf0cce53c1753}{draw\_contacts}}\ :\ 1;}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1PhysicsSystem2D_1_1DebugDrawSettings_a3cea11d4cea3a4dc3e04b7f672d7059c}{draw\_anchor\_A}}\ :\ 1;}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1PhysicsSystem2D_1_1DebugDrawSettings_a667fb4c82a5e0a429ab7488a7bc3a6ee}{draw\_shapes}}\ :\ 1;}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1PhysicsSystem2D_1_1DebugDrawSettings_a7b24a871150437ad6a1ec320eacd0875}{draw\_chain\_normals}}\ :\ 1;}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1PhysicsSystem2D_1_1DebugDrawSettings_a4d1c3f042713c04fa663ed87f5f250ea}{draw\_joints}}\ :\ 1;}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1PhysicsSystem2D_1_1DebugDrawSettings_a8b53acd10b10d9126d6cfd3b1e78b58e}{draw\_joint\_extras}}\ :\ 1;}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1PhysicsSystem2D_1_1DebugDrawSettings_a0e4668564c9555a801f69026017d3a44}{draw\_bounds}}\ :\ 1;}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1PhysicsSystem2D_1_1DebugDrawSettings_abe2ebaadcf61c7508b37dfa0817d63ec}{draw\_mass}}\ :\ 1;}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1PhysicsSystem2D_1_1DebugDrawSettings_ac886128faef4d52a47c9001f5a802c86}{draw\_contact\_normals}}\ :\ 1;}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1PhysicsSystem2D_1_1DebugDrawSettings_a473c5bb049aad18d28ed2c12aebb4898}{draw\_contact\_forces}}\ :\ 1;}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1PhysicsSystem2D_1_1DebugDrawSettings_a781865379f0636847089e0df08a067ec}{draw\_friction\_forces}}\ :\ 1;}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1PhysicsSystem2D_1_1DebugDrawSettings_a8e0a3d4d4e0c1523db9a44d17fa4f927}{draw\_islands}}\ :\ 1;}
+\DoxyCodeLine{00075\ \ \ \ \ \};}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1PhysicsSystem2D_a8142b5c1a4c131743f00654c78b0fee6}{DEFAULT\_TIMESTEP}}\ =\ 1.0f\ /\ 60.0f;}
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ glm::vec2\ DEFAULT\_GRAVITY\{0,\ 9.81\};}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00082\ \ \ \ \ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1PhysicsSystem2D_a0ee854a4bf45f33118539001b9b55653}{PhysicsSystem2D}}(std::shared\_ptr<World>\ world);}
+\DoxyCodeLine{00083\ \ \ \ \ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1PhysicsSystem2D}{\string~PhysicsSystem2D}}();}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1PhysicsSystem2D_a3739857ddb21191f93dc6745c89b0408}{enable\_debug\_rendering}}()\ -\/>\ bool;}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1PhysicsSystem2D_ad5e9e6f2d4fbec770b6f5403649a716b}{set\_gravity}}(glm::vec2\ gravity)\ -\/>\ void;}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1PhysicsSystem2D_ac027932dc91d56c8b1ff586cf9821e96}{set\_hit\_event\_threshold}}(\textcolor{keywordtype}{float}\ threshold)\ -\/>\ void;}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1PhysicsSystem2D_a2b438a1e8a1a3a779dae076c9798bf6a}{create\_physics\_entity}}(}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<CollisionShape2D>\ \ \ \ \&collision\_shapes,}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1PhysicsBody2D_a1ccb6999d1e0d9d6c6ce457c57f37442}{PhysicsBody2D::Type}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ physics\_body\_type\ =\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1PhysicsBody2D_a1ccb6999d1e0d9d6c6ce457c57f37442afe6f99ef1ec99efbdc19a9786cf1facc}{PhysicsBody2D::Type::STATIC}},}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Transform2D}{ECS::Transform2D}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \&transform\ =\ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Transform2D}{ECS::Transform2D}}\{\},}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ std::string\_view\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ name\ =\ \textcolor{stringliteral}{"{}no\_name"{}}}
+\DoxyCodeLine{00111\ \ \ \ \ )\ -\/>\ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}};}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1PhysicsSystem2D_ac8cba2fd61400b6d840093469a22da5a}{sync\_physics\_engine\_to\_ecs}}()\ -\/>\ void;}
+\DoxyCodeLine{00116\ \ \ \ \ }
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1PhysicsSystem2D_ab7173e70e7422b54b8efdb7564b0c349}{update\_physics}}(\textcolor{keywordtype}{float}\ dt,\ \textcolor{keywordtype}{float}\ time\_step\ =\ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1PhysicsSystem2D_a8142b5c1a4c131743f00654c78b0fee6}{DEFAULT\_TIMESTEP}},\ std::uint16\_t\ substep\_count\ =\ 4)\ -\/>\ void;}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1PhysicsSystem2D_a404906fe5645b14b15bbe019c1e18b05}{sync\_ecs\_to\_physics\_engine}}()\ -\/>\ void;}
+\DoxyCodeLine{00132\ }
+\DoxyCodeLine{00140\ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1PhysicsSystem2D_ae0f309e9eef75aa5e18fda79f6e5ad04}{draw\_debug}}(\mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1DrawList}{Rendering::DrawList}}\ \&draw\_list,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1PhysicsSystem2D_1_1DebugDrawSettings}{DebugDrawSettings}}\ \&settings)\ -\/>\ void;}
+\DoxyCodeLine{00141\ }
+\DoxyCodeLine{00142\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00143\ \ \ \ \ std::shared\_ptr<World>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ world\_;}
+\DoxyCodeLine{00144\ \ \ \ \ std::vector<Entity>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ physics\_entities\_;}
+\DoxyCodeLine{00145\ \ \ \ \ std::uint32\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ physics\_world\_;}
+\DoxyCodeLine{00146\ \ \ \ \ std::deque<CollisionShape2D::Callbacks>\ \ \ \ \ collision\_callbacks\_;}
+\DoxyCodeLine{00147\ \ \ \ \ \textcolor{keywordtype}{float}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ accumulator\_;}
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00149\ \ \ \ \ \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1VertexArray}{Rendering::VertexArray}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ line\_vertex\_array\_;}
+\DoxyCodeLine{00150\ \ \ \ \ \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1VertexArray}{Rendering::VertexArray}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tri\_vertex\_array\_;}
+\DoxyCodeLine{00151\ \ \ \ \ \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1GraphicsProgram}{Rendering::GraphicsProgram}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ graphics\_prog\_;}
+\DoxyCodeLine{00152\ }
+\DoxyCodeLine{00153\ \ \ }
+\DoxyCodeLine{00156\ \ \ \ \ \textcolor{keyword}{auto}\ process\_contact\_events()\ -\/>\ void;}
+\DoxyCodeLine{00157\ }
+\DoxyCodeLine{00160\ \ \ \ \ \textcolor{keyword}{auto}\ process\_sensor\_events()\ -\/>\ void;}
+\DoxyCodeLine{00161\ \};}
+\DoxyCodeLine{00162\ }
+\DoxyCodeLine{00163\ \}\ \textcolor{comment}{//\ namespace\ NoctisEngine::ECS}}
+
+\end{DoxyCode}

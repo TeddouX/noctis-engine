@@ -1,0 +1,31 @@
+\doxysection{uniform\+\_\+info.\+hpp}
+\hypertarget{uniform__info_8hpp_source}{}\label{uniform__info_8hpp_source}\index{/home/Victor/Programming/Noctis-\/Engine-\/Test-\/Game/noctis-\/engine/include/noctis\_engine/rendering/uniform\_info.hpp@{/home/Victor/Programming/Noctis-\/Engine-\/Test-\/Game/noctis-\/engine/include/noctis\_engine/rendering/uniform\_info.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <variant>}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering}{NoctisEngine::Rendering}}}
+\DoxyCodeLine{00007\ \{}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00010\ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_aa819b6bcf6f463a33d66644477ebe433}{UniformType}}\ }
+\DoxyCodeLine{00011\ \{}
+\DoxyCodeLine{00013\ \ \ \ \ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_aa819b6bcf6f463a33d66644477ebe433aa97b2c144243b2b9d2c593ec268b62f5}{BOOL}},\ }
+\DoxyCodeLine{00015\ \ \ \ \ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_aa819b6bcf6f463a33d66644477ebe433a53f93baa3057821107c750323892fa92}{INT}},\ }
+\DoxyCodeLine{00017\ \ \ \ \ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_aa819b6bcf6f463a33d66644477ebe433ae738c26bf4ce1037fa81b039a915cbf6}{FLOAT}},}
+\DoxyCodeLine{00018\ \};}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00021\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structNoctisEngine_1_1Rendering_1_1UniformInfo}{UniformInfo}}\ }
+\DoxyCodeLine{00022\ \{}
+\DoxyCodeLine{00024\ \ \ \ \ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_aa819b6bcf6f463a33d66644477ebe433}{UniformType}}\ \mbox{\hyperlink{structNoctisEngine_1_1Rendering_1_1UniformInfo_a583823dc8c37109958f862f79b9c2a5c}{type}};}
+\DoxyCodeLine{00025\ \ \ \ \ }
+\DoxyCodeLine{00027\ \ \ \ \ std::string\_view\ \mbox{\hyperlink{structNoctisEngine_1_1Rendering_1_1UniformInfo_add6310a840677832f61f5e253de10ee3}{name}};}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00030\ \ \ \ \ std::variant<bool,\ int,\ float>\ \mbox{\hyperlink{structNoctisEngine_1_1Rendering_1_1UniformInfo_aec44bea44e54b00450cc432fcf79d14b}{val}};}
+\DoxyCodeLine{00031\ \};}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \}\ \textcolor{comment}{//\ namespace\ NoctisEngine::Rendering}}
+
+\end{DoxyCode}

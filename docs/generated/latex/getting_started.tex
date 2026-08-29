@@ -1,0 +1,105 @@
+\doxysection{Getting Started}
+\hypertarget{getting_started}{}\label{getting_started}\index{Getting Started@{Getting Started}}
+\hypertarget{getting_started_autotoc_md0}{}\doxysubsection{\texorpdfstring{What is Noctis Engine ?}{What is Noctis Engine ?}}\label{getting_started_autotoc_md0}
+Noctis Engine is first of all an ECS (entity component system) based game engine written entirely in cpp. ~\newline
+ It uses Open\+GL as its graphics API. I know Open\+GL is old and now falling behind on features (raytracing, etc...), but it\textquotesingle{}s the easiest of all graphics APIs to use and understand, which for me is a selling point because I am not a specialist in graphics programming. If you want to add implementation for newer graphics APIs like Vulkan or DX12, please contribute to the \href{https://github.com/TeddouX/noctis-engine}{\texttt{ github repo}}. ~\newline
+ The engine is entirely based in code, that means no GUIs (this might change in the future with the addition of helpers to create levels for example), everything you want to do is written in code. This lets you control resources, memory, rendering and many more things manually. ~\newline
+\hypertarget{getting_started_autotoc_md1}{}\doxysubsection{\texorpdfstring{How do I use it for my game ?}{How do I use it for my game ?}}\label{getting_started_autotoc_md1}
+Noctis Engine is based on \href{https://cmake.org/}{\texttt{ CMake}} so you need to have it installed on your system and have a little understanding of how it works. I don\textquotesingle{}t provide pre-\/built binaries for now because the engine is too early in its development cycle, so you have to build it yourself. ~\newline
+ The easiest way to do that is to use \href{https://git-scm.com/book/en/v2/Git-Tools-Submodules}{\texttt{ git submodules}}. ~\newline
+ You first need to initialize git in your project\textquotesingle{}s folder using the command\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{git\ init}
+
+\end{DoxyCode}
+
+
+You then need to add the Noctis Engine github repo as a submodule for your project\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{mkdir\ thirdparty}
+\DoxyCodeLine{git\ submodule\ add\ https://github.com/TeddouX/noctis-\/engine\ thirdparty/noctis-\/engine}
+
+\end{DoxyCode}
+
+
+This command will place the Noctis Engine github repository under the {\ttfamily thirdparty/} folder. ~\newline
+ After adding the engine as a submodule, you need to add it as a subdirectory in your project\textquotesingle{}s {\ttfamily CMake\+Lists.\+txt} for it to be built\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{add\_subdirectory("{}thirdparty/noctis-\/engine"{})}
+
+\end{DoxyCode}
+
+
+To link the library to your project, use\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{target\_link\_libraries(my\_project\ PRIVATE\ noctis\_engine::noctis\_engine)}
+
+\end{DoxyCode}
+
+
+Congratulations ! You now have added Noctis Engine to your project and you can use all its features.\hypertarget{getting_started_autotoc_md2}{}\doxysubsection{\texorpdfstring{Where do I get started ?}{Where do I get started ?}}\label{getting_started_autotoc_md2}
+\hypertarget{getting_started_autotoc_md3}{}\doxysubsubsection{\texorpdfstring{The window}{The window}}\label{getting_started_autotoc_md3}
+The window is one of the most important elements of any games. Noctis Engine uses the \doxylink{classNoctisEngine_1_1Core_1_1Window}{Window} class as its abstraction layer over an API called GLFW. This makes windowing cross platform and easy to use. ~\newline
+ The window is also what holds the Open\+GL context, necessary for drawing anything to the screen. Without it, calling rendering functions and using rendering objects will result in your program SEGFAULT\textquotesingle{}ing because Open\+GL functions aren\textquotesingle{}t initialized and point to NULL. ~\newline
+ To create a window, use the \doxylink{classNoctisEngine_1_1Core_1_1Window_a26680fcbd217f62e0cd20ee4fd68f0c3}{window\textquotesingle{}s constructor} defined in the \doxylink{window_8hpp_source}{window.\+hpp} header\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{auto}\ main()\ -\/>\ \textcolor{keywordtype}{int}}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{classNoctisEngine_1_1Core_1_1Window}{NoctisEngine::Core::Window}}\ my\_window\{800,\ 600,\ \textcolor{stringliteral}{"{}My\ window's\ really\ original\ title"{}}\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}\ (not\ window.is\_valid())}
+\DoxyCodeLine{\ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ std::println(\textcolor{stringliteral}{"{}Failed\ to\ initialize\ window"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+The {\ttfamily window.\+is\+\_\+valid()} check is necessary to check if your window was created successfully. If not, you should see some kind of errors printed to the console. ~\newline
+ But if you try to run this code, you will see your window flashing on the screen, then disappear abruptly. This is because it has nothing to do on the screen. ~\newline
+ You can fix this by adding a {\bfseries{RENDER LOOP}}!! (this is where stuff gets {\itshape serious})\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{auto}\ main()\ -\/>\ \textcolor{keywordtype}{int}}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ ...}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ This\ is\ your\ "{}render\ loop"{}\ which\ doesn't\ really\ render\ anything\ (for\ now...)}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ You\ could\ also\ use\ a\ bool\ variable\ instead\ of\ this\ to\ have\ better\ control\ over\ when\ the\ window\ closes}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}\ (not\ window.should\_close())}
+\DoxyCodeLine{\ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ This\ ensures\ input\ events,\ like\ closing\ the\ window,\ resizing,\ keyboard\ press,\ mouse\ movement,\ etc...\ are\ up\ to\ date}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ This\ function\ call\ is\ required\ for\ window.should\_close()\ to\ work.}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ window.poll\_events();}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Your\ window\ doesn't\ use\ only\ one\ buffer\ to\ draw,\ it\ uses\ two.\ While\ the\ first\ one\ (called\ front\ buffer)\ }}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ is\ being\ presented\ to\ the\ user,\ you\ draw\ stuff\ using\ OpenGL\ to\ the\ second\ one\ (called\ back\ buffer).\ This\ function\ }}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ allows\ you\ to\ swap\ them,\ putting\ on\ the\ user's\ screen\ the\ beauties\ you've\ drawn.}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ window.swap\_buffers();}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Once\ the\ render\ loop\ is\ exitted,\ the\ window\ will\ close}}
+\DoxyCodeLine{\ \ \ \ std::println(\textcolor{stringliteral}{"{}The\ user\ closed\ the\ window"{}});}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+This render loop will end only when the user closes the window, but you can make it stop whenever you want. 

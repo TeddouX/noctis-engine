@@ -1,0 +1,168 @@
+\doxysection{gpu\+\_\+buffer.\+hpp}
+\hypertarget{gpu__buffer_8hpp_source}{}\label{gpu__buffer_8hpp_source}\index{/home/Victor/Programming/Noctis-\/Engine-\/Test-\/Game/noctis-\/engine/include/noctis\_engine/rendering/gpu\_buffer.hpp@{/home/Victor/Programming/Noctis-\/Engine-\/Test-\/Game/noctis-\/engine/include/noctis\_engine/rendering/gpu\_buffer.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <string\_view>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <span>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <stdexcept>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <format>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}../noctis\_engine.hpp"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}../core/logging.hpp"{}}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering}{NoctisEngine::Rendering}}}
+\DoxyCodeLine{00014\ \{}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_a1a4743529585c21477126dfbd16dba42}{BufferTarget}}\ :\ std::uint32\_t\ }
+\DoxyCodeLine{00018\ \{}
+\DoxyCodeLine{00020\ \ \ \ \ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_a1a4743529585c21477126dfbd16dba42a77852f5d7968aa8e2907d2bcfddee859}{ARRAY\_BUFFER}}\ =\ 0x8892,}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00023\ \ \ \ \ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_a1a4743529585c21477126dfbd16dba42a77d897185bd996011915fcbaa342c411}{ATOMIC\_COUNTER\_BUFFER}}\ =\ 0x92C0,}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00026\ \ \ \ \ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_a1a4743529585c21477126dfbd16dba42abf7500ab7da86e0caf5d2379847bfa81}{COPY\_READ\_BUFFER}}\ =\ 0x8F36,}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00029\ \ \ \ \ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_a1a4743529585c21477126dfbd16dba42a02a9bf156ad501539c0055855a538fa4}{COPY\_WRITE\_BUFFER}}\ =\ 0x8F37,}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00032\ \ \ \ \ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_a1a4743529585c21477126dfbd16dba42a73998bcaff440e675812dabcbb22d0ef}{DISPATCH\_INDIRECT\_BUFFER}}\ =\ 0x90EE,}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00035\ \ \ \ \ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_a1a4743529585c21477126dfbd16dba42a69dc2292fd64e682be64eb31fff9803b}{DRAW\_INDIRECT\_BUFFER}}\ =\ 0x8F3F,}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00038\ \ \ \ \ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_a1a4743529585c21477126dfbd16dba42a32d7037a746773d0f5c21a231ea4b0f9}{ELEMENT\_ARRAY\_BUFFER}}\ =\ 0x8893,}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00041\ \ \ \ \ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_a1a4743529585c21477126dfbd16dba42ad6ab5b31b1632039a58a39b50f6b85fb}{PIXEL\_PACK\_BUFFER}}\ =\ 0x88EB,}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00044\ \ \ \ \ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_a1a4743529585c21477126dfbd16dba42a0bbfbc951ae6ea1d0e62c9830966175d}{PIXEL\_UNPACK\_BUFFER}}\ =\ 0x88EC,}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00047\ \ \ \ \ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_a1a4743529585c21477126dfbd16dba42a736dedb6643389508df82bbbadc7a318}{QUERY\_BUFFER}}\ =\ 0x9192,}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00050\ \ \ \ \ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_a1a4743529585c21477126dfbd16dba42a99a82fe2f013bd4a92450c307cd2a51e}{SHADER\_STORAGE\_BUFFER}}\ =\ 0x90D2,}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00053\ \ \ \ \ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_a1a4743529585c21477126dfbd16dba42a2ba2d9f72cddb822395db2e0ecedb4d5}{TEXTURE\_BUFFER}}\ =\ 0x8C2A,}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00056\ \ \ \ \ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_a1a4743529585c21477126dfbd16dba42aecc932b48085af9c47269bfac004565b}{TRANSFORM\_FEEDBACK\_BUFFER}}\ =\ 0x8C8E,}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00059\ \ \ \ \ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_a1a4743529585c21477126dfbd16dba42a8d0be820da8f4fe5aa49e0ef3065ca29}{UNIFORM\_BUFFER}}\ =\ 0x8A11,}
+\DoxyCodeLine{00060\ \};}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00063\ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_a30b4f27c84dd41523c3fa722bac145b7}{BufferFlag}}\ :\ std::uint32\_t\ }
+\DoxyCodeLine{00064\ \{}
+\DoxyCodeLine{00067\ \ \ \ \ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_a30b4f27c84dd41523c3fa722bac145b7ab50339a10e1de285ac99d4c3990b8693}{NONE}}\ =\ 0,}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00070\ \ \ \ \ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_a30b4f27c84dd41523c3fa722bac145b7a92fa3840debf9fb4ac7d30d65655bbff}{MAP\_READ\_BIT}}\ =\ 0x0001,}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00073\ \ \ \ \ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_a30b4f27c84dd41523c3fa722bac145b7a0902902005904628ae58cb3b03152ecc}{MAP\_WRITE\_BIT}}\ =\ 0x0002,}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00078\ \ \ \ \ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_a30b4f27c84dd41523c3fa722bac145b7a4314af1ddf1516bf0e67f15b4a634d1d}{MAP\_PERSISTENT\_BIT}}\ =\ 0x0040,}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00083\ \ \ \ \ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_a30b4f27c84dd41523c3fa722bac145b7a0229e747678385e03e5f1a84fa6c754b}{MAP\_COHERENT\_BIT}}\ =\ 0x0080,}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00086\ \ \ \ \ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_a30b4f27c84dd41523c3fa722bac145b7ada51d529494b3995f62a31b76509bada}{DYNAMIC\_STORAGE\_BIT}}\ =\ 0x0100,}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00090\ \ \ \ \ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_a30b4f27c84dd41523c3fa722bac145b7a942aa5b1c79c4110da8cf014b50760fa}{CLIENT\_STORAGE\_BIT}}\ =\ 0x0200,}
+\DoxyCodeLine{00091\ \};}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00097\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_a73434267c2a8d1398482c6180ce9f3ac}{operator\ |}}(\mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_a30b4f27c84dd41523c3fa722bac145b7}{BufferFlag}}\ left,\ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_a30b4f27c84dd41523c3fa722bac145b7}{BufferFlag}}\ right)\ -\/>\ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_a30b4f27c84dd41523c3fa722bac145b7}{BufferFlag}}}
+\DoxyCodeLine{00098\ \{}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_a30b4f27c84dd41523c3fa722bac145b7}{BufferFlag}}\textcolor{keyword}{>}(}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}std::uint32\_t\textcolor{keyword}{>}(left)\ |\ \textcolor{keyword}{static\_cast<}std::uint32\_t\textcolor{keyword}{>}(right)}
+\DoxyCodeLine{00101\ \ \ \ \ );}
+\DoxyCodeLine{00102\ \}}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00106\ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_ab424026cfbd026dd119d4cc84b3e5984}{BufferMapAccess}}\ :\ std::uint32\_t\ }
+\DoxyCodeLine{00107\ \{}
+\DoxyCodeLine{00110\ \ \ \ \ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_a30b4f27c84dd41523c3fa722bac145b7ab50339a10e1de285ac99d4c3990b8693}{NONE}}\ =\ 0,}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00113\ \ \ \ \ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_a30b4f27c84dd41523c3fa722bac145b7a92fa3840debf9fb4ac7d30d65655bbff}{MAP\_READ\_BIT}}\ =\ 0x0001,}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00116\ \ \ \ \ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_a30b4f27c84dd41523c3fa722bac145b7a0902902005904628ae58cb3b03152ecc}{MAP\_WRITE\_BIT}}\ =\ 0x0002,}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00121\ \ \ \ \ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_a30b4f27c84dd41523c3fa722bac145b7a4314af1ddf1516bf0e67f15b4a634d1d}{MAP\_PERSISTENT\_BIT}}\ =\ 0x0040,}
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00126\ \ \ \ \ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_a30b4f27c84dd41523c3fa722bac145b7a0229e747678385e03e5f1a84fa6c754b}{MAP\_COHERENT\_BIT}}\ =\ 0x0080,}
+\DoxyCodeLine{00127\ }
+\DoxyCodeLine{00133\ \ \ \ \ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_ab424026cfbd026dd119d4cc84b3e5984ae6f131a8f3af122cca1a51dc93d92bc3}{MAP\_INVALIDATE\_RANGE\_BIT}}\ =\ 0x0004,}
+\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00140\ \ \ \ \ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_ab424026cfbd026dd119d4cc84b3e5984a202a0e411e2a764ceca35c8cff07a131}{MAP\_INVALIDATE\_BUFFER\_BIT}}\ =\ 0x0008,}
+\DoxyCodeLine{00141\ }
+\DoxyCodeLine{00147\ \ \ \ \ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_ab424026cfbd026dd119d4cc84b3e5984a2d9f6cbb5eec7ce4332250ba7511ec20}{MAP\_FLUSH\_EXPLICIT\_BIT}}\ =\ 0x0010,}
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00152\ \ \ \ \ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_ab424026cfbd026dd119d4cc84b3e5984ad14e7f69a55f33e57efa9905f4a48c89}{MAP\_UNSYNCHRONIZED\_BIT}}\ =\ 0x0020,}
+\DoxyCodeLine{00153\ \};}
+\DoxyCodeLine{00154\ }
+\DoxyCodeLine{00159\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_a73434267c2a8d1398482c6180ce9f3ac}{operator\ |}}(\mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_ab424026cfbd026dd119d4cc84b3e5984}{BufferMapAccess}}\ left,\ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_ab424026cfbd026dd119d4cc84b3e5984}{BufferMapAccess}}\ right)\ -\/>\ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_ab424026cfbd026dd119d4cc84b3e5984}{BufferMapAccess}}}
+\DoxyCodeLine{00160\ \{}
+\DoxyCodeLine{00161\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_ab424026cfbd026dd119d4cc84b3e5984}{BufferMapAccess}}\textcolor{keyword}{>}(}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}std::uint32\_t\textcolor{keyword}{>}(left)\ |\ \textcolor{keyword}{static\_cast<}std::uint32\_t\textcolor{keyword}{>}(right)}
+\DoxyCodeLine{00163\ \ \ \ \ );}
+\DoxyCodeLine{00164\ \}}
+\DoxyCodeLine{00165\ }
+\DoxyCodeLine{00166\ }
+\DoxyCodeLine{00168\ \textcolor{keyword}{using\ }\mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_a7f64ba7bd7836d1f6936880cc1489950}{CPUReadView}}\ =\ \textcolor{keyword}{const}\ std::span<const\ std::byte>;}
+\DoxyCodeLine{00169\ }
+\DoxyCodeLine{00171\ \textcolor{keyword}{using\ }\mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_afe169301bb824df384acfb6e2585d7ce}{CPUWriteView}}\ =\ std::span<const\ std::byte>;}
+\DoxyCodeLine{00172\ }
+\DoxyCodeLine{00173\ }
+\DoxyCodeLine{00175\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1GPUBuffer}{GPUBuffer}}}
+\DoxyCodeLine{00176\ \{}
+\DoxyCodeLine{00177\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00179\ \ \ \ \ \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1GPUBuffer_ab7bffbd14924d415078426c02e42a242}{GPUBuffer}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00180\ }
+\DoxyCodeLine{00186\ \ \ \ \ \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1GPUBuffer_a6deec747dd2bfb152670c73cc1b8a917}{GPUBuffer}}(std::size\_t\ \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1GPUBuffer_a4014a21b59dc6ac606b3e2e83095069e}{size}},\ std::string\_view\ \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1GPUBuffer_a930633c59ba2e9655f6476785621d993}{name}},\ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_a30b4f27c84dd41523c3fa722bac145b7}{BufferFlag}}\ \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1GPUBuffer_a1b0242607b4b6b4386e21018772f4337}{flags}});}
+\DoxyCodeLine{00187\ }
+\DoxyCodeLine{00188\ \ \ \ \ \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1GPUBuffer}{\string~GPUBuffer}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00189\ }
+\DoxyCodeLine{00197\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1GPUBuffer_aeb1ecf6d554d187dff61cabaf4b4b01f}{resize}}(\mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1GPUBuffer}{GPUBuffer}}\ \&buffer,\ std::size\_t\ new\_size,\ \textcolor{keywordtype}{bool}\ copy\_data\ =\ \textcolor{keyword}{false})\ -\/>\ bool;}
+\DoxyCodeLine{00198\ }
+\DoxyCodeLine{00210\ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1GPUBuffer_a0e70a08ed4ec27364130926d0c8d93fd}{map}}(\mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_ab424026cfbd026dd119d4cc84b3e5984}{BufferMapAccess}}\ access,\ std::size\_t\ offset\ =\ 0,\ std::size\_t\ length\ =\ 0)\ -\/>\ \textcolor{keywordtype}{void}\ *;}
+\DoxyCodeLine{00211\ }
+\DoxyCodeLine{00213\ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1GPUBuffer_a1ab2351a599aa5473078c149c93ac9ad}{unmap}}()\ -\/>\ void;}
+\DoxyCodeLine{00214\ }
+\DoxyCodeLine{00216\ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1GPUBuffer_a1d0110327b8ef441e3ebdaf9d1d56de8}{mapped\_ptr}}()\ -\/>\ \textcolor{keywordtype}{void}\ *;}
+\DoxyCodeLine{00217\ }
+\DoxyCodeLine{00219\ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1GPUBuffer_a30f1ae16e07d6a768fa9b08dc8da9752}{mapped}}()\ -\/>\ bool;}
+\DoxyCodeLine{00220\ }
+\DoxyCodeLine{00226\ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1GPUBuffer_a0c22bbfd8226e0a4ce8b23f96a51015a}{write}}(\mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_a7f64ba7bd7836d1f6936880cc1489950}{CPUReadView}}\ data,\ std::size\_t\ offset)\ \textcolor{keyword}{const}\ -\/>\ void;}
+\DoxyCodeLine{00227\ }
+\DoxyCodeLine{00234\ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1GPUBuffer_ae3dbc8932cc27bd0c9902b0c4cc07069}{write}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *data,\ std::size\_t\ \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1GPUBuffer_a4014a21b59dc6ac606b3e2e83095069e}{size}},\ std::size\_t\ offset)\ \textcolor{keyword}{const}\ -\/>\ void;}
+\DoxyCodeLine{00235\ }
+\DoxyCodeLine{00242\ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1GPUBuffer_a5cbe937ca8775e8cbdbfb62de2a39c8d}{copy\_to}}(}
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1GPUBuffer}{GPUBuffer}}\ \ \ \ \&other,\ }
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ std::size\_t\ \ \ \ \ \ \ \ \ read\_offset\ =\ 0,\ }
+\DoxyCodeLine{00245\ \ \ \ \ \ \ \ \ std::size\_t\ \ \ \ \ \ \ \ \ write\_offset\ =\ 0,\ }
+\DoxyCodeLine{00246\ \ \ \ \ \ \ \ \ std::size\_t\ \ \ \ \ \ \ \ \ length\ =\ 0}
+\DoxyCodeLine{00247\ \ \ \ \ )\ const\ -\/>\ \textcolor{keywordtype}{void};}
+\DoxyCodeLine{00248\ }
+\DoxyCodeLine{00250\ \ \ \ \ using\ \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1GPUBuffer_adf45776a7c98ec52f01bd06d498581ae}{FlushRange}}\ =\ std::pair<std::\textcolor{keywordtype}{size\_t},\ std::\textcolor{keywordtype}{size\_t}>;}
+\DoxyCodeLine{00251\ }
+\DoxyCodeLine{00256\ \ \ \ \ auto\ \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1GPUBuffer_ab3dc6e5c27d38e54d7d19a86ac3c8b9f}{flush\_mapped\_buffer\_ranges}}(const\ std::vector<\mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1GPUBuffer_adf45776a7c98ec52f01bd06d498581ae}{FlushRange}}>\ \&ranges)\ const\ -\/>\ \textcolor{keywordtype}{void};}
+\DoxyCodeLine{00257\ }
+\DoxyCodeLine{00260\ \ \ \ \ auto\ \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1GPUBuffer_a5a1fe604acbdcafb7b7f4039af68c924}{delete\_gpu}}()\ -\/>\ \textcolor{keywordtype}{void};}
+\DoxyCodeLine{00261\ \ \ \ \ }
+\DoxyCodeLine{00263\ \ \ \ \ auto\ \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1GPUBuffer_a4014a21b59dc6ac606b3e2e83095069e}{size}}()\ const\ -\/>\ std::\textcolor{keywordtype}{size\_t};}
+\DoxyCodeLine{00264\ }
+\DoxyCodeLine{00266\ \ \ \ \ auto\ \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1GPUBuffer_a1b0242607b4b6b4386e21018772f4337}{flags}}()\ const\ -\/>\ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_a30b4f27c84dd41523c3fa722bac145b7}{BufferFlag}};}
+\DoxyCodeLine{00267\ }
+\DoxyCodeLine{00269\ \ \ \ \ auto\ \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1GPUBuffer_a3531b5b6472a0f133b1dee4e268bb4fd}{map\_access}}()\ const\ -\/>\ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_ab424026cfbd026dd119d4cc84b3e5984}{BufferMapAccess}};}
+\DoxyCodeLine{00270\ }
+\DoxyCodeLine{00272\ \ \ \ \ auto\ \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1GPUBuffer_a2cf7f9752ed7c399fe0b140dd687d505}{gl\_handle}}()\ const\ -\/>\ std::uint32\_t;}
+\DoxyCodeLine{00273\ }
+\DoxyCodeLine{00275\ \ \ \ \ auto\ \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1GPUBuffer_a930633c59ba2e9655f6476785621d993}{name}}()\ const\ -\/>\ std::string\_view;}
+\DoxyCodeLine{00276\ }
+\DoxyCodeLine{00277\ private:}
+\DoxyCodeLine{00278\ \ \ \ \ std::uint32\_t\ \ \ \ \ \ \ handle\_;}
+\DoxyCodeLine{00279\ \ \ \ \ std::\textcolor{keywordtype}{size\_t}\ \ \ \ \ \ \ \ \ size\_;}
+\DoxyCodeLine{00280\ \ \ \ \ std::string\_view\ \ \ \ name\_;}
+\DoxyCodeLine{00281\ \ \ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *map\_;}
+\DoxyCodeLine{00282\ }
+\DoxyCodeLine{00283\ \ \ \ \ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_a30b4f27c84dd41523c3fa722bac145b7}{BufferFlag}}\ \ \ \ \ \ \ \ \ \ flags\_;}
+\DoxyCodeLine{00284\ \ \ \ \ \mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering_ab424026cfbd026dd119d4cc84b3e5984}{BufferMapAccess}}\ \ \ \ \ map\_access\_;}
+\DoxyCodeLine{00285\ \};}
+\DoxyCodeLine{00286\ }
+\DoxyCodeLine{00287\ \}\ \textcolor{comment}{//\ namespace\ NoctisEngine::Rendering}}
+
+\end{DoxyCode}

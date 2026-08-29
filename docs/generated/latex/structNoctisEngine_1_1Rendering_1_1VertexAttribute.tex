@@ -1,0 +1,107 @@
+\doxysection{Noctis\+Engine\+::Rendering\+::Vertex\+Attribute Struct Reference}
+\hypertarget{structNoctisEngine_1_1Rendering_1_1VertexAttribute}{}\label{structNoctisEngine_1_1Rendering_1_1VertexAttribute}\index{NoctisEngine::Rendering::VertexAttribute@{NoctisEngine::Rendering::VertexAttribute}}
+
+
+This describes a vertex attribute, used when creating a vertex array object.  
+
+
+
+
+{\ttfamily \#include $<$vertex\+\_\+attrib.\+hpp$>$}
+
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a5cd34b6e3643d2f82bb208701d05c403}{Component\+Type}} \{ \newline
+\mbox{\hyperlink{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a5cd34b6e3643d2f82bb208701d05c403ae409eb2ba6eb6801f52763ae370c350e}{BYTE}} = 0x1400
+, \mbox{\hyperlink{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a5cd34b6e3643d2f82bb208701d05c403aa35c2b02966b1563e5bf7b81b8b0cf77}{SHORT}} = 0x1402
+, \mbox{\hyperlink{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a5cd34b6e3643d2f82bb208701d05c403a53f93baa3057821107c750323892fa92}{INT}} = 0x1404
+, \mbox{\hyperlink{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a5cd34b6e3643d2f82bb208701d05c403ac6e6dc18b53b4c2681394b9d8aefcec7}{FIXED}} = 0x140C
+, \newline
+\mbox{\hyperlink{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a5cd34b6e3643d2f82bb208701d05c403ae738c26bf4ce1037fa81b039a915cbf6}{FLOAT}} = 0x1406
+, \mbox{\hyperlink{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a5cd34b6e3643d2f82bb208701d05c403a394f77ad5c4d4d20b17f354a96f6b82e}{HALF\+\_\+\+FLOAT}} = 0x140B
+, \mbox{\hyperlink{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a5cd34b6e3643d2f82bb208701d05c403afd3e4ece78a7d422280d5ed379482229}{DOUBLE}} = 0x140A
+, \mbox{\hyperlink{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a5cd34b6e3643d2f82bb208701d05c403aaa5862eca3c30bb4bb91597f94d0cde2}{INT\+\_\+2\+\_\+10\+\_\+10\+\_\+10\+\_\+\+REV}} = 0x8\+D9F
+, \newline
+\mbox{\hyperlink{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a5cd34b6e3643d2f82bb208701d05c403a3210edf01bfb032f86c83efc1a3ee3c6}{UNSIGNED\+\_\+\+INT\+\_\+2\+\_\+10\+\_\+10\+\_\+10\+\_\+\+REV}} = 0x8368
+, \mbox{\hyperlink{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a5cd34b6e3643d2f82bb208701d05c403ae0abb5df04cba3e84d8cafa1ffb53d4f}{UNSIGNED\+\_\+\+INT\+\_\+10\+F\+\_\+11\+F\+\_\+11\+F\+\_\+\+REV}} = 0x8\+C3B
+ \}
+\begin{DoxyCompactList}\small\item\em This describes a vertex attribute\textquotesingle{}s type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a24fa6fb0a83d599069d7db65b32579f9}\label{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a24fa6fb0a83d599069d7db65b32579f9} 
+int {\bfseries index} = -\/1
+\begin{DoxyCompactList}\small\item\em This vertex attribute\textquotesingle{}s index. -\/1 if the VAO should dynamically compute this based on the other provided vertex attributes. It is recommended to leave it at -\/1. \end{DoxyCompactList}\item 
+\Hypertarget{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a615d38fb67d691a5b251392fcdb696ed}\label{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a615d38fb67d691a5b251392fcdb696ed} 
+\mbox{\hyperlink{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a5cd34b6e3643d2f82bb208701d05c403}{Component\+Type}} {\bfseries component\+\_\+type}
+\begin{DoxyCompactList}\small\item\em This vertex attribute\textquotesingle{}s component type. \end{DoxyCompactList}\item 
+\Hypertarget{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a6636a6ccc321ad06dde7c7ada3ef909f}\label{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a6636a6ccc321ad06dde7c7ada3ef909f} 
+std\+::size\+\_\+t {\bfseries num\+\_\+components}
+\begin{DoxyCompactList}\small\item\em This vertex attribute\textquotesingle{}s number of components. Must be 1, 2, 3 or 4. This is useful for vectors, for example a glm\+::vec3 should be of type FLOAT and have 3 components. \end{DoxyCompactList}\item 
+\Hypertarget{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a05c02654291feb934344f9f743d9b33a}\label{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a05c02654291feb934344f9f743d9b33a} 
+bool {\bfseries normalized} = false
+\begin{DoxyCompactList}\small\item\em Specifies whether fixed-\/point data values should be normalized or converted directly as fixed-\/point values when they are accessed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This describes a vertex attribute, used when creating a vertex array object. 
+
+\doxysubsection{Member Enumeration Documentation}
+\Hypertarget{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a5cd34b6e3643d2f82bb208701d05c403}\label{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a5cd34b6e3643d2f82bb208701d05c403} 
+\index{NoctisEngine::Rendering::VertexAttribute@{NoctisEngine::Rendering::VertexAttribute}!ComponentType@{ComponentType}}
+\index{ComponentType@{ComponentType}!NoctisEngine::Rendering::VertexAttribute@{NoctisEngine::Rendering::VertexAttribute}}
+\doxysubsubsection{\texorpdfstring{ComponentType}{ComponentType}}
+{\footnotesize\ttfamily enum class \mbox{\hyperlink{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a5cd34b6e3643d2f82bb208701d05c403}{Noctis\+Engine\+::\+Rendering\+::\+Vertex\+Attribute\+::\+Component\+Type}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+
+
+This describes a vertex attribute\textquotesingle{}s type. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BYTE@{BYTE}!NoctisEngine::Rendering::VertexAttribute@{NoctisEngine::Rendering::VertexAttribute}}\index{NoctisEngine::Rendering::VertexAttribute@{NoctisEngine::Rendering::VertexAttribute}!BYTE@{BYTE}}}\Hypertarget{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a5cd34b6e3643d2f82bb208701d05c403ae409eb2ba6eb6801f52763ae370c350e}\label{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a5cd34b6e3643d2f82bb208701d05c403ae409eb2ba6eb6801f52763ae370c350e} 
+BYTE&8 bits integer \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SHORT@{SHORT}!NoctisEngine::Rendering::VertexAttribute@{NoctisEngine::Rendering::VertexAttribute}}\index{NoctisEngine::Rendering::VertexAttribute@{NoctisEngine::Rendering::VertexAttribute}!SHORT@{SHORT}}}\Hypertarget{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a5cd34b6e3643d2f82bb208701d05c403aa35c2b02966b1563e5bf7b81b8b0cf77}\label{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a5cd34b6e3643d2f82bb208701d05c403aa35c2b02966b1563e5bf7b81b8b0cf77} 
+SHORT&16 bits integer \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{INT@{INT}!NoctisEngine::Rendering::VertexAttribute@{NoctisEngine::Rendering::VertexAttribute}}\index{NoctisEngine::Rendering::VertexAttribute@{NoctisEngine::Rendering::VertexAttribute}!INT@{INT}}}\Hypertarget{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a5cd34b6e3643d2f82bb208701d05c403a53f93baa3057821107c750323892fa92}\label{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a5cd34b6e3643d2f82bb208701d05c403a53f93baa3057821107c750323892fa92} 
+INT&32 bits integer \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FIXED@{FIXED}!NoctisEngine::Rendering::VertexAttribute@{NoctisEngine::Rendering::VertexAttribute}}\index{NoctisEngine::Rendering::VertexAttribute@{NoctisEngine::Rendering::VertexAttribute}!FIXED@{FIXED}}}\Hypertarget{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a5cd34b6e3643d2f82bb208701d05c403ac6e6dc18b53b4c2681394b9d8aefcec7}\label{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a5cd34b6e3643d2f82bb208701d05c403ac6e6dc18b53b4c2681394b9d8aefcec7} 
+FIXED&This is Open\+GL\textquotesingle{}s fixed point numeric type, calculated using the formula\+: real\+\_\+value = fixed / 65536.\+0. This means it stores 16 bits for the integer part and 16 bits for the fractional part. Legacy type. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FLOAT@{FLOAT}!NoctisEngine::Rendering::VertexAttribute@{NoctisEngine::Rendering::VertexAttribute}}\index{NoctisEngine::Rendering::VertexAttribute@{NoctisEngine::Rendering::VertexAttribute}!FLOAT@{FLOAT}}}\Hypertarget{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a5cd34b6e3643d2f82bb208701d05c403ae738c26bf4ce1037fa81b039a915cbf6}\label{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a5cd34b6e3643d2f82bb208701d05c403ae738c26bf4ce1037fa81b039a915cbf6} 
+FLOAT&32 bits floating point number \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{HALF\_FLOAT@{HALF\_FLOAT}!NoctisEngine::Rendering::VertexAttribute@{NoctisEngine::Rendering::VertexAttribute}}\index{NoctisEngine::Rendering::VertexAttribute@{NoctisEngine::Rendering::VertexAttribute}!HALF\_FLOAT@{HALF\_FLOAT}}}\Hypertarget{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a5cd34b6e3643d2f82bb208701d05c403a394f77ad5c4d4d20b17f354a96f6b82e}\label{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a5cd34b6e3643d2f82bb208701d05c403a394f77ad5c4d4d20b17f354a96f6b82e} 
+HALF\+\_\+\+FLOAT&16 bits floating point number \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DOUBLE@{DOUBLE}!NoctisEngine::Rendering::VertexAttribute@{NoctisEngine::Rendering::VertexAttribute}}\index{NoctisEngine::Rendering::VertexAttribute@{NoctisEngine::Rendering::VertexAttribute}!DOUBLE@{DOUBLE}}}\Hypertarget{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a5cd34b6e3643d2f82bb208701d05c403afd3e4ece78a7d422280d5ed379482229}\label{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a5cd34b6e3643d2f82bb208701d05c403afd3e4ece78a7d422280d5ed379482229} 
+DOUBLE&64 bits floating point number \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{INT\_2\_10\_10\_10\_REV@{INT\_2\_10\_10\_10\_REV}!NoctisEngine::Rendering::VertexAttribute@{NoctisEngine::Rendering::VertexAttribute}}\index{NoctisEngine::Rendering::VertexAttribute@{NoctisEngine::Rendering::VertexAttribute}!INT\_2\_10\_10\_10\_REV@{INT\_2\_10\_10\_10\_REV}}}\Hypertarget{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a5cd34b6e3643d2f82bb208701d05c403aaa5862eca3c30bb4bb91597f94d0cde2}\label{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a5cd34b6e3643d2f82bb208701d05c403aaa5862eca3c30bb4bb91597f94d0cde2} 
+INT\+\_\+2\+\_\+10\+\_\+10\+\_\+10\+\_\+\+REV&A 2 bits signed integer and 3 other 10 bits signed integers stored in a 32 bits int, with the 2 bits int stored in the top 2 bits of the 32 bits int. This is commonly used to store normal or tangent vectors. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{UNSIGNED\_INT\_2\_10\_10\_10\_REV@{UNSIGNED\_INT\_2\_10\_10\_10\_REV}!NoctisEngine::Rendering::VertexAttribute@{NoctisEngine::Rendering::VertexAttribute}}\index{NoctisEngine::Rendering::VertexAttribute@{NoctisEngine::Rendering::VertexAttribute}!UNSIGNED\_INT\_2\_10\_10\_10\_REV@{UNSIGNED\_INT\_2\_10\_10\_10\_REV}}}\Hypertarget{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a5cd34b6e3643d2f82bb208701d05c403a3210edf01bfb032f86c83efc1a3ee3c6}\label{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a5cd34b6e3643d2f82bb208701d05c403a3210edf01bfb032f86c83efc1a3ee3c6} 
+UNSIGNED\+\_\+\+INT\+\_\+2\+\_\+10\+\_\+10\+\_\+10\+\_\+\+REV&A 2 bits unsigned integer and 3 10 bits unsigned integers stored in a 32 bits int, with the 2 bits int stored in the top 2 bits of the 32 bits int. This is commonly used to store normal or tangent vectors. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{UNSIGNED\_INT\_10F\_11F\_11F\_REV@{UNSIGNED\_INT\_10F\_11F\_11F\_REV}!NoctisEngine::Rendering::VertexAttribute@{NoctisEngine::Rendering::VertexAttribute}}\index{NoctisEngine::Rendering::VertexAttribute@{NoctisEngine::Rendering::VertexAttribute}!UNSIGNED\_INT\_10F\_11F\_11F\_REV@{UNSIGNED\_INT\_10F\_11F\_11F\_REV}}}\Hypertarget{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a5cd34b6e3643d2f82bb208701d05c403ae0abb5df04cba3e84d8cafa1ffb53d4f}\label{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a5cd34b6e3643d2f82bb208701d05c403ae0abb5df04cba3e84d8cafa1ffb53d4f} 
+UNSIGNED\+\_\+\+INT\+\_\+10\+F\+\_\+11\+F\+\_\+11\+F\+\_\+\+REV&A 10 bits floating point number and 2 11 bits floating point numbers stored in a 32 bits int, with the 10 bits stored in the top 10 bits of the 32 bits int. This is commonly used to store HDR colors. \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/\+Victor/\+Programming/\+Noctis-\/\+Engine-\/\+Test-\/\+Game/noctis-\/engine/include/noctis\+\_\+engine/rendering/vertex\+\_\+attrib.\+hpp\end{DoxyCompactItemize}

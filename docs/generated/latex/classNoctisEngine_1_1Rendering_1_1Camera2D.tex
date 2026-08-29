@@ -1,0 +1,108 @@
+\doxysection{Noctis\+Engine\+::Rendering\+::Camera2D Class Reference}
+\hypertarget{classNoctisEngine_1_1Rendering_1_1Camera2D}{}\label{classNoctisEngine_1_1Rendering_1_1Camera2D}\index{NoctisEngine::Rendering::Camera2D@{NoctisEngine::Rendering::Camera2D}}
+
+
+Represents an orthographic projection camera, best suited for 2D games.  
+
+
+
+
+{\ttfamily \#include $<$camera\+\_\+2d.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1Camera2D_a8f2772d54b478f9fc6f77dc203a6e40d}{Camera2D}} (const glm\+::vec2 \&half\+\_\+extents, const glm\+::vec2 \&position=glm\+::vec2\{0\}, float near=-\/1000.f, float far=1000.f)
+\begin{DoxyCompactList}\small\item\em Creates a 2D camera. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1Camera2D_a2a5855f3ccf214e4fa78828b8b3c4cd4}{translate}} (const glm\+::vec2 \&translation) -\/$>$ void
+\begin{DoxyCompactList}\small\item\em Translates (moves) the camera by a given amount. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1Camera2D_a78ec65756d42a3de1f9a354ad43595b2}{set\+\_\+position}} (const glm\+::vec2 \&position) -\/$>$ void
+\begin{DoxyCompactList}\small\item\em Sets the camera\textquotesingle{}s position. \end{DoxyCompactList}\item 
+\Hypertarget{classNoctisEngine_1_1Rendering_1_1Camera2D_a79ae8ef038847f5fdc4271f834aa4a7c}\label{classNoctisEngine_1_1Rendering_1_1Camera2D_a79ae8ef038847f5fdc4271f834aa4a7c} 
+auto {\bfseries update\+\_\+buffers} () -\/$>$ void
+\begin{DoxyCompactList}\small\item\em Updates the camera\textquotesingle{}s buffers, call this after it was moved. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1Camera2D_a6c48210789ba29b6bae37d24ae29977e}{use}} (\mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1DrawList}{Draw\+List}} \&draw\+\_\+list) -\/$>$ void
+\begin{DoxyCompactList}\small\item\em Uses this camera for perspective rendering. \end{DoxyCompactList}\item 
+\Hypertarget{classNoctisEngine_1_1Rendering_1_1Camera2D_a22a5029f7df19da0e4514bf350b477fc}\label{classNoctisEngine_1_1Rendering_1_1Camera2D_a22a5029f7df19da0e4514bf350b477fc} 
+auto {\bfseries delete\+\_\+buffer} () -\/$>$ void
+\begin{DoxyCompactList}\small\item\em Deletes this camera\textquotesingle{}s buffer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents an orthographic projection camera, best suited for 2D games. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classNoctisEngine_1_1Rendering_1_1Camera2D_a8f2772d54b478f9fc6f77dc203a6e40d}\label{classNoctisEngine_1_1Rendering_1_1Camera2D_a8f2772d54b478f9fc6f77dc203a6e40d} 
+\index{NoctisEngine::Rendering::Camera2D@{NoctisEngine::Rendering::Camera2D}!Camera2D@{Camera2D}}
+\index{Camera2D@{Camera2D}!NoctisEngine::Rendering::Camera2D@{NoctisEngine::Rendering::Camera2D}}
+\doxysubsubsection{\texorpdfstring{Camera2D()}{Camera2D()}}
+{\footnotesize\ttfamily Noctis\+Engine\+::\+Rendering\+::\+Camera2\+D\+::\+Camera2D (\begin{DoxyParamCaption}\item[{const glm\+::vec2 \&}]{half\+\_\+extents,  }\item[{const glm\+::vec2 \&}]{position = {\ttfamily glm\+:\+:vec2\{0\}},  }\item[{float}]{near = {\ttfamily -\/1000.f},  }\item[{float}]{far = {\ttfamily 1000.f} }\end{DoxyParamCaption})}
+
+
+
+Creates a 2D camera. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em half\+\_\+extents} & The half width and half height of the camera frustum \\
+\hline
+{\em position} & The camera\textquotesingle{}s position, default (0, 0) \\
+\hline
+{\em near} & The near clipping plane position, default -\/1000 \\
+\hline
+{\em far} & The far clipping plane position, default 1000 \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classNoctisEngine_1_1Rendering_1_1Camera2D_a78ec65756d42a3de1f9a354ad43595b2}\label{classNoctisEngine_1_1Rendering_1_1Camera2D_a78ec65756d42a3de1f9a354ad43595b2} 
+\index{NoctisEngine::Rendering::Camera2D@{NoctisEngine::Rendering::Camera2D}!set\_position@{set\_position}}
+\index{set\_position@{set\_position}!NoctisEngine::Rendering::Camera2D@{NoctisEngine::Rendering::Camera2D}}
+\doxysubsubsection{\texorpdfstring{set\_position()}{set\_position()}}
+{\footnotesize\ttfamily auto Noctis\+Engine\+::\+Rendering\+::\+Camera2\+D\+::set\+\_\+position (\begin{DoxyParamCaption}\item[{const glm\+::vec2 \&}]{position }\end{DoxyParamCaption}) -\/$>$  void}
+
+
+
+Sets the camera\textquotesingle{}s position. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em position} & The new position \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classNoctisEngine_1_1Rendering_1_1Camera2D_a2a5855f3ccf214e4fa78828b8b3c4cd4}\label{classNoctisEngine_1_1Rendering_1_1Camera2D_a2a5855f3ccf214e4fa78828b8b3c4cd4} 
+\index{NoctisEngine::Rendering::Camera2D@{NoctisEngine::Rendering::Camera2D}!translate@{translate}}
+\index{translate@{translate}!NoctisEngine::Rendering::Camera2D@{NoctisEngine::Rendering::Camera2D}}
+\doxysubsubsection{\texorpdfstring{translate()}{translate()}}
+{\footnotesize\ttfamily auto Noctis\+Engine\+::\+Rendering\+::\+Camera2\+D\+::translate (\begin{DoxyParamCaption}\item[{const glm\+::vec2 \&}]{translation }\end{DoxyParamCaption}) -\/$>$  void}
+
+
+
+Translates (moves) the camera by a given amount. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em translation} & The translation vector \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classNoctisEngine_1_1Rendering_1_1Camera2D_a6c48210789ba29b6bae37d24ae29977e}\label{classNoctisEngine_1_1Rendering_1_1Camera2D_a6c48210789ba29b6bae37d24ae29977e} 
+\index{NoctisEngine::Rendering::Camera2D@{NoctisEngine::Rendering::Camera2D}!use@{use}}
+\index{use@{use}!NoctisEngine::Rendering::Camera2D@{NoctisEngine::Rendering::Camera2D}}
+\doxysubsubsection{\texorpdfstring{use()}{use()}}
+{\footnotesize\ttfamily auto Noctis\+Engine\+::\+Rendering\+::\+Camera2\+D\+::use (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1DrawList}{Draw\+List}} \&}]{draw\+\_\+list }\end{DoxyParamCaption}) -\/$>$  void}
+
+
+
+Uses this camera for perspective rendering. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em draw\+\_\+list} & The draw list that should be used \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/\+Victor/\+Programming/\+Noctis-\/\+Engine-\/\+Test-\/\+Game/noctis-\/engine/include/noctis\+\_\+engine/rendering/camera\+\_\+2d.\+hpp\end{DoxyCompactItemize}

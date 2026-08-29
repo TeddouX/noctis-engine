@@ -1,0 +1,171 @@
+\doxysection{ecs\+\_\+world.\+hpp}
+\hypertarget{ecs__world_8hpp_source}{}\label{ecs__world_8hpp_source}\index{/home/Victor/Programming/Noctis-\/Engine-\/Test-\/Game/noctis-\/engine/include/noctis\_engine/ecs/ecs\_world.hpp@{/home/Victor/Programming/Noctis-\/Engine-\/Test-\/Game/noctis-\/engine/include/noctis\_engine/ecs/ecs\_world.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <typeindex>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <print>}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}ecs\_fwd.hpp"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}component\_storage.hpp"{}}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{keyword}{namespace\ }NoctisEngine::ECS}
+\DoxyCodeLine{00011\ \{}
+\DoxyCodeLine{00012\ \ \ \ \ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1World}{World}}}
+\DoxyCodeLine{00018\ \{}
+\DoxyCodeLine{00019\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00021\ \ \ \ \ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1World_a1033a69b55ec7816f8f881a791a82079}{World}}()}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ :\ next\_entity\_id\_\{1\}}
+\DoxyCodeLine{00023\ \ \ \ \ \{\}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \ \ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1World}{\string~World}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1World_a9f8e064a6c5378fc904b2ed4d1ff8214}{create\_entity}}()\ -\/>\ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}}}
+\DoxyCodeLine{00030\ \ \ \ \ \{}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (not\ free\_ids\_.empty())}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \ \ \ \ std::int32\_t\ \textcolor{keywordtype}{id}\ =\ free\_ids\_.back();}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ free\_ids\_.pop\_back();}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}}\{\textcolor{keywordtype}{id}\};}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}}\{next\_entity\_id\_++\};}
+\DoxyCodeLine{00039\ \ \ \ \ \}}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1World_a3f554bd765bb7b9ae5a5edb6909682b0}{destroy\_entity}}(\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}}\ entity)\ -\/>\ \textcolor{keywordtype}{void}}
+\DoxyCodeLine{00045\ \ \ \ \ \{}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ free\_ids\_.push\_back(entity.id());}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&[\_,\ storage]\ :\ storages\_)}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (storage-\/>has(entity))}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ storage-\/>remove(entity);}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00053\ \ \ \ \ \}}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1World_a7ba725537eca578ce609f352ed29da7e}{add\_component}}(\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}}\ entity,\ T\ component)\ -\/>\ \textcolor{keywordtype}{void}}
+\DoxyCodeLine{00061\ \ \ \ \ \{}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ get\_storage<T>()-\/>add(entity,\ component);}
+\DoxyCodeLine{00063\ \ \ \ \ \}}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1World_ae66fd1d82ae46c0e21e69aff1f23a575}{get\_component}}(\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}}\ entity)\ -\/>\ T\ *}
+\DoxyCodeLine{00072\ \ \ \ \ \{}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ get\_storage<T>()-\/>get(entity);}
+\DoxyCodeLine{00074\ \ \ \ \ \}}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1World_a36c53819faa31d84590e1b20be2ebf46}{get\_component}}(\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}}\ entity)\ \textcolor{keyword}{const}\ -\/>\ \textcolor{keyword}{const}\ T\ *}
+\DoxyCodeLine{00083\ \ \ \ \ \{}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ storage\ =\ get\_const\_storage<T>())}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ storage-\/>get(entity);}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00087\ \ \ \ \ \}}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1World_ad81efc63d52add42abae44852053c403}{remove\_component}}(\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}}\ entity)\ -\/>\ \textcolor{keywordtype}{void}}
+\DoxyCodeLine{00094\ \ \ \ \ \{}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ get\_storage<T>()-\/>remove(entity);}
+\DoxyCodeLine{00096\ \ \ \ \ \}}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1World_a545da80e64d2cd64efd4fbc20c816add}{has\_component}}(\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}}\ entity)\ \textcolor{keyword}{const}\ -\/>\ \textcolor{keywordtype}{bool}}
+\DoxyCodeLine{00104\ \ \ \ \ \{}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ storage\ =\ get\_const\_storage<T>())}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ storage-\/>has(entity);}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00108\ \ \ \ \ \}}
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1World_a04fca7c4ab22a6c463a3256233efba9b}{all\_entities}}()\ const\ -\/>\ const\ std::vector<\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}}>\ *}
+\DoxyCodeLine{00116\ \ \ \ \ \{}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ storage\ =\ get\_const\_storage<T>())}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \&storage-\/>entities();}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00120\ \ \ \ \ \}}
+\DoxyCodeLine{00121\ }
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00126\ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1World_ae961bf74191b25c69db56de2f64dba4f}{all}}()\ -\/>\ std::vector<T>\ \&}
+\DoxyCodeLine{00127\ \ \ \ \ \{}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ get\_storage<T>()-\/>data();}
+\DoxyCodeLine{00129\ \ \ \ \ \}}
+\DoxyCodeLine{00130\ }
+\DoxyCodeLine{00135\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00136\ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1World_ada9a26a7eb3f695153c930862e38e96e}{all}}()\ const\ -\/>\ const\ std::vector<T>\ *}
+\DoxyCodeLine{00137\ \ \ \ \ \{}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ storage\ =\ get\_const\_storage<T>())}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \&storage-\/>data();}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00141\ \ \ \ \ \}}
+\DoxyCodeLine{00142\ }
+\DoxyCodeLine{00146\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00147\ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1World_aeb4a4a3b79066203123d830743ea2dc5}{get\_storage}}()\ -\/>\ std::shared\_ptr<ComponentStorage<T>>}
+\DoxyCodeLine{00148\ \ \ \ \ \{}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ std::type\_index\ type\_idx\{\textcolor{keyword}{typeid}(T)\};}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (storages\_.find(type\_idx)\ ==\ storages\_.end())}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \ \ \ \ storages\_[type\_idx]\ =\ std::make\_shared<\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1ComponentStorage}{ComponentStorage<T>}}>();}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::dynamic\_pointer\_cast<ComponentStorage<T>>(storages\_[type\_idx]);}
+\DoxyCodeLine{00153\ \ \ \ \ \}}
+\DoxyCodeLine{00154\ }
+\DoxyCodeLine{00158\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00159\ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1World_ae6937bce6f7aa35fa51e67fe2016550d}{get\_const\_storage}}()\ const\ -\/>\ const\ std::shared\_ptr<\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1ComponentStorage}{ComponentStorage}}<T>>}
+\DoxyCodeLine{00160\ \ \ \ \ \{}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ std::type\_index\ type\_idx\{\textcolor{keyword}{typeid}(T)\};}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (storages\_.find(type\_idx)\ ==\ storages\_.end())}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::dynamic\_pointer\_cast<ComponentStorage<T>>(storages\_.at(type\_idx));}
+\DoxyCodeLine{00165\ \ \ \ \ \}}
+\DoxyCodeLine{00166\ }
+\DoxyCodeLine{00170\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}...\ Components\_>}
+\DoxyCodeLine{00171\ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1World_ad1352deede9e0977f58903461b42f9e9}{query}}()\ -\/>\ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1View}{View}}<Components\_...>\ }
+\DoxyCodeLine{00172\ \ \ \ \ \{}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1View}{View}}<Components\_...>\{*\textcolor{keyword}{this}\};}
+\DoxyCodeLine{00174\ \ \ \ \ \}}
+\DoxyCodeLine{00175\ }
+\DoxyCodeLine{00179\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}...\ Components\_>}
+\DoxyCodeLine{00180\ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1World_a8565750bb40f77e9881d74842b17bb92}{smallest\_storage}}()\ const\ -\/>\ const\ std::vector<\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}}>\ *}
+\DoxyCodeLine{00181\ \ \ \ \ \{}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<Entity>\ *smallest\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00183\ }
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ check\ =\ [\&](\textcolor{keyword}{const}\ std::vector<Entity>\ *entities)\ -\/>\ \textcolor{keywordtype}{void}\ }
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (not\ entities)}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00188\ }
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (not\ smallest\ ||\ entities-\/>size()\ <\ smallest-\/>size())}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ smallest\ =\ entities;}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00192\ }
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ (check(all\_entities<Components\_>()),\ ...);}
+\DoxyCodeLine{00194\ }
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ smallest;}
+\DoxyCodeLine{00196\ \ \ \ \ \}}
+\DoxyCodeLine{00197\ }
+\DoxyCodeLine{00198\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00199\ \ \ \ \ std::unordered\_map<std::type\_index,\ std::shared\_ptr<IComponentStorage>>\ storages\_;}
+\DoxyCodeLine{00200\ \ \ \ \ std::int32\_t\ next\_entity\_id\_;}
+\DoxyCodeLine{00201\ \ \ \ \ std::vector<std::int32\_t>\ free\_ids\_;}
+\DoxyCodeLine{00202\ \};}
+\DoxyCodeLine{00203\ }
+\DoxyCodeLine{00204\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}...\ Components\_>}
+\DoxyCodeLine{00205\ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1View_a05c7dc13fc56e08cd812794d8676c55b}{View<Components\_...>::each}}(std::function<\textcolor{keywordtype}{void}(\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}},\ Components\_\ \&...)>\ func)\ -\/>\ \textcolor{keywordtype}{void}}
+\DoxyCodeLine{00206\ \{}
+\DoxyCodeLine{00207\ \ \ \ \ \textcolor{keyword}{auto}\ *storage\ =\ world\_.template\ smallest\_storage<Components\_...>();}
+\DoxyCodeLine{00208\ \ \ \ \ \textcolor{keywordflow}{if}\ (not\ storage)}
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00210\ }
+\DoxyCodeLine{00211\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&entity\ :\ *storage)}
+\DoxyCodeLine{00212\ \ \ \ \ \{}
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((world\_.template\ has\_component<Components\_>(entity)\ \&\&\ ...))}
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \ \ \ \ func(entity,\ *world\_.template\ get\_component<Components\_>(entity)...);}
+\DoxyCodeLine{00215\ \ \ \ \ \}}
+\DoxyCodeLine{00216\ \}}
+\DoxyCodeLine{00217\ }
+\DoxyCodeLine{00218\ }
+\DoxyCodeLine{00219\ \}\ \textcolor{comment}{//\ namespace\ NoctisEngine::ECS}}
+
+\end{DoxyCode}

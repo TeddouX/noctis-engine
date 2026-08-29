@@ -1,0 +1,131 @@
+\doxysection{Noctis\+Engine\+::Core Namespace Reference}
+\hypertarget{namespaceNoctisEngine_1_1Core}{}\label{namespaceNoctisEngine_1_1Core}\index{NoctisEngine::Core@{NoctisEngine::Core}}
+
+
+Namespace that contains all the things that are useful to the engine.  
+
+
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classNoctisEngine_1_1Core_1_1Logger}{Logger}}
+\begin{DoxyCompactList}\small\item\em A helper class to print messages to the console. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classNoctisEngine_1_1Core_1_1Window}{Window}}
+\begin{DoxyCompactList}\small\item\em This class is a wrappter over a GLFW window. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{namespaceNoctisEngine_1_1Core_ab54c7f590fb133ca34bd597c676a1514}{Log\+Level}} \{ \newline
+\mbox{\hyperlink{namespaceNoctisEngine_1_1Core_ab54c7f590fb133ca34bd597c676a1514adc30ec20708ef7b0f641ef78b7880a15}{DEBUG}}
+, \mbox{\hyperlink{namespaceNoctisEngine_1_1Core_ab54c7f590fb133ca34bd597c676a1514a551b723eafd6a31d444fcb2f5920fbd3}{INFO}}
+, \mbox{\hyperlink{namespaceNoctisEngine_1_1Core_ab54c7f590fb133ca34bd597c676a1514a32bd8a1db2275458673903bdb84cb277}{WARN}}
+, \mbox{\hyperlink{namespaceNoctisEngine_1_1Core_ab54c7f590fb133ca34bd597c676a1514abb1ca97ec761fc37101737ba0aa2e7c5}{ERROR}}
+, \newline
+\mbox{\hyperlink{namespaceNoctisEngine_1_1Core_ab54c7f590fb133ca34bd597c676a1514a99cd1c61610c76a57cb8d10d6df6b870}{CRITICAL}}
+ \}
+\begin{DoxyCompactList}\small\item\em Describes which level a log message is. \end{DoxyCompactList}\item 
+enum class \mbox{\hyperlink{namespaceNoctisEngine_1_1Core_ad399c39d9c40848cc9fe919d94107ce0}{VSync\+Method}} \+: int \{ \mbox{\hyperlink{namespaceNoctisEngine_1_1Core_ad399c39d9c40848cc9fe919d94107ce0ad9bfaf7ead68712cad5d5d4dd710d896}{NO\+\_\+\+VSYNC}} = 0
+, \mbox{\hyperlink{namespaceNoctisEngine_1_1Core_ad399c39d9c40848cc9fe919d94107ce0a7f9044a0830fc110c3b82a26ce3511ee}{VSYNC}} = 1
+, \mbox{\hyperlink{namespaceNoctisEngine_1_1Core_ad399c39d9c40848cc9fe919d94107ce0ac4c53810232948c5ee707fca33d77e5f}{HALF\+\_\+\+REFRESH\+\_\+\+RATE}} = 2
+ \}
+\begin{DoxyCompactList}\small\item\em Describes all vertical sync methodsn, used in Window\+::set\+\_\+vsync() \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+auto \mbox{\hyperlink{namespaceNoctisEngine_1_1Core_a3fca4a2a54413853b45f95b9ec7f6309}{exit\+\_\+program\+\_\+failure}} (std\+::string\+\_\+view reason="{}Unrecoverable error"{}) -\/$>$ void
+\begin{DoxyCompactList}\small\item\em Call this when your program failed with something that is unrecoverable. \end{DoxyCompactList}\item 
+\Hypertarget{namespaceNoctisEngine_1_1Core_a57513a618b2d7e135d1461c0113facbd}\label{namespaceNoctisEngine_1_1Core_a57513a618b2d7e135d1461c0113facbd} 
+auto {\bfseries exit\+\_\+program\+\_\+success} () -\/$>$ void
+\begin{DoxyCompactList}\small\item\em Call this function when your program finished without any errors. \end{DoxyCompactList}\item 
+\Hypertarget{namespaceNoctisEngine_1_1Core_a0d7d061d6630f31edcb467213eae0497}\label{namespaceNoctisEngine_1_1Core_a0d7d061d6630f31edcb467213eae0497} 
+auto {\bfseries to\+\_\+string} (\mbox{\hyperlink{namespaceNoctisEngine_1_1Core_ab54c7f590fb133ca34bd597c676a1514}{Log\+Level}} level) -\/$>$ std\+::string
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{namespaceNoctisEngine_1_1Core_a33224724f23fc783d3514b7c95f5b557}\label{namespaceNoctisEngine_1_1Core_a33224724f23fc783d3514b7c95f5b557} 
+static \mbox{\hyperlink{classNoctisEngine_1_1Core_1_1Logger}{Logger}} {\bfseries CORE\+\_\+\+LOGGER} \{"{}Noctis Engine"{}, "{}Core"{}\}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Namespace that contains all the things that are useful to the engine. 
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{namespaceNoctisEngine_1_1Core_ab54c7f590fb133ca34bd597c676a1514}\label{namespaceNoctisEngine_1_1Core_ab54c7f590fb133ca34bd597c676a1514} 
+\index{NoctisEngine::Core@{NoctisEngine::Core}!LogLevel@{LogLevel}}
+\index{LogLevel@{LogLevel}!NoctisEngine::Core@{NoctisEngine::Core}}
+\doxysubsubsection{\texorpdfstring{LogLevel}{LogLevel}}
+{\footnotesize\ttfamily enum class \mbox{\hyperlink{namespaceNoctisEngine_1_1Core_ab54c7f590fb133ca34bd597c676a1514}{Noctis\+Engine\+::\+Core\+::\+Log\+Level}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+
+
+Describes which level a log message is. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DEBUG@{DEBUG}!NoctisEngine::Core@{NoctisEngine::Core}}\index{NoctisEngine::Core@{NoctisEngine::Core}!DEBUG@{DEBUG}}}\Hypertarget{namespaceNoctisEngine_1_1Core_ab54c7f590fb133ca34bd597c676a1514adc30ec20708ef7b0f641ef78b7880a15}\label{namespaceNoctisEngine_1_1Core_ab54c7f590fb133ca34bd597c676a1514adc30ec20708ef7b0f641ef78b7880a15} 
+DEBUG&Used for debugging. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{INFO@{INFO}!NoctisEngine::Core@{NoctisEngine::Core}}\index{NoctisEngine::Core@{NoctisEngine::Core}!INFO@{INFO}}}\Hypertarget{namespaceNoctisEngine_1_1Core_ab54c7f590fb133ca34bd597c676a1514a551b723eafd6a31d444fcb2f5920fbd3}\label{namespaceNoctisEngine_1_1Core_ab54c7f590fb133ca34bd597c676a1514a551b723eafd6a31d444fcb2f5920fbd3} 
+INFO&Used for information. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{WARN@{WARN}!NoctisEngine::Core@{NoctisEngine::Core}}\index{NoctisEngine::Core@{NoctisEngine::Core}!WARN@{WARN}}}\Hypertarget{namespaceNoctisEngine_1_1Core_ab54c7f590fb133ca34bd597c676a1514a32bd8a1db2275458673903bdb84cb277}\label{namespaceNoctisEngine_1_1Core_ab54c7f590fb133ca34bd597c676a1514a32bd8a1db2275458673903bdb84cb277} 
+WARN&Used for warning about something. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ERROR@{ERROR}!NoctisEngine::Core@{NoctisEngine::Core}}\index{NoctisEngine::Core@{NoctisEngine::Core}!ERROR@{ERROR}}}\Hypertarget{namespaceNoctisEngine_1_1Core_ab54c7f590fb133ca34bd597c676a1514abb1ca97ec761fc37101737ba0aa2e7c5}\label{namespaceNoctisEngine_1_1Core_ab54c7f590fb133ca34bd597c676a1514abb1ca97ec761fc37101737ba0aa2e7c5} 
+ERROR&Used for an error. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CRITICAL@{CRITICAL}!NoctisEngine::Core@{NoctisEngine::Core}}\index{NoctisEngine::Core@{NoctisEngine::Core}!CRITICAL@{CRITICAL}}}\Hypertarget{namespaceNoctisEngine_1_1Core_ab54c7f590fb133ca34bd597c676a1514a99cd1c61610c76a57cb8d10d6df6b870}\label{namespaceNoctisEngine_1_1Core_ab54c7f590fb133ca34bd597c676a1514a99cd1c61610c76a57cb8d10d6df6b870} 
+CRITICAL&Used when an unrecoverable error was encountered. \\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespaceNoctisEngine_1_1Core_ad399c39d9c40848cc9fe919d94107ce0}\label{namespaceNoctisEngine_1_1Core_ad399c39d9c40848cc9fe919d94107ce0} 
+\index{NoctisEngine::Core@{NoctisEngine::Core}!VSyncMethod@{VSyncMethod}}
+\index{VSyncMethod@{VSyncMethod}!NoctisEngine::Core@{NoctisEngine::Core}}
+\doxysubsubsection{\texorpdfstring{VSyncMethod}{VSyncMethod}}
+{\footnotesize\ttfamily enum class \mbox{\hyperlink{namespaceNoctisEngine_1_1Core_ad399c39d9c40848cc9fe919d94107ce0}{Noctis\+Engine\+::\+Core\+::\+VSync\+Method}} \+: int\hspace{0.3cm}{\ttfamily [strong]}}
+
+
+
+Describes all vertical sync methodsn, used in \doxylink{classNoctisEngine_1_1Core_1_1Window_a1cd3167e63ba07a8a56683bc51129d09}{Window\+::set\+\_\+vsync()} 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{NO\_VSYNC@{NO\_VSYNC}!NoctisEngine::Core@{NoctisEngine::Core}}\index{NoctisEngine::Core@{NoctisEngine::Core}!NO\_VSYNC@{NO\_VSYNC}}}\Hypertarget{namespaceNoctisEngine_1_1Core_ad399c39d9c40848cc9fe919d94107ce0ad9bfaf7ead68712cad5d5d4dd710d896}\label{namespaceNoctisEngine_1_1Core_ad399c39d9c40848cc9fe919d94107ce0ad9bfaf7ead68712cad5d5d4dd710d896} 
+NO\+\_\+\+VSYNC&No vertical sync. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{VSYNC@{VSYNC}!NoctisEngine::Core@{NoctisEngine::Core}}\index{NoctisEngine::Core@{NoctisEngine::Core}!VSYNC@{VSYNC}}}\Hypertarget{namespaceNoctisEngine_1_1Core_ad399c39d9c40848cc9fe919d94107ce0a7f9044a0830fc110c3b82a26ce3511ee}\label{namespaceNoctisEngine_1_1Core_ad399c39d9c40848cc9fe919d94107ce0a7f9044a0830fc110c3b82a26ce3511ee} 
+VSYNC&Vertical sync set to the screen\textquotesingle{}s refresh rate. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{HALF\_REFRESH\_RATE@{HALF\_REFRESH\_RATE}!NoctisEngine::Core@{NoctisEngine::Core}}\index{NoctisEngine::Core@{NoctisEngine::Core}!HALF\_REFRESH\_RATE@{HALF\_REFRESH\_RATE}}}\Hypertarget{namespaceNoctisEngine_1_1Core_ad399c39d9c40848cc9fe919d94107ce0ac4c53810232948c5ee707fca33d77e5f}\label{namespaceNoctisEngine_1_1Core_ad399c39d9c40848cc9fe919d94107ce0ac4c53810232948c5ee707fca33d77e5f} 
+HALF\+\_\+\+REFRESH\+\_\+\+RATE&Vertical sync set to half of the screen\textquotesingle{}s refresh rate. \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{namespaceNoctisEngine_1_1Core_a3fca4a2a54413853b45f95b9ec7f6309}\label{namespaceNoctisEngine_1_1Core_a3fca4a2a54413853b45f95b9ec7f6309} 
+\index{NoctisEngine::Core@{NoctisEngine::Core}!exit\_program\_failure@{exit\_program\_failure}}
+\index{exit\_program\_failure@{exit\_program\_failure}!NoctisEngine::Core@{NoctisEngine::Core}}
+\doxysubsubsection{\texorpdfstring{exit\_program\_failure()}{exit\_program\_failure()}}
+{\footnotesize\ttfamily auto Noctis\+Engine\+::\+Core\+::exit\+\_\+program\+\_\+failure (\begin{DoxyParamCaption}\item[{std\+::string\+\_\+view}]{reason = {\ttfamily "{}Unrecoverable~error"{}} }\end{DoxyParamCaption}) -\/$>$  void}
+
+
+
+Call this when your program failed with something that is unrecoverable. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em reason} & The reason why your program quit. Default "{}\+Unrecoverable error"{} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+This calls std\+::exit(\+EXIT\+\_\+\+FAILURE), so anything that should be done before quitting should be done before calling this function 
+\end{DoxyWarning}

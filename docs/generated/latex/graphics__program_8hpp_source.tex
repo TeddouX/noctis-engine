@@ -1,0 +1,50 @@
+\doxysection{graphics\+\_\+program.\+hpp}
+\hypertarget{graphics__program_8hpp_source}{}\label{graphics__program_8hpp_source}\index{/home/Victor/Programming/Noctis-\/Engine-\/Test-\/Game/noctis-\/engine/include/noctis\_engine/rendering/graphics\_program.hpp@{/home/Victor/Programming/Noctis-\/Engine-\/Test-\/Game/noctis-\/engine/include/noctis\_engine/rendering/graphics\_program.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}shader.hpp"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}draw\_list.hpp"{}}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering}{NoctisEngine::Rendering}}}
+\DoxyCodeLine{00010\ \{}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1GraphicsProgram}{GraphicsProgram}}}
+\DoxyCodeLine{00014\ \{}
+\DoxyCodeLine{00015\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00017\ \ \ \ \ \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1GraphicsProgram_afb0079ad4c7c671cf438274e9fe86397}{GraphicsProgram}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00024\ \ \ \ \ \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1GraphicsProgram_ac3ab1bb49e5794a30d1938563fbb73a3}{GraphicsProgram}}(\textcolor{keyword}{const}\ std::vector<Shader>\ \&shaders,\ std::string\_view\ name);}
+\DoxyCodeLine{00025\ \ \ \ \ }
+\DoxyCodeLine{00026\ \ \ \ \ \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1GraphicsProgram}{\string~GraphicsProgram}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1GraphicsProgram_a54672d81170bac1a056db87515585b9b}{create\_helper}}(}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ std::string\_view\ vert\_code,\ }
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ std::string\_view\ frag\_code,\ }
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ std::string\_view\ name}
+\DoxyCodeLine{00037\ \ \ \ \ )\ -\/>\ \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1GraphicsProgram_afb0079ad4c7c671cf438274e9fe86397}{GraphicsProgram}};}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1GraphicsProgram_a24ecfde7c5eeda6ec29beaffa83f3a7c}{link}}()\ const\ -\/>\ \textcolor{keywordtype}{bool};}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00047\ \ \ \ \ auto\ \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1GraphicsProgram_a26bd4b54ecb82fea4e1fe8472084fde6}{detach\_shader}}(const\ \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1Shader}{Shader}}\ \&shader)\ const\ -\/>\ \textcolor{keywordtype}{void};}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00050\ \ \ \ \ auto\ \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1GraphicsProgram_aab6fd0ec860f6088bc79d07cdace62f5}{delete\_gpu}}()\ const\ -\/>\ \textcolor{keywordtype}{void};}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00054\ \ \ \ \ auto\ \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1GraphicsProgram_a5023ce71f856d6ea33f46f631b0619fc}{bind}}(\mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1DrawList}{DrawList}}\ \&draw\_list)\ const\ -\/>\ \textcolor{keywordtype}{void};}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00057\ \ \ \ \ auto\ \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1GraphicsProgram_a6271c48339ab26363404675d2b52f728}{gl\_handle}}()\ const\ -\/>\ std::uint32\_t;}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00062\ \ \ \ \ auto\ \mbox{\hyperlink{classNoctisEngine_1_1Rendering_1_1GraphicsProgram_a796b9deb1d5d59dc4f8534492b1363c3}{valid}}()\ const\ -\/>\ \textcolor{keywordtype}{bool};}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ private:}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ valid\_\{\textcolor{keyword}{false}\};}
+\DoxyCodeLine{00066\ \ \ \ \ std::uint32\_t\ \ \ handle\_;}
+\DoxyCodeLine{00067\ \};}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \}\ \textcolor{comment}{//\ namespace\ NoctisEngine::Rendering}}
+
+\end{DoxyCode}

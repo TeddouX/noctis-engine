@@ -1,0 +1,266 @@
+\doxysection{Noctis\+Engine\+::ECS\+::Transform2D Class Reference}
+\hypertarget{classNoctisEngine_1_1ECS_1_1Transform2D}{}\label{classNoctisEngine_1_1ECS_1_1Transform2D}\index{NoctisEngine::ECS::Transform2D@{NoctisEngine::ECS::Transform2D}}
+
+
+This component is used to place an entity in the world.  
+
+
+
+
+{\ttfamily \#include $<$transform\+\_\+2d.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Transform2D_a99b7e8f61b714202619c509ae86e4959}{Transform2D}} (glm\+::vec2 pos=glm\+::vec2\{0\}, float rotation\+\_\+rad=0.f, glm\+::vec2 \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Transform2D_a4a0b0d1e2410a3bc7a18d86325615bc1}{scale}}=glm\+::vec2\{1\})
+\begin{DoxyCompactList}\small\item\em Creates a new 2D transform. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Transform2D_ac063b2689ee32c11661b289a50361d72}{set\+\_\+position}} (const glm\+::vec2 \&pos) -\/$>$ void
+\begin{DoxyCompactList}\small\item\em Sets this transform\textquotesingle{}s position. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Transform2D_a90a47bdb23c41740756b8be6005d1d62}{set\+\_\+scale}} (const glm\+::vec2 \&\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Transform2D_a4a0b0d1e2410a3bc7a18d86325615bc1}{scale}}) -\/$>$ void
+\begin{DoxyCompactList}\small\item\em Sets this transform\textquotesingle{}s scale. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Transform2D_a2e321737f9935860006a8045297a1098}{set\+\_\+rotation}} (float rot) -\/$>$ void
+\begin{DoxyCompactList}\small\item\em Sets this transform\textquotesingle{}s rotation. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Transform2D_a3db647b4f57a7bdf7e4124c2962db4d7}{set\+\_\+rotation\+\_\+deg}} (float rot) -\/$>$ void
+\begin{DoxyCompactList}\small\item\em Sets this transform\textquotesingle{}s rotation. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Transform2D_a72852b9efa2aaae680e380c8399bbdb8}{translate}} (const glm\+::vec2 \&translation) -\/$>$ void
+\begin{DoxyCompactList}\small\item\em Translates this transform\textquotesingle{}s position. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Transform2D_aaeaa4a90a89b94bcf04ad1ab278c290d}{rotate}} (float rot) -\/$>$ void
+\begin{DoxyCompactList}\small\item\em Rotates this transform. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Transform2D_a49faa26d57c72b93923b777a73fc78b3}{rotate\+\_\+deg}} (float rot) -\/$>$ void
+\begin{DoxyCompactList}\small\item\em Rotates this transform. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Transform2D_a79b459048144462663e269b9edd94442}{position}} () const -\/$>$ const glm\+::vec2 \&
+\item 
+auto \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Transform2D_a4a0b0d1e2410a3bc7a18d86325615bc1}{scale}} () const -\/$>$ const glm\+::vec2 \&
+\item 
+auto \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Transform2D_a9c3b451559e6c4e87367d7be07a586ab}{rotation}} () const -\/$>$ float
+\item 
+auto \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Transform2D_a0c5a229f3d96b14284e1631d6ec266ec}{rotation\+\_\+deg}} () const -\/$>$ float
+\item 
+auto \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Transform2D_aa5cc453da57556208341ba1271499785}{distance\+\_\+to}} (const \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Transform2D}{Transform2D}} \&other) -\/$>$ float
+\begin{DoxyCompactList}\small\item\em Calculates the distance between two transforms using Pythagoras\textquotesingle{}s theorem. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Transform2D_a9854d9d23922b980f8a1f77ddf782793}{distance2\+\_\+to}} (const \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Transform2D}{Transform2D}} \&other) -\/$>$ float
+\begin{DoxyCompactList}\small\item\em Calculates the squared distance between two transforms using Pythagoras\textquotesingle{}s theorem. Less expensive than \doxylink{classNoctisEngine_1_1ECS_1_1Transform2D_aa5cc453da57556208341ba1271499785}{distance\+\_\+to()}, use this if comparing distances. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Transform2D_ac5deecb72373a72ffacf31881aa10e01}{model\+\_\+matrix}} () const -\/$>$ const glm\+::mat4 \&
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This component is used to place an entity in the world. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classNoctisEngine_1_1ECS_1_1Transform2D_a99b7e8f61b714202619c509ae86e4959}\label{classNoctisEngine_1_1ECS_1_1Transform2D_a99b7e8f61b714202619c509ae86e4959} 
+\index{NoctisEngine::ECS::Transform2D@{NoctisEngine::ECS::Transform2D}!Transform2D@{Transform2D}}
+\index{Transform2D@{Transform2D}!NoctisEngine::ECS::Transform2D@{NoctisEngine::ECS::Transform2D}}
+\doxysubsubsection{\texorpdfstring{Transform2D()}{Transform2D()}}
+{\footnotesize\ttfamily Noctis\+Engine\+::\+ECS\+::\+Transform2\+D\+::\+Transform2D (\begin{DoxyParamCaption}\item[{glm\+::vec2}]{pos = {\ttfamily glm\+:\+:vec2\{0\}},  }\item[{float}]{rotation\+\_\+rad = {\ttfamily 0.f},  }\item[{glm\+::vec2}]{scale = {\ttfamily glm\+:\+:vec2\{1\}} }\end{DoxyParamCaption})}
+
+
+
+Creates a new 2D transform. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pos} & The position \\
+\hline
+{\em rotation\+\_\+rad} & The rotation in radians. Use glm\+::rad to convert from degrees. \\
+\hline
+{\em scale} & The scale. RENDERING ONLY, SCALING ISN\textquotesingle{}T HANDLED BY THE PHYSICS SYSTEM. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classNoctisEngine_1_1ECS_1_1Transform2D_a9854d9d23922b980f8a1f77ddf782793}\label{classNoctisEngine_1_1ECS_1_1Transform2D_a9854d9d23922b980f8a1f77ddf782793} 
+\index{NoctisEngine::ECS::Transform2D@{NoctisEngine::ECS::Transform2D}!distance2\_to@{distance2\_to}}
+\index{distance2\_to@{distance2\_to}!NoctisEngine::ECS::Transform2D@{NoctisEngine::ECS::Transform2D}}
+\doxysubsubsection{\texorpdfstring{distance2\_to()}{distance2\_to()}}
+{\footnotesize\ttfamily auto Noctis\+Engine\+::\+ECS\+::\+Transform2\+D\+::distance2\+\_\+to (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Transform2D}{Transform2D}} \&}]{other }\end{DoxyParamCaption}) -\/$>$  float}
+
+
+
+Calculates the squared distance between two transforms using Pythagoras\textquotesingle{}s theorem. Less expensive than \doxylink{classNoctisEngine_1_1ECS_1_1Transform2D_aa5cc453da57556208341ba1271499785}{distance\+\_\+to()}, use this if comparing distances. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em other} & The other transform \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The squared distance between the two transforms 
+\end{DoxyReturn}
+\Hypertarget{classNoctisEngine_1_1ECS_1_1Transform2D_aa5cc453da57556208341ba1271499785}\label{classNoctisEngine_1_1ECS_1_1Transform2D_aa5cc453da57556208341ba1271499785} 
+\index{NoctisEngine::ECS::Transform2D@{NoctisEngine::ECS::Transform2D}!distance\_to@{distance\_to}}
+\index{distance\_to@{distance\_to}!NoctisEngine::ECS::Transform2D@{NoctisEngine::ECS::Transform2D}}
+\doxysubsubsection{\texorpdfstring{distance\_to()}{distance\_to()}}
+{\footnotesize\ttfamily auto Noctis\+Engine\+::\+ECS\+::\+Transform2\+D\+::distance\+\_\+to (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Transform2D}{Transform2D}} \&}]{other }\end{DoxyParamCaption}) -\/$>$  float}
+
+
+
+Calculates the distance between two transforms using Pythagoras\textquotesingle{}s theorem. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em other} & The other transform \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The distance between the two transforms 
+\end{DoxyReturn}
+\Hypertarget{classNoctisEngine_1_1ECS_1_1Transform2D_ac5deecb72373a72ffacf31881aa10e01}\label{classNoctisEngine_1_1ECS_1_1Transform2D_ac5deecb72373a72ffacf31881aa10e01} 
+\index{NoctisEngine::ECS::Transform2D@{NoctisEngine::ECS::Transform2D}!model\_matrix@{model\_matrix}}
+\index{model\_matrix@{model\_matrix}!NoctisEngine::ECS::Transform2D@{NoctisEngine::ECS::Transform2D}}
+\doxysubsubsection{\texorpdfstring{model\_matrix()}{model\_matrix()}}
+{\footnotesize\ttfamily auto Noctis\+Engine\+::\+ECS\+::\+Transform2\+D\+::model\+\_\+matrix (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const -\/$>$  const glm\+::mat4 \&}
+
+\begin{DoxyReturn}{Returns}
+This transform\textquotesingle{}s model matrix, used for rendering 
+\end{DoxyReturn}
+\Hypertarget{classNoctisEngine_1_1ECS_1_1Transform2D_a79b459048144462663e269b9edd94442}\label{classNoctisEngine_1_1ECS_1_1Transform2D_a79b459048144462663e269b9edd94442} 
+\index{NoctisEngine::ECS::Transform2D@{NoctisEngine::ECS::Transform2D}!position@{position}}
+\index{position@{position}!NoctisEngine::ECS::Transform2D@{NoctisEngine::ECS::Transform2D}}
+\doxysubsubsection{\texorpdfstring{position()}{position()}}
+{\footnotesize\ttfamily auto Noctis\+Engine\+::\+ECS\+::\+Transform2\+D\+::position (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const -\/$>$  const glm\+::vec2 \&}
+
+\begin{DoxyReturn}{Returns}
+This transform\textquotesingle{}s position 
+\end{DoxyReturn}
+\Hypertarget{classNoctisEngine_1_1ECS_1_1Transform2D_aaeaa4a90a89b94bcf04ad1ab278c290d}\label{classNoctisEngine_1_1ECS_1_1Transform2D_aaeaa4a90a89b94bcf04ad1ab278c290d} 
+\index{NoctisEngine::ECS::Transform2D@{NoctisEngine::ECS::Transform2D}!rotate@{rotate}}
+\index{rotate@{rotate}!NoctisEngine::ECS::Transform2D@{NoctisEngine::ECS::Transform2D}}
+\doxysubsubsection{\texorpdfstring{rotate()}{rotate()}}
+{\footnotesize\ttfamily auto Noctis\+Engine\+::\+ECS\+::\+Transform2\+D\+::rotate (\begin{DoxyParamCaption}\item[{float}]{rot }\end{DoxyParamCaption}) -\/$>$  void}
+
+
+
+Rotates this transform. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rot} & Rotation in radians \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classNoctisEngine_1_1ECS_1_1Transform2D_a49faa26d57c72b93923b777a73fc78b3}\label{classNoctisEngine_1_1ECS_1_1Transform2D_a49faa26d57c72b93923b777a73fc78b3} 
+\index{NoctisEngine::ECS::Transform2D@{NoctisEngine::ECS::Transform2D}!rotate\_deg@{rotate\_deg}}
+\index{rotate\_deg@{rotate\_deg}!NoctisEngine::ECS::Transform2D@{NoctisEngine::ECS::Transform2D}}
+\doxysubsubsection{\texorpdfstring{rotate\_deg()}{rotate\_deg()}}
+{\footnotesize\ttfamily auto Noctis\+Engine\+::\+ECS\+::\+Transform2\+D\+::rotate\+\_\+deg (\begin{DoxyParamCaption}\item[{float}]{rot }\end{DoxyParamCaption}) -\/$>$  void}
+
+
+
+Rotates this transform. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rot} & Rotation in degrees \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classNoctisEngine_1_1ECS_1_1Transform2D_a9c3b451559e6c4e87367d7be07a586ab}\label{classNoctisEngine_1_1ECS_1_1Transform2D_a9c3b451559e6c4e87367d7be07a586ab} 
+\index{NoctisEngine::ECS::Transform2D@{NoctisEngine::ECS::Transform2D}!rotation@{rotation}}
+\index{rotation@{rotation}!NoctisEngine::ECS::Transform2D@{NoctisEngine::ECS::Transform2D}}
+\doxysubsubsection{\texorpdfstring{rotation()}{rotation()}}
+{\footnotesize\ttfamily auto Noctis\+Engine\+::\+ECS\+::\+Transform2\+D\+::rotation (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const -\/$>$  float}
+
+\begin{DoxyReturn}{Returns}
+This transform\textquotesingle{}s rotation in radians 
+\end{DoxyReturn}
+\Hypertarget{classNoctisEngine_1_1ECS_1_1Transform2D_a0c5a229f3d96b14284e1631d6ec266ec}\label{classNoctisEngine_1_1ECS_1_1Transform2D_a0c5a229f3d96b14284e1631d6ec266ec} 
+\index{NoctisEngine::ECS::Transform2D@{NoctisEngine::ECS::Transform2D}!rotation\_deg@{rotation\_deg}}
+\index{rotation\_deg@{rotation\_deg}!NoctisEngine::ECS::Transform2D@{NoctisEngine::ECS::Transform2D}}
+\doxysubsubsection{\texorpdfstring{rotation\_deg()}{rotation\_deg()}}
+{\footnotesize\ttfamily auto Noctis\+Engine\+::\+ECS\+::\+Transform2\+D\+::rotation\+\_\+deg (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const -\/$>$  float}
+
+\begin{DoxyReturn}{Returns}
+This transform\textquotesingle{}s rotation in degrees 
+\end{DoxyReturn}
+\Hypertarget{classNoctisEngine_1_1ECS_1_1Transform2D_a4a0b0d1e2410a3bc7a18d86325615bc1}\label{classNoctisEngine_1_1ECS_1_1Transform2D_a4a0b0d1e2410a3bc7a18d86325615bc1} 
+\index{NoctisEngine::ECS::Transform2D@{NoctisEngine::ECS::Transform2D}!scale@{scale}}
+\index{scale@{scale}!NoctisEngine::ECS::Transform2D@{NoctisEngine::ECS::Transform2D}}
+\doxysubsubsection{\texorpdfstring{scale()}{scale()}}
+{\footnotesize\ttfamily auto Noctis\+Engine\+::\+ECS\+::\+Transform2\+D\+::scale (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const -\/$>$  const glm\+::vec2 \&}
+
+\begin{DoxyReturn}{Returns}
+This transform\textquotesingle{}s scale 
+\end{DoxyReturn}
+\Hypertarget{classNoctisEngine_1_1ECS_1_1Transform2D_ac063b2689ee32c11661b289a50361d72}\label{classNoctisEngine_1_1ECS_1_1Transform2D_ac063b2689ee32c11661b289a50361d72} 
+\index{NoctisEngine::ECS::Transform2D@{NoctisEngine::ECS::Transform2D}!set\_position@{set\_position}}
+\index{set\_position@{set\_position}!NoctisEngine::ECS::Transform2D@{NoctisEngine::ECS::Transform2D}}
+\doxysubsubsection{\texorpdfstring{set\_position()}{set\_position()}}
+{\footnotesize\ttfamily auto Noctis\+Engine\+::\+ECS\+::\+Transform2\+D\+::set\+\_\+position (\begin{DoxyParamCaption}\item[{const glm\+::vec2 \&}]{pos }\end{DoxyParamCaption}) -\/$>$  void}
+
+
+
+Sets this transform\textquotesingle{}s position. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pos} & The new position \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classNoctisEngine_1_1ECS_1_1Transform2D_a2e321737f9935860006a8045297a1098}\label{classNoctisEngine_1_1ECS_1_1Transform2D_a2e321737f9935860006a8045297a1098} 
+\index{NoctisEngine::ECS::Transform2D@{NoctisEngine::ECS::Transform2D}!set\_rotation@{set\_rotation}}
+\index{set\_rotation@{set\_rotation}!NoctisEngine::ECS::Transform2D@{NoctisEngine::ECS::Transform2D}}
+\doxysubsubsection{\texorpdfstring{set\_rotation()}{set\_rotation()}}
+{\footnotesize\ttfamily auto Noctis\+Engine\+::\+ECS\+::\+Transform2\+D\+::set\+\_\+rotation (\begin{DoxyParamCaption}\item[{float}]{rot }\end{DoxyParamCaption}) -\/$>$  void}
+
+
+
+Sets this transform\textquotesingle{}s rotation. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pos} & The new rotation in radians \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classNoctisEngine_1_1ECS_1_1Transform2D_a3db647b4f57a7bdf7e4124c2962db4d7}\label{classNoctisEngine_1_1ECS_1_1Transform2D_a3db647b4f57a7bdf7e4124c2962db4d7} 
+\index{NoctisEngine::ECS::Transform2D@{NoctisEngine::ECS::Transform2D}!set\_rotation\_deg@{set\_rotation\_deg}}
+\index{set\_rotation\_deg@{set\_rotation\_deg}!NoctisEngine::ECS::Transform2D@{NoctisEngine::ECS::Transform2D}}
+\doxysubsubsection{\texorpdfstring{set\_rotation\_deg()}{set\_rotation\_deg()}}
+{\footnotesize\ttfamily auto Noctis\+Engine\+::\+ECS\+::\+Transform2\+D\+::set\+\_\+rotation\+\_\+deg (\begin{DoxyParamCaption}\item[{float}]{rot }\end{DoxyParamCaption}) -\/$>$  void}
+
+
+
+Sets this transform\textquotesingle{}s rotation. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pos} & The new rotation in degrees \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classNoctisEngine_1_1ECS_1_1Transform2D_a90a47bdb23c41740756b8be6005d1d62}\label{classNoctisEngine_1_1ECS_1_1Transform2D_a90a47bdb23c41740756b8be6005d1d62} 
+\index{NoctisEngine::ECS::Transform2D@{NoctisEngine::ECS::Transform2D}!set\_scale@{set\_scale}}
+\index{set\_scale@{set\_scale}!NoctisEngine::ECS::Transform2D@{NoctisEngine::ECS::Transform2D}}
+\doxysubsubsection{\texorpdfstring{set\_scale()}{set\_scale()}}
+{\footnotesize\ttfamily auto Noctis\+Engine\+::\+ECS\+::\+Transform2\+D\+::set\+\_\+scale (\begin{DoxyParamCaption}\item[{const glm\+::vec2 \&}]{scale }\end{DoxyParamCaption}) -\/$>$  void}
+
+
+
+Sets this transform\textquotesingle{}s scale. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pos} & The new scale \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+RENDERING ONLY, SCALING ISN\textquotesingle{}T HANDLED BY THE PHYSICS SYSTEM. 
+\end{DoxyWarning}
+\Hypertarget{classNoctisEngine_1_1ECS_1_1Transform2D_a72852b9efa2aaae680e380c8399bbdb8}\label{classNoctisEngine_1_1ECS_1_1Transform2D_a72852b9efa2aaae680e380c8399bbdb8} 
+\index{NoctisEngine::ECS::Transform2D@{NoctisEngine::ECS::Transform2D}!translate@{translate}}
+\index{translate@{translate}!NoctisEngine::ECS::Transform2D@{NoctisEngine::ECS::Transform2D}}
+\doxysubsubsection{\texorpdfstring{translate()}{translate()}}
+{\footnotesize\ttfamily auto Noctis\+Engine\+::\+ECS\+::\+Transform2\+D\+::translate (\begin{DoxyParamCaption}\item[{const glm\+::vec2 \&}]{translation }\end{DoxyParamCaption}) -\/$>$  void}
+
+
+
+Translates this transform\textquotesingle{}s position. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em translation} & The translation vector \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/\+Victor/\+Programming/\+Noctis-\/\+Engine-\/\+Test-\/\+Game/noctis-\/engine/include/noctis\+\_\+engine/ecs/component/transform\+\_\+2d.\+hpp\end{DoxyCompactItemize}

@@ -1,0 +1,48 @@
+\doxysection{vertex\+\_\+attrib.\+hpp}
+\hypertarget{vertex__attrib_8hpp_source}{}\label{vertex__attrib_8hpp_source}\index{/home/Victor/Programming/Noctis-\/Engine-\/Test-\/Game/noctis-\/engine/include/noctis\_engine/rendering/vertex\_attrib.hpp@{/home/Victor/Programming/Noctis-\/Engine-\/Test-\/Game/noctis-\/engine/include/noctis\_engine/rendering/vertex\_attrib.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceNoctisEngine_1_1Rendering}{NoctisEngine::Rendering}}}
+\DoxyCodeLine{00006\ \{}
+\DoxyCodeLine{00007\ \ \ \ \ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structNoctisEngine_1_1Rendering_1_1VertexAttribute}{VertexAttribute}}}
+\DoxyCodeLine{00010\ \{}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a5cd34b6e3643d2f82bb208701d05c403}{ComponentType}}}
+\DoxyCodeLine{00013\ \ \ \ \ \{}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a5cd34b6e3643d2f82bb208701d05c403ae409eb2ba6eb6801f52763ae370c350e}{BYTE}}\ =\ 0x1400,\ }
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a5cd34b6e3643d2f82bb208701d05c403aa35c2b02966b1563e5bf7b81b8b0cf77}{SHORT}}\ =\ 0x1402,\ }
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a5cd34b6e3643d2f82bb208701d05c403a53f93baa3057821107c750323892fa92}{INT}}\ =\ 0x1404,\ }
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a5cd34b6e3643d2f82bb208701d05c403ac6e6dc18b53b4c2681394b9d8aefcec7}{FIXED}}\ =\ 0x140C,}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a5cd34b6e3643d2f82bb208701d05c403ae738c26bf4ce1037fa81b039a915cbf6}{FLOAT}}\ =\ 0x1406,\ }
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a5cd34b6e3643d2f82bb208701d05c403a394f77ad5c4d4d20b17f354a96f6b82e}{HALF\_FLOAT}}\ =\ 0x140B,}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a5cd34b6e3643d2f82bb208701d05c403afd3e4ece78a7d422280d5ed379482229}{DOUBLE}}\ =\ 0x140A,}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a5cd34b6e3643d2f82bb208701d05c403aaa5862eca3c30bb4bb91597f94d0cde2}{INT\_2\_10\_10\_10\_REV}}\ =\ 0x8D9F,}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a5cd34b6e3643d2f82bb208701d05c403a3210edf01bfb032f86c83efc1a3ee3c6}{UNSIGNED\_INT\_2\_10\_10\_10\_REV}}\ =\ 0x8368,}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a5cd34b6e3643d2f82bb208701d05c403ae0abb5df04cba3e84d8cafa1ffb53d4f}{UNSIGNED\_INT\_10F\_11F\_11F\_REV}}\ =\ 0x8C3B,}
+\DoxyCodeLine{00051\ \ \ \ \ \};}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a24fa6fb0a83d599069d7db65b32579f9}{index}}\ =\ -\/1;}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00059\ \ \ \ \ \mbox{\hyperlink{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a5cd34b6e3643d2f82bb208701d05c403}{ComponentType}}\ \mbox{\hyperlink{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a615d38fb67d691a5b251392fcdb696ed}{component\_type}};}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00063\ \ \ \ \ std::size\_t\ \mbox{\hyperlink{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a6636a6ccc321ad06dde7c7ada3ef909f}{num\_components}};}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structNoctisEngine_1_1Rendering_1_1VertexAttribute_a05c02654291feb934344f9f743d9b33a}{normalized}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00068\ \};}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \}\ \textcolor{comment}{//\ namespace\ NoctisEngine::Rendering}}
+
+\end{DoxyCode}

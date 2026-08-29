@@ -1,0 +1,9 @@
+<map id="NoctisEngine::ECS::CollisionShape2D" name="NoctisEngine::ECS::CollisionShape2D">
+<area shape="rect" id="Node000001" title="Used to create a physics object." alt="" coords="696,47,844,87"/>
+<area shape="rect" id="Node000002" href="$structNoctisEngine_1_1ECS_1_1PhysicsMaterial2D.html" title="Describes the physical properties of a collision shape." alt="" coords="355,5,503,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="517,33,696,55,695,60,516,39"/>
+<area shape="rect" id="Node000003" href="$classNoctisEngine_1_1Color.html" title="A class representing a RGBA color." alt="" coords="5,13,155,38"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="168,23,355,23,355,28,168,28"/>
+<area shape="rect" id="Node000004" href="$structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Callbacks.html" title="Describes all the callbacks that relate to collision." alt="" coords="325,69,532,109"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="546,83,672,76,696,74,696,79,672,81,546,89"/>
+</map>

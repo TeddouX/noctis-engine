@@ -1,0 +1,129 @@
+\doxysection{Noctis\+Engine\+::ECS\+::Collision\+Shape2D\+::Callbacks Struct Reference}
+\hypertarget{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Callbacks}{}\label{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Callbacks}\index{NoctisEngine::ECS::CollisionShape2D::Callbacks@{NoctisEngine::ECS::CollisionShape2D::Callbacks}}
+
+
+Describes all the callbacks that relate to collision.  
+
+
+
+
+{\ttfamily \#include $<$collision\+\_\+shape\+\_\+2d.\+hpp$>$}
+
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::function$<$ void(\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}}, \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}})$>$ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Callbacks_aa8244cdbba40418255ca9b38993bb4c2}{on\+\_\+collision\+\_\+begin}}
+\begin{DoxyCompactList}\small\item\em Called when a collision begins and if enable\+\_\+collision\+\_\+events is set to true. \end{DoxyCompactList}\item 
+std\+::function$<$ void(\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}}, \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}})$>$ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Callbacks_af7051b643749acca3903c9fc0c4af9be}{on\+\_\+collision\+\_\+end}}
+\begin{DoxyCompactList}\small\item\em Called when a collision ends and if enable\+\_\+collision\+\_\+events is set to true. \end{DoxyCompactList}\item 
+std\+::function$<$ void(\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}}, \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}}, glm\+::vec2 \&, glm\+::vec2, float)$>$ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Callbacks_af0e44eae0757de8ffc3c9f5dca65a021}{on\+\_\+hit}}
+\begin{DoxyCompactList}\small\item\em Called when a hit collision is triggered. The hit event threshold can be set in the \doxylink{classNoctisEngine_1_1ECS_1_1PhysicsSystem2D}{Physics\+System2D}. \end{DoxyCompactList}\item 
+std\+::function$<$ void(\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}}, \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}})$>$ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Callbacks_abd147bfef109a42be14c6ae4c482edbf}{on\+\_\+sensor\+\_\+begin\+\_\+touch}}
+\begin{DoxyCompactList}\small\item\em Called when a collision begins and is\+\_\+sensor is set to true. \end{DoxyCompactList}\item 
+std\+::function$<$ void(\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}}, \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}})$>$ \mbox{\hyperlink{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Callbacks_a2a3f072d32538732b641d95e26882032}{on\+\_\+sensor\+\_\+end\+\_\+touch}}
+\begin{DoxyCompactList}\small\item\em Called when a collision ends and is\+\_\+sensor is set to true. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Describes all the callbacks that relate to collision. 
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Callbacks_aa8244cdbba40418255ca9b38993bb4c2}\label{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Callbacks_aa8244cdbba40418255ca9b38993bb4c2} 
+\index{NoctisEngine::ECS::CollisionShape2D::Callbacks@{NoctisEngine::ECS::CollisionShape2D::Callbacks}!on\_collision\_begin@{on\_collision\_begin}}
+\index{on\_collision\_begin@{on\_collision\_begin}!NoctisEngine::ECS::CollisionShape2D::Callbacks@{NoctisEngine::ECS::CollisionShape2D::Callbacks}}
+\doxysubsubsection{\texorpdfstring{on\_collision\_begin}{on\_collision\_begin}}
+{\footnotesize\ttfamily std\+::function$<$void (\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}}, \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}})$>$ Noctis\+Engine\+::\+ECS\+::\+Collision\+Shape2\+D\+::\+Callbacks\+::on\+\_\+collision\+\_\+begin}
+
+
+
+Called when a collision begins and if enable\+\_\+collision\+\_\+events is set to true. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em 1} & entity A (the one bearing this collision shape) \\
+\hline
+{\em 2} & entity B (the one that collided) \\
+\hline
+{\em 3} & the collision manifold \\
+\hline
+\end{DoxyParams}
+\Hypertarget{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Callbacks_af7051b643749acca3903c9fc0c4af9be}\label{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Callbacks_af7051b643749acca3903c9fc0c4af9be} 
+\index{NoctisEngine::ECS::CollisionShape2D::Callbacks@{NoctisEngine::ECS::CollisionShape2D::Callbacks}!on\_collision\_end@{on\_collision\_end}}
+\index{on\_collision\_end@{on\_collision\_end}!NoctisEngine::ECS::CollisionShape2D::Callbacks@{NoctisEngine::ECS::CollisionShape2D::Callbacks}}
+\doxysubsubsection{\texorpdfstring{on\_collision\_end}{on\_collision\_end}}
+{\footnotesize\ttfamily std\+::function$<$void (\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}}, \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}})$>$ Noctis\+Engine\+::\+ECS\+::\+Collision\+Shape2\+D\+::\+Callbacks\+::on\+\_\+collision\+\_\+end}
+
+
+
+Called when a collision ends and if enable\+\_\+collision\+\_\+events is set to true. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em 1} & entity A (the one bearing this collision shape) \\
+\hline
+{\em 2} & entity B (the one that collided) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Callbacks_af0e44eae0757de8ffc3c9f5dca65a021}\label{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Callbacks_af0e44eae0757de8ffc3c9f5dca65a021} 
+\index{NoctisEngine::ECS::CollisionShape2D::Callbacks@{NoctisEngine::ECS::CollisionShape2D::Callbacks}!on\_hit@{on\_hit}}
+\index{on\_hit@{on\_hit}!NoctisEngine::ECS::CollisionShape2D::Callbacks@{NoctisEngine::ECS::CollisionShape2D::Callbacks}}
+\doxysubsubsection{\texorpdfstring{on\_hit}{on\_hit}}
+{\footnotesize\ttfamily std\+::function$<$void (\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}}, \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}}, glm\+::vec2 \&, glm\+::vec2, float)$>$ Noctis\+Engine\+::\+ECS\+::\+Collision\+Shape2\+D\+::\+Callbacks\+::on\+\_\+hit}
+
+
+
+Called when a hit collision is triggered. The hit event threshold can be set in the \doxylink{classNoctisEngine_1_1ECS_1_1PhysicsSystem2D}{Physics\+System2D}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em 1} & entity A (the one bearing this collision shape) \\
+\hline
+{\em 2} & entity B (the one that collided) \\
+\hline
+{\em 3} & Normal vector pointing from shape A to shape B. \\
+\hline
+{\em 4} & Point where the shapes hit. \\
+\hline
+{\em 5} & The speed the shapes are approaching. Always positive. Typically in m/s. ~\newline
+ \\
+\hline
+\end{DoxyParams}
+\Hypertarget{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Callbacks_abd147bfef109a42be14c6ae4c482edbf}\label{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Callbacks_abd147bfef109a42be14c6ae4c482edbf} 
+\index{NoctisEngine::ECS::CollisionShape2D::Callbacks@{NoctisEngine::ECS::CollisionShape2D::Callbacks}!on\_sensor\_begin\_touch@{on\_sensor\_begin\_touch}}
+\index{on\_sensor\_begin\_touch@{on\_sensor\_begin\_touch}!NoctisEngine::ECS::CollisionShape2D::Callbacks@{NoctisEngine::ECS::CollisionShape2D::Callbacks}}
+\doxysubsubsection{\texorpdfstring{on\_sensor\_begin\_touch}{on\_sensor\_begin\_touch}}
+{\footnotesize\ttfamily std\+::function$<$void (\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}}, \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}})$>$ Noctis\+Engine\+::\+ECS\+::\+Collision\+Shape2\+D\+::\+Callbacks\+::on\+\_\+sensor\+\_\+begin\+\_\+touch}
+
+
+
+Called when a collision begins and is\+\_\+sensor is set to true. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em 1} & entity A (the sensor) \\
+\hline
+{\em 2} & entity B (the visitor) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Callbacks_a2a3f072d32538732b641d95e26882032}\label{structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Callbacks_a2a3f072d32538732b641d95e26882032} 
+\index{NoctisEngine::ECS::CollisionShape2D::Callbacks@{NoctisEngine::ECS::CollisionShape2D::Callbacks}!on\_sensor\_end\_touch@{on\_sensor\_end\_touch}}
+\index{on\_sensor\_end\_touch@{on\_sensor\_end\_touch}!NoctisEngine::ECS::CollisionShape2D::Callbacks@{NoctisEngine::ECS::CollisionShape2D::Callbacks}}
+\doxysubsubsection{\texorpdfstring{on\_sensor\_end\_touch}{on\_sensor\_end\_touch}}
+{\footnotesize\ttfamily std\+::function$<$void (\mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}}, \mbox{\hyperlink{classNoctisEngine_1_1ECS_1_1Entity}{Entity}})$>$ Noctis\+Engine\+::\+ECS\+::\+Collision\+Shape2\+D\+::\+Callbacks\+::on\+\_\+sensor\+\_\+end\+\_\+touch}
+
+
+
+Called when a collision ends and is\+\_\+sensor is set to true. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em 1} & entity A (the sensor) \\
+\hline
+{\em 2} & entity B (the visitor) \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/\+Victor/\+Programming/\+Noctis-\/\+Engine-\/\+Test-\/\+Game/noctis-\/engine/include/noctis\+\_\+engine/ecs/system/collision\+\_\+shape\+\_\+2d.\+hpp\end{DoxyCompactItemize}

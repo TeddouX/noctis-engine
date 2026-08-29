@@ -1,0 +1,19 @@
+var searchData=
+[
+  ['radius_0',['radius',['../structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Circle.html#a883a63f8b42371f8dfe9d991184702ad',1,'NoctisEngine::ECS::CollisionShape2D::Circle::radius'],['../structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Capsule.html#af28860d6c9cb0c0ce1bd7c2824a2337b',1,'NoctisEngine::ECS::CollisionShape2D::Capsule::radius']]],
+  ['red_1',['red',['../classNoctisEngine_1_1Color.html#a89789591ae35191977bf38d61976037e',1,'NoctisEngine::Color']]],
+  ['red_5ff_2',['red_f',['../classNoctisEngine_1_1Color.html#a45c29b48986cac83777419b61e6d58b4',1,'NoctisEngine::Color']]],
+  ['remove_3',['remove',['../classNoctisEngine_1_1ECS_1_1ComponentStorage.html#aa89fcedd39aeb25e2eebcfa29e67a2d5',1,'NoctisEngine::ECS::ComponentStorage']]],
+  ['remove_5fcomponent_4',['remove_component',['../classNoctisEngine_1_1ECS_1_1World.html#ad81efc63d52add42abae44852053c403',1,'NoctisEngine::ECS::World']]],
+  ['render_5',['render',['../classNoctisEngine_1_1Rendering_1_1Renderer.html#a11ef6e905c649e683f1bb04e27d3452d',1,'NoctisEngine::Rendering::Renderer']]],
+  ['renderer_6',['renderer',['../classNoctisEngine_1_1Rendering_1_1Renderer.html#a22cad2a95d6c64722dd3a903c3e0daed',1,'NoctisEngine::Rendering::Renderer::Renderer()'],['../classNoctisEngine_1_1Rendering_1_1Renderer.html',1,'NoctisEngine::Rendering::Renderer']]],
+  ['repeat_7',['REPEAT',['../namespaceNoctisEngine_1_1Rendering.html#aa2cf3bfbd0e13a00a570d9b7358bd94ea5be68175be14dfaa080165456c2e9555',1,'NoctisEngine::Rendering']]],
+  ['resize_8',['resize',['../classNoctisEngine_1_1Rendering_1_1GPUBuffer.html#aeb1ecf6d554d187dff61cabaf4b4b01f',1,'NoctisEngine::Rendering::GPUBuffer']]],
+  ['rolling_5fimpulse_9',['rolling_impulse',['../structNoctisEngine_1_1ECS_1_1CollisionManifold2D.html#a10175f35e6a1457ca73425a29bdfdbb5',1,'NoctisEngine::ECS::CollisionManifold2D']]],
+  ['rolling_5fresistance_10',['rolling_resistance',['../structNoctisEngine_1_1ECS_1_1PhysicsMaterial2D.html#ad0467baf4d7b43a981a72c753d7393a6',1,'NoctisEngine::ECS::PhysicsMaterial2D']]],
+  ['rotate_11',['rotate',['../classNoctisEngine_1_1ECS_1_1Transform2D.html#aaeaa4a90a89b94bcf04ad1ab278c290d',1,'NoctisEngine::ECS::Transform2D']]],
+  ['rotate_5fdeg_12',['rotate_deg',['../classNoctisEngine_1_1ECS_1_1Transform2D.html#a49faa26d57c72b93923b777a73fc78b3',1,'NoctisEngine::ECS::Transform2D']]],
+  ['rotation_13',['rotation',['../structNoctisEngine_1_1ECS_1_1PhysicsBody2D_1_1MotionLocks.html#aaf8513d40aa32d8996f9c649d6af683b',1,'NoctisEngine::ECS::PhysicsBody2D::MotionLocks::rotation'],['../classNoctisEngine_1_1ECS_1_1Transform2D.html#a9c3b451559e6c4e87367d7be07a586ab',1,'NoctisEngine::ECS::Transform2D::rotation()']]],
+  ['rotation_5fdeg_14',['rotation_deg',['../structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Box.html#a5d559714135f8d65d2723e7fd881e47c',1,'NoctisEngine::ECS::CollisionShape2D::Box::rotation_deg'],['../classNoctisEngine_1_1ECS_1_1Transform2D.html#a0c5a229f3d96b14284e1631d6ec266ec',1,'NoctisEngine::ECS::Transform2D::rotation_deg()']]],
+  ['rotational_5finertia_15',['rotational_inertia',['../structNoctisEngine_1_1ECS_1_1PhysicsBody2D.html#a2e8661ec304673b8644659bf5fccfa1a',1,'NoctisEngine::ECS::PhysicsBody2D']]]
+];
