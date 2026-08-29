@@ -12,7 +12,7 @@ namespace NoctisEngine::Rendering
 /// any other positive number will use the provided length
 /// @return The created read view
 template <typename T>
-auto get_cpu_buffer_view(const std::vector<T> &buf, std::size_t offset, std::size_t length = 0) -> CPUReadView 
+auto get_cpu_read_view(const std::vector<T> &buf, std::size_t offset, std::size_t length = 0) -> CPUReadView 
 {
     if (length + offset > buf.size())
     {
@@ -30,16 +30,14 @@ auto get_cpu_buffer_view(const std::vector<T> &buf, std::size_t offset, std::siz
     });
 }
 
+/// @brief Creates a CPU read view from an object
+/// @tparam T The object type
+/// @param val The object
+/// @return The created read vie
 template <typename T>
-auto get_cpu_buffer_view(const T &val) -> CPUReadView 
+auto get_cpu_read_view(const T &val) -> CPUReadView 
 {
     return std::as_bytes(std::span{std::addressof(val), 1});
-}
-
-template <typename T>
-auto get_cpu_buffer_view(T &val) -> CPUWriteView 
-{
-    return std::as_writable_bytes(std::span{std::addressof(val), 1});
 }
 
 } // namespace NoctisEngine::Rendering

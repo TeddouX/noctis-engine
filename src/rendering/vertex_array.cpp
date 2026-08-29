@@ -80,7 +80,7 @@ auto VertexArray::upload_indices(const std::vector<std::uint32_t> &indices) -> v
     }
 
     bool resized = GPUBuffer::resize(ebo_, indices.size());
-    ebo_.write(get_cpu_buffer_view(indices, 0), 0);
+    ebo_.write(get_cpu_read_view(indices, 0), 0);
 
     // Relink if resized because a new buffer was created
     if (resized)

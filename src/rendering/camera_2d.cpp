@@ -39,7 +39,7 @@ auto Camera2D::set_position(const glm::vec2 &position) -> void
 
 auto Camera2D::update_buffers() -> void
 {
-    camera_ubo_.write(get_cpu_buffer_view(CameraData{
+    camera_ubo_.write(get_cpu_read_view(CameraData{
         .proj_mat = projection_matrix_,
         .view_mat = glm::translate(glm::mat4{1}, -glm::vec3{pos_, 0}),
         .pos = glm::vec3{pos_, 0},
