@@ -80,6 +80,16 @@ auto Renderer::set_blend(bool b) const -> void
     glad_enable_disable(b, GL_BLEND);
 }
 
+auto Renderer::set_blend_color(const Color &col)
+{
+    glBlendColor(
+        col.red_f(),
+        col.green_f(),
+        col.blue_f(),
+        col.alpha_f()
+    );
+}
+
 auto Renderer::set_blend_func(BlendFunc sFactor, BlendFunc dFactor) const -> void 
 {
     glBlendFunc(static_cast<GLenum>(sFactor), static_cast<GLenum>(dFactor));

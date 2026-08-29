@@ -2,6 +2,7 @@
 #include <string_view>
 
 
+/// @brief Default shader code
 namespace NoctisEngine::Rendering::DefaultShaders
 {
 

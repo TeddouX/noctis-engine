@@ -3,6 +3,8 @@
 #include "mesh_view.hpp"
 #include "../vertex.hpp"
 
+
+/// @brief Default meshes that are automatically loaded by mesh managers
 namespace NoctisEngine::Rendering::DefaultMeshes
 {
 

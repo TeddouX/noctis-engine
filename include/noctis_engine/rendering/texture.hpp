@@ -138,6 +138,8 @@ private:
     int             height_;
 };
 
+/// @brief Texture uniform indices and names reserved by the 
+/// engine to pass textures to shaders
 namespace TextureSlots
 {
 
