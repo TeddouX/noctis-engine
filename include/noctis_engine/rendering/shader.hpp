@@ -9,11 +9,22 @@ namespace NoctisEngine::Rendering
 /// @brief Represents different shader types
 enum class ShaderType
 {
-    /// @brief Controls where vertices are draw on the screen
+    /// @brief Runs once per vertex. Controls where vertices are draw on the screen.
+    /// @important This shader is mandatory for draw calls
     VERTEX = 0x8B31,
 
-    /// @brief Controls the color of the pixels of your meshes
-    FRAGMENT = 0x8B30
+    /// @brief Runs once per fragment (per pixel that covers a meshe's primitives)
+    /// Computes the final color output
+    /// @important This shader is mandatory for draw calls
+    FRAGMENT = 0x8B30,
+
+    /// @brief Runs once per primitive (point, line, or triangle) rather than per vertex. 
+    /// Can emit zero, one, or many primitives from each input primitive. Not mandatory for draw calls
+    GEOMETRY = 0x8DD9,
+
+    /// @brief Not part of the drawing pipeline at all. Runs arbitrary parallel work on the GPU.
+    /// This shader should be used in a ComputeProgram.
+    COMPUTE = 0x91B9, 
 };
 
 /// @brief This class represents a shader on the GPU. 
@@ -35,8 +46,8 @@ public:
     /// @return The OpenGL handle to this shader 
     auto gl_handle() -> std::uint32_t;
 
-    /// @brief Deletes this shader from the GPU, call this after 
-    /// it was linked in a program to free up memory
+    /// @brief Deletes this shader from the GPU. If the shader is attached to a program 
+    /// the deletion will be queued until the shader is detached from the program.
     auto delete_gpu() -> void;
 
 private:
