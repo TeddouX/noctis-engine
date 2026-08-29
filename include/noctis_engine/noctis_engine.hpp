@@ -15,8 +15,10 @@ namespace NoctisEngine
 
 /// @brief Multiply by this value to convert from pixels to meters
 constexpr float PIXELS_TO_METERS = 0.02f;
+
 /// @brief Multiply by this value to convert from meters to pixels
 constexpr float METERS_TO_PIXELS = 1.0f / PIXELS_TO_METERS;
+
 
 namespace Rendering 
 {
