@@ -20,7 +20,8 @@ public:
     /// @brief Creates a VAO on the GPU
     /// @param vertex_attribs This VAO's vertex attributes
     /// @param name This VAO's name. Default "vertex_array"
-    /// @param create_buffers Specifies if the VAO should create the VBO and EBO buffers, 
+    /// @param create_buffers Specifies if the VAO should create the VBO and, possibly (see use_ebo), EBO buffers 
+    /// @param use_ebo Specifies if the VAO should use an EBO buffer
     /// this will also link them. True by default
     VertexArray(
         const std::vector<VertexAttribute> &vertex_attribs,
