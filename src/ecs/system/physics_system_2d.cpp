@@ -35,14 +35,14 @@ auto PhysicsSystem2D::enable_debug_rendering() -> void
         Rendering::DEBUG_VERTEX_ATTRIBUTES,
         "physics_line_vertex_array",
         true,
-        true // false
+        false
     };
 
     tri_vertex_array_ = Rendering::VertexArray{
         Rendering::DEBUG_VERTEX_ATTRIBUTES,
         "physics_tri_vertex_array",
         true,
-        true // false
+        false
     };
 
     dbg_shader_ = Rendering::Shader{
