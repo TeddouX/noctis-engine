@@ -1,5 +1,0 @@
-<map id="NoctisEngine::ECS::Sprite" name="NoctisEngine::ECS::Sprite">
-<area shape="rect" id="Node000001" title="A 2D sprite." alt="" coords="22,108,170,148"/>
-<area shape="rect" id="Node000002" href="$classNoctisEngine_1_1Rendering_1_1Texture.html" title="This class represents a texture stored on the GPU." alt="" coords="5,5,187,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="99,59,99,108,93,108,93,59"/>
-</map>
