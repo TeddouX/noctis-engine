@@ -1,6 +1,6 @@
 #pragma once
 #include <cstdint>
-#include <string_view>
+#include <string>
 
 
 namespace NoctisEngine::Rendering
@@ -35,7 +35,7 @@ public:
     /// @brief Default constructor
     Shader() = default;
 
-    /// @brief Creates a shader and compiles it
+    /// @brief Creates a shader
     /// @param type The shader's type
     /// @param code The shader's code, null terminated
     /// @param name The shader's name, null terminated

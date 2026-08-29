@@ -29,7 +29,7 @@ PhysicsSystem2D::~PhysicsSystem2D()
     b2DestroyWorld(b2LoadWorldId(physics_world_));
 }
 
-auto PhysicsSystem2D::enable_debug_rendering() -> void
+auto PhysicsSystem2D::enable_debug_rendering() -> bool
 {
     line_vertex_array_ = Rendering::VertexArray{
         Rendering::DEBUG_VERTEX_ATTRIBUTES,
@@ -45,11 +45,51 @@ auto PhysicsSystem2D::enable_debug_rendering() -> void
         false
     };
 
-    dbg_shader_ = Rendering::Shader{
-        Rendering::DefaultShaders::DEBUG_SHADER_2D.data(),
-        "phys_shader"
+    Rendering::Shader dbg_vert_shader_2d{
+        Rendering::ShaderType::VERTEX, 
+        Rendering::DefaultShaders::DEBUG_VERT_SHADER_2D_CODE, 
+        "dbg_vert_shader_2d"
     };
-    dbg_shader_.compile();
+
+    if (not dbg_vert_shader_2d.compile())
+    {
+        PHYSICS_LOGGER.critical("Failed to compile debug vertex shader");
+        return false;
+    }
+
+    Rendering::Shader dbg_frag_shader_2d{
+        Rendering::ShaderType::FRAGMENT, 
+        Rendering::DefaultShaders::DEBUG_FRAG_SHADER_2D_CODE, 
+        "dbg_frag_shader_2d"
+    };
+
+    if (not dbg_frag_shader_2d.compile())
+    {
+        PHYSICS_LOGGER.critical("Failed to compile debug fragment shader");
+        return false;
+    }
+
+    graphics_prog_ = Rendering::GraphicsProgram{
+        {
+            dbg_vert_shader_2d,
+            dbg_frag_shader_2d,
+        },
+        "default_graphics_prog"
+    };
+
+    if (not graphics_prog_.valid())
+    {
+        PHYSICS_LOGGER.critical("Invalid debug graphics prog");
+        return false;
+    }
+
+    if (not graphics_prog_.link())
+    {
+        PHYSICS_LOGGER.critical("Failed to link debug graphics prog");
+        return false;
+    }
+
+    return true;
 }
 
 auto PhysicsSystem2D::set_gravity(glm::vec2 gravity) -> void
@@ -704,7 +744,7 @@ auto PhysicsSystem2D::draw_debug(Rendering::DrawList &draw_list, const DebugDraw
         sizeof(Rendering::DebugVertex)
     );
 
-    dbg_shader_.use(draw_list);
+    graphics_prog_.bind(draw_list);
     
     line_vertex_array_.bind(draw_list);
     draw_list.draw_lines(0, ctx.lines_vertices.size());

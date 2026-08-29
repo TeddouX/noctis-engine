@@ -49,7 +49,7 @@ public:
     auto valid() const -> bool;
 
 private:
-    bool            valid_;
+    bool            valid_{false};
     std::uint32_t   handle_;
 };
 

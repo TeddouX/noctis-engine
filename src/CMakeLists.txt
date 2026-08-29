@@ -11,6 +11,7 @@ set(NCENG_SOURCES
     "rendering/camera_2d.cpp"
     "rendering/draw_list.cpp"
     "rendering/gpu_buffer.cpp"
+    "rendering/graphics_program.cpp"
     "rendering/renderer.cpp"
     "rendering/shader.cpp"
     "rendering/texture.cpp"

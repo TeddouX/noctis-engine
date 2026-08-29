@@ -1,4 +1,4 @@
-#include <rendering/texture.hpp>
+#include <noctis_engine/rendering/texture.hpp>
 
 #include <GL/gl.h>
 

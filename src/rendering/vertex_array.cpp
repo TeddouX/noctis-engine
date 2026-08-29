@@ -16,6 +16,7 @@ VertexArray::VertexArray(
     std::string_view                    name, 
     bool                                create_buffers,
     bool                                use_ebo)
+    : use_ebo_{use_ebo}
 {
     glGenVertexArrays(1, &vao_);
     glBindVertexArray(vao_);
@@ -25,7 +26,7 @@ VertexArray::VertexArray(
     {
         vbo_ = GPUBuffer(1, name);
 
-        if (use_ebo)
+        if (use_ebo_)
             ebo_ = GPUBuffer(1, name);
     }
 
@@ -55,7 +56,7 @@ VertexArray::VertexArray(
         // Offset should have the total size of one vertex by now
         link_vbo(vbo_, offset);
 
-        if (use_ebo)
+        if (use_ebo_)
             link_ebo(ebo_);
     }
 }

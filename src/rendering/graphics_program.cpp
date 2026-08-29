@@ -18,6 +18,22 @@ GraphicsProgram::GraphicsProgram(const std::vector<Shader> &shaders, std::string
 
     for (const auto &shader : shaders)
     {
+        GLuint shader_handle = shader.gl_handle();
+
+        int compile_success;
+        glGetShaderiv(shader_handle, GL_COMPILE_STATUS, &compile_success);
+
+        if (not compile_success)
+        {
+            RENDERING_LOGGER.error(
+                "Tried to attach \"{}\" that wasn't compiled or has a compilation error", 
+                shader.name()
+            );
+
+            valid_ = false;
+            return;
+        }
+
         switch (shader.type())
         {
             case ShaderType::COMPUTE:
@@ -26,6 +42,7 @@ GraphicsProgram::GraphicsProgram(const std::vector<Shader> &shaders, std::string
                     shader.name(),
                     name
                 );
+                
                 valid_ = false;
                 return;
 
@@ -57,7 +74,7 @@ GraphicsProgram::GraphicsProgram(const std::vector<Shader> &shaders, std::string
                 break;
         }
 
-        glAttachShader(handle_, shader.gl_handle());
+        glAttachShader(handle_, shader_handle);
     }
 
     if (not has_frag_shader)

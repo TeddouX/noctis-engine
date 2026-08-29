@@ -1,13 +1,12 @@
 #pragma once
 #include <string_view>
 
+
 namespace NoctisEngine::Rendering::DefaultShaders
 {
-    
-constexpr std::string_view SHADER_2D = 
-R"(
-#ifdef VERTEX
 
+/// @brief Default vertex shader for drawing 2D sprites
+inline std::string_view VERT_SHADER_2D_CODE = R"(
 layout (location = 0) in vec3 aPos;
 layout (location = 1) in vec3 aNormal;
 layout (location = 2) in vec3 aTangent;
@@ -40,13 +39,11 @@ void main()
     // gl_Position = vec4(aPos, 1.0);
     fsTexCoord = aTexCoord;
 }
-
-#endif
-
+)";
 
 
-#ifdef FRAGMENT
-
+/// @brief Default fragment shader for drawing 2D sprites
+inline std::string_view FRAG_SHADER_2D_CODE = R"(
 layout (location = 0) in vec2 fsTexCoord;
 
 layout (location = 0) uniform sampler2D albedo;
@@ -57,13 +54,11 @@ void main()
 {
     FragColor = texture(albedo, fsTexCoord);
 }
-
-#endif
 )";
 
-constexpr std::string_view DEBUG_SHADER_2D = R"(
-#ifdef VERTEX
 
+/// @brief Default vertex shader for drawing 2D debug elements
+inline std::string_view DEBUG_VERT_SHADER_2D_CODE = R"(
 layout (location = 0) in vec3 aWorldPos;
 layout (location = 1) in vec3 aColor;
 
@@ -80,11 +75,11 @@ void main()
     gl_Position = camera.projMat * camera.viewMat * vec4(aWorldPos, 1.0);
     fsColor = aColor;
 }
+)";
 
-#endif 
 
-#ifdef FRAGMENT
-
+/// @brief Default fragment shader for drawing 2D debug elements
+inline std::string_view DEBUG_FRAG_SHADER_2D_CODE = R"(
 layout (location = 0) in vec3 fsColor;
 
 layout (location = 0) out vec4 FragColor;
@@ -93,8 +88,6 @@ void main()
 {
     FragColor = vec4(fsColor, 0);
 }
-
-#endif
 )";
 
 } // namespace NoctisEngine::Rendering::DefaultShaders
