@@ -14,7 +14,7 @@ GraphicsProgram::GraphicsProgram(const std::vector<Shader> &shaders, std::string
     bool has_geo_shader = false;
 
     handle_ = glCreateProgram();
-    glObjectLabel(GL_PROGRAM, handle_, -1, name.data());
+    glObjectLabel(GL_PROGRAM, handle_, name.size(), name.data());
 
     for (const auto &shader : shaders)
     {

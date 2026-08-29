@@ -24,10 +24,10 @@ VertexArray::VertexArray(
 
     if (create_buffers)
     {
-        vbo_ = GPUBuffer(1, name);
+        vbo_ = GPUBuffer(1, name, BufferFlag::DYNAMIC_STORAGE_BIT);
 
         if (use_ebo_)
-            ebo_ = GPUBuffer(1, name);
+            ebo_ = GPUBuffer(1, name, BufferFlag::DYNAMIC_STORAGE_BIT);
     }
 
     std::uint32_t attrib_idx{0};

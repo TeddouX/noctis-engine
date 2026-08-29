@@ -6,29 +6,28 @@ namespace NoctisEngine::Rendering
     
 inline auto resize_buffer(GPUBuffer &buf, std::int64_t buf_size, bool copy = false) -> bool 
 {
-    if (buf.size_bytes() >= buf_size) 
+    if (buf.size() >= buf_size) 
         return false;
 
-    std::int64_t new_buf_size = std::max(buf.size_bytes() * 2, 1zu);
+    std::size_t new_buf_size = std::max(buf.size() * 2, 1zu);
     while (new_buf_size < buf_size)
         new_buf_size *= 2;
     
-    RENDERING_LOGGER.debug("Resizing buffer '{}', {} => {}", buf.get_name(), buf.size_bytes(), new_buf_size);
+    RENDERING_LOGGER.debug("Resizing buffer '{}', {} => {}", buf.name(), buf.size(), new_buf_size);
 
 
-    GPUBuffer new_buf{new_buf_size, buf.get_name(), buf.get_flags()};
+    GPUBuffer new_buf{new_buf_size, buf.name(), buf.flags()};
 
     if (copy)
         buf.copy_to(new_buf);
     
-    buf.delete_gpu();
-
-    if (buf.is_mapped()) 
+    if (buf.mapped()) 
     {
-        RENDERING_LOGGER.debug("Remapping buffer '{}'", buf.get_name());
-        new_buf.map();
+        RENDERING_LOGGER.debug("Remapping buffer '{}'", buf.name());
+        new_buf.map(buf.map_access());
     }
 
+    buf.delete_gpu();
     buf = new_buf;
 
     return true;
@@ -42,7 +41,7 @@ auto resize_buffer(GPUBuffer &buf, const std::vector<T> &cpu_buf, bool copy = fa
 }
 
 template <typename T>
-auto get_cpu_buffer_view(const std::vector<T> &buf, std::size_t offset, std::size_t size) -> CPUBufferReadView 
+auto get_cpu_buffer_view(const std::vector<T> &buf, std::size_t offset, std::size_t size) -> CPUReadView 
 {
     if (size + offset > buf.size())
     {
@@ -58,13 +57,13 @@ auto get_cpu_buffer_view(const std::vector<T> &buf, std::size_t offset, std::siz
 }
 
 template <typename T>
-auto get_cpu_buffer_view(const T &val) -> CPUBufferReadView 
+auto get_cpu_buffer_view(const T &val) -> CPUReadView 
 {
     return std::as_bytes(std::span{std::addressof(val), 1});
 }
 
 template <typename T>
-auto get_cpu_buffer_view(T &val) -> CPUBufferWriteView 
+auto get_cpu_buffer_view(T &val) -> CPUWriteView 
 {
     return std::as_writable_bytes(std::span{std::addressof(val), 1});
 }

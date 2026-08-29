@@ -20,7 +20,7 @@ Shader::Shader(ShaderType type, std::string_view code, std::string_view name)
     , type_{type}
 {
     handle_ = glCreateShader(static_cast<GLenum>(type));
-    glObjectLabel(GL_SHADER, handle_, -1, name.data());
+    glObjectLabel(GL_SHADER, handle_, name.size(), name.data());
 
     std::string final_code = std::string(OPENGL_VERSION) 
         + "\n" 

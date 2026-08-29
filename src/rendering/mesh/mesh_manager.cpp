@@ -11,8 +11,8 @@ MeshManager::MeshManager()
     : vertex_off_{0}
     , index_off_{0}
 {
-    vbo_ = GPUBuffer{1, "mesh_manager_vbo"};
-    ebo_ = GPUBuffer{1, "mesh_manager_ebo"};
+    vbo_ = GPUBuffer{1, "mesh_manager_vbo", BufferFlag::DYNAMIC_STORAGE_BIT};
+    ebo_ = GPUBuffer{1, "mesh_manager_ebo", BufferFlag::DYNAMIC_STORAGE_BIT};
 
     vertex_array_ = VertexArray{
         DEFAULT_VERTEX_ATTRIBUTES, 

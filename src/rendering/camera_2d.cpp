@@ -14,7 +14,7 @@ Camera2D::Camera2D(
     const glm::vec2    &position, 
     float               near, 
     float               far)
-    : camera_ubo_{sizeof(CameraData), "camera_ubo"}
+    : camera_ubo_{sizeof(CameraData), "camera_ubo", BufferFlag::DYNAMIC_STORAGE_BIT}
     , projection_matrix_{1}
     , pos_{position}
 {

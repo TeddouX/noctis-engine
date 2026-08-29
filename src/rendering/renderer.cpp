@@ -41,12 +41,13 @@ Renderer::Renderer()
 
     glDebugMessageCallback((GLDEBUGPROC)opengl_debug_message_callback, this);
 
-    BufferFlag mappedBufFlags = BufferFlag::MAP_PERSISTENT_BIT | BufferFlag::MAP_COHERENT_BIT | BufferFlag::MAP_WRITE_BIT;
-    command_buffer_ = GPUBuffer(1, "renderer_command_buffer", mappedBufFlags);
-    objectsSSBO_ = GPUBuffer(1, "renderer_object_buffer", mappedBufFlags);
+    BufferFlag buf_flags = BufferFlag::MAP_PERSISTENT_BIT | BufferFlag::MAP_COHERENT_BIT | BufferFlag::MAP_WRITE_BIT;
+    command_buffer_ = GPUBuffer(1, "renderer_command_buffer", buf_flags);
+    objectsSSBO_ = GPUBuffer(1, "renderer_object_buffer", buf_flags);
 
-    command_buffer_.map();
-    objectsSSBO_.map();
+    BufferMapAccess map_accesses = BufferMapAccess::MAP_PERSISTENT_BIT | BufferMapAccess::MAP_COHERENT_BIT | BufferMapAccess::MAP_WRITE_BIT;
+    command_buffer_.map(map_accesses);
+    objectsSSBO_.map(map_accesses);
 
     RENDERING_LOGGER.info("GPU: Vendor: \"{}\", Renderer: \"{}\", Version: \"{}\"", 
         (const char *)glGetString(GL_VENDOR), 
@@ -98,8 +99,8 @@ auto Renderer::render(DrawList &draw_list) -> void
         command_buffer_.gl_handle()
     );
 
-    auto command_buf_ptr = static_cast<DrawElementsIndirectCommand *>(command_buffer_.get_mapped_ptr());
-    auto object_ssbo_ptr = static_cast<ObjectData *>(objectsSSBO_.get_mapped_ptr());
+    auto command_buf_ptr = static_cast<DrawElementsIndirectCommand *>(command_buffer_.mapped_ptr());
+    auto object_ssbo_ptr = static_cast<ObjectData *>(objectsSSBO_.mapped_ptr());
 
     auto curr_cmd = draw_list.data().begin();
     auto cmds_end = draw_list.data().end();

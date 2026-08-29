@@ -62,6 +62,10 @@ enum class BufferTarget : std::uint32_t
 /// @brief Describes different flags a buffer can have
 enum class BufferFlag : std::uint32_t 
 {
+    /// @brief This flag means the buffer will not have any special behaviour.
+    /// It also means it can't be mapped
+    NONE = 0,
+
     /// @brief This flag allows the buffer to be mapped for CPU reading
     MAP_READ_BIT = 0x0001,
 
@@ -69,6 +73,8 @@ enum class BufferFlag : std::uint32_t
     MAP_WRITE_BIT = 0x0002,
 
     /// @brief This flag allows the buffer to remain mapped while the GPU is also using it
+    /// This allows you to not unbind it each time you need the GPU to use it
+    /// @important requires MAP_READ_BIT or MAP_WRITE_BIT to be set
     MAP_PERSISTENT_BIT = 0x0040,
 
     /// @brief This flag guarantees writes/reads between CPU and GPU stay 
@@ -76,7 +82,7 @@ enum class BufferFlag : std::uint32_t
     /// @important Requires MAP_PERSISTENT_BIT to be set
     MAP_COHERENT_BIT = 0x0080,
 
-    /// @brief This flagallows the buffer's contents to be updated later via write()
+    /// @brief This flag allows the buffer's contents to be updated later via write()
     DYNAMIC_STORAGE_BIT = 0x0100,
 
     /// @brief This flag is hint to the driver that it should prefer keeping the buffer's backing storage in CPU
@@ -94,13 +100,19 @@ auto operator |(BufferFlag left, BufferFlag right) -> BufferFlag;
 /// @brief Describes how to map a buffer to RAM
 enum class BufferMapAccess : std::uint32_t 
 {
+    /// @brief This is an invalid map access used when a buffer is unmapped
+    /// @important DO NOT USE WHEN MAPPING BUFFERS
+    NONE = 0,
+
     /// @brief This flag allows the buffer to be mapped for CPU reading
     MAP_READ_BIT = 0x0001,
 
     /// @brief This flag allows the buffer to be mapped for CPU writing
     MAP_WRITE_BIT = 0x0002,
 
-    /// @brief This flag allows the buffer to remain mapped while the GPU is also using it
+    /// @brief This flag allows the buffer to remain mapped while the GPU is also using it.
+    /// This allows you to not unbind it each time you need the GPU to use it
+    /// @important requires MAP_READ_BIT or MAP_WRITE_BIT to be set
     MAP_PERSISTENT_BIT = 0x0040,
 
     /// @brief This flag guarantees writes/reads between CPU and GPU stay 
@@ -158,70 +170,98 @@ public:
 
     /// @brief Creates a buffer on the GPU
     /// @param size The buffer's size
-    /// @param name The buffer's name
+    /// @param name The buffer's name, must outlive the buffer
     /// @param flags The buffer's flags. You can combine multiple 
     /// of them using the binary or operator
-    GPUBuffer(std::int64_t size, std::string_view name, BufferFlag flags);
+    GPUBuffer(std::size_t size, std::string_view name, BufferFlag flags);
 
     ~GPUBuffer() = default;
 
     /// @brief Maps this buffer to RAM, for easier read and write from the CPU
-    /// @param access The access modifiers for the mapped buffer. You can combine multiple 
-    /// of them using the binary or operator
+    /// @param access The access modifiers for the mapped buffer. You must put at most the flags 
+    /// that were requested at buffer creation, for example, if MAP_READ_BIT is set at creation 
+    /// but not MAP_WRITE_BIT, you can't map the buffer for writing, but you can still map it for reading.
+    /// You can combine multiple map accesses using the binary or operator
+    /// @param offset The starting offset within the buffer of the range to be mapped. Default 0
+    /// @param length The length of the range to be mapped. Set to 0 to use the size of the buffer (default), 
+    /// any other positive number will use a different length
     /// @return The mapped pointer
-    auto map(BufferMapAccess access) -> void *;
+    /// @important This buffer must've created with either the MAP_READ_BIT flag or the MAP_WRITE_BIT flag 
+    /// for this function to not cause an OpenGL error.
+    auto map(BufferMapAccess access, std::size_t offset = 0, std::size_t length = 0) -> void *;
+
+    /// @brief Unmaps this buffer, any pointers left to the mapped range will be invalidated
+    auto unmap() -> void;
 
     /// @return The mapped pointer, `nullptr` if the buffer isn't mapped 
-    auto get_mapped_ptr() -> void *;
+    auto mapped_ptr() -> void *;
+
+    /// @return `true` if the buffer is mapped `false` otherwise 
+    auto mapped() -> bool;
 
     /// @brief Writes to a buffer
     /// @param data The data that should be written
-    /// @param offset The offset inside the buffer it should be written at, default 0
-    auto write(CPUReadView data, std::int64_t offset = 0) -> void;
+    /// @param offset The offset inside the buffer it should be written at
+    /// @important This buffer must've created with the GL_DYNAMIC_STORAGE flag for this function 
+    /// to not cause an OpenGL error
+    auto write(CPUReadView data, std::size_t offset) const -> void;
 
     /// @brief Writes to a buffer
     /// @param data The type erased data that should be written
     /// @param size The size in bytes of the data that should be written
-    /// @param offset The offset inside the buffer it should be written at
-    auto write(const void *data, std::int64_t size, std::int64_t offset) -> void;
+    /// @param offset The offset inside the buffer it size_t be written at
+    /// @important This buffer must've created with the GL_DYNAMIC_STORAGE flag for this function 
+    /// to not cause an OpenGL error
+    auto write(const void *data, std::size_t size, std::size_t offset) const -> void;
+
+    /// @brief Copies this buffer's data to another buffer
+    /// @param other The other buffer
+    /// @param read_offset The starting offset within this buffer of the range to be copied. Default 0
+    /// @param write_offset The starting offset where this buffer's data will be written to. Default 0
+    /// @param length The length of the range to be copied. Set to 0 to use the size of the buffer (default), 
+    /// any other positive number will use a different length
+    auto copy_to(
+        const GPUBuffer    &other, 
+        std::size_t         read_offset = 0, 
+        std::size_t         write_offset = 0, 
+        std::size_t         length = 0
+    ) const -> void;
 
     /// @brief This describes a flushing range
-    using FlushRange = std::pair<std::int64_t, int>;
+    using FlushRange = std::pair<std::size_t, std::size_t>;
 
     /// @brief This indicates that modifications have been made to a mapped buffer.
     /// @important The buffer must have been mapped with the MAP_FLUSH_EXPLICIT_BIT flag.
     /// @param ranges The ranges that were modified
-    auto flush_mapped_buffer_ranges(const std::vector<FlushRange> &ranges) -> void;
+    auto flush_mapped_buffer_ranges(const std::vector<FlushRange> &ranges) const -> void;
 
     /// @brief Deletes this buffer and its data from the GPU.
     /// The buffer shouldn't be used after deletion
     auto delete_gpu() -> void;
     
     /// @return The size of this buffer in bytes
-    auto size() -> std::int64_t;
+    auto size() const -> std::size_t;
 
     /// @return This buffer's creation flags 
-    auto flags() -> BufferFlag;
+    auto flags() const -> BufferFlag;
 
     /// @return This buffer's map accesses 
-    auto map_access() -> BufferMapAccess;
+    auto map_access() const -> BufferMapAccess;
 
     /// @return This buffer's OpenGL handle 
-    auto gl_handle() -> std::uint32_t;
+    auto gl_handle() const -> std::uint32_t;
 
     /// @return The buffer's name
-    /// @warning This is expensive as it gets the name from the driver. 
-    /// Use this sparringly 
-    auto name() -> std::string;
+    auto name() const -> std::string_view;
 
 private:
-    std::uint32_t   handle_;
-    std::int64_t    size_;
-    
-    void           *map_;
+    std::uint32_t       handle_;
+    std::size_t         size_;
+    std::string_view    name_;
+    void               *map_;
 
-    BufferFlag      flags_;
-    BufferMapAccess map_access_;
+    BufferFlag          flags_;
+    BufferMapAccess     map_access_;
 };
 
 } // namespace NoctisEngine::Rendering
