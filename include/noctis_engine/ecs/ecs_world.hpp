@@ -1,7 +1,9 @@
 #pragma once
 #include <typeindex>
 #include <memory>
+#include <print>
 
+#include "ecs_fwd.hpp"
 #include "component_storage.hpp"
 
 
@@ -108,10 +110,50 @@ public:
         return static_cast<ComponentStorage<T> *>(storages_.at(type_idx).get());
     }
 
+    template <typename... Components_>
+    auto query() -> View<Components_...> 
+    {
+        return View<Components_...>(*this);
+    }
+
+    template <typename... Components_>
+    auto smallest_storage() const -> const std::vector<Entity> *
+    {
+        const std::vector<Entity> *smallest = nullptr;
+
+        auto check = [&](const std::vector<Entity> *entities) -> void 
+        {
+            if (not entities)
+                return;
+
+            if (not smallest || entities->size() < smallest->size())
+                smallest = entities;
+        };
+
+        (check(all_entities<Components_>()), ...);
+
+        return smallest;
+    }
+
 private:
     std::unordered_map<std::type_index, std::shared_ptr<void>> storages_;
     std::int32_t next_entity_id_;
     std::vector<std::int32_t> free_ids_;
 };
+
+template <typename... Components_>
+auto View<Components_...>::each(std::function<void(Entity, Components_ &...)> func) -> void
+{
+    auto *storage = world_.template smallest_storage<Components_...>();
+    if (not storage)
+        return;
+
+    for (const auto &e : *storage)
+    {
+        if ((world_.template has_component<Components_>(e) && ...))
+            func(e, *world_.template get_component<Components_>(e)...);
+    }
+}
+
 
 } // namespace NoctisEngine::ECS

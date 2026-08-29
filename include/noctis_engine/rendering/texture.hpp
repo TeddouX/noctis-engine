@@ -59,6 +59,7 @@ public:
     auto height() const -> int;
 
     auto gl_handle() const -> std::uint32_t;
+    auto name() const -> const std::string &;
 
 private:
     std::uint32_t   texID_;
@@ -71,7 +72,8 @@ private:
 namespace TextureSlots
 {
     
-constexpr std::uint32_t ALBEDO = 0;
+constexpr std::uint32_t ALBEDO          = 0;
+constexpr std::string_view ALBEDO_NAME  = "albedo";
 
 } // namespace TextureSlots
 

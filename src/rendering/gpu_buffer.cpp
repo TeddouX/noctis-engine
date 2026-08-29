@@ -6,7 +6,6 @@
 
 #include <noctis_engine/core/logging.hpp>
 #include <noctis_engine/core/exit.hpp>
-#include <noctis_engine/core/format.hpp>
 
 
 namespace NoctisEngine::Rendering
@@ -35,17 +34,22 @@ GPUBuffer::GPUBuffer(std::int64_t size, std::string_view name, BufferFlag flags)
 
 auto GPUBuffer::write(CPUBufferReadView data, GLintptr offset) const -> void 
 {
-    if (offset + data.size_bytes() > size_)
+    write(data.data(), data.size_bytes(), offset);
+}
+
+auto GPUBuffer::write(const void *data, std::int64_t size, std::int64_t offset) const -> void
+{
+    if (offset + size > size_)
     {
         RENDERING_LOGGER.error(
             "Tried to write {} bytes at offset {} into a buffer that is {} bytes long.", 
-            data.size_bytes(), offset, size_
+            size, offset, size_
         );
 
         return;
     }
 
-    glNamedBufferSubData(id_, offset, data.size_bytes(), data.data());
+    glNamedBufferSubData(id_, offset, size, data);
 }
 
 auto GPUBuffer::copy_to(GPUBuffer &other) -> void 
@@ -136,32 +140,6 @@ auto GPUBuffer::get_flags() const -> BufferFlag
 auto GPUBuffer::get_name() const -> std::string_view 
 {
     return name_;
-}
-
-
-auto to_string(BufferTarget type) -> std::string 
-{
-    switch (type) 
-    {
-        using enum BufferTarget;
-        case ARRAY_BUFFER:              return "ARRAY_BUFFER"; 
-        case ATOMIC_COUNTER_BUFFER:     return "ATOMIC_COUNTER_BUFFER"; 
-        case COPY_READ_BUFFER:          return "COPY_READ_BUFFER"; 
-        case COPY_WRITE_BUFFER:         return "COPY_WRITE_BUFFER"; 
-        case DISPATCH_INDIRECT_BUFFER:  return "DISPATCH_INDIRECT_BUFFER"; 
-        case DRAW_INDIRECT_BUFFER:      return "DRAW_INDIRECT_BUFFER"; 
-        case ELEMENT_ARRAY_BUFFER:      return "ELEMENT_ARRAY_BUFFER"; 
-        case PIXEL_PACK_BUFFER:         return "PIXEL_PACK_BUFFER"; 
-        case PIXEL_UNPACK_BUFFER:       return "PIXEL_UNPACK_BUFFER"; 
-        case QUERY_BUFFER:              return "QUERY_BUFFER"; 
-        case SHADER_STORAGE_BUFFER:     return "SHADER_STORAGE_BUFFER"; 
-        case TEXTURE_BUFFER:            return "TEXTURE_BUFFER"; 
-        case TRANSFORM_FEEDBACK_BUFFER: return "TRANSFORM_FEEDBACK_BUFFER"; 
-        case UNIFORM_BUFFER:            return "UNIFORM_BUFFER";
-        default:
-            RENDERING_LOGGER.info("Unsupported BufferTarget: {}", static_cast<int>(type));
-            return "unknown";
-    }
 }
 
 auto is_bindable_to_index(BufferTarget type) -> bool 

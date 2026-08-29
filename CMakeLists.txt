@@ -8,6 +8,7 @@ option(NCENG_BUILD_SHARED   "Build as a shared lib" OFF)
 option(NCENG_BUILD_TEST     "Build tests"           ON)
 option(NCENG_DEBUG          "Build as debug"        OFF)
 
+add_subdirectory(thirdparty/box2d)
 add_subdirectory(thirdparty/glad)
 add_subdirectory(thirdparty/glfw)
 add_subdirectory(thirdparty/glm)

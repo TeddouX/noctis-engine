@@ -1,22 +1,17 @@
 #include <noctis_engine/rendering/draw_list.hpp>
 
 #include <noctis_engine/ecs/component/sprite.hpp>
+#include <noctis_engine/ecs/component/transform_2d.hpp>
 #include <noctis_engine/rendering/mesh/default_meshes.hpp>
 
 
 namespace NoctisEngine::Rendering
 {
 
-auto DrawList::bind_texture(std::uint32_t tex, std::uint32_t bind_point) -> void
+auto DrawList::bind_texture(std::uint32_t tex, std::uint32_t bind_point, std::string_view tex_name) -> void
 {
     write_cmd_type(DrawCommandType::BIND_TEXTURE);
-    write(BindTextureCmd{ tex, bind_point });
-    
-    set_uniform(UniformInfo{ 
-        UniformType::INT, 
-        "albedo", 
-        static_cast<int>(bind_point) 
-    });
+    write(BindTextureCmd{ tex, bind_point, tex_name });
 }
 
 auto DrawList::bind_buffer(const GPUBuffer &buffer, BufferTarget target) -> void
@@ -60,19 +55,40 @@ auto DrawList::draw_mesh(MeshView mesh_view, const glm::mat4 &model_mat) -> void
 auto DrawList::draw_sprite_entity(ECS::Entity entity, const ECS::World &world) -> void
 {
     auto *sprite = world.get_component<ECS::Sprite>(entity);
-    if (not sprite) return;
+    if (not sprite) 
+    {
+        RENDERING_LOGGER.warn("Sprite component is missing to draw a sprite entity");
+        return;
+    }
 
-    auto *transform = world.get_component<ECS::Transform>(entity);
-    if (not transform) return;
+    auto *transform = world.get_component<ECS::Transform2D>(entity);
+    if (not transform) 
+    {
+        RENDERING_LOGGER.warn("Transform2D component is missing to draw a sprite entity");
+        return;
+    }
 
     const Texture &tex = sprite->texture;
-    const glm::mat4 &model_mat = transform->model_matrix();
+    glm::mat4 model_mat = transform->model_matrix();
+    model_mat[3][2] = -sprite->draw_order;
 
-    bind_texture(tex.gl_handle(), TextureSlots::ALBEDO);
+    bind_texture(tex.gl_handle(), TextureSlots::ALBEDO, TextureSlots::ALBEDO_NAME);
     draw_mesh(
         DefaultMeshes::QUAD_MESH_VIEW, 
         glm::scale(model_mat, glm::vec3(tex.width(), tex.height(), 1))
     );
+}
+
+auto DrawList::draw_triangles(std::size_t first, std::size_t count) -> void
+{
+    write_cmd_type(DrawCommandType::DRAW_TRIANGLES);
+    write(DrawTrianglesCommand{ first, count });
+}
+
+auto DrawList::draw_lines(std::size_t first, std::size_t count) -> void
+{
+    write_cmd_type(DrawCommandType::DRAW_LINES);
+    write(DrawLinesCommand{ first, count });
 }
 
 auto DrawList::clear_screen(const Color &color, double depth, bool clear_color, bool clear_depth) -> void

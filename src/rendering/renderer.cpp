@@ -27,7 +27,6 @@ struct ObjectData
 };
 
 
-
 static auto glad_enable_disable(bool b, GLenum name) -> void 
 {
     if (b) glEnable(name);
@@ -108,8 +107,11 @@ auto Renderer::render(DrawList &draw_list) -> void
     std::uint32_t total_commands{0};
     std::uint32_t command_batch_start{0};
     std::uint32_t num_objects{0};
-    std::uint32_t last_program_id{0};
 
+    std::uint32_t last_program_id{0};
+    std::uint32_t last_texture_id{0};
+    std::uint32_t last_vao_id{0};
+    
     auto flush_commands = [&]() -> void
     {
         std::uint32_t count = total_commands - command_batch_start;
@@ -144,9 +146,23 @@ auto Renderer::render(DrawList &draw_list) -> void
 
                 auto texture_cmd = reinterpret_cast<const BindTextureCmd *>(curr_cmd.base());
                 
-                flush_commands();
-                glActiveTexture(GL_TEXTURE0 + texture_cmd->bind_point);
-                glBindTexture(GL_TEXTURE_2D, texture_cmd->tex);
+                if (last_texture_id != texture_cmd->tex)
+                {
+                    flush_commands();
+                    glActiveTexture(GL_TEXTURE0 + texture_cmd->bind_point);
+                    glBindTexture(GL_TEXTURE_2D, texture_cmd->tex);
+
+                    int loc = glGetUniformLocation(last_program_id, texture_cmd->tex_name.data());
+                    if (loc < 0) 
+                    {
+                        RENDERING_LOGGER.error("Uniform for texture \"{}\" couldn't be found", texture_cmd->tex_name);
+                        break;
+                    }
+
+                    glUniform1i(loc, texture_cmd->bind_point);
+
+                    last_texture_id = texture_cmd->tex;
+                }
 
                 curr_cmd += sizeof(BindTextureCmd);
                 break;
@@ -156,10 +172,13 @@ auto Renderer::render(DrawList &draw_list) -> void
             {
                 auto shader_cmd = reinterpret_cast<const BindProgramCmd *>(curr_cmd.base());
             
-                flush_commands();
-                glUseProgram(shader_cmd->prog);
+                if (last_program_id != shader_cmd->prog)
+                {
+                    flush_commands();
+                    glUseProgram(shader_cmd->prog);
 
-                last_program_id = shader_cmd->prog;
+                    last_program_id = shader_cmd->prog;
+                }
 
                 curr_cmd += sizeof(BindProgramCmd);
                 break;
@@ -169,8 +188,13 @@ auto Renderer::render(DrawList &draw_list) -> void
             {
                 auto vao_cmd = reinterpret_cast<const BindVAOCmd *>(curr_cmd.base());
                 
-                flush_commands();
-                glBindVertexArray(vao_cmd->vao);
+                if (last_vao_id != vao_cmd->vao)
+                {
+                    flush_commands();
+                    glBindVertexArray(vao_cmd->vao);
+
+                    last_vao_id = vao_cmd->vao;
+                }
 
                 curr_cmd += sizeof(BindVAOCmd);
                 break;
@@ -217,7 +241,7 @@ auto Renderer::render(DrawList &draw_list) -> void
                 int loc = glGetUniformLocation(last_program_id, info.name.data());
                 if (loc < 0) 
                 {
-                    RENDERING_LOGGER.warn("Uniform {} couldn't be found", info.name);
+                    RENDERING_LOGGER.error("Uniform {} couldn't be found", info.name);
                     break;
                 }
 
@@ -287,6 +311,26 @@ auto Renderer::render(DrawList &draw_list) -> void
                 glClear(mask);
 
                 curr_cmd += sizeof(ClearCmd);
+                break;
+            }
+
+            case DrawCommandType::DRAW_LINES:
+            {
+                auto draw_lines_cmd = reinterpret_cast<const DrawLinesCommand *>(curr_cmd.base());
+
+                glDrawArrays(GL_LINES, draw_lines_cmd->first, draw_lines_cmd->count);
+
+                curr_cmd += sizeof(DrawLinesCommand);
+                break;
+            }
+
+            case DrawCommandType::DRAW_TRIANGLES:
+            {
+                auto draw_tris_cmd = reinterpret_cast<const DrawTrianglesCommand *>(curr_cmd.base());
+                
+                glDrawArrays(GL_TRIANGLES, draw_tris_cmd->first, draw_tris_cmd->count);
+
+                curr_cmd += sizeof(DrawTrianglesCommand);
                 break;
             }
         }

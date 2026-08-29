@@ -2,7 +2,6 @@
 #include "uniform_info.hpp"
 #include "mesh/mesh_view.hpp"
 #include "../math/color.hpp"
-#include "../ecs/component/transform.hpp"
 
 
 namespace NoctisEngine::Rendering
@@ -18,12 +17,15 @@ enum class DrawCommandType
     SET_UNIFORM,
     DRAW_MESH,
     CLEAR,
+    DRAW_LINES,
+    DRAW_TRIANGLES,
 };
     
 struct BindTextureCmd
 {
-    std::uint32_t tex;
-    std::uint32_t bind_point;
+    std::uint32_t       tex;
+    std::uint32_t       bind_point;
+    std::string_view    tex_name;
 };
 
 struct BindProgramCmd
@@ -66,6 +68,18 @@ struct ClearCmd
     double depth;
     bool clear_color;
     bool clear_depth;
+};
+
+struct DrawTrianglesCommand
+{
+    std::size_t first;
+    std::size_t count;
+};
+
+struct DrawLinesCommand
+{
+    std::size_t first;
+    std::size_t count;
 };
 
 } // namespace NoctisEngine::Rendering

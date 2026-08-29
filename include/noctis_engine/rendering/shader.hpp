@@ -12,7 +12,9 @@ namespace NoctisEngine::Rendering
 class Shader 
 {
 public:
+    Shader() = default;
     Shader(const char *code, const std::string &name);
+
     ~Shader() = default;
 
     auto compile() -> bool;

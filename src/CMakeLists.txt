@@ -4,7 +4,9 @@ set(NCENG_SOURCES
     "asset/loaders.cpp"
     "core/exit.cpp"
     "core/window.cpp"
-    "ecs/component/transform.cpp"
+    "ecs/component/physics_body_2d.cpp"
+    "ecs/component/transform_2d.cpp"
+    "ecs/system/physics_system_2d.cpp"
     "rendering/mesh/mesh_manager.cpp"
     "rendering/camera_2d.cpp"
     "rendering/draw_list.cpp"
@@ -12,6 +14,7 @@ set(NCENG_SOURCES
     "rendering/renderer.cpp"
     "rendering/shader.cpp"
     "rendering/texture.cpp"
+    "rendering/vertex_array.cpp"
 )
 
 
@@ -25,7 +28,7 @@ endif()
 
 if (NCENG_DEBUG)
     message("Building noctis_engine as debug")
-    add_compile_definitions(noctis_engine PUBLIC NCENG_DEBUG)
+    target_compile_definitions(noctis_engine PUBLIC NCENG_DEBUG)
 endif()
 
 target_compile_definitions(noctis_engine PUBLIC GLM_ENABLE_EXPERIMENTAL)
@@ -38,6 +41,7 @@ target_link_libraries(noctis_engine
     glfw
     Glad
     stb
+    box2d::box2d
     stdc++exp
 )
 
