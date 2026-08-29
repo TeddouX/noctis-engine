@@ -147,7 +147,8 @@ public:
     /// @return The gravity scale
     auto gravity_scale() -> float;
 
-    /// @return true if the body is awake 
+    /// @brief Checks if this body is awake
+    /// @return true if the body is awake, false otherwise
     auto awake() -> bool;
 
     /// @brief Wakes or puts a body to sleep
@@ -173,6 +174,7 @@ public:
     /// @return The sleep threshold, usually in meters per second
     auto sleep_threshold() -> float;
 
+    /// @brief Checks if this body is enabled
     /// @return true if this physics body is enabled else false
     auto enabled() -> bool;
 
@@ -192,7 +194,7 @@ public:
     /// @return The motion locks
     auto motion_locks() -> MotionLocks;
 
-    /// @return This physics body's mass in kg 
+    /// @brief Gets this physics body's mass in kg 
     auto mass() -> float;
 };
 

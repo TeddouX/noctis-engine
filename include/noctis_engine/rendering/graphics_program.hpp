@@ -53,9 +53,10 @@ public:
     /// @param draw_list The draw list that it should be bound to
     auto bind(DrawList &draw_list) const -> void;
 
-    /// @return This shader's OpenGL handle
+    /// @brief Gets this shader's OpenGL handle
     auto gl_handle() const -> std::uint32_t;
 
+    /// @brief Checks if this program is valid
     /// @return true if the program is valid, meaning it has the necessary shaders, 
     /// false otherwise 
     auto valid() const -> bool;

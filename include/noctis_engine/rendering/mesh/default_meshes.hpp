@@ -21,7 +21,7 @@ inline const MeshData QUAD_MESH
 };
 
 /// @brief The quad's mesh view, set by a mesh manager when it is constructed
-/// @warning You need to use a mesh manager for this mesh view to be valid
+/// @warning You need to have an initialized mesh manager for this mesh view to be valid
 inline MeshView QUAD_MESH_VIEW;
 
 } // namespace NoctisEngine::Rendering::DefaultMeshes

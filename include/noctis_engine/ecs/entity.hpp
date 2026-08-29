@@ -19,7 +19,7 @@ public:
     auto is_valid() const -> bool { return id_ >= 0; }
 
     /// @internal
-    /// @return This entitie's id 
+    /// @brief Gets this entitie's id 
     auto id() -> std::uint32_t { return id_; }
 
 private:

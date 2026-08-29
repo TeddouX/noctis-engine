@@ -430,7 +430,7 @@ auto PhysicsSystem2D::draw_debug(Rendering::DrawList &draw_list, const DebugDraw
     {
         auto ctx = reinterpret_cast<Context *>(context);
 
-        glm::vec4 color_floats4 = RGBA_to_floats(static_cast<std::uint32_t>(color));
+        glm::vec4 color_floats4 = Color::RGBA_to_floats(static_cast<std::uint32_t>(color));
         glm::vec3 color_floats{ color_floats4.r, color_floats4.g, color_floats4.b };
 
         if (vertexCount < 3)
@@ -467,7 +467,7 @@ auto PhysicsSystem2D::draw_debug(Rendering::DrawList &draw_list, const DebugDraw
     {
         auto ctx = reinterpret_cast<Context *>(context);
         
-        glm::vec4 color_floats4 = RGBA_to_floats(static_cast<std::uint32_t>(color));
+        glm::vec4 color_floats4 = Color::RGBA_to_floats(static_cast<std::uint32_t>(color));
         glm::vec3 color_floats{ color_floats4.r, color_floats4.g, color_floats4.b };
 
         if (vertexCount < 3)
@@ -499,7 +499,7 @@ auto PhysicsSystem2D::draw_debug(Rendering::DrawList &draw_list, const DebugDraw
     {
         auto ctx = reinterpret_cast<Context *>(context);
 
-        glm::vec4 color_floats4 = RGBA_to_floats(static_cast<std::uint32_t>(color));
+        glm::vec4 color_floats4 = Color::RGBA_to_floats(static_cast<std::uint32_t>(color));
         glm::vec3 color_floats{ color_floats4.r, color_floats4.g, color_floats4.b };
 
         constexpr int SEGMENTS = 24;
@@ -534,7 +534,7 @@ auto PhysicsSystem2D::draw_debug(Rendering::DrawList &draw_list, const DebugDraw
     {
         auto ctx = reinterpret_cast<Context *>(context);
 
-        glm::vec4 color_floats4 = RGBA_to_floats(static_cast<std::uint32_t>(color));
+        glm::vec4 color_floats4 = Color::RGBA_to_floats(static_cast<std::uint32_t>(color));
         glm::vec3 color_floats{ color_floats4.r, color_floats4.g, color_floats4.b };
 
         constexpr int SEGMENTS = 24;
@@ -584,7 +584,7 @@ auto PhysicsSystem2D::draw_debug(Rendering::DrawList &draw_list, const DebugDraw
     {
         auto ctx = reinterpret_cast<Context *>(context);
 
-        glm::vec4 color_floats4 = RGBA_to_floats(static_cast<std::uint32_t>(color));
+        glm::vec4 color_floats4 = Color::RGBA_to_floats(static_cast<std::uint32_t>(color));
         glm::vec3 color_floats{ color_floats4.r, color_floats4.g, color_floats4.b };
 
         b2Vec2 axis = { p2.x - p1.x, p2.y - p1.y };
@@ -646,7 +646,7 @@ auto PhysicsSystem2D::draw_debug(Rendering::DrawList &draw_list, const DebugDraw
     {
         auto ctx = reinterpret_cast<Context *>(context);
 
-        glm::vec4 color_floats4 = RGBA_to_floats(static_cast<std::uint32_t>(color));
+        glm::vec4 color_floats4 = Color::RGBA_to_floats(static_cast<std::uint32_t>(color));
         glm::vec3 color_floats{ color_floats4.r, color_floats4.g, color_floats4.b };
 
         ctx->lines_vertices.push_back(Rendering::DebugVertex{ 
@@ -668,7 +668,7 @@ auto PhysicsSystem2D::draw_debug(Rendering::DrawList &draw_list, const DebugDraw
     {
         auto ctx = reinterpret_cast<Context *>(context);
 
-        glm::vec4 color_floats4 = RGBA_to_floats(static_cast<std::uint32_t>(color));
+        glm::vec4 color_floats4 = Color::RGBA_to_floats(static_cast<std::uint32_t>(color));
         glm::vec3 color_floats{ color_floats4.r, color_floats4.g, color_floats4.b };
 
         constexpr int NUM_CORNERS = 4;

@@ -120,7 +120,7 @@ public:
     /// for better stability. Default 1/60
     /// @param substep_count The number of sub-steps, increasing this number may 
     /// increase accuracy, but at the cost of performance.
-    /// @important sync_physics_engine_to_ecs() should be called before 
+    /// @warning sync_physics_engine_to_ecs() should be called before 
     /// calling this function to update position changes
     auto update_physics(float dt, float time_step = DEFAULT_TIMESTEP, std::uint16_t substep_count = 4) -> void;
 

@@ -1,3 +1,4 @@
 build/
 testing/build/
+docs/generated/
 .vscode/

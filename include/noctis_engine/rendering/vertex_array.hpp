@@ -64,17 +64,17 @@ public:
     /// Also deletes linked buffers.
     auto delete_gpu() -> void;
 
-    /// @brief Binds this VAO and its linked EBO to a draw list
+    /// @brief Binds this vertex array and its linked EBO to a draw list
     /// @param draw_list The draw list this vertex array should be bound to
     auto bind(DrawList &draw_list) -> void;
 
-    /// @return The VAO's OpenGL handle  
+    /// @brief Gets this vertex array's OpenGL handle  
     auto vao_gl_handle() -> std::uint32_t;
 
-    /// @return Linked EBO 
+    /// @brief Gets the linked EBO 
     auto ebo() -> GPUBuffer &;
     
-    /// @return Linked VBO 
+    /// @brief Gets the linked VBO 
     auto vbo() -> GPUBuffer &;
 
 private:

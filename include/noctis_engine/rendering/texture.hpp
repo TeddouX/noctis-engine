@@ -101,14 +101,14 @@ public:
     auto set_magnifying_function(MagnifyingFunction func) const -> void;
 
     /// @brief Sets the texture's wrap parameters
-    /// @param u Horizontal wrap parameter
-    /// @param v Vertical wrap parameter
-    auto set_wrap_params(WrapParam u, WrapParam v) const -> void;
+    /// @param u_param Horizontal wrap parameter
+    /// @param v_param Vertical wrap parameter
+    auto set_wrap_params(WrapParam u_param, WrapParam v_param) const -> void;
     
     /// @brief Sets the texture's border color
-    /// @important Only useful if you use the CLAMP_TO_BORDER wrap parameter
-    /// @param c The texture's border color
-    auto set_border_color(const Color &c) const -> void;
+    /// @warning Only useful if you use the CLAMP_TO_BORDER wrap parameter
+    /// @param color The texture's border color
+    auto set_border_color(const Color &color) const -> void;
 
     /// @brief Sets this texture to be bound in a draw list
     /// @param draw_list The draw list
@@ -118,16 +118,16 @@ public:
     /// @brief Removes this texture from the GPU, it shouldn't be used after deletion
     auto delete_gpu() const -> void;
 
-    /// @return This texture's OpenGL handle 
+    /// @brief Gets this texture's OpenGL handle 
     auto gl_handle() const -> std::uint32_t;
 
-    /// @return The texture's width 
+    /// @brief Gets this texture's width 
     auto width() const -> int;
 
-    /// @return The texture's height 
+    /// @brief Gets this texture's height 
     auto height() const -> int;
 
-    /// @return The texture's name 
+    /// @brief Gets this texture's name 
     auto name() const -> std::string;
 
 private:
@@ -138,7 +138,7 @@ private:
     int             height_;
 };
 
-/// @brief Texture uniform indices and names reserved by the 
+/// @brief %Texture uniform indices and names reserved by the 
 /// engine to pass textures to shaders
 namespace TextureSlots
 {

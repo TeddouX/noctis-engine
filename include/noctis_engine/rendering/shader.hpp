@@ -10,12 +10,12 @@ namespace NoctisEngine::Rendering
 enum class ShaderType
 {
     /// @brief Runs once per vertex. Controls where vertices are draw on the screen.
-    /// @important This shader is mandatory for draw calls
+    /// @warning This shader is mandatory for draw calls
     VERTEX = 0x8B31,
 
     /// @brief Runs once per fragment (per pixel that covers a meshe's primitives)
     /// Computes the final color output
-    /// @important This shader is mandatory for draw calls
+    /// @warning This shader is mandatory for draw calls
     FRAGMENT = 0x8B30,
 
     /// @brief Runs once per primitive (point, line, or triangle) rather than per vertex. 
@@ -43,16 +43,17 @@ public:
     
     ~Shader() = default;
 
+    /// @brief Compiles this shader's code
     /// @return true on success, false on error 
     auto compile() const -> bool;
 
-    /// @return The OpenGL handle to this shader 
+    /// @brief Gets the OpenGL handle to this shader 
     auto gl_handle() const -> std::uint32_t;
 
-    /// @return This shader's type 
+    /// @brief Gets this shader's type 
     auto type() const -> ShaderType;
 
-    /// @return This shader's name 
+    /// @brief Gets this shader's name 
     auto name() const -> const std::string &;
 
     /// @brief Deletes this shader from the GPU. If the shader is attached to a program 

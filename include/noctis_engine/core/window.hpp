@@ -9,7 +9,7 @@ struct GLFWwindow;
 namespace NoctisEngine::Core
 {
     
-/// @brief Describes all vertical sync methods supported by Window
+/// @brief Describes all vertical sync methodsn, used in Window::set_vsync()
 enum class VSyncMethod : int 
 {
     /// @brief No vertical sync
