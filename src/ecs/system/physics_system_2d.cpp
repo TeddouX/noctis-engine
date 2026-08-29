@@ -418,9 +418,7 @@ auto PhysicsSystem2D::draw_debug(Rendering::DrawList &draw_list, const DebugDraw
 	debug_draw.drawContactNormals   = settings.draw_contact_normals;
 	debug_draw.drawContactForces    = settings.draw_contact_forces;
 	debug_draw.drawFrictionForces   = settings.draw_friction_forces;
-
-	/// Option to draw islands as bounding boxes
-	bool drawIslands;
+	debug_draw.drawIslands          = settings.draw_islands;
 
     debug_draw.DrawPolygonFcn = [](
         b2WorldTransform    transform, 

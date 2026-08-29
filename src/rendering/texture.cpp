@@ -6,7 +6,7 @@
 namespace NoctisEngine::Rendering
 {
     
-Texture::Texture(TextureInfo tex_info)
+Texture::Texture(TextureData tex_info)
     : name_(tex_info.name)
     , width_{tex_info.width}
     , height_{tex_info.height}

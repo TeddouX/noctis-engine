@@ -38,7 +38,7 @@ auto load_texture(const std::filesystem::path &path, const std::string &name) ->
     if (tex_name.empty())
         tex_name = path.stem();
 
-    Rendering::TextureInfo texInfo 
+    Rendering::TextureData texInfo 
     {
         .data = data,
         .width = width, .height = height,
