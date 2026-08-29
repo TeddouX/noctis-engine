@@ -43,7 +43,7 @@ public:
     
     ~Shader() = default;
 
-    /// @return `true` on success, `false` on error 
+    /// @return true on success, false on error 
     auto compile() const -> bool;
 
     /// @return The OpenGL handle to this shader 

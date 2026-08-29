@@ -37,7 +37,7 @@ public:
     ) -> GraphicsProgram;
 
     /// @brief Links this program's shaders to it
-    /// @return `true` on success `false` on error
+    /// @return true on success false on error
     auto link() const -> bool;
 
     /// @brief Detaches a shader from this program
@@ -56,8 +56,8 @@ public:
     /// @return This shader's OpenGL handle
     auto gl_handle() const -> std::uint32_t;
 
-    /// @return `true` if the program is valid, meaning it has the necessary shaders, 
-    /// `false` otherwise 
+    /// @return true if the program is valid, meaning it has the necessary shaders, 
+    /// false otherwise 
     auto valid() const -> bool;
 
 private:

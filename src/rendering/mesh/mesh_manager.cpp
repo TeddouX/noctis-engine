@@ -1,6 +1,5 @@
 #include <noctis_engine/rendering/mesh/mesh_manager.hpp>
 
-#include <noctis_engine/rendering/gpu_buffer_utils.hpp>
 #include <noctis_engine/rendering/mesh/default_meshes.hpp>
 
 
@@ -35,8 +34,8 @@ auto MeshManager::upload(const MeshData &mesh_data) -> MeshView
     std::size_t num_indices = mesh_data.indices.size();
     std::size_t indices_size = num_indices * sizeof(std::uint32_t);
 
-    bool vbo_resized = resize_buffer(vbo_, vertices_size, true);
-    bool ebo_resized = resize_buffer(ebo_, indices_size, true);
+    bool vbo_resized = GPUBuffer::resize(vbo_, vertices_size, true);
+    bool ebo_resized = GPUBuffer::resize(ebo_, indices_size, true);
 
     vbo_.write(mesh_data.vertices.data(), vertices_size, vertex_off_);
     ebo_.write(mesh_data.indices.data(), indices_size, index_off_);

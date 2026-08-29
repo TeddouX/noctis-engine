@@ -84,7 +84,7 @@ public:
 
     /// @brief Enables debug rendering by creating required buffers.
     /// Do not call except if you want to draw debug shapes
-    /// @return `true` on success, `false` otherwise
+    /// @return true on success, false otherwise
     /// @warning Default shaders should be compiled before calling this function
     auto enable_debug_rendering() -> bool;
 

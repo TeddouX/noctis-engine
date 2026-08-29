@@ -2,7 +2,7 @@
 
 #include <GL/gl.h>
 
-#include <noctis_engine/rendering/gpu_buffer_utils.hpp>
+#include <noctis_engine/rendering/buffer_utils.hpp>
 
 
 namespace NoctisEngine::Rendering
@@ -63,7 +63,7 @@ VertexArray::VertexArray(
 
 auto VertexArray::upload_vertices(void *vertices, std::size_t size, std::size_t vertex_size) -> void
 {
-    bool resized = resize_buffer(vbo_, size);
+    bool resized = GPUBuffer::resize(vbo_, size);
     vbo_.write(vertices, size, 0);
 
     // Relink if resized because a new buffer was created
@@ -79,8 +79,8 @@ auto VertexArray::upload_indices(const std::vector<std::uint32_t> &indices) -> v
         return;
     }
 
-    bool resized = resize_buffer(ebo_, indices.size());
-    ebo_.write(get_cpu_buffer_view(indices), 0);
+    bool resized = GPUBuffer::resize(ebo_, indices.size());
+    ebo_.write(get_cpu_buffer_view(indices, 0), 0);
 
     // Relink if resized because a new buffer was created
     if (resized)

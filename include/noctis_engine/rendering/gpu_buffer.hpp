@@ -94,7 +94,12 @@ enum class BufferFlag : std::uint32_t
 /// @param left The left flag
 /// @param right The right flag
 /// @return The or'ed flags
-auto operator |(BufferFlag left, BufferFlag right) -> BufferFlag;
+constexpr auto operator |(BufferFlag left, BufferFlag right) -> BufferFlag
+{
+    return static_cast<BufferFlag>(
+        static_cast<std::uint32_t>(left) | static_cast<std::uint32_t>(right)
+    );
+}
 
 
 /// @brief Describes how to map a buffer to RAM
@@ -151,7 +156,12 @@ enum class BufferMapAccess : std::uint32_t
 /// @param left The left access
 /// @param right The right access
 /// @return The or'ed map accesses
-auto operator |(BufferMapAccess left, BufferMapAccess right) -> BufferMapAccess;
+constexpr auto operator |(BufferMapAccess left, BufferMapAccess right) -> BufferMapAccess
+{
+    return static_cast<BufferMapAccess>(
+        static_cast<std::uint32_t>(left) | static_cast<std::uint32_t>(right)
+    );
+}
 
 
 /// @brief A read only view of a CPU object
@@ -177,6 +187,15 @@ public:
 
     ~GPUBuffer() = default;
 
+    /// @brief Resizes a GPU buffer if necessary by creating a new one. The new one's size will 
+    /// always be a power of two. Optionally copies data to the new buffer
+    /// @param buffer The buffer that should be resized
+    /// @param req_size The buffer's new required size
+    /// @param copy_data true if it should copy data from the old buffer to the new one
+    /// @return true if the buffer was resized, false otherwise
+    /// @warning This doesn't remap the buffer
+    static auto resize(GPUBuffer &buffer, std::size_t new_size, bool copy_data = false) -> bool;
+
     /// @brief Maps this buffer to RAM, for easier read and write from the CPU
     /// @param access The access modifiers for the mapped buffer. You must put at most the flags 
     /// that were requested at buffer creation, for example, if MAP_READ_BIT is set at creation 
@@ -184,7 +203,7 @@ public:
     /// You can combine multiple map accesses using the binary or operator
     /// @param offset The starting offset within the buffer of the range to be mapped. Default 0
     /// @param length The length of the range to be mapped. Set to 0 to use the size of the buffer (default), 
-    /// any other positive number will use a different length
+    /// any other positive number will use the provided length
     /// @return The mapped pointer
     /// @important This buffer must've created with either the MAP_READ_BIT flag or the MAP_WRITE_BIT flag 
     /// for this function to not cause an OpenGL error.
@@ -193,10 +212,10 @@ public:
     /// @brief Unmaps this buffer, any pointers left to the mapped range will be invalidated
     auto unmap() -> void;
 
-    /// @return The mapped pointer, `nullptr` if the buffer isn't mapped 
+    /// @return The mapped pointer, nullptr if the buffer isn't mapped 
     auto mapped_ptr() -> void *;
 
-    /// @return `true` if the buffer is mapped `false` otherwise 
+    /// @return true if the buffer is mapped false otherwise 
     auto mapped() -> bool;
 
     /// @brief Writes to a buffer
@@ -219,7 +238,7 @@ public:
     /// @param read_offset The starting offset within this buffer of the range to be copied. Default 0
     /// @param write_offset The starting offset where this buffer's data will be written to. Default 0
     /// @param length The length of the range to be copied. Set to 0 to use the size of the buffer (default), 
-    /// any other positive number will use a different length
+    /// any other positive number will use the provided length
     auto copy_to(
         const GPUBuffer    &other, 
         std::size_t         read_offset = 0, 

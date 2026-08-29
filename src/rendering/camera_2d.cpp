@@ -1,6 +1,6 @@
 #include <noctis_engine/rendering/camera_2d.hpp>
 
-#include <noctis_engine/rendering/gpu_buffer_utils.hpp>
+#include <noctis_engine/rendering/buffer_utils.hpp>
 #include <noctis_engine/rendering/shader_bindings.hpp>
 
 #include "camera_data.hpp"

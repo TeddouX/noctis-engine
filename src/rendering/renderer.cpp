@@ -6,7 +6,6 @@
 
 #include <noctis_engine/core/exit.hpp>
 #include <noctis_engine/rendering/shader_bindings.hpp>
-#include <noctis_engine/rendering/gpu_buffer_utils.hpp>
 
 
 namespace NoctisEngine::Rendering
@@ -26,6 +25,10 @@ struct ObjectData
     glm::mat4 mat;
 };
 
+constexpr BufferMapAccess BUFFER_MAP_ACCESSES = 
+    BufferMapAccess::MAP_PERSISTENT_BIT 
+    | BufferMapAccess::MAP_COHERENT_BIT 
+    | BufferMapAccess::MAP_WRITE_BIT;
 
 static auto glad_enable_disable(bool b, GLenum name) -> void 
 {
@@ -43,11 +46,10 @@ Renderer::Renderer()
 
     BufferFlag buf_flags = BufferFlag::MAP_PERSISTENT_BIT | BufferFlag::MAP_COHERENT_BIT | BufferFlag::MAP_WRITE_BIT;
     command_buffer_ = GPUBuffer(1, "renderer_command_buffer", buf_flags);
-    objectsSSBO_ = GPUBuffer(1, "renderer_object_buffer", buf_flags);
+    objects_ssbo_ = GPUBuffer(1, "renderer_object_buffer", buf_flags);
 
-    BufferMapAccess map_accesses = BufferMapAccess::MAP_PERSISTENT_BIT | BufferMapAccess::MAP_COHERENT_BIT | BufferMapAccess::MAP_WRITE_BIT;
-    command_buffer_.map(map_accesses);
-    objectsSSBO_.map(map_accesses);
+    command_buffer_.map(BUFFER_MAP_ACCESSES);
+    objects_ssbo_.map(BUFFER_MAP_ACCESSES);
 
     RENDERING_LOGGER.info("GPU: Vendor: \"{}\", Renderer: \"{}\", Version: \"{}\"", 
         (const char *)glGetString(GL_VENDOR), 
@@ -85,13 +87,26 @@ auto Renderer::set_blend_func(BlendFunc sFactor, BlendFunc dFactor) const -> voi
 
 auto Renderer::render(DrawList &draw_list) -> void
 {
-    resize_buffer(command_buffer_, draw_list.required_indirect_draw_cmds() * sizeof(DrawElementsIndirectCommand));
-    resize_buffer(objectsSSBO_, draw_list.required_indirect_draw_cmds() * sizeof(ObjectData));
+    bool command_buf_resized = GPUBuffer::resize(
+        command_buffer_, 
+        draw_list.required_indirect_draw_cmds() * sizeof(DrawElementsIndirectCommand)
+    );
+
+    bool object_ssbo_resized = GPUBuffer::resize(
+        objects_ssbo_, 
+        draw_list.required_indirect_draw_cmds() * sizeof(ObjectData)
+    );
+
+    if (command_buf_resized)
+        command_buffer_.map(BUFFER_MAP_ACCESSES);
+
+    if (object_ssbo_resized)
+        objects_ssbo_.map(BUFFER_MAP_ACCESSES);
 
     glBindBufferBase(
         GL_SHADER_STORAGE_BUFFER, 
         ShaderBindings::OBJECTS_SSBO, 
-        objectsSSBO_.gl_handle()
+        objects_ssbo_.gl_handle()
     );
 
     glBindBuffer(
@@ -100,7 +115,7 @@ auto Renderer::render(DrawList &draw_list) -> void
     );
 
     auto command_buf_ptr = static_cast<DrawElementsIndirectCommand *>(command_buffer_.mapped_ptr());
-    auto object_ssbo_ptr = static_cast<ObjectData *>(objectsSSBO_.mapped_ptr());
+    auto object_ssbo_ptr = static_cast<ObjectData *>(objects_ssbo_.mapped_ptr());
 
     auto curr_cmd = draw_list.data().begin();
     auto cmds_end = draw_list.data().end();

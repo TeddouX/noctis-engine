@@ -45,7 +45,7 @@ public:
     auto render(DrawList &draw_list) -> void;
 
 private:
-    GPUBuffer                       objectsSSBO_;
+    GPUBuffer                       objects_ssbo_;
     GPUBuffer                       command_buffer_;
 
     bool                            throw_on_err_;

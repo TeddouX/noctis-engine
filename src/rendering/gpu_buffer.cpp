@@ -14,21 +14,6 @@ namespace NoctisEngine::Rendering
 static auto is_bindable_to_index(BufferTarget type) -> bool;
 
 
-auto operator |(BufferFlag left, BufferFlag right) -> BufferFlag 
-{
-    return static_cast<BufferFlag>(
-        static_cast<std::uint32_t>(left) | static_cast<std::uint32_t>(right)
-    );
-}
-
-auto operator |(BufferMapAccess left, BufferMapAccess right) -> BufferMapAccess
-{
-    return static_cast<BufferMapAccess>(
-        static_cast<std::uint32_t>(left) | static_cast<std::uint32_t>(right)
-    );
-}
-
-
 GPUBuffer::GPUBuffer(std::size_t size, std::string_view name, BufferFlag flags)
     : size_{size}
     , flags_{flags}
@@ -38,6 +23,30 @@ GPUBuffer::GPUBuffer(std::size_t size, std::string_view name, BufferFlag flags)
     glCreateBuffers(1, &handle_);
     glNamedBufferStorage(handle_, size_, nullptr, static_cast<GLbitfield>(flags_));
     glObjectLabel(GL_BUFFER, handle_, name_.size(), name_.data());
+}
+
+auto GPUBuffer::resize(GPUBuffer &buffer, std::size_t req_size, bool copy_data) -> bool
+{
+    if (buffer.size() >= req_size)
+        return false;
+
+    std::size_t new_buf_size = std::max(buffer.size() * 2, 1zu);
+    while (new_buf_size < req_size)
+        new_buf_size *= 2;
+
+    RENDERING_LOGGER.debug("Resizing buffer \"{}\", {} => {}", 
+        buffer.name(), buffer.size(), new_buf_size
+    );
+
+    GPUBuffer new_buf{new_buf_size, buffer.name(), buffer.flags()};
+
+    if (copy_data)
+        buffer.copy_to(new_buf);
+    
+    buffer.delete_gpu();
+    buffer = new_buf;
+
+    return true;
 }
 
 auto GPUBuffer::map(BufferMapAccess access, std::size_t offset, std::size_t length) -> void *

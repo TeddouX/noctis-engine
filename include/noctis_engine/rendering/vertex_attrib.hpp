@@ -21,7 +21,7 @@ struct VertexAttribute
         INT = 0x1404, 
         
         /// @brief This is OpenGL's fixed point numeric type, calculated using the formula:
-        /// `real_value = fixed / 65536.0`. This means it stores 16 bits for the integer part
+        /// real_value = fixed / 65536.0. This means it stores 16 bits for the integer part
         /// and 16 bits for the fractional part. Legacy type.
         FIXED = 0x140C,
         
