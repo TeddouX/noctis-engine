@@ -4,7 +4,7 @@
 namespace NoctisEngine::Rendering
 {
     
-inline auto resize_buffer(GPUBuffer &buf, std::int64_t buf_size) -> bool 
+inline auto resize_buffer(GPUBuffer &buf, std::int64_t buf_size, bool copy = false) -> bool 
 {
     if (buf.size_bytes() >= buf_size) 
         return false;
@@ -15,10 +15,14 @@ inline auto resize_buffer(GPUBuffer &buf, std::int64_t buf_size) -> bool
     
     RENDERING_LOGGER.debug("Resizing buffer '{}', {} => {}", buf.get_name(), buf.size_bytes(), new_buf_size);
 
-    buf.delete_gpu();
 
     GPUBuffer new_buf{new_buf_size, buf.get_name(), buf.get_flags()};
+
+    if (copy)
+        buf.copy_to(new_buf);
     
+    buf.delete_gpu();
+
     if (buf.is_mapped()) 
     {
         RENDERING_LOGGER.debug("Remapping buffer '{}'", buf.get_name());
@@ -31,10 +35,10 @@ inline auto resize_buffer(GPUBuffer &buf, std::int64_t buf_size) -> bool
 }
 
 template <typename T>
-auto resize_buffer(GPUBuffer &buf, const std::vector<T> &cpu_buf) -> bool 
+auto resize_buffer(GPUBuffer &buf, const std::vector<T> &cpu_buf, bool copy = false) -> bool 
 {
     std::int64_t cpuBufSize = cpu_buf.size() * sizeof(T);
-    return resize_buffer(buf, cpuBufSize);
+    return resize_buffer(buf, cpuBufSize, copy);
 }
 
 template <typename T>

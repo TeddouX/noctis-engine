@@ -48,7 +48,7 @@ VertexArray::VertexArray(
         glEnableVertexAttribArray(gl_attrib_idx);
     
         attrib_idx++;
-        offset += attrib_type_size_bytes(vertex_attrib.component_type);
+        offset += attrib_type_size_bytes(vertex_attrib.component_type) * vertex_attrib.num_components;
     }
 
     if (create_buffers)
@@ -90,11 +90,13 @@ auto VertexArray::upload_indices(const std::vector<std::uint32_t> &indices) -> v
 auto VertexArray::link_vbo(const GPUBuffer &vbo_buf, std::size_t vertex_size, std::size_t first_el_off) -> void
 {
     glVertexArrayVertexBuffer(vao_, 0, vbo_buf.gl_handle(), first_el_off, vertex_size);
+    vbo_ = vbo_buf;
 }
 
 auto VertexArray::link_ebo(const GPUBuffer &ebo_buf) -> void
 {
     glVertexArrayElementBuffer(vao_, ebo_buf.gl_handle());
+    ebo_ = ebo_buf;
     use_ebo_ = true;
 }
 

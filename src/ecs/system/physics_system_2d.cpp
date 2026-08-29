@@ -710,7 +710,7 @@ auto PhysicsSystem2D::draw_debug(Rendering::DrawList &draw_list, const DebugDraw
     draw_list.draw_lines(0, ctx.lines_vertices.size());
 
     tri_vertex_array_.bind(draw_list);
-    draw_list.draw_lines(0, ctx.tris_vertices.size());
+    draw_list.draw_triangles(0, ctx.tris_vertices.size());
 }
 
 auto PhysicsSystem2D::process_contact_events() -> void

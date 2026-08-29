@@ -15,7 +15,7 @@ struct MeshData
     std::vector<Vertex> vertices;
 
     /// @brief The meshe's indices
-    std::vector<uint32_t> indices;
+    std::vector<std::uint32_t> indices;
 };
 
 } // namespace NoctisEngine::Rendering

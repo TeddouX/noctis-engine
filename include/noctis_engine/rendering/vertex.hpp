@@ -27,6 +27,30 @@ struct DebugVertex
     glm::vec3 color;
 };
 
+/// @brief Vertex attributes for the default vertex
+inline static std::vector<VertexAttribute> DEFAULT_VERTEX_ATTRIBUTES = {
+    // Pos
+    VertexAttribute{
+        .component_type = VertexAttribute::ComponentType::FLOAT,
+        .num_components = 3,
+    },
+    // Normal
+    VertexAttribute{
+        .component_type = VertexAttribute::ComponentType::FLOAT,
+        .num_components = 3,
+    },
+    // Tangent
+    VertexAttribute{
+        .component_type = VertexAttribute::ComponentType::FLOAT,
+        .num_components = 3,
+    },
+    // Texture coordinates
+    VertexAttribute{
+        .component_type = VertexAttribute::ComponentType::FLOAT,
+        .num_components = 2,
+    },
+};
+
 /// @brief Vertex attributes for the debug vertex
 inline static std::vector<VertexAttribute> DEBUG_VERTEX_ATTRIBUTES = {
     // Pos

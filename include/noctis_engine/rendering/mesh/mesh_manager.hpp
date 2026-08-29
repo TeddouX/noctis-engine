@@ -18,11 +18,12 @@ public:
 
     /// @brief Uploads a mesh to the GPU
     /// @param mesh_data The mesh's data
-    auto upload(const MeshData &mesh_data) -> void;
+    /// @return The mesh view that represents the mesh on the GPU
+    auto upload(const MeshData &mesh_data) -> MeshView;
 
     /// @brief Adds bind commands for this mesh manager's buffers
     /// @param draw_list The draw list that the commands should be added to
-    auto bind(DrawList &draw_list) -> void;
+    auto use(DrawList &draw_list) -> void;
 
     /// @brief Deletes this mesh manager's buffers, it shouldn't be used afterwards
     auto delete_buffers() -> void;
@@ -31,6 +32,9 @@ private:
     VertexArray vertex_array_;
     GPUBuffer   vbo_;
     GPUBuffer   ebo_;
+
+    std::size_t vertex_off_;
+    std::size_t index_off_;
 };
 
 } // namespace NoctisEngine::Rendering
