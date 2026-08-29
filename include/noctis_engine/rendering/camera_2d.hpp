@@ -12,14 +12,14 @@ class Camera2D
 public:
     /// @brief Creates a 2D camera
     /// @param half_extents The half width and half height of the camera frustum 
-    /// @param position The camera's position
-    /// @param near The near clipping plane position
-    /// @param far The far clipping plane position
+    /// @param position The camera's position, default (0, 0)
+    /// @param near The near clipping plane position, default -1000
+    /// @param far The far clipping plane position, default 1000
     Camera2D(
-        const glm::vec2 &half_extents, 
-        const glm::vec2 &position = glm::vec2{0}, 
-        float near = -1000.f, 
-        float far = 1000.f
+        const glm::vec2    &half_extents, 
+        const glm::vec2    &position = glm::vec2{0}, 
+        float               near = -1000.f, 
+        float               far = 1000.f
     );
 
     ~Camera2D() = default;
@@ -33,7 +33,7 @@ public:
     auto set_position(const glm::vec2 &position) -> void;
 
     /// @brief Updates the camera's buffers, call this after it was moved
-    auto update_buffers();
+    auto update_buffers() -> void;
 
     /// @brief Uses this camera for perspective rendering
     /// @param draw_list The draw list that should be used

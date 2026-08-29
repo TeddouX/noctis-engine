@@ -104,7 +104,7 @@ auto VertexArray::delete_gpu() -> void
     ebo_.delete_gpu();
 }
 
-auto VertexArray::use(DrawList &draw_list) -> void
+auto VertexArray::bind(DrawList &draw_list) -> void
 {
     draw_list.bind_vao(vao_);
     if (use_ebo_)

@@ -706,10 +706,10 @@ auto PhysicsSystem2D::draw_debug(Rendering::DrawList &draw_list, const DebugDraw
 
     dbg_shader_.use(draw_list);
     
-    line_vertex_array_.use(draw_list);
+    line_vertex_array_.bind(draw_list);
     draw_list.draw_lines(0, ctx.lines_vertices.size());
 
-    tri_vertex_array_.use(draw_list);
+    tri_vertex_array_.bind(draw_list);
     draw_list.draw_lines(0, ctx.tris_vertices.size());
 }
 

@@ -65,7 +65,7 @@ public:
 
     /// @brief Binds this VAO and its linked EBO to a draw list
     /// @param draw_list The draw list this VAO should be bound to
-    auto use(DrawList &draw_list) -> void;
+    auto bind(DrawList &draw_list) -> void;
 
     /// @return The VAO's OpenGL handle  
     auto vao_gl_handle() -> std::uint32_t;

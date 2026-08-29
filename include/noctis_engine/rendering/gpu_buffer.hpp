@@ -106,6 +106,8 @@ public:
 
     auto get_flags() const -> BufferFlag;
 
+    /// TODO: buffer should bind itself 
+
     auto get_name() const -> std::string_view;
 
 private:
