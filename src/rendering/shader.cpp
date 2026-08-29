@@ -16,7 +16,8 @@ R"(#extension GL_ARB_gpu_shader_int64 : enable
 )";
 
 Shader::Shader(ShaderType type, std::string_view code, std::string_view name)
-    : name_{name}
+    : name_{std::string(name)}
+    , type_{type}
 {
     handle_ = glCreateShader(static_cast<GLenum>(type));
     glObjectLabel(GL_SHADER, handle_, -1, name.data());
@@ -30,7 +31,7 @@ Shader::Shader(ShaderType type, std::string_view code, std::string_view name)
     glShaderSource(handle_, 1, &final_code_data, nullptr);
 }
     
-auto Shader::compile() -> bool
+auto Shader::compile() const -> bool
 {
     int success;
     char info_log[1024];
@@ -49,12 +50,22 @@ auto Shader::compile() -> bool
     return true;
 }
 
-auto Shader::gl_handle() -> std::uint32_t
+auto Shader::gl_handle() const -> std::uint32_t
 {
     return handle_;
 }
 
-auto Shader::delete_gpu() -> void
+auto Shader::type() const -> ShaderType
+{
+    return type_;
+}
+
+auto Shader::name() const -> const std::string &
+{
+    return name_;
+}
+
+auto Shader::delete_gpu() const -> void
 {
     glDeleteShader(handle_);
 }

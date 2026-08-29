@@ -32,6 +32,9 @@ enum class ShaderType
 class Shader
 {
 public:
+    /// @brief Default constructor
+    Shader() = default;
+
     /// @brief Creates a shader and compiles it
     /// @param type The shader's type
     /// @param code The shader's code, null terminated
@@ -41,18 +44,25 @@ public:
     ~Shader() = default;
 
     /// @return `true` on success, `false` on error 
-    auto compile() -> bool;
+    auto compile() const -> bool;
 
     /// @return The OpenGL handle to this shader 
-    auto gl_handle() -> std::uint32_t;
+    auto gl_handle() const -> std::uint32_t;
+
+    /// @return This shader's type 
+    auto type() const -> ShaderType;
+
+    /// @return This shader's name 
+    auto name() const -> const std::string &;
 
     /// @brief Deletes this shader from the GPU. If the shader is attached to a program 
     /// the deletion will be queued until the shader is detached from the program.
-    auto delete_gpu() -> void;
+    auto delete_gpu() const -> void;
 
 private:
-    std::uint32_t       handle_;
-    std::string_view    name_;
+    std::uint32_t   handle_;
+    std::string     name_;
+    ShaderType      type_;
 };
 
 } // namespace NoctisEngine::Rendering
