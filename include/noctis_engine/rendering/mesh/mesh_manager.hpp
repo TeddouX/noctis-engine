@@ -14,7 +14,7 @@ public:
     MeshManager();
     ~MeshManager() = default;
 
-    auto upload(const MeshInfo &mesh) -> MeshView;
+    auto upload(const MeshData &mesh) -> MeshView;
     auto use(DrawList &draw_list) -> void;
 
 private:

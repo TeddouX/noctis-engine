@@ -25,7 +25,7 @@ MeshManager::MeshManager()
     RENDERING_LOGGER.debug("Uploaded default meshes");
 }
 
-auto MeshManager::upload(const MeshInfo &mesh) -> MeshView 
+auto MeshManager::upload(const MeshData &mesh) -> MeshView 
 {
     size_t vertices_count = mesh.vertices.size(); 
     size_t vertices_size = vertices_count * sizeof(Vertex); 

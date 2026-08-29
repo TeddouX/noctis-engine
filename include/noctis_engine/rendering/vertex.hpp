@@ -5,15 +5,17 @@
 namespace NoctisEngine::Rendering
 {
     
+/// @brief The default vertex used by the engine
 struct Vertex
 {
+    /// @brief Coordinates in local space
     glm::vec3 pos;
+    /// @brief The surface normal
     glm::vec3 normal;
+    /// @brief The surface tangent
     glm::vec3 tangent;
+    /// @brief The texture coordinates
     glm::vec2 tex_coords;
-
-    constexpr Vertex(glm::vec3 pos, glm::vec3 normal, glm::vec3 tangent, glm::vec2 tex_coords)
-        : pos(pos), normal(normal), tangent(tangent), tex_coords(tex_coords) {}
 };
 
 /// @brief This is used to draw debug shapes, it is for example used by the physics system

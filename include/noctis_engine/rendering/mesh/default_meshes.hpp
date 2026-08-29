@@ -6,7 +6,8 @@
 namespace NoctisEngine::Rendering::DefaultMeshes
 {
 
-inline static const MeshInfo QUAD_MESH
+/// @brief A simple flat square
+inline static const MeshData QUAD_MESH
 {
     {
         Vertex{glm::vec3( 0.5f,  0.5f, 0.0f), glm::vec3(0), glm::vec3(0), glm::vec2(1, 1)},
@@ -17,6 +18,7 @@ inline static const MeshInfo QUAD_MESH
     {0, 1, 2, 2, 3, 0}
 };
 
+/// @brief The quad's mesh view
 inline static const MeshView QUAD_MESH_VIEW
 {
     .vertices_offset = 0,
