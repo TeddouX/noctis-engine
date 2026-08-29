@@ -1,4 +1,6 @@
 #pragma once
+#include <cstdint>
+#include <string_view>
 
 
 namespace NoctisEngine::Rendering
@@ -20,9 +22,10 @@ class Shader
 {
 public:
     /// @brief Creates a shader and compiles it
-    /// @param code The shader's code
-    /// @param name The shader's name
-    Shader(std::string_view code, std::string_view name);
+    /// @param type The shader's type
+    /// @param code The shader's code, null terminated
+    /// @param name The shader's name, null terminated
+    Shader(ShaderType type, std::string_view code, std::string_view name);
     
     ~Shader() = default;
 
@@ -37,6 +40,8 @@ public:
     auto delete_gpu() -> void;
 
 private:
+    std::uint32_t       handle_;
+    std::string_view    name_;
 };
 
 } // namespace NoctisEngine::Rendering

@@ -48,6 +48,4 @@ target_link_libraries(noctis_engine
 target_include_directories(noctis_engine
     PUBLIC
         ${NCENG_INCLUDE_DIR}
-    PRIVATE
-        ${NCENG_INCLUDE_DIR}/noctis_engine
 )
