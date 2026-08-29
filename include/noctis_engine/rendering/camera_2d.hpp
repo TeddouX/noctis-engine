@@ -39,6 +39,9 @@ public:
     /// @param draw_list The draw list that should be used
     auto use(DrawList &draw_list) -> void;
 
+    /// @brief Deletes this camera's buffer
+    auto delete_buffer() -> void;
+
 private:
     GPUBuffer camera_ubo_;
 

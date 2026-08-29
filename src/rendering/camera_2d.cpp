@@ -54,5 +54,10 @@ auto Camera2D::use(DrawList &draw_list) -> void
         ShaderBindings::CAMERA_DATA_UBO
     );
 }
+
+auto Camera2D::delete_buffer() -> void
+{
+    camera_ubo_.delete_gpu();
+}
     
 } // namespace NoctisEngine::Rendering
