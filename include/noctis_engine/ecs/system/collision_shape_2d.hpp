@@ -227,11 +227,19 @@ struct CollisionShape2D
         std::function<void (Entity, Entity)> on_sensor_end_touch;
     };
 
-    /// @brief This collision shape's callbacks
-    Callbacks callbacks;
-
     /// @brief The density of this collision shape, in kg/m^2
     float density{1.0f};
+
+    /// @brief This collision shape's physics material
+    PhysicsMaterial2D physics_material;
+
+    /// @brief This represents the collision shape's category
+    std::uint64_t type_bit = 0x1;
+
+    static constexpr std::uint64_t ALL_CATEGORIES = std::numeric_limits<std::uint64_t>::max();
+
+    /// @brief This states the categories that this shape would accept for collision.
+    std::uint64_t collision_mask_bits = ALL_CATEGORIES;
 
     /// @brief Enables collision events for this collision shape
     bool enable_collision_events = false;
@@ -245,14 +253,8 @@ struct CollisionShape2D
     /// Sensors still contribute to the body mass if they have non-zero density.
     bool is_sensor = false;
 
-    /// @brief This collision shape's physics material
-    PhysicsMaterial2D physics_material;
-
-    /// @brief This represents the collision shape's category
-    std::uint64_t type_bit;
-
-    /// @brief This states the categories that this shape would accept for collision.
-    std::uint64_t collision_mask_bits;
+    /// @brief This collision shape's callbacks
+    Callbacks callbacks;
 };
 
 } // namespace NoctisEngine::ECS
