@@ -9,10 +9,11 @@
 namespace NoctisEngine::Rendering
 {
 
-
+/// @brief Describes a program that links shaders used for rendering
 class GraphicsProgram
 {
 public:
+    /// @brief Default constructor creates an invalid graphics program
     GraphicsProgram() = default;
 
     /// @brief Creates a graphics program on the GPU and attaches shaders to it
@@ -23,6 +24,17 @@ public:
     GraphicsProgram(const std::vector<Shader> &shaders, std::string_view name);
     
     ~GraphicsProgram() = default;
+
+    /// @brief A helper for graphics program creation
+    /// @param vert_code The vertex shader code
+    /// @param frag_code The fragment shader code
+    /// @param name The program's name, also used for the shaders' names
+    /// @return A valid graphics program on success
+    static auto create_helper(
+        std::string_view vert_code, 
+        std::string_view frag_code, 
+        std::string_view name
+    ) -> GraphicsProgram;
 
     /// @brief Links this program's shaders to it
     /// @return `true` on success `false` on error

@@ -141,4 +141,60 @@ auto GraphicsProgram::valid() const -> bool
     return valid_;
 }
 
+auto GraphicsProgram::create_helper(
+    std::string_view vert_code, 
+    std::string_view frag_code, 
+    std::string_view name
+) -> GraphicsProgram
+{
+    std::string vert_shader_name = std::string(name) + "_vert_shader";
+    std::string frag_shader_name = std::string(name) + "_frag_shader";
+
+    Rendering::Shader vert_shader{
+        Rendering::ShaderType::VERTEX, 
+        vert_code, 
+        vert_shader_name
+    };
+
+    if (not vert_shader.compile())
+    {
+        RENDERING_LOGGER.error("graphics program create helper: Failed to compile vertex shader for program \"{}\" ", name);
+        return GraphicsProgram{};
+    }
+
+    Rendering::Shader frag_shader{
+        Rendering::ShaderType::FRAGMENT, 
+        frag_code, 
+        frag_shader_name
+    };
+
+    if (not frag_shader.compile())
+    {
+        RENDERING_LOGGER.critical("graphics program create helper: Failed to compile fragment shader for program \"{}\" ", name);
+        return GraphicsProgram{};
+    }
+
+    GraphicsProgram prog{
+        {
+            vert_shader,
+            frag_shader,
+        },
+        name
+    };
+
+    if (not prog.valid())
+    {
+        RENDERING_LOGGER.critical("graphics program create helper: Failed to create program \"{}\" ", name);
+        return GraphicsProgram{};
+    }
+
+    if (not prog.link())
+    {
+        RENDERING_LOGGER.critical("graphics program create helper: Failed to link program \"{}\"", name);
+        return GraphicsProgram{};
+    }
+
+    return prog;
+}
+
 } // namespace NoctisEngine::Rendering
