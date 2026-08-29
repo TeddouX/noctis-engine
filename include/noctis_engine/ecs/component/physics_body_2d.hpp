@@ -147,11 +147,12 @@ public:
     /// @return The gravity scale
     auto gravity_scale() -> float;
 
-    /// @return `true` if the body is awake 
+    /// @brief Checks if this body is awake
+    /// @return true if the body is awake, false otherwise
     auto awake() -> bool;
 
     /// @brief Wakes or puts a body to sleep
-    /// @param awake `true` if the body should be awaken else `false`
+    /// @param awake true if the body should be awaken else false
     /// @warning Putting a body to sleep will put the entire island of bodies touching this body to sleep,
     auto set_awake(bool awake) -> void;
 
@@ -159,10 +160,10 @@ public:
     auto wake_touching() -> void;
 
     /// @brief Enables or disables sleeping for this physics body
-    /// @param enable `true` if sleep should be enabled else `false`
+    /// @param enable true if sleep should be enabled else false
     auto enable_sleeping(bool enable) -> void;
 
-    /// @return `true` if sleep is enabled for this physics body 
+    /// @return true if sleep is enabled for this physics body 
     auto sleep_enabled() -> bool;
 
     /// @brief Sets the sleep threshold for this physics body
@@ -173,7 +174,8 @@ public:
     /// @return The sleep threshold, usually in meters per second
     auto sleep_threshold() -> float;
 
-    /// @return `true` if this physics body is enabled else `false`
+    /// @brief Checks if this body is enabled
+    /// @return true if this physics body is enabled else false
     auto enabled() -> bool;
 
     /// @brief Enables this physics body by adding it from the simulation
@@ -192,7 +194,7 @@ public:
     /// @return The motion locks
     auto motion_locks() -> MotionLocks;
 
-    /// @return This physics body's mass in kg 
+    /// @brief Gets this physics body's mass in kg 
     auto mass() -> float;
 };
 

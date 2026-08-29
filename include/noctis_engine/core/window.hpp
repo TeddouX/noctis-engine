@@ -9,7 +9,7 @@ struct GLFWwindow;
 namespace NoctisEngine::Core
 {
     
-/// @brief Describes all vertical sync methods supported by Window
+/// @brief Describes all vertical sync methodsn, used in Window::set_vsync()
 enum class VSyncMethod : int 
 {
     /// @brief No vertical sync
@@ -33,10 +33,10 @@ public:
     Window(std::uint32_t width, std::uint32_t height, std::string_view title);
     ~Window();
 
-    /// @return `true` if the window was created successfully 
+    /// @return true if the window was created successfully 
     auto is_valid() -> bool;
 
-    /// @return `true` if the user requested the window to close 
+    /// @return true if the user requested the window to close 
     auto should_close() -> bool;
 
     /// @brief Polls GLFW events (input, window events, ...)

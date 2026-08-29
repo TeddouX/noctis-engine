@@ -1,4 +1,4 @@
-#include <rendering/texture.hpp>
+#include <noctis_engine/rendering/texture.hpp>
 
 #include <GL/gl.h>
 
@@ -6,71 +6,88 @@
 namespace NoctisEngine::Rendering
 {
     
-Texture::Texture(TextureInfo tex_info)
-    : name_(tex_info.name)
-    , width_{tex_info.width}
-    , height_{tex_info.height}
+Texture::Texture(const Data &texture_data)
+    : width_{texture_data.width}
+    , height_{texture_data.height}
+    , name_{texture_data.name}
 {
-    glGenTextures(1, &texID_);
-    glBindTexture(GL_TEXTURE_2D, texID_);
-    glObjectLabel(GL_TEXTURE, texID_, -1, name_.c_str());
+    glGenTextures(1, &handle_);
+    glBindTexture(GL_TEXTURE_2D, handle_);
+    glObjectLabel(GL_TEXTURE, handle_, -1, name_.c_str());
 
-    GLenum internalFormat = GL_RGBA8;
-    GLenum dataFormat = GL_RGBA;
+    GLenum internal_format = GL_RGBA8;
+    GLenum data_format = GL_RGBA;
 
-    if (tex_info.nr_channels == 1)
+    if (texture_data.nr_channels == 1)
     {
-        internalFormat = GL_R8;
-        dataFormat = GL_RED;
+        internal_format = GL_R8;
+        data_format = GL_RED;
     }
-    else if (tex_info.nr_channels == 3)
+    else if (texture_data.nr_channels == 3)
     {
-        internalFormat = GL_RGB8;
-        dataFormat = GL_RGB;
+        internal_format = GL_RGB8;
+        data_format = GL_RGB;
     }
 
-	glTexImage2D(
+    glTexImage2D(
 		GL_TEXTURE_2D, 
 		0, 
-		internalFormat, 
-		tex_info.width, 
-		tex_info.height, 
+		internal_format, 
+		width_, 
+		height_, 
 		0, 
-		dataFormat,
+		data_format,
 		GL_UNSIGNED_BYTE, 
-		tex_info.data
+		texture_data.data
 	);
 
-	glGenerateMipmap(GL_TEXTURE_2D);
-
+    glGenerateMipmap(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-auto Texture::use(DrawList &draw_list, std::uint32_t bind_point) const -> void 
+auto Texture::set_minifying_function(MinifyingFunction func) const -> void
 {
-    draw_list.bind_texture(texID_, bind_point, name_);
+    glBindTexture(GL_TEXTURE_2D, handle_);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, static_cast<GLenum>(func));
+    glBindTexture(GL_TEXTURE_2D, 0);
+
 }
 
-auto Texture::set_min_function(MinifyingFunction param) const -> void 
+auto Texture::set_magnifying_function(MagnifyingFunction func) const -> void
 {
-    glBindTexture(GL_TEXTURE_2D, texID_);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, static_cast<GLint>(param));
+    glBindTexture(GL_TEXTURE_2D, handle_);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, static_cast<GLenum>(func));
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-auto Texture::set_mag_function(MagnifyingFunction param) const -> void 
+auto Texture::set_wrap_params(WrapParam u, WrapParam v) const -> void
 {
-    glBindTexture(GL_TEXTURE_2D, texID_);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, static_cast<GLint>(param));
+    glBindTexture(GL_TEXTURE_2D, handle_);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, static_cast<GLenum>(u));
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, static_cast<GLenum>(v));
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-auto Texture::set_wrap_function(WrapParam paramU, WrapParam paramV) const -> void 
+auto Texture::set_border_color(const Color &c) const -> void
 {
-    glBindTexture(GL_TEXTURE_2D, texID_);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, static_cast<GLint>(paramU));
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, static_cast<GLint>(paramV));
+    glBindTexture(GL_TEXTURE_2D, handle_);
+    glTexParameterfv(GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_WRAP_S, &c.to_floats()[0]);
     glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+auto Texture::bind(DrawList &draw_list, std::uint32_t bind_point) const -> void
+{
+    draw_list.bind_texture(handle_, bind_point, name_);
+}
+
+auto Texture::delete_gpu() const -> void
+{
+    glDeleteTextures(1, &handle_);
+}
+
+auto Texture::gl_handle() const -> std::uint32_t
+{
+    return handle_;
 }
 
 auto Texture::width() const -> int
@@ -83,14 +100,10 @@ auto Texture::height() const -> int
     return height_;
 }
 
-auto Texture::gl_handle() const -> std::uint32_t 
-{
-    return texID_; 
-}
-
-auto Texture::name() const -> const std::string &
+auto Texture::name() const -> std::string
 {
     return name_;
 }
+
 
 } // namespace NoctisEngine::Rendering

@@ -2,7 +2,7 @@
 
 #include <GL/gl.h>
 
-#include <noctis_engine/rendering/gpu_buffer_utils.hpp>
+#include <noctis_engine/rendering/buffer_utils.hpp>
 
 
 namespace NoctisEngine::Rendering
@@ -16,6 +16,7 @@ VertexArray::VertexArray(
     std::string_view                    name, 
     bool                                create_buffers,
     bool                                use_ebo)
+    : use_ebo_{use_ebo}
 {
     glGenVertexArrays(1, &vao_);
     glBindVertexArray(vao_);
@@ -23,10 +24,10 @@ VertexArray::VertexArray(
 
     if (create_buffers)
     {
-        vbo_ = GPUBuffer(1, name);
+        vbo_ = GPUBuffer(1, name, BufferFlag::DYNAMIC_STORAGE_BIT);
 
-        if (use_ebo)
-            ebo_ = GPUBuffer(1, name);
+        if (use_ebo_)
+            ebo_ = GPUBuffer(1, name, BufferFlag::DYNAMIC_STORAGE_BIT);
     }
 
     std::uint32_t attrib_idx{0};
@@ -47,7 +48,7 @@ VertexArray::VertexArray(
         glEnableVertexAttribArray(gl_attrib_idx);
     
         attrib_idx++;
-        offset += attrib_type_size_bytes(vertex_attrib.component_type);
+        offset += attrib_type_size_bytes(vertex_attrib.component_type) * vertex_attrib.num_components;
     }
 
     if (create_buffers)
@@ -55,14 +56,14 @@ VertexArray::VertexArray(
         // Offset should have the total size of one vertex by now
         link_vbo(vbo_, offset);
 
-        if (use_ebo)
+        if (use_ebo_)
             link_ebo(ebo_);
     }
 }
 
 auto VertexArray::upload_vertices(void *vertices, std::size_t size, std::size_t vertex_size) -> void
 {
-    bool resized = resize_buffer(vbo_, size);
+    bool resized = GPUBuffer::resize(vbo_, size);
     vbo_.write(vertices, size, 0);
 
     // Relink if resized because a new buffer was created
@@ -78,8 +79,8 @@ auto VertexArray::upload_indices(const std::vector<std::uint32_t> &indices) -> v
         return;
     }
 
-    bool resized = resize_buffer(ebo_, indices.size());
-    ebo_.write(get_cpu_buffer_view(indices), 0);
+    bool resized = GPUBuffer::resize(ebo_, indices.size());
+    ebo_.write(get_cpu_read_view(indices, 0), 0);
 
     // Relink if resized because a new buffer was created
     if (resized)
@@ -89,11 +90,13 @@ auto VertexArray::upload_indices(const std::vector<std::uint32_t> &indices) -> v
 auto VertexArray::link_vbo(const GPUBuffer &vbo_buf, std::size_t vertex_size, std::size_t first_el_off) -> void
 {
     glVertexArrayVertexBuffer(vao_, 0, vbo_buf.gl_handle(), first_el_off, vertex_size);
+    vbo_ = vbo_buf;
 }
 
 auto VertexArray::link_ebo(const GPUBuffer &ebo_buf) -> void
 {
     glVertexArrayElementBuffer(vao_, ebo_buf.gl_handle());
+    ebo_ = ebo_buf;
     use_ebo_ = true;
 }
 
@@ -104,7 +107,7 @@ auto VertexArray::delete_gpu() -> void
     ebo_.delete_gpu();
 }
 
-auto VertexArray::use(DrawList &draw_list) -> void
+auto VertexArray::bind(DrawList &draw_list) -> void
 {
     draw_list.bind_vao(vao_);
     if (use_ebo_)

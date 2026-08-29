@@ -13,46 +13,106 @@ namespace NoctisEngine::Rendering
     
 static auto is_bindable_to_index(BufferTarget type) -> bool;
 
-BufferFlag operator |(BufferFlag left, BufferFlag right) 
-{
-    return static_cast<BufferFlag>(
-        static_cast<std::uint32_t>(left) | static_cast<std::uint32_t>(right)
-    );
-}
 
-GPUBuffer::GPUBuffer(std::int64_t size, std::string_view name, BufferFlag flags)
+GPUBuffer::GPUBuffer(std::size_t size, std::string_view name, BufferFlag flags)
     : size_{size}
-    , name_{name}
     , flags_{flags}
+    , name_{name}
     , map_{nullptr}
-    , id_{}
 {
-    glCreateBuffers(1, &id_);
-    glNamedBufferStorage(id_, size, nullptr, static_cast<GLbitfield>(flags));
-    glObjectLabel(GL_BUFFER, id_, name.size(), name.data());
+    glCreateBuffers(1, &handle_);
+    glNamedBufferStorage(handle_, size_, nullptr, static_cast<GLbitfield>(flags_));
+    glObjectLabel(GL_BUFFER, handle_, name_.size(), name_.data());
 }
 
-auto GPUBuffer::write(CPUBufferReadView data, GLintptr offset) const -> void 
+auto GPUBuffer::resize(GPUBuffer &buffer, std::size_t req_size, bool copy_data) -> bool
+{
+    if (buffer.size() >= req_size)
+        return false;
+
+    std::size_t new_buf_size = std::max(buffer.size() * 2, 1zu);
+    while (new_buf_size < req_size)
+        new_buf_size *= 2;
+
+    RENDERING_LOGGER.debug("Resizing buffer \"{}\", {} => {}", 
+        buffer.name(), buffer.size(), new_buf_size
+    );
+
+    GPUBuffer new_buf{new_buf_size, buffer.name(), buffer.flags()};
+
+    if (copy_data)
+        buffer.copy_to(new_buf);
+    
+    buffer.delete_gpu();
+    buffer = new_buf;
+
+    return true;
+}
+
+auto GPUBuffer::map(BufferMapAccess access, std::size_t offset, std::size_t length) -> void *
+{
+    map_ = glMapNamedBufferRange(
+        handle_,
+        offset,
+        length == 0 ? size_ : length,
+        static_cast<GLbitfield>(access)
+    );
+    
+    if (!map_)
+    {
+        RENDERING_LOGGER.error("Failed to map buffer {}.", name_);
+        return nullptr;
+    }
+
+    map_access_ = access;
+
+    return map_;
+}
+
+auto GPUBuffer::unmap() -> void
+{
+    glUnmapNamedBuffer(handle_);
+    
+    map_ = nullptr;
+    map_access_ = BufferMapAccess::NONE;
+}
+
+auto GPUBuffer::mapped_ptr() -> void *
+{
+    return map_;
+}
+
+auto GPUBuffer::mapped() -> bool
+{
+    return map_ != nullptr;
+}
+
+auto GPUBuffer::write(CPUReadView data, std::size_t offset) const -> void
 {
     write(data.data(), data.size_bytes(), offset);
 }
 
-auto GPUBuffer::write(const void *data, std::int64_t size, std::int64_t offset) const -> void
+auto GPUBuffer::write(const void *data, std::size_t size, std::size_t offset) const -> void
 {
     if (offset + size > size_)
     {
         RENDERING_LOGGER.error(
-            "Tried to write {} bytes at offset {} into a buffer that is {} bytes long.", 
-            size, offset, size_
+            "Tried to write {} bytes at offset {} into a buffer that is {} bytes long (buffer \"{}\")", 
+            size, offset, size_, name_
         );
 
         return;
     }
 
-    glNamedBufferSubData(id_, offset, size, data);
+    glNamedBufferSubData(handle_, offset, size, data);
 }
 
-auto GPUBuffer::copy_to(GPUBuffer &other) -> void 
+auto GPUBuffer::copy_to(
+    const GPUBuffer    &other, 
+    std::size_t         read_offset, 
+    std::size_t         write_offset, 
+    std::size_t         length
+) const -> void
 {
     if (size_ > other.size_)
     {
@@ -64,83 +124,74 @@ auto GPUBuffer::copy_to(GPUBuffer &other) -> void
         return;
     }
 
-    glCopyNamedBufferSubData(id_, other.id_, 0, 0, size_);
+    glCopyNamedBufferSubData(
+        handle_, 
+        other.handle_, 
+        read_offset, write_offset, 
+        length == 0 ? size_ : length
+    );
 }
 
-auto GPUBuffer::size_bytes() const -> std::size_t 
+auto GPUBuffer::flush_mapped_buffer_ranges(const std::vector<FlushRange> &ranges) const -> void
 {
-    return size_;
-}
-
-auto GPUBuffer::gl_handle() const -> std::uint32_t 
-{
-    return id_;
-}
-
-auto GPUBuffer::delete_gpu() -> void
-{
-    if (map_)
-        glUnmapNamedBuffer(id_);
-    glDeleteBuffers(1, &id_);
-}
-
-auto GPUBuffer::map() -> void * 
-{
-    map_ = glMapNamedBufferRange(id_, 0, size_, static_cast<GLbitfield>(flags_));
-    if (!map_)
-    {
-        RENDERING_LOGGER.critical("Failed to map buffer {}.", name_);
-        Core::exit_program_failure();
-    }
-
-    return map_;
-}
-
-auto GPUBuffer::unmap() -> void 
-{
-    glUnmapNamedBuffer(id_);
-    map_ = nullptr;
-}
-
-auto GPUBuffer::is_mapped() const -> bool 
-{
-    return map_ != nullptr;
-}
-
-auto GPUBuffer::get_mapped_ptr() -> void * 
-{
-    return map_;
-}
-
-auto GPUBuffer::get_data(std::size_t offset, CPUBufferWriteView data) const -> void 
-{
-    if (offset + data.size_bytes() > size_)
+    if (not map_)
     {
         RENDERING_LOGGER.error(
-            "Failed to read data at offset {} with an object size of {} bytes because it exceeds the buffer's size ({} bytes)" ,
-            offset, data.size_bytes(), size_
+            "Can't flush mapped buffer range if it wasn't mapped (buffer \"{}\")",
+            name_
         );
 
         return;
     }
 
-    glGetNamedBufferSubData(
-        id_, 
-        offset, 
-        data.size_bytes(), 
-        data.data()
-    );
+    if ((static_cast<std::uint32_t>(map_access_) 
+      & static_cast<std::uint32_t>(BufferMapAccess::MAP_UNSYNCHRONIZED_BIT)) == 0)
+    {
+        RENDERING_LOGGER.error(
+            "Can't flush mapped buffer range if it wasn't mapped with the MAP_UNSYNCHRONIZED_BIT (buffer \"{}\")",
+            name_
+        );
+
+        return;
+    }
+
+    for (const auto &range : ranges)
+        glFlushMappedNamedBufferRange(handle_, range.first, range.second);
 }
 
-auto GPUBuffer::get_flags() const -> BufferFlag 
+auto GPUBuffer::delete_gpu() -> void
+{
+    if (map_)
+        unmap();
+
+    glDeleteBuffers(1, &handle_);
+}
+
+auto GPUBuffer::size() const -> std::size_t
+{
+    return size_;
+}
+
+auto GPUBuffer::flags() const -> BufferFlag
 {
     return flags_;
 }
 
-auto GPUBuffer::get_name() const -> std::string_view 
+auto GPUBuffer::map_access() const -> BufferMapAccess
+{
+    return map_access_;
+}
+
+auto GPUBuffer::gl_handle() const -> std::uint32_t
+{
+    return handle_;
+}
+
+auto GPUBuffer::name() const -> std::string_view
 {
     return name_;
 }
+
 
 auto is_bindable_to_index(BufferTarget type) -> bool 
 {

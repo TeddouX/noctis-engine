@@ -156,7 +156,7 @@ struct CollisionShape2D
         /// - Points are should use pixels as units
         std::vector<glm::vec2> points;
         
-        /// @brief `true` if the chain's points form a loop
+        /// @brief true if the chain's points form a loop
         bool is_loop;
         
         /// @brief Either 0 physics materials or the number of points. If 0, the CollisionShape2D's 
@@ -196,13 +196,13 @@ struct CollisionShape2D
     /// @brief Describes all the callbacks that relate to collision
     struct Callbacks
     {
-        /// @brief Called when a collision begins and if enable_collision_events is set to `true`
+        /// @brief Called when a collision begins and if enable_collision_events is set to true
         /// @param 1 entity A (the one bearing this collision shape)
         /// @param 2 entity B (the one that collided)
         /// @param 3 the collision manifold
         std::function<void (Entity, Entity)> on_collision_begin;
 
-        /// @brief Called when a collision ends and if enable_collision_events is set to `true`
+        /// @brief Called when a collision ends and if enable_collision_events is set to true
         /// @param 1 entity A (the one bearing this collision shape)
         /// @param 2 entity B (the one that collided)
         std::function<void (Entity, Entity)> on_collision_end;
@@ -216,12 +216,12 @@ struct CollisionShape2D
         /// @param 5 The speed the shapes are approaching. Always positive. Typically in m/s. 
         std::function<void (Entity, Entity, glm::vec2 &, glm::vec2, float)> on_hit;
         
-        /// @brief Called when a collision begins and is_sensor is set to `true`
+        /// @brief Called when a collision begins and is_sensor is set to true
         /// @param 1 entity A (the sensor)
         /// @param 2 entity B (the visitor)
         std::function<void (Entity, Entity)> on_sensor_begin_touch;
 
-        /// @brief Called when a collision ends and is_sensor is set to `true`
+        /// @brief Called when a collision ends and is_sensor is set to true
         /// @param 1 entity A (the sensor)
         /// @param 2 entity B (the visitor)
         std::function<void (Entity, Entity)> on_sensor_end_touch;

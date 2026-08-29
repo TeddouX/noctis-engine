@@ -15,7 +15,6 @@ auto load_texture(const std::filesystem::path &path, const std::string &name) ->
     int width, height;
     int nr_channels;
 
-
     if (!std::filesystem::exists(path)) 
     {
         ASSET_LOGGER.error("{} does not exist.", path.string());
@@ -38,7 +37,7 @@ auto load_texture(const std::filesystem::path &path, const std::string &name) ->
     if (tex_name.empty())
         tex_name = path.stem();
 
-    Rendering::TextureInfo texInfo 
+    Rendering::Texture::Data texInfo 
     {
         .data = data,
         .width = width, .height = height,

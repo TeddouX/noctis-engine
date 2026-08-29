@@ -29,7 +29,7 @@ PhysicsSystem2D::~PhysicsSystem2D()
     b2DestroyWorld(b2LoadWorldId(physics_world_));
 }
 
-auto PhysicsSystem2D::enable_debug_rendering() -> void
+auto PhysicsSystem2D::enable_debug_rendering() -> bool
 {
     line_vertex_array_ = Rendering::VertexArray{
         Rendering::DEBUG_VERTEX_ATTRIBUTES,
@@ -45,11 +45,13 @@ auto PhysicsSystem2D::enable_debug_rendering() -> void
         false
     };
 
-    dbg_shader_ = Rendering::Shader{
-        Rendering::DefaultShaders::DEBUG_SHADER_2D.data(),
-        "phys_shader"
-    };
-    dbg_shader_.compile();
+    graphics_prog_ = Rendering::GraphicsProgram::create_helper(
+        Rendering::DefaultShaders::DEBUG_VERT_SHADER_2D_CODE,
+        Rendering::DefaultShaders::DEBUG_FRAG_SHADER_2D_CODE,
+        "physics_dbg_program"
+    );
+
+    return graphics_prog_.valid();
 }
 
 auto PhysicsSystem2D::set_gravity(glm::vec2 gravity) -> void
@@ -416,9 +418,7 @@ auto PhysicsSystem2D::draw_debug(Rendering::DrawList &draw_list, const DebugDraw
 	debug_draw.drawContactNormals   = settings.draw_contact_normals;
 	debug_draw.drawContactForces    = settings.draw_contact_forces;
 	debug_draw.drawFrictionForces   = settings.draw_friction_forces;
-
-	/// Option to draw islands as bounding boxes
-	bool drawIslands;
+	debug_draw.drawIslands          = settings.draw_islands;
 
     debug_draw.DrawPolygonFcn = [](
         b2WorldTransform    transform, 
@@ -430,7 +430,7 @@ auto PhysicsSystem2D::draw_debug(Rendering::DrawList &draw_list, const DebugDraw
     {
         auto ctx = reinterpret_cast<Context *>(context);
 
-        glm::vec4 color_floats4 = RGBA_to_floats(static_cast<std::uint32_t>(color));
+        glm::vec4 color_floats4 = Color::RGBA_to_floats(static_cast<std::uint32_t>(color));
         glm::vec3 color_floats{ color_floats4.r, color_floats4.g, color_floats4.b };
 
         if (vertexCount < 3)
@@ -467,7 +467,7 @@ auto PhysicsSystem2D::draw_debug(Rendering::DrawList &draw_list, const DebugDraw
     {
         auto ctx = reinterpret_cast<Context *>(context);
         
-        glm::vec4 color_floats4 = RGBA_to_floats(static_cast<std::uint32_t>(color));
+        glm::vec4 color_floats4 = Color::RGBA_to_floats(static_cast<std::uint32_t>(color));
         glm::vec3 color_floats{ color_floats4.r, color_floats4.g, color_floats4.b };
 
         if (vertexCount < 3)
@@ -499,7 +499,7 @@ auto PhysicsSystem2D::draw_debug(Rendering::DrawList &draw_list, const DebugDraw
     {
         auto ctx = reinterpret_cast<Context *>(context);
 
-        glm::vec4 color_floats4 = RGBA_to_floats(static_cast<std::uint32_t>(color));
+        glm::vec4 color_floats4 = Color::RGBA_to_floats(static_cast<std::uint32_t>(color));
         glm::vec3 color_floats{ color_floats4.r, color_floats4.g, color_floats4.b };
 
         constexpr int SEGMENTS = 24;
@@ -534,7 +534,7 @@ auto PhysicsSystem2D::draw_debug(Rendering::DrawList &draw_list, const DebugDraw
     {
         auto ctx = reinterpret_cast<Context *>(context);
 
-        glm::vec4 color_floats4 = RGBA_to_floats(static_cast<std::uint32_t>(color));
+        glm::vec4 color_floats4 = Color::RGBA_to_floats(static_cast<std::uint32_t>(color));
         glm::vec3 color_floats{ color_floats4.r, color_floats4.g, color_floats4.b };
 
         constexpr int SEGMENTS = 24;
@@ -584,7 +584,7 @@ auto PhysicsSystem2D::draw_debug(Rendering::DrawList &draw_list, const DebugDraw
     {
         auto ctx = reinterpret_cast<Context *>(context);
 
-        glm::vec4 color_floats4 = RGBA_to_floats(static_cast<std::uint32_t>(color));
+        glm::vec4 color_floats4 = Color::RGBA_to_floats(static_cast<std::uint32_t>(color));
         glm::vec3 color_floats{ color_floats4.r, color_floats4.g, color_floats4.b };
 
         b2Vec2 axis = { p2.x - p1.x, p2.y - p1.y };
@@ -646,7 +646,7 @@ auto PhysicsSystem2D::draw_debug(Rendering::DrawList &draw_list, const DebugDraw
     {
         auto ctx = reinterpret_cast<Context *>(context);
 
-        glm::vec4 color_floats4 = RGBA_to_floats(static_cast<std::uint32_t>(color));
+        glm::vec4 color_floats4 = Color::RGBA_to_floats(static_cast<std::uint32_t>(color));
         glm::vec3 color_floats{ color_floats4.r, color_floats4.g, color_floats4.b };
 
         ctx->lines_vertices.push_back(Rendering::DebugVertex{ 
@@ -668,7 +668,7 @@ auto PhysicsSystem2D::draw_debug(Rendering::DrawList &draw_list, const DebugDraw
     {
         auto ctx = reinterpret_cast<Context *>(context);
 
-        glm::vec4 color_floats4 = RGBA_to_floats(static_cast<std::uint32_t>(color));
+        glm::vec4 color_floats4 = Color::RGBA_to_floats(static_cast<std::uint32_t>(color));
         glm::vec3 color_floats{ color_floats4.r, color_floats4.g, color_floats4.b };
 
         constexpr int NUM_CORNERS = 4;
@@ -704,13 +704,13 @@ auto PhysicsSystem2D::draw_debug(Rendering::DrawList &draw_list, const DebugDraw
         sizeof(Rendering::DebugVertex)
     );
 
-    dbg_shader_.use(draw_list);
+    graphics_prog_.bind(draw_list);
     
-    line_vertex_array_.use(draw_list);
+    line_vertex_array_.bind(draw_list);
     draw_list.draw_lines(0, ctx.lines_vertices.size());
 
-    tri_vertex_array_.use(draw_list);
-    draw_list.draw_lines(0, ctx.tris_vertices.size());
+    tri_vertex_array_.bind(draw_list);
+    draw_list.draw_triangles(0, ctx.tris_vertices.size());
 }
 
 auto PhysicsSystem2D::process_contact_events() -> void

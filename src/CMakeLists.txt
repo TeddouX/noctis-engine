@@ -11,6 +11,7 @@ set(NCENG_SOURCES
     "rendering/camera_2d.cpp"
     "rendering/draw_list.cpp"
     "rendering/gpu_buffer.cpp"
+    "rendering/graphics_program.cpp"
     "rendering/renderer.cpp"
     "rendering/shader.cpp"
     "rendering/texture.cpp"
@@ -48,6 +49,4 @@ target_link_libraries(noctis_engine
 target_include_directories(noctis_engine
     PUBLIC
         ${NCENG_INCLUDE_DIR}
-    PRIVATE
-        ${NCENG_INCLUDE_DIR}/noctis_engine
 )

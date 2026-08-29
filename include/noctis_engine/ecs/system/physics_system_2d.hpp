@@ -9,7 +9,7 @@
 #include "../component/physics_body_2d.hpp"
 #include "../../rendering/draw_list.hpp"
 #include "../../rendering/vertex_array.hpp"
-#include "../../rendering/shader.hpp"
+#include "../../rendering/graphics_program.hpp"
 
 
 namespace NoctisEngine::ECS
@@ -84,7 +84,9 @@ public:
 
     /// @brief Enables debug rendering by creating required buffers.
     /// Do not call except if you want to draw debug shapes
-    auto enable_debug_rendering() -> void;
+    /// @return true on success, false otherwise
+    /// @warning Default shaders should be compiled before calling this function
+    auto enable_debug_rendering() -> bool;
 
     /// @brief Set the gravity vector for the physics world
     /// @param gravity The gravity vector
@@ -118,8 +120,8 @@ public:
     /// for better stability. Default 1/60
     /// @param substep_count The number of sub-steps, increasing this number may 
     /// increase accuracy, but at the cost of performance.
-    /// @important sync_physics_engine_to_ecs() should be called before 
-    /// calling this function
+    /// @warning sync_physics_engine_to_ecs() should be called before 
+    /// calling this function to update position changes
     auto update_physics(float dt, float time_step = DEFAULT_TIMESTEP, std::uint16_t substep_count = 4) -> void;
 
     /// @brief Updates the transforms according to what 
@@ -133,7 +135,8 @@ public:
     /// @param settings The draw settings
     /// @warning enable_debug_rendering() should be called before.
     /// Overrides previously bound VAOs and shaders, so be careful to when in your 
-    /// rendering loop you call this function
+    /// rendering loop you call this function. 
+    /// Default shaders must be compiled before calling this function
     auto draw_debug(Rendering::DrawList &draw_list, const DebugDrawSettings &settings) -> void;
 
 private:
@@ -145,7 +148,7 @@ private:
 
     Rendering::VertexArray                      line_vertex_array_;
     Rendering::VertexArray                      tri_vertex_array_;
-    Rendering::Shader                           dbg_shader_;
+    Rendering::GraphicsProgram                  graphics_prog_;
 
   
     /// @brief This is called in sync_ecs_to_physics_engine().
