@@ -1,4 +1,5 @@
 #pragma once
+#include "input_stack.hpp"
 #include "keyboard.hpp"
 #include "mouse.hpp"
 
@@ -93,13 +94,12 @@ private:
     };
 
     inline static std::array<InputState, NUM_PHYSICAL_KEYS> key_states_;
-    inline static std::vector<size_t> dirty_keys_;
+    inline static std::vector<std::size_t> dirty_keys_;
 
     inline static std::array<InputState, NUM_MOUSE_BUTTONS> mouse_buttons_;
     inline static MouseMouvement last_mouse_mvt_;
 
     static auto update() -> void;
-    static auto check_key(PhysicalKey key) -> bool;
     static auto update_state(InputState &state) -> void;
 
     static auto glfw_key_callback(GLFWwindow *window, int key, int scancode, int action, int mods) -> void;

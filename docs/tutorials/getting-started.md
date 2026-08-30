@@ -82,6 +82,7 @@ auto main() -> int
     {
         // This ensures input events, like closing the window, resizing, keyboard press, mouse movement, etc... are up to date
         // This function call is required for window.should_close() to work.
+        // It should be done above everything else so your inputs are valid for this loop
         window.poll_events();
 
         // Your window doesn't use only one buffer to draw, it uses two. While the first one (called front buffer) 
@@ -216,6 +217,8 @@ auto main() -> int
  
     while (not window.should_close())
     {
+        window.poll_events();
+
         NoctisEngine::Rendering::DrawList draw_list{};
  
         // This command control how the screen is cleared, here its a kind of gray-ish color
@@ -247,7 +250,6 @@ auto main() -> int
         renderer.render(draw_list);
  
         // Same thing as above
-        window.poll_events();
         window.swap_buffers();
     }
  
@@ -302,6 +304,8 @@ auto main() -> int
 
     while (not window.should_close)
     {
+        window.poll_events();
+
         // ...
         // Same things must be bound except for texture
         // The mesh drawing should also be removed
@@ -312,7 +316,6 @@ auto main() -> int
 
         renderer.render(draw_list);
 
-        window.poll_events();
         window.swap_buffers();
     }
     

@@ -39,7 +39,7 @@ public:
     /// @return true if the user requested the window to close 
     auto should_close() -> bool;
 
-    /// @brief Polls GLFW events (input, window events, ...)
+    /// @brief Polls GLFW events (input, window events, ...) and updates the InputHandler
     auto poll_events() -> void;
 
     /// @brief Presents elements drawn by OpenGL
