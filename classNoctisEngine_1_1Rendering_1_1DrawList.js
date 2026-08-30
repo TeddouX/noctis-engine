@@ -8,8 +8,8 @@ var classNoctisEngine_1_1Rendering_1_1DrawList =
     [ "bind_vao", "classNoctisEngine_1_1Rendering_1_1DrawList.html#ae3c758c28e63b4d43d0362d6503533c8", null ],
     [ "clear_screen", "classNoctisEngine_1_1Rendering_1_1DrawList.html#a94eba6b54527394a89448a0d6a807cc3", null ],
     [ "draw_lines", "classNoctisEngine_1_1Rendering_1_1DrawList.html#a5408edaf29d8a6be55d1109869d942f7", null ],
-    [ "draw_mesh", "classNoctisEngine_1_1Rendering_1_1DrawList.html#ace8fb5051729ea955ecbf62c29605513", null ],
-    [ "draw_sprite_entity", "classNoctisEngine_1_1Rendering_1_1DrawList.html#a7cf068198dfa42515fa22595963cc0d2", null ],
+    [ "draw_mesh", "classNoctisEngine_1_1Rendering_1_1DrawList.html#aeb4362092d4bb0628331e84b8c78af51", null ],
+    [ "draw_sprite_entity", "classNoctisEngine_1_1Rendering_1_1DrawList.html#ac343909af28e72e90bc2dd2fa1584033", null ],
     [ "draw_triangles", "classNoctisEngine_1_1Rendering_1_1DrawList.html#a81ee5711537071f98e3802b7c6805d6e", null ],
     [ "set_uniform", "classNoctisEngine_1_1Rendering_1_1DrawList.html#a051ef42b904dcaa866422f9cb5d8b135", null ]
 ];

@@ -132,9 +132,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:abde7d0f4a1977028a52ed6102c9a51b8" id="r_abde7d0f4a1977028a52ed6102c9a51b8"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNoctisEngine_1_1Rendering_1_1Texture.html#abde7d0f4a1977028a52ed6102c9a51b8">set_border_color</a> (const <a class="el" href="classNoctisEngine_1_1Color.html">Color</a> &amp;color) const -&gt; void</td></tr>
 <tr class="memdesc:abde7d0f4a1977028a52ed6102c9a51b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the texture's border color.  <br /></td></tr>
 <tr class="separator:abde7d0f4a1977028a52ed6102c9a51b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a345b8883ad6acd542a54b14f73e74c5f" id="r_a345b8883ad6acd542a54b14f73e74c5f"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNoctisEngine_1_1Rendering_1_1Texture.html#a345b8883ad6acd542a54b14f73e74c5f">bind</a> (<a class="el" href="classNoctisEngine_1_1Rendering_1_1DrawList.html">DrawList</a> &amp;draw_list, std::uint32_t bind_point) const -&gt; void</td></tr>
-<tr class="memdesc:a345b8883ad6acd542a54b14f73e74c5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets this texture to be bound in a draw list.  <br /></td></tr>
-<tr class="separator:a345b8883ad6acd542a54b14f73e74c5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa1381d101649c39e610f8fcffb9573d" id="r_aaa1381d101649c39e610f8fcffb9573d"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNoctisEngine_1_1Rendering_1_1Texture.html#aaa1381d101649c39e610f8fcffb9573d">bind</a> (<a class="el" href="classNoctisEngine_1_1Rendering_1_1DrawList.html">DrawList</a> &amp;draw_list, std::uint32_t bind_point, std::string_view uniform_name) const -&gt; void</td></tr>
+<tr class="memdesc:aaa1381d101649c39e610f8fcffb9573d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets this texture to be bound in a draw list.  <br /></td></tr>
+<tr class="separator:aaa1381d101649c39e610f8fcffb9573d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a062f99027aa064d76b5b3cea947adf8b" id="r_a062f99027aa064d76b5b3cea947adf8b"><td class="memItemLeft" align="right" valign="top"><a id="a062f99027aa064d76b5b3cea947adf8b" name="a062f99027aa064d76b5b3cea947adf8b"></a>
 auto&#160;</td><td class="memItemRight" valign="bottom"><b>delete_gpu</b> () const -&gt; void</td></tr>
 <tr class="memdesc:a062f99027aa064d76b5b3cea947adf8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes this texture from the GPU, it shouldn't be used after deletion. <br /></td></tr>
@@ -186,8 +186,8 @@ auto&#160;</td><td class="memItemRight" valign="bottom"><b>name</b> () const -&g
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a345b8883ad6acd542a54b14f73e74c5f" name="a345b8883ad6acd542a54b14f73e74c5f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a345b8883ad6acd542a54b14f73e74c5f">&#9670;&#160;</a></span>bind()</h2>
+<a id="aaa1381d101649c39e610f8fcffb9573d" name="aaa1381d101649c39e610f8fcffb9573d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaa1381d101649c39e610f8fcffb9573d">&#9670;&#160;</a></span>bind()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -202,7 +202,13 @@ auto&#160;</td><td class="memItemRight" valign="bottom"><b>name</b> () const -&g
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">std::uint32_t&#160;</td>
-          <td class="paramname"><em>bind_point</em>&#160;</td>
+          <td class="paramname"><em>bind_point</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string_view&#160;</td>
+          <td class="paramname"><em>uniform_name</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -217,6 +223,7 @@ auto&#160;</td><td class="memItemRight" valign="bottom"><b>name</b> () const -&g
   <table class="params">
     <tr><td class="paramname">draw_list</td><td>The draw list </td></tr>
     <tr><td class="paramname">bind_point</td><td>The point the texture should be bound to in the shader </td></tr>
+    <tr><td class="paramname">uniform_name</td><td>The name of the uniform this texture should be bound to </td></tr>
   </table>
   </dd>
 </dl>

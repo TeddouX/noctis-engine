@@ -1,8 +1,7 @@
 var namespaceNoctisEngine_1_1Rendering =
 [
     [ "DefaultMeshes", "namespaceNoctisEngine_1_1Rendering_1_1DefaultMeshes.html", [
-      [ "QUAD_MESH", "namespaceNoctisEngine_1_1Rendering_1_1DefaultMeshes.html#ab89bdb7728d33e7947a340da6225fe4a", null ],
-      [ "QUAD_MESH_VIEW", "namespaceNoctisEngine_1_1Rendering_1_1DefaultMeshes.html#ab6209203b0c862b6c2ae9e0fea034edd", null ]
+      [ "QUAD_MESH", "namespaceNoctisEngine_1_1Rendering_1_1DefaultMeshes.html#ab89bdb7728d33e7947a340da6225fe4a", null ]
     ] ],
     [ "DefaultShaders", "namespaceNoctisEngine_1_1Rendering_1_1DefaultShaders.html", [
       [ "DEBUG_FRAG_SHADER_2D_CODE", "namespaceNoctisEngine_1_1Rendering_1_1DefaultShaders.html#a3511b6ba1205cec3b3738a3407a2213a", null ],

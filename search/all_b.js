@@ -9,7 +9,7 @@ var searchData=
   ['link_5febo_6',['link_ebo',['../classNoctisEngine_1_1Rendering_1_1VertexArray.html#a3a75000482f41b789c818c3b4333a066',1,'NoctisEngine::Rendering::VertexArray']]],
   ['link_5fvbo_7',['link_vbo',['../classNoctisEngine_1_1Rendering_1_1VertexArray.html#af659e0b3e2d0ef4701058df7bee16a41',1,'NoctisEngine::Rendering::VertexArray']]],
   ['load_5ftexture_8',['load_texture',['../namespaceNoctisEngine_1_1Asset.html#ad89ba9e670b4f9fae35ddb792165c077',1,'NoctisEngine::Asset']]],
-  ['logger_9',['logger',['../classNoctisEngine_1_1Core_1_1Logger.html',1,'NoctisEngine::Core::Logger'],['../classNoctisEngine_1_1Core_1_1Logger.html#a97b44c6a5634948dfbf04507d10958b0',1,'NoctisEngine::Core::Logger::Logger()']]],
+  ['logger_9',['logger',['../classNoctisEngine_1_1Core_1_1Logger.html',1,'NoctisEngine::Core::Logger'],['../classNoctisEngine_1_1Core_1_1Logger.html#a97b44c6a5634948dfbf04507d10958b0',1,'NoctisEngine::Core::Logger::Logger()'],['../core_functionalities.html#autotoc_md0',1,'The logger']]],
   ['loglevel_10',['LogLevel',['../namespaceNoctisEngine_1_1Core.html#ab54c7f590fb133ca34bd597c676a1514',1,'NoctisEngine::Core']]],
   ['lower_5fdraw_5fbound_11',['lower_draw_bound',['../structNoctisEngine_1_1ECS_1_1PhysicsSystem2D_1_1DebugDrawSettings.html#a98b4727295084d14b5e8408c23a15ef0',1,'NoctisEngine::ECS::PhysicsSystem2D::DebugDrawSettings']]]
 ];

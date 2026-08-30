@@ -115,7 +115,7 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a97b44c6a5634948dfbf04507d10958b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a921cd07480f2c618ffaa227dbe5b4b65" id="r_a921cd07480f2c618ffaa227dbe5b4b65"><td class="memTemplParams" colspan="2">template&lt;typename ... Args_&gt; </td></tr>
 <tr class="memitem:a921cd07480f2c618ffaa227dbe5b4b65"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classNoctisEngine_1_1Core_1_1Logger.html#a921cd07480f2c618ffaa227dbe5b4b65">debug</a> (std::format_string&lt; Args_... &gt; fmt, Args_ &amp;&amp;...args) const -&gt; void</td></tr>
-<tr class="memdesc:a921cd07480f2c618ffaa227dbe5b4b65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used for printing debug messages.  <br /></td></tr>
+<tr class="memdesc:a921cd07480f2c618ffaa227dbe5b4b65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used for printing debug messages, only prints messages if NCENG_DEBUG is defined.  <br /></td></tr>
 <tr class="separator:a921cd07480f2c618ffaa227dbe5b4b65"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4f22af1d982b81224054b4e4fbb2f621" id="r_a4f22af1d982b81224054b4e4fbb2f621"><td class="memTemplParams" colspan="2">template&lt;typename ... Args_&gt; </td></tr>
 <tr class="memitem:a4f22af1d982b81224054b4e4fbb2f621"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classNoctisEngine_1_1Core_1_1Logger.html#a4f22af1d982b81224054b4e4fbb2f621">info</a> (std::format_string&lt; Args_... &gt; fmt, Args_ &amp;&amp;...args) const -&gt; void</td></tr>
@@ -256,7 +256,7 @@ template&lt;typename ... Args_&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Used for printing debug messages. </p>
+<p>Used for printing debug messages, only prints messages if NCENG_DEBUG is defined. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">...Args_</td><td>The format arguments types </td></tr>
