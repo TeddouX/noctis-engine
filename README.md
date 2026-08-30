@@ -3,8 +3,9 @@
 Noctis Engine is a game engine written entirely in C++. It is based on OpenGL and an ECS.  
 
 ## Docs, usage and tutorials
-
-These can all be found in the [docs](https://teddoux.github.io/noctis-engine/).
+The docs: [Noctis Engine](https://teddoux.github.io/noctis-engine/index.html)
+For usage using CMake: [How do I use Noctis Engine for my game ?](https://teddoux.github.io/noctis-engine/getting_started.html#autotoc_md1)
+A quickstart guide: [Where do I get started ?](https://teddoux.github.io/noctis-engine/getting_started.html#autotoc_md2)
 
 ## Acknowledgements
 
