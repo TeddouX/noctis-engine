@@ -109,8 +109,8 @@ auto InputHandler::action_just_pressed(std::string_view action_name) -> bool
     {
         switch (action_idx.type)
         {
-            case InternalActionData::Type::KEYBOARD:   return key_just_pressed(static_cast<PhysicalKey>(action_idx.ordinal));
-            case InternalActionData::Type::MOUSE:      return mouse_button_just_pressed(static_cast<MouseButton>(action_idx.ordinal));
+            case InternalActionData::Type::KEYBOARD:   if (key_just_pressed(static_cast<PhysicalKey>(action_idx.ordinal))) return true; else continue;
+            case InternalActionData::Type::MOUSE:      if (mouse_button_just_pressed(static_cast<MouseButton>(action_idx.ordinal))) return true; else continue;
             default:                                   continue;
         }
     }
@@ -124,8 +124,8 @@ auto InputHandler::action_pressed(std::string_view action_name) -> bool
     {
         switch (action_idx.type)
         {
-            case InternalActionData::Type::KEYBOARD:   return key_pressed(static_cast<PhysicalKey>(action_idx.ordinal));
-            case InternalActionData::Type::MOUSE:      return mouse_button_pressed(static_cast<MouseButton>(action_idx.ordinal));
+            case InternalActionData::Type::KEYBOARD:   if (key_pressed(static_cast<PhysicalKey>(action_idx.ordinal))) return true; else continue;
+            case InternalActionData::Type::MOUSE:      if (mouse_button_pressed(static_cast<MouseButton>(action_idx.ordinal))) return true; else continue;
             default:                                   continue;
         }
     }
@@ -138,8 +138,8 @@ auto InputHandler::action_just_released(std::string_view action_name) -> bool
     {
         switch (action_idx.type)
         {
-            case InternalActionData::Type::KEYBOARD:   return key_just_released(static_cast<PhysicalKey>(action_idx.ordinal));
-            case InternalActionData::Type::MOUSE:      return mouse_button_just_released(static_cast<MouseButton>(action_idx.ordinal));
+            case InternalActionData::Type::KEYBOARD:   if (key_just_released(static_cast<PhysicalKey>(action_idx.ordinal))) return true; else continue;
+            case InternalActionData::Type::MOUSE:      if (mouse_button_just_released(static_cast<MouseButton>(action_idx.ordinal))) return true; else continue;
             default:                                   continue;
         }
     }
@@ -153,8 +153,8 @@ auto InputHandler::action_released(std::string_view action_name) -> bool
     {
         switch (action_idx.type)
         {
-            case InternalActionData::Type::KEYBOARD:   return key_just_released(static_cast<PhysicalKey>(action_idx.ordinal));
-            case InternalActionData::Type::MOUSE:      return mouse_button_released(static_cast<MouseButton>(action_idx.ordinal));
+            case InternalActionData::Type::KEYBOARD:   if (key_just_released(static_cast<PhysicalKey>(action_idx.ordinal))) return true; else continue;
+            case InternalActionData::Type::MOUSE:      if (mouse_button_released(static_cast<MouseButton>(action_idx.ordinal))) return true; else continue;
             default:                                   continue;
         }
     }
@@ -168,8 +168,8 @@ auto InputHandler::action_held(std::string_view action_name) -> bool
     {
         switch (action_idx.type)
         {
-            case InternalActionData::Type::KEYBOARD:   return key_held(static_cast<PhysicalKey>(action_idx.ordinal));
-            case InternalActionData::Type::MOUSE:      return mouse_button_held(static_cast<MouseButton>(action_idx.ordinal));
+            case InternalActionData::Type::KEYBOARD:   if (key_held(static_cast<PhysicalKey>(action_idx.ordinal))) return true; else continue;
+            case InternalActionData::Type::MOUSE:      if (mouse_button_held(static_cast<MouseButton>(action_idx.ordinal))) return true; else continue;
             default:                                   continue;
         }
     }
@@ -270,15 +270,9 @@ auto InputHandler::glfw_mouse_btn_callback(GLFWwindow *window, int button, int a
     int btn_ord = ordinal(mouse_btn);
     
     if (action == GLFW_PRESS && mouse_button_released(mouse_btn))
-    {
         btn_state = InputInfo::State::PRESSED;
-        CORE_LOGGER.debug("{} pressed", button);
-    }
     else if (action == GLFW_RELEASE)
-    {
         btn_state = InputInfo::State::RELEASED;
-        CORE_LOGGER.debug("{} released", button);
-    }
 
     mouse_buttons_[btn_ord] = InputInfo{
         .state = btn_state,
