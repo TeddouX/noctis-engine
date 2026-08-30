@@ -11,7 +11,7 @@ namespace NoctisEngine::Core
 /// @warning This is based on the QWERTY layout
 enum class PhysicalKey : int
 {
-    KEY_SPACE       = 32,
+    SPACE           = 32,
     APOSTROPHE      = 39,
     COMMA           = 44,
     MINUS           = 45,
@@ -146,7 +146,7 @@ constexpr int NUM_PHYSICAL_KEYS = static_cast<int>(PhysicalKey::MAX_KEYS) - 1;
 
 static const std::unordered_map<std::string_view, PhysicalKey> KEY_NAME_MAP = 
 {
-    {"space",               PhysicalKey::KEY_SPACE},
+    {"space",               PhysicalKey::SPACE},
     {"apostrophe",          PhysicalKey::APOSTROPHE},
     {"comma",               PhysicalKey::COMMA},
     {"minus",               PhysicalKey::MINUS},

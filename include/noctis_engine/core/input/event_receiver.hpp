@@ -5,12 +5,13 @@
 namespace NoctisEngine::Core
 {
     
+/// @brief The interface for classes that receive events from the event stack
 class IEventReceiver
 {
 public:
     virtual ~IEventReceiver() = default;
 
-    /// @brief Called when a keyboard is received
+    /// @brief Called when a keyboard event is received
     /// @param event The event
     /// @return True if this receiver consumes it, false otherwise
     /// @warning The InputInfo::state cannot be InputInfo::State::HELD 

@@ -307,7 +307,7 @@ auto main() -> int
         window.poll_events();
 
         // ...
-        // Same things must be bound except for texture
+        // Same things must be bound except for the texture
         // The mesh drawing should also be removed
 
         // This is where the draw list does everything for you, note that this function requires
@@ -325,3 +325,7 @@ auto main() -> int
 
 You should now see a square, 50 by 50 pixels wide rotated by 45 degrees, in the lower left quadrant of your screen.  
 This is how you should actually render sprites to the screen, if you don't need or want to control each object yourself.
+
+## Going further
+
+Go see the @subpage core_functionalities of the engine. 
