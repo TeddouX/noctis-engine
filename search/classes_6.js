@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['logger_0',['Logger',['../classNoctisEngine_1_1Core_1_1Logger.html',1,'NoctisEngine::Core']]]
+  ['keyboardinputevent_0',['KeyboardInputEvent',['../structNoctisEngine_1_1Core_1_1KeyboardInputEvent.html',1,'NoctisEngine::Core']]]
 ];

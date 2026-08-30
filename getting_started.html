@@ -18,6 +18,7 @@
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
 <script type="text/javascript">
     DoxygenAwesomeDarkModeToggle.init();
@@ -98,13 +99,13 @@ $(document).ready(function(){initNavTree('getting_started.html',''); initResizab
   <div class="headertitle"><div class="title">Getting Started</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="autotoc_md1"></a>
+<div class="textblock"><h1><a class="anchor" id="autotoc_md2"></a>
 What is Noctis Engine ?</h1>
 <p>Noctis Engine is first of all an ECS (entity component system) based game engine written entirely in cpp. <br  />
  It uses OpenGL as its graphics API. I know OpenGL is old and now falling behind on features (raytracing, etc...), but it's the easiest of all graphics APIs to use and understand, which for me is a selling point because I am not a specialist in graphics programming. If you want to add implementation for newer graphics APIs like Vulkan or DX12, please contribute to the <a href="https://github.com/TeddouX/noctis-engine">github repo</a>. <br  />
  The engine is entirely based in code, that means no GUIs (this might change in the future with the addition of helpers to create levels for example), everything you want to do is written in code. This lets you control resources, memory, rendering and many more things manually. <br  />
 </p>
-<h1><a class="anchor" id="autotoc_md2"></a>
+<h1><a class="anchor" id="autotoc_md3"></a>
 How do I use it for my game ?</h1>
 <p>Noctis Engine is based on <a href="https://cmake.org/">CMake</a> so you need to have it installed on your system and have a little understanding of how it works. I don't provide pre-built binaries for now because the engine is too early in its development cycle, so you have to build it yourself. <br  />
  The easiest way to do that is to use <a href="https://git-scm.com/book/en/v2/Git-Tools-Submodules">git submodules</a>. <br  />
@@ -119,9 +120,9 @@ How do I use it for my game ?</h1>
 </div><!-- fragment --><p>To link the library to your project, use:</p>
 <div class="fragment"><div class="line">target_link_libraries(my_project PRIVATE noctis_engine::noctis_engine)</div>
 </div><!-- fragment --><p>Congratulations ! You now have added Noctis Engine to your project and you can use all its features.</p>
-<h1><a class="anchor" id="autotoc_md3"></a>
+<h1><a class="anchor" id="autotoc_md4"></a>
 Where do I get started ?</h1>
-<h2><a class="anchor" id="autotoc_md4"></a>
+<h2><a class="anchor" id="autotoc_md5"></a>
 The window</h2>
 <p>The window is one of the most important elements of any games. Noctis Engine uses the <a class="el" href="classNoctisEngine_1_1Core_1_1Window.html">Window</a> class as its abstraction layer over an API called GLFW. This makes windowing cross platform and easy to use. <br  />
  The window is also what holds the OpenGL context, necessary for drawing anything to the screen. Without it, calling rendering functions and using rendering objects will result in your program SEGFAULT'ing because OpenGL functions aren't initialized and point to NULL. <br  />
@@ -158,6 +159,7 @@ The window</h2>
 <div class="line">    {</div>
 <div class="line">        <span class="comment">// This ensures input events, like closing the window, resizing, keyboard press, mouse movement, etc... are up to date</span></div>
 <div class="line">        <span class="comment">// This function call is required for window.should_close() to work.</span></div>
+<div class="line">        <span class="comment">// It should be done above everything else so your inputs are valid for this loop</span></div>
 <div class="line">        window.poll_events();</div>
 <div class="line"> </div>
 <div class="line">        <span class="comment">// Your window doesn&#39;t use only one buffer to draw, it uses two. While the first one (called front buffer) </span></div>
@@ -173,10 +175,10 @@ The window</h2>
 <div class="line">}</div>
 </div><!-- fragment --><p>This render loop will end only when the user closes the window, but you can make it stop whenever you want. <br  />
  Next step is actually rendering stuff to the screen, and this is where it gets a bit more complicated, so hold on tight.</p>
-<h2><a class="anchor" id="autotoc_md5"></a>
+<h2><a class="anchor" id="autotoc_md6"></a>
 Rendering</h2>
 <p>Noctis Engine uses a draw list system to render things to the screen. This is handled by the <a class="el" href="classNoctisEngine_1_1Rendering_1_1DrawList.html">DrawList</a> class. <br  />
- The draw list is then passed to a renderer (here we will use Renderer2D since it's the only one that is implemented for now). <br  />
+ The draw list is then passed to a <a class="el" href="classNoctisEngine_1_1Rendering_1_1Renderer.html">renderer</a>. <br  />
  There are more things required to correctly draw things to the screen, but you will see that in the code below:</p>
 <div class="fragment"><div class="line"><span class="comment">// NoctisEngine::Core::Window is included from: </span></div>
 <div class="line"><span class="preprocessor">#include &lt;noctis_engine/core/window.hpp&gt;</span></div>
@@ -224,7 +226,7 @@ Rendering</h2>
 <div class="line">        <span class="keywordflow">return</span> 1;</div>
 <div class="line">    }</div>
 <div class="line"> </div>
-<div class="line">    <span class="comment">// This helps you to manage meshes, and also has some default meshes that will be useful here for rendering</span></div>
+<div class="line">    <span class="comment">// This helps you to manage meshes</span></div>
 <div class="line">    <a class="code hl_class" href="classNoctisEngine_1_1Rendering_1_1MeshManager.html">NoctisEngine::Rendering::MeshManager</a> mesh_manager{};</div>
 <div class="line"> </div>
 <div class="line">    <a class="code hl_struct" href="structNoctisEngine_1_1Rendering_1_1MeshView.html">NoctisEngine::Rendering::MeshView</a> quad_mv = </div>
@@ -287,6 +289,8 @@ Rendering</h2>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">while</span> (not window.should_close())</div>
 <div class="line">    {</div>
+<div class="line">        window.poll_events();</div>
+<div class="line"> </div>
 <div class="line">        <a class="code hl_class" href="classNoctisEngine_1_1Rendering_1_1DrawList.html">NoctisEngine::Rendering::DrawList</a> draw_list{};</div>
 <div class="line"> </div>
 <div class="line">        <span class="comment">// This command control how the screen is cleared, here its a kind of gray-ish color</span></div>
@@ -318,7 +322,6 @@ Rendering</h2>
 <div class="line">        renderer.render(draw_list);</div>
 <div class="line"> </div>
 <div class="line">        <span class="comment">// Same thing as above</span></div>
-<div class="line">        window.poll_events();</div>
 <div class="line">        window.swap_buffers();</div>
 <div class="line">    }</div>
 <div class="line"> </div>
@@ -346,7 +349,7 @@ Rendering</h2>
 <div class="ttc" id="astructNoctisEngine_1_1Rendering_1_1Texture_1_1Data_html_a3cb966adaef7704f746fbc00856e423f"><div class="ttname"><a href="structNoctisEngine_1_1Rendering_1_1Texture_1_1Data.html#a3cb966adaef7704f746fbc00856e423f">NoctisEngine::Rendering::Texture::Data::data</a></div><div class="ttdeci">std::uint8_t * data</div><div class="ttdoc">The texture's pixel data.</div><div class="ttdef"><b>Definition</b> texture.hpp:75</div></div>
 </div><!-- fragment --><p>You should see a 100 pixels wide and 100 pixels tall cube when running this code. <br  />
 </p>
-<h2><a class="anchor" id="autotoc_md6"></a>
+<h2><a class="anchor" id="autotoc_md7"></a>
 The ECS</h2>
 <p><b>BUT</b> don't draw things to the screen as you just saw above, it's a lot of boilerplate and there's a lot of places where you could get something wrong (wrong texture bound, wrong mesh used, wrong position, wrong rotation, etc...), instead use my carefully crafted ECS:</p>
 <div class="fragment"><div class="line"><span class="comment">// NoctisEngine::ECS::Entity</span></div>
@@ -389,9 +392,11 @@ The ECS</h2>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">while</span> (not window.should_close)</div>
 <div class="line">    {</div>
+<div class="line">        window.poll_events();</div>
+<div class="line"> </div>
 <div class="line">        <span class="comment">// ...</span></div>
-<div class="line">        <span class="comment">// Same things must be bound texture</span></div>
-<div class="line">        <span class="comment">// The mesh drawing should be removed too</span></div>
+<div class="line">        <span class="comment">// Same things must be bound except for the texture</span></div>
+<div class="line">        <span class="comment">// The mesh drawing should also be removed</span></div>
 <div class="line"> </div>
 <div class="line">        <span class="comment">// This is where the draw list does everything for you, note that this function requires</span></div>
 <div class="line">        <span class="comment">// the entity to have a Transform2D component and a Sprite component</span></div>
@@ -399,7 +404,6 @@ The ECS</h2>
 <div class="line"> </div>
 <div class="line">        renderer.render(draw_list);</div>
 <div class="line"> </div>
-<div class="line">        window.poll_events();</div>
 <div class="line">        window.swap_buffers();</div>
 <div class="line">    }</div>
 <div class="line">    </div>
@@ -409,7 +413,10 @@ The ECS</h2>
 <div class="ttc" id="aclassNoctisEngine_1_1ECS_1_1Transform2D_html"><div class="ttname"><a href="classNoctisEngine_1_1ECS_1_1Transform2D.html">NoctisEngine::ECS::Transform2D</a></div><div class="ttdoc">This component is used to place an entity in the world.</div><div class="ttdef"><b>Definition</b> transform_2d.hpp:10</div></div>
 <div class="ttc" id="astructNoctisEngine_1_1ECS_1_1Sprite_html"><div class="ttname"><a href="structNoctisEngine_1_1ECS_1_1Sprite.html">NoctisEngine::ECS::Sprite</a></div><div class="ttdoc">A 2D sprite.</div><div class="ttdef"><b>Definition</b> sprite.hpp:9</div></div>
 </div><!-- fragment --><p>You should now see a square, 50 by 50 pixels wide rotated by 45 degrees, in the lower left quadrant of your screen. <br  />
- This is how you should actually render sprites to the screen, if you don't need or want to control each object yourself. </p>
+ This is how you should actually render sprites to the screen, if you don't need or want to control each object yourself.</p>
+<h1><a class="anchor" id="autotoc_md8"></a>
+Going further</h1>
+<p>Go see the <a class="el" href="core_functionalities.html">Core Functionalities</a> of the engine. </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

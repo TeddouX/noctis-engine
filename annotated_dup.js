@@ -2,7 +2,14 @@ var annotated_dup =
 [
     [ "NoctisEngine", "namespaceNoctisEngine.html", [
       [ "Core", "namespaceNoctisEngine_1_1Core.html", [
+        [ "EventStack", "classNoctisEngine_1_1Core_1_1EventStack.html", "classNoctisEngine_1_1Core_1_1EventStack" ],
+        [ "IEventReceiver", "classNoctisEngine_1_1Core_1_1IEventReceiver.html", "classNoctisEngine_1_1Core_1_1IEventReceiver" ],
+        [ "InputHandler", "classNoctisEngine_1_1Core_1_1InputHandler.html", "classNoctisEngine_1_1Core_1_1InputHandler" ],
+        [ "InputInfo", "structNoctisEngine_1_1Core_1_1InputInfo.html", "structNoctisEngine_1_1Core_1_1InputInfo" ],
+        [ "KeyboardInputEvent", "structNoctisEngine_1_1Core_1_1KeyboardInputEvent.html", "structNoctisEngine_1_1Core_1_1KeyboardInputEvent" ],
         [ "Logger", "classNoctisEngine_1_1Core_1_1Logger.html", "classNoctisEngine_1_1Core_1_1Logger" ],
+        [ "MouseButtonEvent", "structNoctisEngine_1_1Core_1_1MouseButtonEvent.html", "structNoctisEngine_1_1Core_1_1MouseButtonEvent" ],
+        [ "MouseMouvement", "structNoctisEngine_1_1Core_1_1MouseMouvement.html", "structNoctisEngine_1_1Core_1_1MouseMouvement" ],
         [ "Window", "classNoctisEngine_1_1Core_1_1Window.html", "classNoctisEngine_1_1Core_1_1Window" ]
       ] ],
       [ "ECS", null, [

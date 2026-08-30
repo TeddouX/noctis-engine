@@ -18,6 +18,7 @@
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
 <script type="text/javascript">
     DoxygenAwesomeDarkModeToggle.init();
@@ -109,8 +110,29 @@ $(document).ready(function(){initNavTree('namespaceNoctisEngine_1_1Core.html',''
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNoctisEngine_1_1Core_1_1EventStack.html">EventStack</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This singleton handles event layering.  <a href="classNoctisEngine_1_1Core_1_1EventStack.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNoctisEngine_1_1Core_1_1IEventReceiver.html">IEventReceiver</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The interface for classes that receive events from the event stack.  <a href="classNoctisEngine_1_1Core_1_1IEventReceiver.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNoctisEngine_1_1Core_1_1InputHandler.html">InputHandler</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is the singleton that handles all input processing.  <a href="classNoctisEngine_1_1Core_1_1InputHandler.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structNoctisEngine_1_1Core_1_1InputInfo.html">InputInfo</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Information about an input.  <a href="structNoctisEngine_1_1Core_1_1InputInfo.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structNoctisEngine_1_1Core_1_1KeyboardInputEvent.html">KeyboardInputEvent</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A keyboard event.  <a href="structNoctisEngine_1_1Core_1_1KeyboardInputEvent.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNoctisEngine_1_1Core_1_1Logger.html">Logger</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A helper class to print messages to the console.  <a href="classNoctisEngine_1_1Core_1_1Logger.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structNoctisEngine_1_1Core_1_1MouseButtonEvent.html">MouseButtonEvent</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A mouse button event.  <a href="structNoctisEngine_1_1Core_1_1MouseButtonEvent.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structNoctisEngine_1_1Core_1_1MouseMouvement.html">MouseMouvement</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents a mouse movement event.  <a href="structNoctisEngine_1_1Core_1_1MouseMouvement.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNoctisEngine_1_1Core_1_1Window.html">Window</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This class is a wrappter over a GLFW window.  <a href="classNoctisEngine_1_1Core_1_1Window.html#details">More...</a><br /></td></tr>
@@ -118,6 +140,190 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
+<tr class="memitem:abdbb7944a4a92cdd12c587ecb51321f3" id="r_abdbb7944a4a92cdd12c587ecb51321f3"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceNoctisEngine_1_1Core.html#abdbb7944a4a92cdd12c587ecb51321f3">Modifier</a> : int { <br />
+&#160;&#160;<b>NONE</b> = 0
+, <b>SHIFT_BIT</b> = 0x01
+, <b>CONTROL_BIT</b> = 0x02
+, <a class="el" href="namespaceNoctisEngine_1_1Core.html#abdbb7944a4a92cdd12c587ecb51321f3a13e2f1ed24683a1633ae6bbf06530271">SUPER_BIT</a> = 0x04
+, <br />
+&#160;&#160;<b>CAPS_LOCK_BIT</b> = 0x0010
+, <b>NUM_LOCK_BIT</b> = 0x0020
+<br />
+ }</td></tr>
+<tr class="memdesc:abdbb7944a4a92cdd12c587ecb51321f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Any modifiers that can be applied when pressing a key.  <a href="namespaceNoctisEngine_1_1Core.html#abdbb7944a4a92cdd12c587ecb51321f3">More...</a><br /></td></tr>
+<tr class="separator:abdbb7944a4a92cdd12c587ecb51321f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a141d505ae7a3686034673e917e06d7" id="r_a1a141d505ae7a3686034673e917e06d7"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceNoctisEngine_1_1Core.html#a1a141d505ae7a3686034673e917e06d7">PhysicalKey</a> : int { <br />
+&#160;&#160;<b>SPACE</b> = 32
+, <b>APOSTROPHE</b> = 39
+, <b>COMMA</b> = 44
+, <b>MINUS</b> = 45
+, <br />
+&#160;&#160;<b>PERIOD</b> = 46
+, <b>SLASH</b> = 47
+, <b>KEY_0</b> = 48
+, <b>KEY_1</b> = 49
+, <br />
+&#160;&#160;<b>KEY_2</b> = 50
+, <b>KEY_3</b> = 51
+, <b>KEY_4</b> = 52
+, <b>KEY_5</b> = 53
+, <br />
+&#160;&#160;<b>KEY_6</b> = 54
+, <b>KEY_7</b> = 55
+, <b>KEY_8</b> = 56
+, <b>KEY_9</b> = 57
+, <br />
+&#160;&#160;<b>SEMICOLON</b> = 59
+, <b>EQUAL</b> = 61
+, <b>A</b> = 65
+, <b>B</b> = 66
+, <br />
+&#160;&#160;<b>C</b> = 67
+, <b>D</b> = 68
+, <b>E</b> = 69
+, <b>F</b> = 70
+, <br />
+&#160;&#160;<b>G</b> = 71
+, <b>H</b> = 72
+, <b>I</b> = 73
+, <b>J</b> = 74
+, <br />
+&#160;&#160;<b>K</b> = 75
+, <b>L</b> = 76
+, <b>M</b> = 77
+, <b>N</b> = 78
+, <br />
+&#160;&#160;<b>O</b> = 79
+, <b>P</b> = 80
+, <b>Q</b> = 81
+, <b>R</b> = 82
+, <br />
+&#160;&#160;<b>S</b> = 83
+, <b>T</b> = 84
+, <b>U</b> = 85
+, <b>V</b> = 86
+, <br />
+&#160;&#160;<b>W</b> = 87
+, <b>X</b> = 88
+, <b>Y</b> = 89
+, <b>Z</b> = 90
+, <br />
+&#160;&#160;<b>LEFT_BRACKET</b> = 91
+, <b>BACKSLASH</b> = 92
+, <b>RIGHT_BRACKET</b> = 93
+, <b>GRAVE_ACCENT</b> = 96
+, <br />
+&#160;&#160;<b>WORLD_1</b> = 161
+, <b>WORLD_2</b> = 162
+, <b>ESCAPE</b> = 256
+, <b>ENTER</b> = 257
+, <br />
+&#160;&#160;<b>TAB</b> = 258
+, <b>BACKSPACE</b> = 259
+, <b>INSERT</b> = 260
+, <b>DELETE</b> = 261
+, <br />
+&#160;&#160;<b>RIGHT</b> = 262
+, <b>LEFT</b> = 263
+, <b>DOWN</b> = 264
+, <b>UP</b> = 265
+, <br />
+&#160;&#160;<b>PAGE_UP</b> = 266
+, <b>PAGE_DOWN</b> = 267
+, <b>HOME</b> = 268
+, <b>END</b> = 269
+, <br />
+&#160;&#160;<b>CAPS_LOCK</b> = 280
+, <b>SCROLL_LOCK</b> = 281
+, <b>NUM_LOCK</b> = 282
+, <b>PRINT_SCREEN</b> = 283
+, <br />
+&#160;&#160;<b>PAUSE</b> = 284
+, <b>F1</b> = 290
+, <b>F2</b> = 291
+, <b>F3</b> = 292
+, <br />
+&#160;&#160;<b>F4</b> = 293
+, <b>F5</b> = 294
+, <b>F6</b> = 295
+, <b>F7</b> = 296
+, <br />
+&#160;&#160;<b>F8</b> = 297
+, <b>F9</b> = 298
+, <b>F10</b> = 299
+, <b>F11</b> = 300
+, <br />
+&#160;&#160;<b>F12</b> = 301
+, <b>F13</b> = 302
+, <b>F14</b> = 303
+, <b>F15</b> = 304
+, <br />
+&#160;&#160;<b>F16</b> = 305
+, <b>F17</b> = 306
+, <b>F18</b> = 307
+, <b>F19</b> = 308
+, <br />
+&#160;&#160;<b>F20</b> = 309
+, <b>F21</b> = 310
+, <b>F22</b> = 311
+, <b>F23</b> = 312
+, <br />
+&#160;&#160;<b>F24</b> = 313
+, <b>F25</b> = 314
+, <b>NUMPAD_0</b> = 320
+, <b>NUMPAD_1</b> = 321
+, <br />
+&#160;&#160;<b>NUMPAD_2</b> = 322
+, <b>NUMPAD_3</b> = 323
+, <b>NUMPAD_4</b> = 324
+, <b>NUMPAD_5</b> = 325
+, <br />
+&#160;&#160;<b>NUMPAD_6</b> = 326
+, <b>NUMPAD_7</b> = 327
+, <b>NUMPAD_8</b> = 328
+, <b>NUMPAD_9</b> = 329
+, <br />
+&#160;&#160;<b>NUMPAD_DECIMAL</b> = 330
+, <b>NUMPAD_DIVIDE</b> = 331
+, <b>NUMPAD_MULTIPLY</b> = 332
+, <b>NUMPAD_SUBTRACT</b> = 333
+, <br />
+&#160;&#160;<b>NUMPAD_ADD</b> = 334
+, <b>NUMPAD_ENTER</b> = 335
+, <b>NUMPAD_EQUAL</b> = 336
+, <b>LEFT_SHIFT</b> = 340
+, <br />
+&#160;&#160;<b>LEFT_CONTROL</b> = 341
+, <b>LEFT_ALT</b> = 342
+, <b>LEFT_SUPER</b> = 343
+, <b>RIGHT_SHIFT</b> = 344
+, <br />
+&#160;&#160;<b>RIGHT_CONTROL</b> = 345
+, <b>RIGHT_ALT</b> = 346
+, <b>RIGHT_SUPER</b> = 347
+, <b>MENU</b> = 348
+, <br />
+&#160;&#160;<b>MAX_KEYS</b>
+<br />
+ }</td></tr>
+<tr class="memdesc:a1a141d505ae7a3686034673e917e06d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">This represents any physical key on your keyboard.  <a href="namespaceNoctisEngine_1_1Core.html#a1a141d505ae7a3686034673e917e06d7">More...</a><br /></td></tr>
+<tr class="separator:a1a141d505ae7a3686034673e917e06d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c2bf01ffb519faf3ac7d4bc0486a02d" id="r_a5c2bf01ffb519faf3ac7d4bc0486a02d"><td class="memItemLeft" align="right" valign="top"><a id="a5c2bf01ffb519faf3ac7d4bc0486a02d" name="a5c2bf01ffb519faf3ac7d4bc0486a02d"></a>enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceNoctisEngine_1_1Core.html#a5c2bf01ffb519faf3ac7d4bc0486a02d">MouseButton</a> : int { <br />
+&#160;&#160;<b>LEFT</b> = 0
+, <b>RIGHT</b> = 1
+, <b>MIDDLE</b> = 2
+, <b>BUTTON_4</b> = 3
+, <br />
+&#160;&#160;<b>BUTTON_5</b> = 4
+, <b>BUTTON_6</b> = 5
+, <b>BUTTON_7</b> = 6
+, <b>BUTTON_8</b> = 7
+, <br />
+&#160;&#160;<b>MAX_MOUSE_BUTTON</b>
+<br />
+ }</td></tr>
+<tr class="memdesc:a5c2bf01ffb519faf3ac7d4bc0486a02d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents any recognized mouse button. <br /></td></tr>
+<tr class="separator:a5c2bf01ffb519faf3ac7d4bc0486a02d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab54c7f590fb133ca34bd597c676a1514" id="r_ab54c7f590fb133ca34bd597c676a1514"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceNoctisEngine_1_1Core.html#ab54c7f590fb133ca34bd597c676a1514">LogLevel</a> { <br />
 &#160;&#160;<a class="el" href="namespaceNoctisEngine_1_1Core.html#ab54c7f590fb133ca34bd597c676a1514adc30ec20708ef7b0f641ef78b7880a15">DEBUG</a>
 , <a class="el" href="namespaceNoctisEngine_1_1Core.html#ab54c7f590fb133ca34bd597c676a1514a551b723eafd6a31d444fcb2f5920fbd3">INFO</a>
@@ -145,18 +351,41 @@ Functions</h2></td></tr>
 auto&#160;</td><td class="memItemRight" valign="bottom"><b>exit_program_success</b> () -&gt; void</td></tr>
 <tr class="memdesc:a57513a618b2d7e135d1461c0113facbd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call this function when your program finished without any errors. <br /></td></tr>
 <tr class="separator:a57513a618b2d7e135d1461c0113facbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac371ffcdbd3e9970c37e99f860eb1e4a" id="r_ac371ffcdbd3e9970c37e99f860eb1e4a"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceNoctisEngine_1_1Core.html#ac371ffcdbd3e9970c37e99f860eb1e4a">has_mod</a> (<a class="el" href="namespaceNoctisEngine_1_1Core.html#abdbb7944a4a92cdd12c587ecb51321f3">Modifier</a> modifiers, <a class="el" href="namespaceNoctisEngine_1_1Core.html#abdbb7944a4a92cdd12c587ecb51321f3">Modifier</a> mod) -&gt; bool</td></tr>
+<tr class="memdesc:ac371ffcdbd3e9970c37e99f860eb1e4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if modifiers contain one modifier.  <br /></td></tr>
+<tr class="separator:ac371ffcdbd3e9970c37e99f860eb1e4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2137e8beef7b6fd35c5a1d74b30d033d" id="r_a2137e8beef7b6fd35c5a1d74b30d033d"><td class="memItemLeft" align="right" valign="top"><a id="a2137e8beef7b6fd35c5a1d74b30d033d" name="a2137e8beef7b6fd35c5a1d74b30d033d"></a>
+constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><b>ordinal</b> (<a class="el" href="namespaceNoctisEngine_1_1Core.html#a1a141d505ae7a3686034673e917e06d7">PhysicalKey</a> key) -&gt; int</td></tr>
+<tr class="memdesc:a2137e8beef7b6fd35c5a1d74b30d033d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the ordinal (number associated to a key) of a phyiscal key. <br /></td></tr>
+<tr class="separator:a2137e8beef7b6fd35c5a1d74b30d033d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec39d6cf266cbdaec5016967a411329c" id="r_aec39d6cf266cbdaec5016967a411329c"><td class="memItemLeft" align="right" valign="top"><a id="aec39d6cf266cbdaec5016967a411329c" name="aec39d6cf266cbdaec5016967a411329c"></a>
+constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><b>ordinal</b> (<a class="el" href="namespaceNoctisEngine_1_1Core.html#a5c2bf01ffb519faf3ac7d4bc0486a02d">MouseButton</a> mouse_btn) -&gt; int</td></tr>
+<tr class="memdesc:aec39d6cf266cbdaec5016967a411329c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the ordinal (number associated to a key) of a mouse button. <br /></td></tr>
+<tr class="separator:aec39d6cf266cbdaec5016967a411329c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0d7d061d6630f31edcb467213eae0497" id="r_a0d7d061d6630f31edcb467213eae0497"><td class="memItemLeft" align="right" valign="top"><a id="a0d7d061d6630f31edcb467213eae0497" name="a0d7d061d6630f31edcb467213eae0497"></a>
 auto&#160;</td><td class="memItemRight" valign="bottom"><b>to_string</b> (<a class="el" href="namespaceNoctisEngine_1_1Core.html#ab54c7f590fb133ca34bd597c676a1514">LogLevel</a> level) -&gt; std::string</td></tr>
 <tr class="separator:a0d7d061d6630f31edcb467213eae0497"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
+<tr class="memitem:a03e168e11e737ca63f93f706e98fd1e9" id="r_a03e168e11e737ca63f93f706e98fd1e9"><td class="memItemLeft" align="right" valign="top"><a id="a03e168e11e737ca63f93f706e98fd1e9" name="a03e168e11e737ca63f93f706e98fd1e9"></a>
+constexpr int&#160;</td><td class="memItemRight" valign="bottom"><b>NUM_PHYSICAL_KEYS</b> = static_cast&lt;int&gt;(PhysicalKey::MAX_KEYS) - 1</td></tr>
+<tr class="memdesc:a03e168e11e737ca63f93f706e98fd1e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">This represents the number of physcal keys the engine recognizes. <br /></td></tr>
+<tr class="separator:a03e168e11e737ca63f93f706e98fd1e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a418a01ea049cd27eecbfb9f0392344b5" id="r_a418a01ea049cd27eecbfb9f0392344b5"><td class="memItemLeft" align="right" valign="top"><a id="a418a01ea049cd27eecbfb9f0392344b5" name="a418a01ea049cd27eecbfb9f0392344b5"></a>
+static const std::unordered_map&lt; std::string_view, <a class="el" href="namespaceNoctisEngine_1_1Core.html#a1a141d505ae7a3686034673e917e06d7">PhysicalKey</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>KEY_NAME_MAP</b></td></tr>
+<tr class="separator:a418a01ea049cd27eecbfb9f0392344b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4e8d702034225f91dd7d715da14743a" id="r_aa4e8d702034225f91dd7d715da14743a"><td class="memItemLeft" align="right" valign="top"><a id="aa4e8d702034225f91dd7d715da14743a" name="aa4e8d702034225f91dd7d715da14743a"></a>
+constexpr int&#160;</td><td class="memItemRight" valign="bottom"><b>NUM_MOUSE_BUTTONS</b> = static_cast&lt;int&gt;(MouseButton::MAX_MOUSE_BUTTON) - 1</td></tr>
+<tr class="memdesc:aa4e8d702034225f91dd7d715da14743a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of recognized mouse buttons. <br /></td></tr>
+<tr class="separator:aa4e8d702034225f91dd7d715da14743a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a33224724f23fc783d3514b7c95f5b557" id="r_a33224724f23fc783d3514b7c95f5b557"><td class="memItemLeft" align="right" valign="top"><a id="a33224724f23fc783d3514b7c95f5b557" name="a33224724f23fc783d3514b7c95f5b557"></a>
 static <a class="el" href="classNoctisEngine_1_1Core_1_1Logger.html">Logger</a>&#160;</td><td class="memItemRight" valign="bottom"><b>CORE_LOGGER</b> {&quot;Noctis Engine&quot;, &quot;Core&quot;}</td></tr>
 <tr class="separator:a33224724f23fc783d3514b7c95f5b557"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Namespace that contains all the things that are useful to the engine. </p>
+<p>This namespace containes everything implemented by the engine for input handling. </p>
 </div><h2 class="groupheader">Enumeration Type Documentation</h2>
 <a id="ab54c7f590fb133ca34bd597c676a1514" name="ab54c7f590fb133ca34bd597c676a1514"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab54c7f590fb133ca34bd597c676a1514">&#9670;&#160;</a></span>LogLevel</h2>
@@ -191,6 +420,59 @@ static <a class="el" href="classNoctisEngine_1_1Core_1_1Logger.html">Logger</a>&
 <tr><td class="fieldname"><a id="ab54c7f590fb133ca34bd597c676a1514a99cd1c61610c76a57cb8d10d6df6b870" name="ab54c7f590fb133ca34bd597c676a1514a99cd1c61610c76a57cb8d10d6df6b870"></a>CRITICAL&#160;</td><td class="fielddoc"><p>Used when an unrecoverable error was encountered. </p>
 </td></tr>
 </table>
+
+</div>
+</div>
+<a id="abdbb7944a4a92cdd12c587ecb51321f3" name="abdbb7944a4a92cdd12c587ecb51321f3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abdbb7944a4a92cdd12c587ecb51321f3">&#9670;&#160;</a></span>Modifier</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum class <a class="el" href="namespaceNoctisEngine_1_1Core.html#abdbb7944a4a92cdd12c587ecb51321f3">NoctisEngine::Core::Modifier</a> : int</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Any modifiers that can be applied when pressing a key. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="abdbb7944a4a92cdd12c587ecb51321f3a13e2f1ed24683a1633ae6bbf06530271" name="abdbb7944a4a92cdd12c587ecb51321f3a13e2f1ed24683a1633ae6bbf06530271"></a>SUPER_BIT&#160;</td><td class="fielddoc"><p>Typically the windows key. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="a1a141d505ae7a3686034673e917e06d7" name="a1a141d505ae7a3686034673e917e06d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1a141d505ae7a3686034673e917e06d7">&#9670;&#160;</a></span>PhysicalKey</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum class <a class="el" href="namespaceNoctisEngine_1_1Core.html#a1a141d505ae7a3686034673e917e06d7">NoctisEngine::Core::PhysicalKey</a> : int</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>This represents any physical key on your keyboard. </p>
+<dl class="section warning"><dt>Warning</dt><dd>This is based on the QWERTY layout </dd></dl>
 
 </div>
 </div>
@@ -251,6 +533,53 @@ static <a class="el" href="classNoctisEngine_1_1Core_1_1Logger.html">Logger</a>&
   </dd>
 </dl>
 <dl class="section warning"><dt>Warning</dt><dd>This calls std::exit(EXIT_FAILURE), so anything that should be done before quitting should be done before calling this function </dd></dl>
+
+</div>
+</div>
+<a id="ac371ffcdbd3e9970c37e99f860eb1e4a" name="ac371ffcdbd3e9970c37e99f860eb1e4a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac371ffcdbd3e9970c37e99f860eb1e4a">&#9670;&#160;</a></span>has_mod()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr auto NoctisEngine::Core::has_mod </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespaceNoctisEngine_1_1Core.html#abdbb7944a4a92cdd12c587ecb51321f3">Modifier</a>&#160;</td>
+          <td class="paramname"><em>modifiers</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespaceNoctisEngine_1_1Core.html#abdbb7944a4a92cdd12c587ecb51321f3">Modifier</a>&#160;</td>
+          <td class="paramname"><em>mod</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> -&gt; bool 
+</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if modifiers contain one modifier. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">modifiers</td><td>The modifiers </td></tr>
+    <tr><td class="paramname">mod</td><td>The modifier that should be checked </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if they contain the modifier, false otherwise </dd></dl>
 
 </div>
 </div>

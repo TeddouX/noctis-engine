@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['operator_7c_0',['operator|',['../namespaceNoctisEngine_1_1Rendering.html#a73434267c2a8d1398482c6180ce9f3ac',1,'NoctisEngine::Rendering::operator|(BufferFlag left, BufferFlag right) -&gt; BufferFlag'],['../namespaceNoctisEngine_1_1Rendering.html#a561c974a984205cae95d24c36c3f0fc7',1,'NoctisEngine::Rendering::operator|(BufferMapAccess left, BufferMapAccess right) -&gt; BufferMapAccess']]]
+  ['name_0',['name',['../classNoctisEngine_1_1Rendering_1_1GPUBuffer.html#a930633c59ba2e9655f6476785621d993',1,'NoctisEngine::Rendering::GPUBuffer::name()'],['../classNoctisEngine_1_1Rendering_1_1Shader.html#a695ff3621a9f30d1633bcdb946a5371e',1,'NoctisEngine::Rendering::Shader::name()'],['../classNoctisEngine_1_1Rendering_1_1Texture.html#aad75445393bc3beadf6a6a2184f9bf12',1,'NoctisEngine::Rendering::Texture::name()']]]
 ];

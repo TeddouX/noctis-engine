@@ -26,16 +26,22 @@ var NAVTREE =
 [
   [ "Noctis Engine", "index.html", [
     [ "Getting Started", "getting_started.html", [
-      [ "What is Noctis Engine ?", "getting_started.html#autotoc_md1", null ],
-      [ "How do I use it for my game ?", "getting_started.html#autotoc_md2", null ],
-      [ "Where do I get started ?", "getting_started.html#autotoc_md3", [
-        [ "The window", "getting_started.html#autotoc_md4", null ],
-        [ "Rendering", "getting_started.html#autotoc_md5", null ],
-        [ "The ECS", "getting_started.html#autotoc_md6", null ]
+      [ "What is Noctis Engine ?", "getting_started.html#autotoc_md2", null ],
+      [ "How do I use it for my game ?", "getting_started.html#autotoc_md3", null ],
+      [ "Where do I get started ?", "getting_started.html#autotoc_md4", [
+        [ "The window", "getting_started.html#autotoc_md5", null ],
+        [ "Rendering", "getting_started.html#autotoc_md6", null ],
+        [ "The ECS", "getting_started.html#autotoc_md7", null ]
+      ] ],
+      [ "Going further", "getting_started.html#autotoc_md8", null ],
+      [ "Core Functionalities", "core_functionalities.html", [
+        [ "The logger", "core_functionalities.html#autotoc_md0", null ],
+        [ "Input handling", "core_functionalities.html#autotoc_md1", null ]
       ] ]
     ] ],
     [ "Core Functionalities", "core_functionalities.html", [
-      [ "The logger", "core_functionalities.html#autotoc_md0", null ]
+      [ "The logger", "core_functionalities.html#autotoc_md0", null ],
+      [ "Input handling", "core_functionalities.html#autotoc_md1", null ]
     ] ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
@@ -53,7 +59,7 @@ var NAVTREE =
       [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
       [ "Class Members", "functions.html", [
         [ "All", "functions.html", "functions_dup" ],
-        [ "Functions", "functions_func.html", null ],
+        [ "Functions", "functions_func.html", "functions_func" ],
         [ "Variables", "functions_vars.html", null ],
         [ "Typedefs", "functions_type.html", null ],
         [ "Enumerations", "functions_enum.html", null ]
@@ -68,8 +74,10 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "all__components_8hpp_source.html",
-"classNoctisEngine_1_1Rendering_1_1Shader.html",
-"namespacemembers_func.html"
+"classNoctisEngine_1_1Rendering_1_1GPUBuffer.html#adf45776a7c98ec52f01bd06d498581ae",
+"namespaceNoctisEngine_1_1Core.html#a1a141d505ae7a3686034673e917e06d7a331b3100a485d8cacff1d3df8e9b0c13",
+"structNoctisEngine_1_1Core_1_1InputInfo.html#a39584b94d7c9d91eebf87d03da838218",
+"structNoctisEngine_1_1Rendering_1_1VertexAttribute.html#a5cd34b6e3643d2f82bb208701d05c403afd3e4ece78a7d422280d5ed379482229"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

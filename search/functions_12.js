@@ -1,10 +1,10 @@
 var searchData=
 [
-  ['unmap_0',['unmap',['../classNoctisEngine_1_1Rendering_1_1GPUBuffer.html#a1ab2351a599aa5473078c149c93ac9ad',1,'NoctisEngine::Rendering::GPUBuffer']]],
-  ['update_5fbuffers_1',['update_buffers',['../classNoctisEngine_1_1Rendering_1_1Camera2D.html#a79ae8ef038847f5fdc4271f834aa4a7c',1,'NoctisEngine::Rendering::Camera2D']]],
-  ['update_5fphysics_2',['update_physics',['../classNoctisEngine_1_1ECS_1_1PhysicsSystem2D.html#ab7173e70e7422b54b8efdb7564b0c349',1,'NoctisEngine::ECS::PhysicsSystem2D']]],
-  ['upload_3',['upload',['../classNoctisEngine_1_1Rendering_1_1MeshManager.html#ac850d2e3b85efaec29ccc99fbdf2d641',1,'NoctisEngine::Rendering::MeshManager']]],
-  ['upload_5findices_4',['upload_indices',['../classNoctisEngine_1_1Rendering_1_1VertexArray.html#a90c1cf89066bc873d00f53013ef4764e',1,'NoctisEngine::Rendering::VertexArray']]],
-  ['upload_5fvertices_5',['upload_vertices',['../classNoctisEngine_1_1Rendering_1_1VertexArray.html#aa47e5823d31fd02cc8ed0f486b04901d',1,'NoctisEngine::Rendering::VertexArray']]],
-  ['use_6',['use',['../classNoctisEngine_1_1Rendering_1_1Camera2D.html#a6c48210789ba29b6bae37d24ae29977e',1,'NoctisEngine::Rendering::Camera2D::use()'],['../classNoctisEngine_1_1Rendering_1_1MeshManager.html#a7600cf6cd8c82564be64fff09a33a3ac',1,'NoctisEngine::Rendering::MeshManager::use()']]]
+  ['texture_0',['Texture',['../classNoctisEngine_1_1Rendering_1_1Texture.html#a4eecf903ec139a8f967e4586e5ebbe0d',1,'NoctisEngine::Rendering::Texture']]],
+  ['time_1',['time',['../classNoctisEngine_1_1Core_1_1Window.html#aceb403c2461447e7a624da039eb86216',1,'NoctisEngine::Core::Window']]],
+  ['to_5ffloats_2',['to_floats',['../classNoctisEngine_1_1Color.html#a5c5d19b4e5a90a108c5ffc653e58f93f',1,'NoctisEngine::Color']]],
+  ['to_5frgba_5fint_3',['to_RGBA_int',['../classNoctisEngine_1_1Color.html#a6c39fe18c05853a6918705e593d753b7',1,'NoctisEngine::Color']]],
+  ['transform2d_4',['Transform2D',['../classNoctisEngine_1_1ECS_1_1Transform2D.html#a99b7e8f61b714202619c509ae86e4959',1,'NoctisEngine::ECS::Transform2D']]],
+  ['translate_5',['translate',['../classNoctisEngine_1_1ECS_1_1Transform2D.html#a72852b9efa2aaae680e380c8399bbdb8',1,'NoctisEngine::ECS::Transform2D::translate()'],['../classNoctisEngine_1_1Rendering_1_1Camera2D.html#a2a5855f3ccf214e4fa78828b8b3c4cd4',1,'NoctisEngine::Rendering::Camera2D::translate()']]],
+  ['type_6',['type',['../classNoctisEngine_1_1Rendering_1_1Shader.html#aea7aadec1b168465e93c0a290c4671b1',1,'NoctisEngine::Rendering::Shader']]]
 ];

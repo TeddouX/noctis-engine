@@ -29,7 +29,7 @@ var searchData=
   ['copy_5fread_5fbuffer_26',['COPY_READ_BUFFER',['../namespaceNoctisEngine_1_1Rendering.html#a1a4743529585c21477126dfbd16dba42abf7500ab7da86e0caf5d2379847bfa81',1,'NoctisEngine::Rendering']]],
   ['copy_5fto_27',['copy_to',['../classNoctisEngine_1_1Rendering_1_1GPUBuffer.html#a5cbe937ca8775e8cbdbfb62de2a39c8d',1,'NoctisEngine::Rendering::GPUBuffer']]],
   ['copy_5fwrite_5fbuffer_28',['COPY_WRITE_BUFFER',['../namespaceNoctisEngine_1_1Rendering.html#a1a4743529585c21477126dfbd16dba42a02a9bf156ad501539c0055855a538fa4',1,'NoctisEngine::Rendering']]],
-  ['core_20functionalities_29',['Core Functionalities',['../core_functionalities.html',1,'index']]],
+  ['core_20functionalities_29',['Core Functionalities',['../core_functionalities.html',1,'getting_started']]],
   ['corner_5fradius_30',['corner_radius',['../structNoctisEngine_1_1ECS_1_1CollisionShape2D_1_1Box.html#a34a54d7ac644643021d0c2ac32abf492',1,'NoctisEngine::ECS::CollisionShape2D::Box']]],
   ['cpureadview_31',['CPUReadView',['../namespaceNoctisEngine_1_1Rendering.html#a7f64ba7bd7836d1f6936880cc1489950',1,'NoctisEngine::Rendering']]],
   ['cpuwriteview_32',['CPUWriteView',['../namespaceNoctisEngine_1_1Rendering.html#afe169301bb824df384acfb6e2585d7ce',1,'NoctisEngine::Rendering']]],

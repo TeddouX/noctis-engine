@@ -45,9 +45,11 @@ var searchData=
   ['sprite_42',['Sprite',['../structNoctisEngine_1_1ECS_1_1Sprite.html',1,'NoctisEngine::ECS']]],
   ['src_5falpha_43',['SRC_ALPHA',['../namespaceNoctisEngine_1_1Rendering.html#a3ef1b69e4ce9d797ca3f08395dd204ceaa01be6519d4fb614f16261a59958bbb4',1,'NoctisEngine::Rendering']]],
   ['src_5fcolor_44',['SRC_COLOR',['../namespaceNoctisEngine_1_1Rendering.html#a3ef1b69e4ce9d797ca3f08395dd204cea0d64e73cd04f53e815a849347285839e',1,'NoctisEngine::Rendering']]],
-  ['started_45',['started',['../getting_started.html',1,'Getting Started'],['../getting_started.html#autotoc_md3',1,'Where do I get started ?']]],
-  ['static_46',['STATIC',['../structNoctisEngine_1_1ECS_1_1PhysicsBody2D.html#a1ccb6999d1e0d9d6c6ce457c57f37442afe6f99ef1ec99efbdc19a9786cf1facc',1,'NoctisEngine::ECS::PhysicsBody2D']]],
-  ['swap_5fbuffers_47',['swap_buffers',['../classNoctisEngine_1_1Core_1_1Window.html#ac32ebb60fe064d8a7fe01ce356c898af',1,'NoctisEngine::Core::Window']]],
-  ['sync_5fecs_5fto_5fphysics_5fengine_48',['sync_ecs_to_physics_engine',['../classNoctisEngine_1_1ECS_1_1PhysicsSystem2D.html#a404906fe5645b14b15bbe019c1e18b05',1,'NoctisEngine::ECS::PhysicsSystem2D']]],
-  ['sync_5fphysics_5fengine_5fto_5fecs_49',['sync_physics_engine_to_ecs',['../classNoctisEngine_1_1ECS_1_1PhysicsSystem2D.html#ac8cba2fd61400b6d840093469a22da5a',1,'NoctisEngine::ECS::PhysicsSystem2D']]]
+  ['started_45',['started',['../getting_started.html',1,'Getting Started'],['../getting_started.html#autotoc_md4',1,'Where do I get started ?']]],
+  ['state_46',['state',['../structNoctisEngine_1_1Core_1_1InputInfo.html#a5c6f7305f7f98d561452252f81750fe1',1,'NoctisEngine::Core::InputInfo::state'],['../structNoctisEngine_1_1Core_1_1InputInfo.html#a39584b94d7c9d91eebf87d03da838218',1,'NoctisEngine::Core::InputInfo::State']]],
+  ['static_47',['STATIC',['../structNoctisEngine_1_1ECS_1_1PhysicsBody2D.html#a1ccb6999d1e0d9d6c6ce457c57f37442afe6f99ef1ec99efbdc19a9786cf1facc',1,'NoctisEngine::ECS::PhysicsBody2D']]],
+  ['super_5fbit_48',['SUPER_BIT',['../namespaceNoctisEngine_1_1Core.html#abdbb7944a4a92cdd12c587ecb51321f3a13e2f1ed24683a1633ae6bbf06530271',1,'NoctisEngine::Core']]],
+  ['swap_5fbuffers_49',['swap_buffers',['../classNoctisEngine_1_1Core_1_1Window.html#ac32ebb60fe064d8a7fe01ce356c898af',1,'NoctisEngine::Core::Window']]],
+  ['sync_5fecs_5fto_5fphysics_5fengine_50',['sync_ecs_to_physics_engine',['../classNoctisEngine_1_1ECS_1_1PhysicsSystem2D.html#a404906fe5645b14b15bbe019c1e18b05',1,'NoctisEngine::ECS::PhysicsSystem2D']]],
+  ['sync_5fphysics_5fengine_5fto_5fecs_51',['sync_physics_engine_to_ecs',['../classNoctisEngine_1_1ECS_1_1PhysicsSystem2D.html#ac8cba2fd61400b6d840093469a22da5a',1,'NoctisEngine::ECS::PhysicsSystem2D']]]
 ];

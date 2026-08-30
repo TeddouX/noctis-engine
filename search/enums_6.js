@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['uniformtype_0',['UniformType',['../namespaceNoctisEngine_1_1Rendering.html#aa819b6bcf6f463a33d66644477ebe433',1,'NoctisEngine::Rendering']]]
+  ['type_0',['Type',['../structNoctisEngine_1_1ECS_1_1PhysicsBody2D.html#a1ccb6999d1e0d9d6c6ce457c57f37442',1,'NoctisEngine::ECS::PhysicsBody2D']]]
 ];
