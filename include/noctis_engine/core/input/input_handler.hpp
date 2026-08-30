@@ -1,8 +1,9 @@
 #pragma once
+#include <variant>
+
 #include "event_stack.hpp"
 #include "keyboard.hpp"
 #include "input_info.hpp"
-#include "input_action.hpp"
 #include "mouse.hpp"
 
 
@@ -79,9 +80,16 @@ public:
     /// @return true if is the mouse button is held, but not pressed in this frame
     static auto mouse_button_held(MouseButton mb) -> bool;
 
+    /// @brief All the possible input action types
+    using InputActions = std::variant<
+        PhysicalKey, 
+        MouseButton
+    >;
+
     /// @brief Registers an action
-    /// @param info Info about the action to register
-    static auto register_action(const ActionInfo &info) -> void;
+    /// @param name The action's name
+    /// @param name The input actions this action will be triggered by
+    static auto register_action(std::string_view name, const std::vector<InputActions> &mappings) -> void;
 
     /// @brief Checks if an action was pressed in this frame
     /// @param action_name The action's name
@@ -117,7 +125,7 @@ private:
     inline static std::array<InputInfo, NUM_MOUSE_BUTTONS>  mouse_buttons_;
     inline static MouseMouvement                            last_mouse_mvt_;
 
-    struct InternalActionData
+    struct ActionData
     {
         enum class Type
         {
@@ -130,8 +138,8 @@ private:
 
     inline static std::unordered_map<
         std::string_view, 
-        std::vector<InternalActionData>
-    >                                       actions_;
+        std::vector<ActionData>
+    > actions_;
 
     static auto scancode(PhysicalKey key) -> int;
 

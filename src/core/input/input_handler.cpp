@@ -74,24 +74,24 @@ auto InputHandler::mouse_button_held(MouseButton mb) -> bool
     return key_states_[ordinal(mb)].state == InputInfo::State::HELD;
 }
 
-auto InputHandler::register_action(const ActionInfo &info) -> void
+auto InputHandler::register_action(std::string_view name, const std::vector<InputActions> &mappings) -> void
 {
-    for (const auto &input_action : info.mappings)
+    for (const auto &input_action : mappings)
     {
         std::visit([&](auto&& input_action)
         {
             using T = std::decay_t<decltype(input_action)>;
             if constexpr (std::is_same_v<T, PhysicalKey>)
             {
-                actions_[info.name].push_back(InternalActionData{
-                    .type = InternalActionData::Type::KEYBOARD,
+                actions_[name].push_back(ActionData{
+                    .type = ActionData::Type::KEYBOARD,
                     .ordinal = ordinal(input_action)
                 });
             }
             else if constexpr (std::is_same_v<T, MouseButton>)
             {
-                actions_[info.name].push_back(InternalActionData{
-                    .type = InternalActionData::Type::MOUSE,
+                actions_[name].push_back(ActionData{
+                    .type = ActionData::Type::MOUSE,
                     .ordinal = ordinal(input_action)
                 });
             }
@@ -109,8 +109,8 @@ auto InputHandler::action_just_pressed(std::string_view action_name) -> bool
     {
         switch (action_idx.type)
         {
-            case InternalActionData::Type::KEYBOARD:   if (key_just_pressed(static_cast<PhysicalKey>(action_idx.ordinal))) return true; else continue;
-            case InternalActionData::Type::MOUSE:      if (mouse_button_just_pressed(static_cast<MouseButton>(action_idx.ordinal))) return true; else continue;
+            case ActionData::Type::KEYBOARD:   if (key_just_pressed(static_cast<PhysicalKey>(action_idx.ordinal))) return true; else continue;
+            case ActionData::Type::MOUSE:      if (mouse_button_just_pressed(static_cast<MouseButton>(action_idx.ordinal))) return true; else continue;
             default:                                   continue;
         }
     }
@@ -124,8 +124,8 @@ auto InputHandler::action_pressed(std::string_view action_name) -> bool
     {
         switch (action_idx.type)
         {
-            case InternalActionData::Type::KEYBOARD:   if (key_pressed(static_cast<PhysicalKey>(action_idx.ordinal))) return true; else continue;
-            case InternalActionData::Type::MOUSE:      if (mouse_button_pressed(static_cast<MouseButton>(action_idx.ordinal))) return true; else continue;
+            case ActionData::Type::KEYBOARD:   if (key_pressed(static_cast<PhysicalKey>(action_idx.ordinal))) return true; else continue;
+            case ActionData::Type::MOUSE:      if (mouse_button_pressed(static_cast<MouseButton>(action_idx.ordinal))) return true; else continue;
             default:                                   continue;
         }
     }
@@ -138,8 +138,8 @@ auto InputHandler::action_just_released(std::string_view action_name) -> bool
     {
         switch (action_idx.type)
         {
-            case InternalActionData::Type::KEYBOARD:   if (key_just_released(static_cast<PhysicalKey>(action_idx.ordinal))) return true; else continue;
-            case InternalActionData::Type::MOUSE:      if (mouse_button_just_released(static_cast<MouseButton>(action_idx.ordinal))) return true; else continue;
+            case ActionData::Type::KEYBOARD:   if (key_just_released(static_cast<PhysicalKey>(action_idx.ordinal))) return true; else continue;
+            case ActionData::Type::MOUSE:      if (mouse_button_just_released(static_cast<MouseButton>(action_idx.ordinal))) return true; else continue;
             default:                                   continue;
         }
     }
@@ -153,8 +153,8 @@ auto InputHandler::action_released(std::string_view action_name) -> bool
     {
         switch (action_idx.type)
         {
-            case InternalActionData::Type::KEYBOARD:   if (key_just_released(static_cast<PhysicalKey>(action_idx.ordinal))) return true; else continue;
-            case InternalActionData::Type::MOUSE:      if (mouse_button_released(static_cast<MouseButton>(action_idx.ordinal))) return true; else continue;
+            case ActionData::Type::KEYBOARD:   if (key_just_released(static_cast<PhysicalKey>(action_idx.ordinal))) return true; else continue;
+            case ActionData::Type::MOUSE:      if (mouse_button_released(static_cast<MouseButton>(action_idx.ordinal))) return true; else continue;
             default:                                   continue;
         }
     }
@@ -168,8 +168,8 @@ auto InputHandler::action_held(std::string_view action_name) -> bool
     {
         switch (action_idx.type)
         {
-            case InternalActionData::Type::KEYBOARD:   if (key_held(static_cast<PhysicalKey>(action_idx.ordinal))) return true; else continue;
-            case InternalActionData::Type::MOUSE:      if (mouse_button_held(static_cast<MouseButton>(action_idx.ordinal))) return true; else continue;
+            case ActionData::Type::KEYBOARD:   if (key_held(static_cast<PhysicalKey>(action_idx.ordinal))) return true; else continue;
+            case ActionData::Type::MOUSE:      if (mouse_button_held(static_cast<MouseButton>(action_idx.ordinal))) return true; else continue;
             default:                                   continue;
         }
     }
