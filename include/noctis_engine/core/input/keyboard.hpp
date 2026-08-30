@@ -2,7 +2,7 @@
 #include <cstdint>
 
 
-namespace NoctisEngine::Input
+namespace NoctisEngine::Core
 {
 
 /// @brief This represents any physical key on your keyboard
@@ -139,7 +139,7 @@ constexpr auto ordinal(PhysicalKey key) -> int
 }
 
 /// @brief This represents the number of physcal keys the engine recognizes
-constexpr int NUM_KEYS = static_cast<int>(PhysicalKey::MAX_KEYS) - 1;
+constexpr int NUM_PHYSICAL_KEYS = static_cast<int>(PhysicalKey::MAX_KEYS) - 1;
 
 /// @brief Any modifiers that can be applied when pressing a key
 enum class Modifier : int

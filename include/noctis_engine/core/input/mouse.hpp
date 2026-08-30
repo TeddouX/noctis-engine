@@ -1,8 +1,8 @@
 #pragma once
-#include "../math/math.hpp"
+#include "../../math/math.hpp"
 
 
-namespace NoctisEngine
+namespace NoctisEngine::Core
 {
 
 /// @brief Represents a mouse movement event
@@ -34,4 +34,4 @@ enum class MouseButton : int
 /// @brief The number of recognized mouse buttons
 constexpr int NUM_MOUSE_BUTTONS = static_cast<int>(MouseButton::MAX_MOUSE_BUTTON) - 1;
 
-} // namespace NoctisEngine
+} // namespace NoctisEngine::Core
