@@ -141,21 +141,4 @@ constexpr auto ordinal(PhysicalKey key) -> int
 /// @brief This represents the number of physcal keys the engine recognizes
 constexpr int NUM_PHYSICAL_KEYS = static_cast<int>(PhysicalKey::MAX_KEYS) - 1;
 
-/// @brief Any modifiers that can be applied when pressing a key
-enum class Modifier : int
-{
-    NONE            = 0,
-    SHIFT_BIT       = 0x01,
-    CONTROL_BIT     = 0x02,
-    /// @brief Typically the windows key
-    SUPER_BIT       = 0x04,
-    CAPS_LOCK_BIT   = 0x0010,
-    NUM_LOCK_BIT    = 0x0020,
-};
-
-constexpr auto has_mod(Modifier modifiers, Modifier mod) -> bool 
-{
-    return static_cast<int>(modifiers) & static_cast<int>(mod);
-}
-
 } // namespace NoctisEngine::Input

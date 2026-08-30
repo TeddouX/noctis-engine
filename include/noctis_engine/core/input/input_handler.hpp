@@ -1,6 +1,7 @@
 #pragma once
-#include "input_stack.hpp"
+#include "event_stack.hpp"
 #include "keyboard.hpp"
+#include "input_info.hpp"
 #include "mouse.hpp"
 
 
@@ -11,7 +12,7 @@ struct GLFWwindow;
 namespace NoctisEngine::Core
 {
 
-/// @brief This is the main class of the engine's input handling
+/// @brief This is the singleton that handles all input processing
 class InputHandler
 {
 public:
@@ -80,27 +81,14 @@ public:
 private:
     friend class Window;
 
-    struct InputState 
-    {
-        enum class State 
-        { 
-            UP,
-            PRESSED,
-            HELD,
-            RELEASED 
-        } state;
+    inline static std::array<InputInfo, NUM_PHYSICAL_KEYS>  key_states_;
+    inline static std::vector<std::size_t>                  dirty_keys_;
 
-        Modifier mods;
-    };
-
-    inline static std::array<InputState, NUM_PHYSICAL_KEYS> key_states_;
-    inline static std::vector<std::size_t> dirty_keys_;
-
-    inline static std::array<InputState, NUM_MOUSE_BUTTONS> mouse_buttons_;
-    inline static MouseMouvement last_mouse_mvt_;
+    inline static std::array<InputInfo, NUM_MOUSE_BUTTONS>  mouse_buttons_;
+    inline static MouseMouvement                            last_mouse_mvt_;
 
     static auto update() -> void;
-    static auto update_state(InputState &state) -> void;
+    static auto update_state(InputInfo &state) -> bool;
 
     static auto glfw_key_callback(GLFWwindow *window, int key, int scancode, int action, int mods) -> void;
     static auto glfw_cursor_pos_callback(GLFWwindow *window, double xPos, double yPos) -> void;
