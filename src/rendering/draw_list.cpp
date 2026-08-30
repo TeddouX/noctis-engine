@@ -44,7 +44,7 @@ auto DrawList::set_uniform(UniformInfo info) -> void
     write(SetUniformCmd{ info });
 }
 
-auto DrawList::draw_mesh(MeshView mesh_view, const glm::mat4 &model_mat) -> void
+auto DrawList::draw_mesh(const MeshView &mesh_view, const glm::mat4 &model_mat) -> void
 {
     write_cmd_type(DrawCommandType::DRAW_MESH);
     write(DrawMeshCmd{ mesh_view, model_mat });
@@ -52,7 +52,7 @@ auto DrawList::draw_mesh(MeshView mesh_view, const glm::mat4 &model_mat) -> void
     req_indirect_draw_cmds++;
 }
 
-auto DrawList::draw_sprite_entity(ECS::Entity entity, const ECS::World &world) -> void
+auto DrawList::draw_sprite_entity(ECS::Entity entity, const ECS::World &world, const MeshView &quad_mv) -> void
 {
     auto *sprite = world.get_component<ECS::Sprite>(entity);
     if (not sprite) 
@@ -70,13 +70,12 @@ auto DrawList::draw_sprite_entity(ECS::Entity entity, const ECS::World &world) -
 
     const Texture &tex = sprite->texture;
     glm::mat4 model_mat = transform->model_matrix();
+    model_mat = glm::scale(model_mat, glm::vec3(tex.width(), tex.height(), 1));
+
     model_mat[3][2] = -sprite->draw_order;
 
     bind_texture(tex.gl_handle(), TextureSlots::ALBEDO, TextureSlots::ALBEDO_NAME);
-    draw_mesh(
-        DefaultMeshes::QUAD_MESH_VIEW, 
-        glm::scale(model_mat, glm::vec3(tex.width(), tex.height(), 1))
-    );
+    draw_mesh(quad_mv, model_mat);
 }
 
 auto DrawList::draw_triangles(std::size_t first, std::size_t count) -> void

@@ -99,10 +99,10 @@ auto Transform2D::model_matrix() const -> const glm::mat4 &
         const float scaleY = scale_.y;
 
         model_matrix_ = glm::mat4{
-            {  c * scaleX,                  s * scaleX,                     0.0f, 0.0f },
-            { -s * scaleY,                  c * scaleY,                     0.0f, 0.0f },
-            {  0.0f,                        0.0f,                           1.0f, 0.0f },
-            { pos_.x * METERS_TO_PIXELS,    pos_.y * METERS_TO_PIXELS,      0.0f, 1.0f }
+            {  c * scaleX,  s * scaleX,  0.0f, 0.0f },
+            { -s * scaleY,  c * scaleY,  0.0f, 0.0f },
+            {  0.0f,        0.0f,        1.0f, 0.0f },
+            { pos_.x,       pos_.y,      0.0f, 1.0f }
         };
 
         dirty_ = false;

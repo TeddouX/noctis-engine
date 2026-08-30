@@ -72,13 +72,14 @@ public:
     struct Data 
     {
         /// @brief The texture's pixel data
-        uint8_t *data;
+        std::uint8_t *data;
 
         /// @brief The texture's width
         int width; 
 
         /// @brief The texture's height
         int height;
+
         /// @brief The texture's number of color channels
         int nr_channels;
 
@@ -113,7 +114,8 @@ public:
     /// @brief Sets this texture to be bound in a draw list
     /// @param draw_list The draw list
     /// @param bind_point The point the texture should be bound to in the shader
-    auto bind(DrawList &draw_list, std::uint32_t bind_point) const -> void;
+    /// @param uniform_name The name of the uniform this texture should be bound to
+    auto bind(DrawList &draw_list, std::uint32_t bind_point, std::string_view uniform_name) const -> void;
 
     /// @brief Removes this texture from the GPU, it shouldn't be used after deletion
     auto delete_gpu() const -> void;

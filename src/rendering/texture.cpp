@@ -75,9 +75,9 @@ auto Texture::set_border_color(const Color &c) const -> void
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-auto Texture::bind(DrawList &draw_list, std::uint32_t bind_point) const -> void
+auto Texture::bind(DrawList &draw_list, std::uint32_t bind_point, std::string_view uniform_name) const -> void
 {
-    draw_list.bind_texture(handle_, bind_point, name_);
+    draw_list.bind_texture(handle_, bind_point, uniform_name);
 }
 
 auto Texture::delete_gpu() const -> void

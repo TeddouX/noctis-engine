@@ -11,7 +11,7 @@ class Transform2D
 public:
     /// @brief Creates a new 2D transform
     /// @param pos The position
-    /// @param rotation_rad The rotation in radians. Use glm::rad to convert from degrees.
+    /// @param rotation_rad The rotation in radians. Use glm::radians to convert from degrees.
     /// @param scale The scale. RENDERING ONLY, SCALING ISN'T HANDLED BY THE PHYSICS SYSTEM.
     Transform2D(glm::vec2 pos = glm::vec2{0}, float rotation_rad = 0.f, glm::vec2 scale = glm::vec2{1});
 

@@ -60,7 +60,7 @@ public:
         , sub_directory_{sub_directory}
     {}
 
-    /// @brief Used for printing debug messages
+    /// @brief Used for printing debug messages, only prints messages if NCENG_DEBUG is defined
     /// @tparam ...Args_ The format arguments types
     /// @param fmt The format string
     /// @param ...args The format arguments

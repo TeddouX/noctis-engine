@@ -337,7 +337,10 @@ auto PhysicsSystem2D::sync_physics_engine_to_ecs() -> void
 
         b2Body_SetTransform(
             b2LoadBodyId(e_pb->body_id), 
-            b2Vec2{e_transform->position().x, e_transform->position().y}, 
+            b2Vec2{
+                e_transform->position().x * PIXELS_TO_METERS, 
+                e_transform->position().y * PIXELS_TO_METERS
+            }, 
             b2MakeRot(e_transform->rotation())
         );
     }
@@ -369,7 +372,7 @@ auto PhysicsSystem2D::sync_ecs_to_physics_engine() -> void
             b2LoadBodyId(e_rb->body_id) 
         );
 
-        e_transform->set_position(glm::vec2{body_transform.p.x, body_transform.p.y});
+        e_transform->set_position(glm::vec2{body_transform.p.x, body_transform.p.y} * METERS_TO_PIXELS);
         e_transform->set_rotation(b2Rot_GetAngle(body_transform.q));
 
         PHYSICS_LOGGER.debug("pos: {} {}, rot: {}", 

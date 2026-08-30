@@ -57,13 +57,15 @@ public:
     /// @param model_mat The model matrix describing where the mesh should be placed.
     /// This is can be gotten from a transform.
     /// @warning This requires a shader to be bound before
-    auto draw_mesh(MeshView mesh_view, const glm::mat4 &model_mat = glm::mat4{1}) -> void;
+    auto draw_mesh(const MeshView &mesh_view, const glm::mat4 &model_mat = glm::mat4{1}) -> void;
     
     /// @brief Draws an entity as a sprite
     /// @param entity The entity to draw
     /// @param world The world it belongs to
-    /// @warning The entity is required to have a Sprite and a Transform2D components
-    auto draw_sprite_entity(ECS::Entity entity, const ECS::World &world) -> void;
+    /// @param quad_mv The quad mesh view that should be used, the mesh should be a *QUAD* and nothing else
+    /// @warning The entity is required to have a Sprite and a Transform2D components. This function also 
+    /// scales the sprite's transform to make it match with its texture
+    auto draw_sprite_entity(ECS::Entity entity, const ECS::World &world, const MeshView &quad_mv) -> void;
 
     /// @brief Draws triandles from a previously bound VAO
     /// @param first The starting index in the bound VAO. 

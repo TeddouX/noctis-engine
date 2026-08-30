@@ -38,7 +38,7 @@ public:
     /// @brief Converts a RGBA color to 4 floats (red, green, blue and alpha) in the range [0, 1]
     /// @param color The RGBA color
     /// @return The 4 floats
-    static constexpr auto Color::RGBA_to_floats(std::uint32_t color) -> glm::vec4
+    static constexpr auto RGBA_to_floats(std::uint32_t color) -> glm::vec4
     {
         float r = static_cast<float>((color >> 24)  & 0xFF) / 255.0f;
         float g = static_cast<float>((color >> 16)  & 0xFF) / 255.0f;

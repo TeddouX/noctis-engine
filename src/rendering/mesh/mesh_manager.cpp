@@ -22,9 +22,6 @@ MeshManager::MeshManager()
     vertex_array_.link_vbo(vbo_, sizeof(Vertex));
     vertex_array_.link_ebo(ebo_);
     RENDERING_LOGGER.debug("Created mesh manager buffers");
-
-    DefaultMeshes::QUAD_MESH_VIEW = upload(DefaultMeshes::QUAD_MESH);
-    RENDERING_LOGGER.debug("Uploaded default meshes");
 }
 
 auto MeshManager::upload(const MeshData &mesh_data) -> MeshView
