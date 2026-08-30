@@ -328,4 +328,4 @@ This is how you should actually render sprites to the screen, if you don't need 
 
 ## Going further
 
-Go see the @subpage core_functionalities of the engine. 
+Go see the [Core Functionalities](@ref core_functionalities) of the engine. 
