@@ -1,8 +1,5 @@
 var NAVTREEINDEX4 =
 {
-"structNoctisEngine_1_1Rendering_1_1VertexAttribute.html#a5cd34b6e3643d2f82bb208701d05c403afd3e4ece78a7d422280d5ed379482229":[2,0,0,2,28,0,6],
-"structNoctisEngine_1_1Rendering_1_1VertexAttribute.html#a5cd34b6e3643d2f82bb208701d05c403afd3e4ece78a7d422280d5ed379482229":[3,0,0,2,24,0,6],
-"structNoctisEngine_1_1Rendering_1_1VertexAttribute.html#a615d38fb67d691a5b251392fcdb696ed":[2,0,0,2,28,1],
 "structNoctisEngine_1_1Rendering_1_1VertexAttribute.html#a615d38fb67d691a5b251392fcdb696ed":[3,0,0,2,24,1],
 "structNoctisEngine_1_1Rendering_1_1VertexAttribute.html#a6636a6ccc321ad06dde7c7ada3ef909f":[3,0,0,2,24,4],
 "structNoctisEngine_1_1Rendering_1_1VertexAttribute.html#a6636a6ccc321ad06dde7c7ada3ef909f":[2,0,0,2,28,4],

@@ -1,8 +1,5 @@
 var NAVTREEINDEX3 =
 {
-"structNoctisEngine_1_1Core_1_1InputInfo.html#a39584b94d7c9d91eebf87d03da838218":[2,0,0,1,3,0],
-"structNoctisEngine_1_1Core_1_1InputInfo.html#a39584b94d7c9d91eebf87d03da838218a109d54efbb64d71f9a6ab18d0fb8add8":[3,0,0,0,3,0,3],
-"structNoctisEngine_1_1Core_1_1InputInfo.html#a39584b94d7c9d91eebf87d03da838218a109d54efbb64d71f9a6ab18d0fb8add8":[2,0,0,1,3,0,3],
 "structNoctisEngine_1_1Core_1_1InputInfo.html#a39584b94d7c9d91eebf87d03da838218a5381dc876ab002103a027265bc14ae52":[3,0,0,0,3,0,1],
 "structNoctisEngine_1_1Core_1_1InputInfo.html#a39584b94d7c9d91eebf87d03da838218a5381dc876ab002103a027265bc14ae52":[2,0,0,1,3,0,1],
 "structNoctisEngine_1_1Core_1_1InputInfo.html#a39584b94d7c9d91eebf87d03da838218ab33343cae11179cc3df2575f7f6ddc33":[3,0,0,0,3,0,2],
@@ -249,5 +246,8 @@ var NAVTREEINDEX3 =
 "structNoctisEngine_1_1Rendering_1_1VertexAttribute.html#a5cd34b6e3643d2f82bb208701d05c403ae409eb2ba6eb6801f52763ae370c350e":[2,0,0,2,28,0,0],
 "structNoctisEngine_1_1Rendering_1_1VertexAttribute.html#a5cd34b6e3643d2f82bb208701d05c403ae409eb2ba6eb6801f52763ae370c350e":[3,0,0,2,24,0,0],
 "structNoctisEngine_1_1Rendering_1_1VertexAttribute.html#a5cd34b6e3643d2f82bb208701d05c403ae738c26bf4ce1037fa81b039a915cbf6":[2,0,0,2,28,0,4],
-"structNoctisEngine_1_1Rendering_1_1VertexAttribute.html#a5cd34b6e3643d2f82bb208701d05c403ae738c26bf4ce1037fa81b039a915cbf6":[3,0,0,2,24,0,4]
+"structNoctisEngine_1_1Rendering_1_1VertexAttribute.html#a5cd34b6e3643d2f82bb208701d05c403ae738c26bf4ce1037fa81b039a915cbf6":[3,0,0,2,24,0,4],
+"structNoctisEngine_1_1Rendering_1_1VertexAttribute.html#a5cd34b6e3643d2f82bb208701d05c403afd3e4ece78a7d422280d5ed379482229":[2,0,0,2,28,0,6],
+"structNoctisEngine_1_1Rendering_1_1VertexAttribute.html#a5cd34b6e3643d2f82bb208701d05c403afd3e4ece78a7d422280d5ed379482229":[3,0,0,2,24,0,6],
+"structNoctisEngine_1_1Rendering_1_1VertexAttribute.html#a615d38fb67d691a5b251392fcdb696ed":[2,0,0,2,28,1]
 };

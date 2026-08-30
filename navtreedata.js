@@ -33,11 +33,7 @@ var NAVTREE =
         [ "Rendering", "getting_started.html#autotoc_md6", null ],
         [ "The ECS", "getting_started.html#autotoc_md7", null ]
       ] ],
-      [ "Going further", "getting_started.html#autotoc_md8", null ],
-      [ "Core Functionalities", "core_functionalities.html", [
-        [ "The logger", "core_functionalities.html#autotoc_md0", null ],
-        [ "Input handling", "core_functionalities.html#autotoc_md1", null ]
-      ] ]
+      [ "Going further", "getting_started.html#autotoc_md8", null ]
     ] ],
     [ "Core Functionalities", "core_functionalities.html", [
       [ "The logger", "core_functionalities.html#autotoc_md0", null ],
@@ -75,9 +71,9 @@ var NAVTREEINDEX =
 [
 "all__components_8hpp_source.html",
 "classNoctisEngine_1_1Rendering_1_1GPUBuffer.html#adf45776a7c98ec52f01bd06d498581ae",
-"namespaceNoctisEngine_1_1Core.html#a1a141d505ae7a3686034673e917e06d7a331b3100a485d8cacff1d3df8e9b0c13",
-"structNoctisEngine_1_1Core_1_1InputInfo.html#a39584b94d7c9d91eebf87d03da838218",
-"structNoctisEngine_1_1Rendering_1_1VertexAttribute.html#a5cd34b6e3643d2f82bb208701d05c403afd3e4ece78a7d422280d5ed379482229"
+"namespaceNoctisEngine_1_1Core.html#a1a141d505ae7a3686034673e917e06d7a3a3ea00cfc35332cedf6e5e9a32e94da",
+"structNoctisEngine_1_1Core_1_1InputInfo.html#a39584b94d7c9d91eebf87d03da838218a5381dc876ab002103a027265bc14ae52",
+"structNoctisEngine_1_1Rendering_1_1VertexAttribute.html#a615d38fb67d691a5b251392fcdb696ed"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

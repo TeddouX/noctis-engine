@@ -10,6 +10,6 @@ var searchData=
   ['frag_5fshader_5f2d_5fcode_7',['FRAG_SHADER_2D_CODE',['../namespaceNoctisEngine_1_1Rendering_1_1DefaultShaders.html#a471a98c2f54adb13ff620e5128eaa133',1,'NoctisEngine::Rendering::DefaultShaders']]],
   ['fragment_8',['FRAGMENT',['../namespaceNoctisEngine_1_1Rendering.html#ada5e8d771b159844a550689cb833fc4fa7345a249ed5c2f850d85dc1727c24716',1,'NoctisEngine::Rendering']]],
   ['friction_9',['friction',['../structNoctisEngine_1_1ECS_1_1PhysicsMaterial2D.html#aa562b9841d1926295e37e3c798bf088c',1,'NoctisEngine::ECS::PhysicsMaterial2D']]],
-  ['functionalities_10',['Core Functionalities',['../core_functionalities.html',1,'getting_started']]],
+  ['functionalities_10',['Core Functionalities',['../core_functionalities.html',1,'index']]],
   ['further_11',['Going further',['../getting_started.html#autotoc_md8',1,'']]]
 ];

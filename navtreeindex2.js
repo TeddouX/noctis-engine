@@ -1,8 +1,5 @@
 var NAVTREEINDEX2 =
 {
-"namespaceNoctisEngine_1_1Core.html#a1a141d505ae7a3686034673e917e06d7a331b3100a485d8cacff1d3df8e9b0c13":[2,0,0,1,12,51],
-"namespaceNoctisEngine_1_1Core.html#a1a141d505ae7a3686034673e917e06d7a33a277bfd7cd8357e1c6fe453cd356a6":[2,0,0,1,12,101],
-"namespaceNoctisEngine_1_1Core.html#a1a141d505ae7a3686034673e917e06d7a37f438df6a6d5ba4c17ef8ca58562f00":[2,0,0,1,12,73],
 "namespaceNoctisEngine_1_1Core.html#a1a141d505ae7a3686034673e917e06d7a3a3ea00cfc35332cedf6e5e9a32e94da":[2,0,0,1,12,22],
 "namespaceNoctisEngine_1_1Core.html#a1a141d505ae7a3686034673e917e06d7a3a92f3bbf26e4ea5ea7ce7db2f432c56":[2,0,0,1,12,113],
 "namespaceNoctisEngine_1_1Core.html#a1a141d505ae7a3686034673e917e06d7a3e16c4a5bdf6ad965c8228255b50e44c":[2,0,0,1,12,104],
@@ -249,5 +246,8 @@ var NAVTREEINDEX2 =
 "sprite_8hpp_source.html":[4,0,0,0,2,0,2],
 "structNoctisEngine_1_1Core_1_1InputInfo.html":[2,0,0,1,3],
 "structNoctisEngine_1_1Core_1_1InputInfo.html":[3,0,0,0,3],
-"structNoctisEngine_1_1Core_1_1InputInfo.html#a39584b94d7c9d91eebf87d03da838218":[3,0,0,0,3,0]
+"structNoctisEngine_1_1Core_1_1InputInfo.html#a39584b94d7c9d91eebf87d03da838218":[3,0,0,0,3,0],
+"structNoctisEngine_1_1Core_1_1InputInfo.html#a39584b94d7c9d91eebf87d03da838218":[2,0,0,1,3,0],
+"structNoctisEngine_1_1Core_1_1InputInfo.html#a39584b94d7c9d91eebf87d03da838218a109d54efbb64d71f9a6ab18d0fb8add8":[3,0,0,0,3,0,3],
+"structNoctisEngine_1_1Core_1_1InputInfo.html#a39584b94d7c9d91eebf87d03da838218a109d54efbb64d71f9a6ab18d0fb8add8":[2,0,0,1,3,0,3]
 };
