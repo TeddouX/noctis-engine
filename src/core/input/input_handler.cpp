@@ -74,6 +74,109 @@ auto InputHandler::mouse_button_held(MouseButton mb) -> bool
     return key_states_[ordinal(mb)].state == InputInfo::State::HELD;
 }
 
+auto InputHandler::register_action(const ActionInfo &info) -> void
+{
+    for (const auto &input_action : info.mappings)
+    {
+        std::visit([&](auto&& input_action)
+        {
+            using T = std::decay_t<decltype(input_action)>;
+            if constexpr (std::is_same_v<T, PhysicalKey>)
+            {
+                actions_[info.name].push_back(InternalActionData{
+                    .type = InternalActionData::Type::KEYBOARD,
+                    .ordinal = ordinal(input_action)
+                });
+            }
+            else if constexpr (std::is_same_v<T, MouseButton>)
+            {
+                actions_[info.name].push_back(InternalActionData{
+                    .type = InternalActionData::Type::MOUSE,
+                    .ordinal = ordinal(input_action)
+                });
+            }
+            else
+            {
+                static_assert(false, "Missing input action handling in registe_action!");
+            }
+        }, input_action);
+    }
+}
+
+auto InputHandler::action_just_pressed(std::string_view action_name) -> bool
+{
+    for (const auto &action_idx : actions_[action_name])
+    {
+        switch (action_idx.type)
+        {
+            case InternalActionData::Type::KEYBOARD:   return key_just_pressed(static_cast<PhysicalKey>(action_idx.ordinal));
+            case InternalActionData::Type::MOUSE:      return mouse_button_just_pressed(static_cast<MouseButton>(action_idx.ordinal));
+            default:                                   continue;
+        }
+    }
+
+    return false;
+}
+
+auto InputHandler::action_pressed(std::string_view action_name) -> bool
+{
+    for (const auto &action_idx : actions_[action_name])
+    {
+        switch (action_idx.type)
+        {
+            case InternalActionData::Type::KEYBOARD:   return key_pressed(static_cast<PhysicalKey>(action_idx.ordinal));
+            case InternalActionData::Type::MOUSE:      return mouse_button_pressed(static_cast<MouseButton>(action_idx.ordinal));
+            default:                                   continue;
+        }
+    }
+    return false;
+}
+
+auto InputHandler::action_just_released(std::string_view action_name) -> bool
+{
+    for (const auto &action_idx : actions_[action_name])
+    {
+        switch (action_idx.type)
+        {
+            case InternalActionData::Type::KEYBOARD:   return key_just_released(static_cast<PhysicalKey>(action_idx.ordinal));
+            case InternalActionData::Type::MOUSE:      return mouse_button_just_released(static_cast<MouseButton>(action_idx.ordinal));
+            default:                                   continue;
+        }
+    }
+
+    return false;
+}
+
+auto InputHandler::action_released(std::string_view action_name) -> bool
+{
+    for (const auto &action_idx : actions_[action_name])
+    {
+        switch (action_idx.type)
+        {
+            case InternalActionData::Type::KEYBOARD:   return key_just_released(static_cast<PhysicalKey>(action_idx.ordinal));
+            case InternalActionData::Type::MOUSE:      return mouse_button_released(static_cast<MouseButton>(action_idx.ordinal));
+            default:                                   continue;
+        }
+    }
+
+    return false;
+}
+
+auto InputHandler::action_held(std::string_view action_name) -> bool
+{
+    for (const auto &action_idx : actions_[action_name])
+    {
+        switch (action_idx.type)
+        {
+            case InternalActionData::Type::KEYBOARD:   return key_held(static_cast<PhysicalKey>(action_idx.ordinal));
+            case InternalActionData::Type::MOUSE:      return mouse_button_held(static_cast<MouseButton>(action_idx.ordinal));
+            default:                                   continue;
+        }
+    }
+
+    return false;
+}
+
 auto InputHandler::update() -> void
 {
     for (std::size_t key_ord : dirty_keys_)
@@ -85,6 +188,12 @@ auto InputHandler::update() -> void
     last_mouse_mvt_.delta.x = 0;
     last_mouse_mvt_.delta.y = 0;
 }
+
+auto InputHandler::scancode(PhysicalKey key) -> int
+{
+    return glfwGetKeyScancode(ordinal(key));
+}
+
 
 auto InputHandler::update_state(InputInfo &state) -> bool
 {

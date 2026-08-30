@@ -2,6 +2,7 @@
 #include "event_stack.hpp"
 #include "keyboard.hpp"
 #include "input_info.hpp"
+#include "input_action.hpp"
 #include "mouse.hpp"
 
 
@@ -78,6 +79,35 @@ public:
     /// @return true if is the mouse button is held, but not pressed in this frame
     static auto mouse_button_held(MouseButton mb) -> bool;
 
+    /// @brief Registers an action
+    /// @param info Info about the action to register
+    static auto register_action(const ActionInfo &info) -> void;
+
+    /// @brief Checks if an action was pressed in this frame
+    /// @param action_name The action's name
+    /// @return true if is the action was pressed in this frame
+    static auto action_just_pressed(std::string_view action_name) -> bool;
+
+    /// @brief Checks if an action is pressed
+    /// @param action_name The action's name
+    /// @return true if is the action is pressed
+    static auto action_pressed(std::string_view action_name) -> bool;
+
+    /// @brief Checks if an action was released in this frame
+    /// @param action_name The action's name
+    /// @return true if is the action is released in this frame
+    static auto action_just_released(std::string_view action_name) -> bool;
+
+    /// @brief Checks if an action is released
+    /// @param action_name The action's name
+    /// @return true if is the action is released
+    static auto action_released(std::string_view action_name) -> bool;
+
+    /// @brief Checks if an action is held, but not pressed in this frame
+    /// @param action_name The action's name
+    /// @return true if is the action is held, but not pressed in this frame
+    static auto action_held(std::string_view action_name) -> bool;
+
 private:
     friend class Window;
 
@@ -86,6 +116,24 @@ private:
 
     inline static std::array<InputInfo, NUM_MOUSE_BUTTONS>  mouse_buttons_;
     inline static MouseMouvement                            last_mouse_mvt_;
+
+    struct InternalActionData
+    {
+        enum class Type
+        {
+            KEYBOARD,
+            MOUSE
+        } type;
+
+        int ordinal;
+    };
+
+    inline static std::unordered_map<
+        std::string_view, 
+        std::vector<InternalActionData>
+    >                                       actions_;
+
+    static auto scancode(PhysicalKey key) -> int;
 
     static auto update() -> void;
     static auto update_state(InputInfo &state) -> bool;
