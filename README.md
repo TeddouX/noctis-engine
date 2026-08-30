@@ -15,3 +15,4 @@ A quickstart guide: [Where do I get started ?](https://teddoux.github.io/noctis-
 - The maths library used is [GLM](https://github.com/icaven/glm): OpenGL Mathematics
 - The library used for debug UI rendering is [Dear ImGui](https://github.com/ocornut/imgui): Bloat-free Graphical User interface for C++ with minimal dependencies
 - The library used for image loading is [stb](https://github.com/nothings/stb) (specifically [stb_image.h](https://github.com/nothings/stb/blob/master/stb_image.h)): single-file public domain libraries for C/C++
+- The library used for prettier doxygen documentation is [doxygen-awesome-css](https://github.com/jothepro/doxygen-awesome-css): Custom CSS theme for doxygen html-documentation with lots of customization parameters.

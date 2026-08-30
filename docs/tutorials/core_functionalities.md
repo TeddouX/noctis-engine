@@ -22,7 +22,7 @@ auto main() -> int
 }
 ```
 
-"My Game" is the directory of the logger, this should be your projects's name, and "Main" should be the part of your project this logger's used by (for example: "Rendering", "Enemies", "Level loading", etc...). The directory and subdirectory parameters are used to better organize logs.  
+"My Game" is the directory of the logger, this should be your project's name, and "Main" should be the part of your project this logger's used by (for example: "Rendering", "Enemies", "Level loading", etc...). The directory and subdirectory parameters are used to better organize logs.  
 You can format values and variables into your log messages using [C++'s standard library formats](https://en.cppreference.com/cpp/utility/format/spec).  
 Note that [.debug()](@ref NoctisEngine::Core::Logger::debug()) only prints its message to the screen if the macro NCENG_DEBUG is defined. You can enable and disable this macro's definition in your CMakeLists.txt:
 

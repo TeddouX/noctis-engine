@@ -103,7 +103,7 @@ Next step is actually rendering stuff to the screen, and this is where it gets a
 ### Rendering
 
 Noctis Engine uses a draw list system to render things to the screen. This is handled by the [DrawList](@ref NoctisEngine::Rendering::DrawList) class.  
-The draw list is then passed to a renderer (here we will use [Renderer2D](@ref NoctisEngine::Rendering::Renderer2D) since it's the only one that is implemented for now).  
+The draw list is then passed to a [renderer](@ref NoctisEngine::Rendering::Renderer).  
 There are more things required to correctly draw things to the screen, but you will see that in the code below: 
 
 ```cpp
@@ -153,7 +153,7 @@ auto main() -> int
         return 1;
     }
  
-    // This helps you to manage meshes, and also has some default meshes that will be useful here for rendering
+    // This helps you to manage meshes
     NoctisEngine::Rendering::MeshManager mesh_manager{};
  
     NoctisEngine::Rendering::MeshView quad_mv = 
@@ -303,8 +303,8 @@ auto main() -> int
     while (not window.should_close)
     {
         // ...
-        // Same things must be bound texture
-        // The mesh drawing should be removed too
+        // Same things must be bound except for texture
+        // The mesh drawing should also be removed
 
         // This is where the draw list does everything for you, note that this function requires
         // the entity to have a Transform2D component and a Sprite component
