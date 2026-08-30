@@ -374,11 +374,6 @@ auto PhysicsSystem2D::sync_ecs_to_physics_engine() -> void
 
         e_transform->set_position(glm::vec2{body_transform.p.x, body_transform.p.y} * METERS_TO_PIXELS);
         e_transform->set_rotation(b2Rot_GetAngle(body_transform.q));
-
-        PHYSICS_LOGGER.debug("pos: {} {}, rot: {}", 
-            body_transform.p.x, body_transform.p.y, 
-            b2Rot_GetAngle(body_transform.q)
-        );
     }
 
     process_contact_events();
