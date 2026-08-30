@@ -1,6 +1,7 @@
 #pragma once
 #include "asset/loaders.hpp"
 
+#include "core/input/input_handler.hpp"
 #include "core/exit.hpp"
 #include "core/logging.hpp"
 #include "core/window.hpp"

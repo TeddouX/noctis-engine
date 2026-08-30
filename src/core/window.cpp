@@ -5,6 +5,7 @@
 
 #include <noctis_engine/definitions.hpp>
 #include <noctis_engine/core/logging.hpp>
+#include <noctis_engine/core/input/input_handler.hpp>
 
 
 namespace NoctisEngine::Core
@@ -45,6 +46,10 @@ Window::Window(std::uint32_t width, std::uint32_t height, std::string_view title
     
     CORE_LOGGER.debug("Created window \"{}\"", title);
 
+    glfwSetKeyCallback(glfw_window_, InputHandler::glfw_key_callback);
+    glfwSetMouseButtonCallback(glfw_window_, InputHandler::glfw_mouse_btn_callback);
+    glfwSetCursorPosCallback(glfw_window_, InputHandler::glfw_cursor_pos_callback);
+
     glfwSetWindowUserPointer(glfw_window_, this);
     glfwMakeContextCurrent(glfw_window_);
 
@@ -80,6 +85,7 @@ auto Window::should_close() -> bool
 
 auto Window::poll_events() -> void
 {
+    InputHandler::update();
     glfwPollEvents();
 }
 
