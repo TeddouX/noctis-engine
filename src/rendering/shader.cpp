@@ -4,7 +4,7 @@
 #include <string>
 
 #include <noctis_engine/core/logging.hpp>
-#include <noctis_engine/noctis_engine.hpp>
+#include <noctis_engine/definitions.hpp>
 
 
 namespace NoctisEngine::Rendering

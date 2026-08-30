@@ -6,7 +6,7 @@
 #include <stdexcept>
 #include <format>
 
-#include "../noctis_engine.hpp"
+#include "../definitions.hpp"
 #include "../core/logging.hpp"
 
 

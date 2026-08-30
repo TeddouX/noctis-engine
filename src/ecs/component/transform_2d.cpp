@@ -1,6 +1,6 @@
 #include <noctis_engine/ecs/component/transform_2d.hpp>
 
-#include <noctis_engine/noctis_engine.hpp>
+#include <noctis_engine/definitions.hpp>
 
 
 namespace NoctisEngine::ECS

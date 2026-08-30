@@ -1,7 +1,7 @@
 #pragma once
 #include <stdint.h>
 
-#include "../noctis_engine.hpp"
+#include "../definitions.hpp"
 #include "math.hpp"
 
 

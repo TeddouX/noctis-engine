@@ -3,7 +3,7 @@
 #include <GL/gl.h>
 #include <GLFW/glfw3.h>
 
-#include <noctis_engine/noctis_engine.hpp>
+#include <noctis_engine/definitions.hpp>
 #include <noctis_engine/core/logging.hpp>
 
 

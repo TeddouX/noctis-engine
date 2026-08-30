@@ -3,7 +3,7 @@
 #include <string>
 #include <memory>
 
-#include "../noctis_engine.hpp"
+#include "../definitions.hpp"
 #include "../math/color.hpp"
 #include "shader.hpp"
 #include "draw_list.hpp"
