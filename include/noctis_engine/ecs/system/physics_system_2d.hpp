@@ -117,13 +117,19 @@ public:
     
     /// @brief Updates the physics engine
     /// @param dt The frame delta time
+    /// @param callback A callback that is called once per physics update 
     /// @param time_step The amount of time to simulate, this should be a fixed number 
     /// for better stability. Default 1/60
     /// @param substep_count The number of sub-steps, increasing this number may 
     /// increase accuracy, but at the cost of performance.
     /// @warning sync_physics_engine_to_ecs() should be called before 
     /// calling this function to update position changes
-    auto update_physics(float dt, float time_step = DEFAULT_TIMESTEP, std::uint16_t substep_count = 4) -> void;
+    auto update_physics(
+        float                   dt, 
+        std::function<void()>   callback = nullptr, 
+        float                   time_step = DEFAULT_TIMESTEP, 
+        std::uint16_t           substep_count = 4
+    ) -> void;
 
     /// @brief Updates the transforms according to what 
     /// the physics engine calculated.

@@ -351,11 +351,14 @@ auto PhysicsSystem2D::sync_physics_engine_to_ecs() -> void
     }
 }
 
-auto PhysicsSystem2D::update_physics(float dt, float time_step, std::uint16_t substep_count) -> void
+auto PhysicsSystem2D::update_physics(float dt, std::function<void()> callback, float time_step, std::uint16_t substep_count) -> void
 {
     accumulator_ += dt;
     while (accumulator_ >= time_step)
     {
+        if (callback)
+            callback();
+
         b2World_Step(b2LoadWorldId(physics_world_), time_step, substep_count);
         accumulator_ -= time_step;
     }
