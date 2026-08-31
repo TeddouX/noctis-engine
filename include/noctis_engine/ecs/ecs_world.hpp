@@ -2,6 +2,7 @@
 #include <typeindex>
 #include <memory>
 #include <print>
+#include <set>
 
 #include "ecs_fwd.hpp"
 #include "component_storage.hpp"
@@ -30,12 +31,36 @@ public:
     {
         if (not free_ids_.empty())
         {
-            std::int32_t id = free_ids_.back();
-            free_ids_.pop_back();
+            EntityID id = *free_ids_.end();
+            free_ids_.erase(id);
             return Entity{id};
         }
 
         return Entity{next_entity_id_++};
+    }
+
+    /// @brief Gets an entity from an id
+    /// @param id The entity's id
+    /// @return A valid entity if an entity with that id was found, an invalid entity otherwise
+    /// @warning This can be expensive
+    auto entity_from_id(EntityID id) -> Entity
+    {
+        if (free_ids_.find(id) != free_ids_.end())
+            return Entity{};
+        if (id < 0 or id >= next_entity_id_)
+            return Entity{};
+
+        return Entity{id};
+    }
+
+    /// @brief Creates an entity from an id
+    /// @param id The entity's id
+    /// @return An entity with that ID, can be invalid because the world doesn't own it
+    /// @warning Doesn't check if the entity really exists in this world, 
+    /// so be careful on how you use it
+    auto unsafe_entity_from_id(EntityID id) -> Entity
+    {
+        return Entity{id};
     }
 
     /// @brief Destroys an entity, and its associated components
@@ -43,7 +68,7 @@ public:
     /// @warning This can be expensive, so use sparringly
     auto destroy_entity(Entity entity) -> void
     {
-        free_ids_.push_back(entity.id());
+        free_ids_.emplace(entity.id());
 
         for (const auto &[_, storage] : storages_)
         {
@@ -81,7 +106,7 @@ public:
     template <typename T>
     auto get_component(Entity entity) const -> const T *
     {
-        if (const auto storage = get_const_storage<T>())
+        if (const auto storage = get_storage<T>())
             return storage->get(entity);
         return nullptr;
     }
@@ -102,7 +127,7 @@ public:
     template <typename T>
     auto has_component(Entity entity) const -> bool
     {
-        if (const auto storage = get_const_storage<T>())
+        if (const auto storage = get_storage<T>())
             return storage->has(entity);
         return false;
     }
@@ -114,7 +139,7 @@ public:
     template <typename T>
     auto all_entities() const -> const std::vector<Entity> *
     {
-        if (const auto storage = get_const_storage<T>())
+        if (const auto storage = get_storage<T>())
             return &storage->entities();
         return nullptr;
     }
@@ -123,7 +148,7 @@ public:
     /// @tparam T The component's type
     /// @return A vector containing all the components of that type, can be empty
     template <typename T>
-    auto all() -> std::vector<T> &
+    auto all_components() -> std::vector<T> &
     {
         return get_storage<T>()->data();
     }
@@ -133,9 +158,9 @@ public:
     /// @return A constant pointer to the vector containing all the components
     /// of that type
     template <typename T>
-    auto all() const -> const std::vector<T> *
+    auto all_components() const -> const std::vector<T> *
     {
-        if (const auto storage = get_const_storage<T>())
+        if (const auto storage = get_storage<T>())
             return &storage->data();
         return nullptr;
     }
@@ -156,7 +181,7 @@ public:
     /// @tparam T The component's type
     /// @return A shared pointer to the component storage. This one can be stored
     template <typename T>
-    auto get_const_storage() const -> const std::shared_ptr<ComponentStorage<T>>
+    auto get_storage() const -> const std::shared_ptr<ComponentStorage<T>>
     {
         std::type_index type_idx{typeid(T)};
         if (storages_.find(type_idx) == storages_.end())
@@ -197,8 +222,8 @@ public:
 
 private:
     std::unordered_map<std::type_index, std::shared_ptr<IComponentStorage>> storages_;
-    std::int32_t next_entity_id_;
-    std::vector<std::int32_t> free_ids_;
+    EntityID next_entity_id_;
+    std::set<EntityID> free_ids_;
 };
 
 template <typename... Components_>

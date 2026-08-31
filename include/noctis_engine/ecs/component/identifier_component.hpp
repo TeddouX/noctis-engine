@@ -9,7 +9,7 @@ namespace NoctisEngine::ECS
 struct Identifier
 {
     std::string_view name;
-    std::uint64_t id;
+    std::uint64_t tag;
 };
 
 } // namespace NoctisEngine::ECS

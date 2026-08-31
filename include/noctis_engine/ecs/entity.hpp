@@ -5,6 +5,8 @@
 namespace NoctisEngine::ECS
 {
 
+using EntityID = std::int32_t;
+
 /// @brief Represents an entity in a world
 class Entity
 {
@@ -13,6 +15,12 @@ public:
     Entity()
         : id_{-1}
     {}
+
+    /// @brief Creates an entity from an ID, the created entity isn't 
+    /// guaranteed to be valid in any worlds
+    explicit Entity(EntityID id)
+        : id_{id}
+    {}
     
     /// @brief Checks if this entity is valid
     /// @return True if it's valid, false otherwise
@@ -20,16 +28,10 @@ public:
 
     /// @internal
     /// @brief Gets this entitie's id 
-    auto id() -> std::uint32_t { return id_; }
+    auto id() -> EntityID { return id_; }
 
 private:
-    friend class World;
-
-    std::int32_t id_;
-
-    explicit Entity(std::int32_t id)
-        : id_{id}
-    {}
+    EntityID id_;
 };
 
 } // namespace NoctisEngine::ECS

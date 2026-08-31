@@ -106,9 +106,9 @@ public:
     /// The created entity is invalid if something went wrong during creation
     auto create_physics_entity(
         const std::vector<CollisionShape2D>    &collision_shapes,
+        Identifier                              id,
         PhysicsBody2D::Type                     physics_body_type = PhysicsBody2D::Type::STATIC,
-        const Transform2D                      &transform = Transform2D{},
-        Identifier                              id
+        const Transform2D                      &transform = Transform2D{}
     ) -> Entity;
 
     /// @brief Updates the physics engine's transforms
@@ -142,7 +142,7 @@ public:
 
 private:
     std::shared_ptr<World>                      world_;
-    std::vector<Entity>                         physics_entities_;
+    // std::vector<Entity>                         physics_entities_;
     std::uint32_t                               physics_world_;
     std::deque<CollisionShape2D::Callbacks>     collision_callbacks_;
     float                                       accumulator_;

@@ -12,7 +12,7 @@ Core::Logger PHYSICS_LOGGER{"Noctis Engine", "Physics"};
 
 auto phys_mat_to_b2_surface_mat(const PhysicsMaterial2D &phys_mat) -> b2SurfaceMaterial;
 auto glm_points_to_b2_points(const std::vector<glm::vec2> &glm_points) -> std::vector<b2Vec2>;
-auto entity_from_shape(b2ShapeId shape_id) -> Entity;
+auto entity_from_shape(const b2ShapeId &shape_id) -> Entity;
 
 
 PhysicsSystem2D::PhysicsSystem2D(std::shared_ptr<World> world)
@@ -72,9 +72,9 @@ auto PhysicsSystem2D::set_hit_event_threshold(float threshold) -> void
 
 auto PhysicsSystem2D::create_physics_entity(
     const std::vector<CollisionShape2D>    &collision_shapes,
-    PhysicsBody2D::Type                     physics_body_type = PhysicsBody2D::Type::STATIC,
-    const Transform2D                      &transform = Transform2D{},
-    Identifier                              id
+    Identifier                              id,
+    PhysicsBody2D::Type                     physics_body_type,
+    const Transform2D                      &transform
 ) -> Entity
 {
     Entity entity = world_->create_entity();
@@ -113,8 +113,17 @@ auto PhysicsSystem2D::create_physics_entity(
         auto surface_mat = phys_mat_to_b2_surface_mat(phys_mat); 
         shape_def.material = surface_mat;
 
-        collision_callbacks_.push_back(collision_shape.callbacks);
-        shape_def.userData = &collision_callbacks_.back();
+        if (collision_shape.enable_collision_events 
+            or collision_shape.enable_hit_events 
+            or collision_shape.is_sensor)
+        {
+            collision_callbacks_.push_back(collision_shape.callbacks);
+            shape_def.userData = &collision_callbacks_.back();
+        }
+        else
+        {
+            shape_def.userData = nullptr;
+        }
 
         bool is_chain = false;
         std::uint64_t shape_store;
@@ -316,19 +325,14 @@ auto PhysicsSystem2D::create_physics_entity(
     world_->add_component(entity, physics_body);
     world_->add_component(entity, transform);
 
-    physics_entities_.push_back(entity);
-
     return entity;
 }
 
 auto PhysicsSystem2D::sync_physics_engine_to_ecs() -> void
 {
-    for (const auto &e : physics_entities_)
+    for (const auto &e : *world_->all_entities<Transform2D>())
     {
         auto e_transform = world_->get_component<Transform2D>(e);
-        if (not e_transform)
-            continue;
-
         auto e_pb = world_->get_component<PhysicsBody2D>(e);
         if (not e_pb)
             continue;
@@ -359,12 +363,9 @@ auto PhysicsSystem2D::update_physics(float dt, float time_step, std::uint16_t su
 
 auto PhysicsSystem2D::sync_ecs_to_physics_engine() -> void
 {
-    for (const auto &e : physics_entities_)
+    for (const auto &e : *world_->all_entities<Transform2D>())
     {
         auto e_transform = world_->get_component<Transform2D>(e);
-        if (not e_transform)
-            continue;
-
         auto e_rb = world_->get_component<PhysicsBody2D>(e);
         if (not e_rb)
             continue;
@@ -722,11 +723,19 @@ auto PhysicsSystem2D::process_contact_events() -> void
         if (!b2Shape_IsValid(ev.shapeIdA) || !b2Shape_IsValid(ev.shapeIdB)) 
             continue;
 
-        auto cb = reinterpret_cast<CollisionShape2D::Callbacks *>(b2Shape_GetUserData(ev.shapeIdA));
-        cb->on_collision_begin(
-            entity_from_shape(ev.shapeIdA), 
-            entity_from_shape(ev.shapeIdB)
-        );
+        auto invoke = [&](b2ShapeId owner, b2ShapeId other) {
+            auto cb = reinterpret_cast<CollisionShape2D::Callbacks *>(b2Shape_GetUserData(owner));
+            if (cb && cb->on_collision_begin)
+            {
+                cb->on_collision_begin(
+                    entity_from_shape(owner),
+                    entity_from_shape(other)
+                );
+            }
+        };
+
+        invoke(ev.shapeIdA, ev.shapeIdB);
+        invoke(ev.shapeIdB, ev.shapeIdA);
     }
 
     for (std::size_t i = 0; i < events.endCount; i++)
@@ -735,11 +744,19 @@ auto PhysicsSystem2D::process_contact_events() -> void
         if (!b2Shape_IsValid(ev.shapeIdA) || !b2Shape_IsValid(ev.shapeIdB)) 
             continue;
 
-        auto cb = reinterpret_cast<CollisionShape2D::Callbacks *>(b2Shape_GetUserData(ev.shapeIdA));
-        cb->on_collision_end(
-            entity_from_shape(ev.shapeIdA), 
-            entity_from_shape(ev.shapeIdB)
-        );
+        auto invoke = [&](b2ShapeId owner, b2ShapeId other) {
+            auto cb = reinterpret_cast<CollisionShape2D::Callbacks *>(b2Shape_GetUserData(owner));
+            if (cb && cb->on_collision_end)
+            {
+                cb->on_collision_end(
+                    entity_from_shape(owner),
+                    entity_from_shape(other)
+                );
+            }
+        };
+
+        invoke(ev.shapeIdA, ev.shapeIdB);
+        invoke(ev.shapeIdB, ev.shapeIdA);
     }
 
     for (std::size_t i = 0; i < events.hitCount; i++)
@@ -748,11 +765,22 @@ auto PhysicsSystem2D::process_contact_events() -> void
         if (!b2Shape_IsValid(ev.shapeIdA) || !b2Shape_IsValid(ev.shapeIdB)) 
             continue;
 
-        auto cb = reinterpret_cast<CollisionShape2D::Callbacks *>(b2Shape_GetUserData(ev.shapeIdA));
-        cb->on_collision_end(
-            entity_from_shape(ev.shapeIdA), 
-            entity_from_shape(ev.shapeIdB)
-        );
+        auto invoke = [&](b2ShapeId owner, b2ShapeId other) {
+            auto cb = reinterpret_cast<CollisionShape2D::Callbacks *>(b2Shape_GetUserData(owner));
+            if (cb && cb->on_collision_end)
+            {
+                cb->on_hit(
+                    entity_from_shape(ev.shapeIdA), 
+                    entity_from_shape(ev.shapeIdB),
+                    glm::vec2{ev.normal.x, ev.normal.y},
+                    glm::vec2{ev.point.x, ev.point.y},
+                    ev.approachSpeed
+                );
+            }
+        };
+
+        invoke(ev.shapeIdA, ev.shapeIdB);
+        invoke(ev.shapeIdB, ev.shapeIdA);
     }
 }
 
@@ -766,11 +794,19 @@ auto PhysicsSystem2D::process_sensor_events() -> void
         if (!b2Shape_IsValid(ev.sensorShapeId) || !b2Shape_IsValid(ev.visitorShapeId)) 
             continue;
 
-        auto cb = reinterpret_cast<CollisionShape2D::Callbacks *>(b2Shape_GetUserData(ev.sensorShapeId));
-        cb->on_sensor_begin_touch(
-            entity_from_shape(ev.sensorShapeId), 
-            entity_from_shape(ev.visitorShapeId)
-        );
+        auto invoke = [&](b2ShapeId owner, b2ShapeId other) {
+            auto cb = reinterpret_cast<CollisionShape2D::Callbacks *>(b2Shape_GetUserData(owner));
+            if (cb && cb->on_collision_end)
+            {
+                cb->on_sensor_begin_touch(
+                    entity_from_shape(owner),
+                    entity_from_shape(other)
+                );
+            }
+        };
+
+        invoke(ev.sensorShapeId, ev.visitorShapeId);
+        invoke(ev.visitorShapeId, ev.sensorShapeId);
     }
 
     for (std::size_t i = 0; i < events.endCount; i++)
@@ -779,13 +815,22 @@ auto PhysicsSystem2D::process_sensor_events() -> void
         if (!b2Shape_IsValid(ev.sensorShapeId) || !b2Shape_IsValid(ev.visitorShapeId)) 
             continue;
 
-        auto cb = reinterpret_cast<CollisionShape2D::Callbacks *>(b2Shape_GetUserData(ev.sensorShapeId));
-        cb->on_sensor_end_touch(
-            entity_from_shape(ev.sensorShapeId), 
-            entity_from_shape(ev.visitorShapeId)
-        );
+        auto invoke = [&](b2ShapeId owner, b2ShapeId other) {
+            auto cb = reinterpret_cast<CollisionShape2D::Callbacks *>(b2Shape_GetUserData(owner));
+            if (cb && cb->on_collision_end)
+            {
+                cb->on_sensor_end_touch(
+                    entity_from_shape(owner),
+                    entity_from_shape(other)
+                );
+            }
+        };
+
+        invoke(ev.sensorShapeId, ev.visitorShapeId);
+        invoke(ev.visitorShapeId, ev.sensorShapeId);
     }
 }
+
 
 auto phys_mat_to_b2_surface_mat(const PhysicsMaterial2D &phys_mat) -> b2SurfaceMaterial
 {
@@ -809,11 +854,13 @@ auto glm_points_to_b2_points(const std::vector<glm::vec2> &glm_points) -> std::v
     return b2_points;
 }
 
-auto entity_from_shape(b2ShapeId shape_id) -> Entity
+auto entity_from_shape(const b2ShapeId &shape_id) -> Entity
 {
     b2BodyId body_id = b2Shape_GetBody(shape_id);
-    // my bad
-    return *reinterpret_cast<Entity *>(b2Body_GetUserData(body_id));
+
+    // The entity's id is stored as a pointer
+    std::uintptr_t ptr = (std::uintptr_t)b2Body_GetUserData(body_id);
+    return Entity{static_cast<EntityID>(ptr)};
 }
 
 } // namespace NoctisEngine::ECS

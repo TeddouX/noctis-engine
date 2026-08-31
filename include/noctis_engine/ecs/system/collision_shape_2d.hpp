@@ -3,6 +3,7 @@
 #include <variant>
 
 #include "../entity.hpp"
+#include "../ecs_world.hpp"
 #include "../component/physics_body_2d.hpp"
 #include "../../math/color.hpp"
 
@@ -197,34 +198,38 @@ struct CollisionShape2D
     struct Callbacks
     {
         /// @brief Called when a collision begins and if enable_collision_events is set to true
-        /// @param 1 entity A (the one bearing this collision shape)
-        /// @param 2 entity B (the one that collided)
-        /// @param 3 the collision manifold
-        std::function<void (Entity, Entity)> on_collision_begin;
+        /// @param 1 The world to which the entities that collided belong to
+        /// @param 2 entity A (the one bearing this collision shape)
+        /// @param 3 entity B (the one that collided)
+        std::function<void (Entity, Entity)> on_collision_begin{nullptr};
 
         /// @brief Called when a collision ends and if enable_collision_events is set to true
-        /// @param 1 entity A (the one bearing this collision shape)
-        /// @param 2 entity B (the one that collided)
-        std::function<void (Entity, Entity)> on_collision_end;
+        /// @param 1 The world to which the entities that collided belong to
+        /// @param 2 entity A (the one bearing this collision shape)
+        /// @param 3 entity B (the one that collided)
+        std::function<void (Entity, Entity)> on_collision_end{nullptr};
         
         /// @brief Called when a hit collision is triggered.
         /// The hit event threshold can be set in the PhysicsSystem2D.
-        /// @param 1 entity A (the one bearing this collision shape)
-        /// @param 2 entity B (the one that collided)
-        /// @param 3 Normal vector pointing from shape A to shape B. 
-        /// @param 4 Point where the shapes hit.
-        /// @param 5 The speed the shapes are approaching. Always positive. Typically in m/s. 
-        std::function<void (Entity, Entity, glm::vec2 &, glm::vec2, float)> on_hit;
+        /// @param 1 The world to which the entities that collided belong to
+        /// @param 2 entity A (the one bearing this collision shape)
+        /// @param 3 entity B (the one that collided)
+        /// @param 4 Normal vector pointing from shape A to shape B. 
+        /// @param 5 Point where the shapes hit.
+        /// @param 6 The speed the shapes are approaching. Always positive. Typically in m/s. 
+        std::function<void (Entity, Entity, glm::vec2, glm::vec2, float)> on_hit{nullptr};
         
         /// @brief Called when a collision begins and is_sensor is set to true
-        /// @param 1 entity A (the sensor)
-        /// @param 2 entity B (the visitor)
-        std::function<void (Entity, Entity)> on_sensor_begin_touch;
+        /// @param 1 The world to which the entities that collided belong to
+        /// @param 2 entity A (the sensor)
+        /// @param 3 entity B (the visitor)
+        std::function<void (Entity, Entity)> on_sensor_begin_touch{nullptr};
 
         /// @brief Called when a collision ends and is_sensor is set to true
-        /// @param 1 entity A (the sensor)
-        /// @param 2 entity B (the visitor)
-        std::function<void (Entity, Entity)> on_sensor_end_touch;
+        /// @param 1 The world to which the entities that collided belong to
+        /// @param 2 entity A (the sensor)
+        /// @param 3 entity B (the visitor)
+        std::function<void (Entity, Entity)> on_sensor_end_touch{nullptr};
     };
 
     /// @brief The density of this collision shape, in kg/m^2
