@@ -258,6 +258,9 @@ struct CollisionShape2D
     /// Sensors still contribute to the body mass if they have non-zero density.
     bool is_sensor = false;
 
+    /// @brief Enables this shape to generate sensor events when colliding with sensors
+    bool enable_sensor_events = false;
+
     /// @brief This collision shape's callbacks
     Callbacks callbacks;
 };

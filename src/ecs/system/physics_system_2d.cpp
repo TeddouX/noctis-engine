@@ -100,8 +100,8 @@ auto PhysicsSystem2D::create_physics_entity(
         shape_def.density = collision_shape.density;
         shape_def.enableContactEvents = collision_shape.enable_collision_events;
         shape_def.enableHitEvents = collision_shape.enable_hit_events;
-        shape_def.enableSensorEvents = collision_shape.is_sensor;
-            
+        
+        shape_def.enableSensorEvents = collision_shape.enable_sensor_events | collision_shape.is_sensor;
         shape_def.isSensor = collision_shape.is_sensor;
             
         shape_def.filter = b2Filter{ 
@@ -335,9 +335,6 @@ auto PhysicsSystem2D::sync_physics_engine_to_ecs() -> void
         auto e_transform = world_->get_component<Transform2D>(e);
         auto e_pb = world_->get_component<PhysicsBody2D>(e);
         if (not e_pb)
-            continue;
-
-        if (e_pb->phys_body_type() != PhysicsBody2D::Type::KINEMATIC)
             continue;
 
         b2Body_SetTransform(
@@ -796,20 +793,15 @@ auto PhysicsSystem2D::process_sensor_events() -> void
         const b2SensorBeginTouchEvent &ev = events.beginEvents[i];
         if (!b2Shape_IsValid(ev.sensorShapeId) || !b2Shape_IsValid(ev.visitorShapeId)) 
             continue;
-
-        auto invoke = [&](b2ShapeId owner, b2ShapeId other) {
-            auto cb = reinterpret_cast<CollisionShape2D::Callbacks *>(b2Shape_GetUserData(owner));
-            if (cb && cb->on_collision_end)
-            {
-                cb->on_sensor_begin_touch(
-                    entity_from_shape(owner),
-                    entity_from_shape(other)
-                );
-            }
-        };
-
-        invoke(ev.sensorShapeId, ev.visitorShapeId);
-        invoke(ev.visitorShapeId, ev.sensorShapeId);
+        
+        auto cb = reinterpret_cast<CollisionShape2D::Callbacks *>(b2Shape_GetUserData(ev.sensorShapeId));
+        if (cb && cb->on_sensor_begin_touch)
+        {
+            cb->on_sensor_begin_touch(
+                entity_from_shape(ev.sensorShapeId),
+                entity_from_shape(ev.visitorShapeId)
+            );
+        }
     }
 
     for (std::size_t i = 0; i < events.endCount; i++)
@@ -817,20 +809,15 @@ auto PhysicsSystem2D::process_sensor_events() -> void
         const b2SensorEndTouchEvent &ev = events.endEvents[i];
         if (!b2Shape_IsValid(ev.sensorShapeId) || !b2Shape_IsValid(ev.visitorShapeId)) 
             continue;
-
-        auto invoke = [&](b2ShapeId owner, b2ShapeId other) {
-            auto cb = reinterpret_cast<CollisionShape2D::Callbacks *>(b2Shape_GetUserData(owner));
-            if (cb && cb->on_collision_end)
-            {
-                cb->on_sensor_end_touch(
-                    entity_from_shape(owner),
-                    entity_from_shape(other)
-                );
-            }
-        };
-
-        invoke(ev.sensorShapeId, ev.visitorShapeId);
-        invoke(ev.visitorShapeId, ev.sensorShapeId);
+        
+        auto cb = reinterpret_cast<CollisionShape2D::Callbacks *>(b2Shape_GetUserData(ev.sensorShapeId));
+        if (cb && cb->on_sensor_end_touch)
+        {
+            cb->on_sensor_end_touch(
+                entity_from_shape(ev.sensorShapeId),
+                entity_from_shape(ev.visitorShapeId)
+            );
+        }
     }
 }
 
