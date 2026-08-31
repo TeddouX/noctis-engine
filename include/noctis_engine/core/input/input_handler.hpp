@@ -1,6 +1,7 @@
 #pragma once
 #include <variant>
 
+#include "../../math/math.hpp"
 #include "event_stack.hpp"
 #include "keyboard.hpp"
 #include "input_info.hpp"
@@ -115,6 +116,16 @@ public:
     /// @param action_name The action's name
     /// @return true if is the action is held, but not pressed in this frame
     static auto action_held(std::string_view action_name) -> bool;
+
+    /// @brief Creates a vector ranging from -1 to 1 on the X axis, -1 if the left action is pressed,
+    /// 1 if the right action is pressed and 0 if both are pressed
+    /// @param left_action The left action
+    /// @param right_action The right action
+    /// @return The created vector
+    static auto horizontal_input_vector(
+        std::string_view left_action, 
+        std::string_view right_action
+    ) -> glm::vec2;
 
 private:
     friend class Window;
