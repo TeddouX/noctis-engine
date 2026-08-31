@@ -72,9 +72,9 @@ auto PhysicsSystem2D::set_hit_event_threshold(float threshold) -> void
 
 auto PhysicsSystem2D::create_physics_entity(
     const std::vector<CollisionShape2D>    &collision_shapes,
-    PhysicsBody2D::Type                     physics_body_type,
-    const ECS::Transform2D                 &transform,
-    std::string_view                        name
+    PhysicsBody2D::Type                     physics_body_type = PhysicsBody2D::Type::STATIC,
+    const Transform2D                      &transform = Transform2D{},
+    Identifier                              id
 ) -> Entity
 {
     Entity entity = world_->create_entity();
@@ -88,7 +88,7 @@ auto PhysicsSystem2D::create_physics_entity(
 
     body_def.rotation = b2MakeRot(transform.rotation());
     body_def.type = static_cast<b2BodyType>(physics_body_type);
-    body_def.name = name.data();
+    body_def.name = id.name.data();
     body_def.userData = (void *)(std::uintptr_t)entity.id();
 
     b2BodyId body_id = b2CreateBody(b2LoadWorldId(physics_world_), &body_def);
@@ -134,7 +134,7 @@ auto PhysicsSystem2D::create_physics_entity(
                 b2ShapeId shape_id = b2CreatePolygonShape(body_id, &shape_def, &box_polygon);
                 if (not b2Shape_IsValid(shape_id))
                 {
-                    PHYSICS_LOGGER.error("Failed to create box shape for rigidbody \"{}\"", name);
+                    PHYSICS_LOGGER.error("Failed to create box shape for rigidbody \"{}\"", id.name);
                     world_->destroy_entity(entity);
                     b2DestroyBody(body_id);
 
@@ -165,7 +165,7 @@ auto PhysicsSystem2D::create_physics_entity(
                 b2ShapeId  shape_id = b2CreateCapsuleShape(body_id, &shape_def, &capsule);
                 if (not b2Shape_IsValid(shape_id))
                 {
-                    PHYSICS_LOGGER.error("Failed to create capsule shape for rigidbody \"{}\"", name);
+                    PHYSICS_LOGGER.error("Failed to create capsule shape for rigidbody \"{}\"", id.name);
                     world_->destroy_entity(entity);
                     b2DestroyBody(body_id);
 
@@ -208,7 +208,7 @@ auto PhysicsSystem2D::create_physics_entity(
                 b2ChainId chain_id = b2CreateChain(body_id, &chain_def);
                 if (not b2Chain_IsValid(chain_id))
                 {
-                    PHYSICS_LOGGER.error("Failed to create chain shape for rigidbody \"{}\"", name);
+                    PHYSICS_LOGGER.error("Failed to create chain shape for rigidbody \"{}\"", id.name);
                     world_->destroy_entity(entity);
                     b2DestroyBody(body_id);
 
@@ -236,7 +236,7 @@ auto PhysicsSystem2D::create_physics_entity(
                 b2ShapeId shape_id = b2CreateCircleShape(body_id, &shape_def, &circle);
                 if (not b2Shape_IsValid(shape_id))
                 {
-                    PHYSICS_LOGGER.error("Failed to create circle shape for rigidbody \"{}\"", name);
+                    PHYSICS_LOGGER.error("Failed to create circle shape for rigidbody \"{}\"", id.name);
                     world_->destroy_entity(entity);
                     b2DestroyBody(body_id);
 
@@ -259,7 +259,7 @@ auto PhysicsSystem2D::create_physics_entity(
 
                 if (hull.count <= 0)
                 {
-                    PHYSICS_LOGGER.error("Failed to create polygon shape for rigidbody \"{}\"", name);
+                    PHYSICS_LOGGER.error("Failed to create polygon shape for rigidbody \"{}\"", id.name);
                     world_->destroy_entity(entity);
                     b2DestroyBody(body_id);
 
@@ -292,7 +292,7 @@ auto PhysicsSystem2D::create_physics_entity(
                 b2ShapeId shape_id = b2CreateSegmentShape(body_id, &shape_def, &seg);
                 if (not b2Shape_IsValid(shape_id))
                 {
-                    PHYSICS_LOGGER.error("Failed to create segment shape for rigidbody \"{}\"", name);
+                    PHYSICS_LOGGER.error("Failed to create segment shape for rigidbody \"{}\"", id.name);
                     world_->destroy_entity(entity);
                     b2DestroyBody(body_id);
 
@@ -312,6 +312,7 @@ auto PhysicsSystem2D::create_physics_entity(
         physics_body.collision_shapes.push_back(coll_shape);
     }
 
+    world_->add_component(entity, id);
     world_->add_component(entity, physics_body);
     world_->add_component(entity, transform);
 

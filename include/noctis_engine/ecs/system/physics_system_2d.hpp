@@ -7,6 +7,7 @@
 #include "../ecs_world.hpp"
 #include "../component/transform_2d.hpp"
 #include "../component/physics_body_2d.hpp"
+#include "../component/identifier_component.hpp"
 #include "../../rendering/draw_list.hpp"
 #include "../../rendering/vertex_array.hpp"
 #include "../../rendering/graphics_program.hpp"
@@ -106,8 +107,8 @@ public:
     auto create_physics_entity(
         const std::vector<CollisionShape2D>    &collision_shapes,
         PhysicsBody2D::Type                     physics_body_type = PhysicsBody2D::Type::STATIC,
-        const ECS::Transform2D                 &transform = ECS::Transform2D{},
-        std::string_view                        name = "no_name"
+        const Transform2D                      &transform = Transform2D{},
+        Identifier                              id
     ) -> Entity;
 
     /// @brief Updates the physics engine's transforms

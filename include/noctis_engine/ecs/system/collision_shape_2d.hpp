@@ -17,16 +17,16 @@ struct PhysicsMaterial2D
     Color debug_draw_color{0, 255, 0};
 
     /// @brief The friction coefficient. In the range [0, 1]
-    float friction;
+    float friction{0.6f};
     
     /// @brief The bounciness. In the range [0, 1]
-    float bounciness;
+    float bounciness{0.f};
     
     /// @brief The rolling resistance. In the range [0, 1]
-    float rolling_resistance;
+    float rolling_resistance{0.f};
 
     /// @brief The tangent speed.
-    float tangent_speed;
+    float tangent_speed{0.f};
 };
 
 /// @brief Describes the contact points between colliding shapes
