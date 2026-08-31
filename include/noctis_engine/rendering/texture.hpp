@@ -72,7 +72,7 @@ public:
     struct Data 
     {
         /// @brief The texture's pixel data
-        std::uint8_t *data;
+        const std::uint8_t *data;
 
         /// @brief The texture's width
         int width; 
