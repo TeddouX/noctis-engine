@@ -32,6 +32,10 @@ public:
     /// @param position The new position
     auto set_position(const glm::vec2 &position) -> void;
 
+    /// @brief Updates the camera's projection matrix, useful when the window gets resized
+    /// @param new_half_extents The new half extents
+    auto update_projection_matrix(const glm::vec2 &new_half_extents) -> void;
+
     /// @brief Updates the camera's buffers, call this after it was moved
     auto update_buffers() -> void;
 

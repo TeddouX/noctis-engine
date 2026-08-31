@@ -1,9 +1,12 @@
 #pragma once 
 #include <cstdint>
 #include <string>
+#include <vector>
+#include <functional>
 
 
 struct GLFWwindow;
+struct GLFWmonitor;
 
 
 namespace NoctisEngine::Core
@@ -20,6 +23,35 @@ enum class VSyncMethod : int
 
     /// @brief Vertical sync set to half of the screen's refresh rate
     HALF_REFRESH_RATE = 2,
+};
+
+/// @brief This represents a user's monitor
+struct Monitor
+{
+    struct VideoMode
+    {
+        /// @brief The monitor's width, in pixels
+        int width;
+        /// @brief The monitor's heigh , in pixels
+        int height;
+        
+        /// @brief This mode's refresh rate
+        int refresh_rate;
+    };
+
+    /// @brief The monitor's name
+    std::string_view name;
+
+    /// @brief All this monitor's supported video modes
+    std::vector<VideoMode> video_modes;
+
+    /// @brief This monitor's current video mode
+    VideoMode current_video_mode;
+
+private:
+    friend class Window;
+
+    GLFWmonitor *ptr;
 };
 
 /// @brief This class is a wrappter over a GLFW window 
@@ -55,11 +87,48 @@ public:
     /// @param method The vsync method
     auto set_vsync(VSyncMethod method) -> void;
 
+    /// @brief Gets the user's primary monitor
+    auto get_primary_monitor() -> Monitor;
+
+    /// @brief Gets the all the user's monitors
+    auto get_all_monitors() -> std::vector<Monitor>;
+
+    /// @brief Sets the window to be a floating window
+    auto set_floating() -> void;
+
+    /// @brief Sets the window to be fullscreen borderless
+    /// @param monitor The monitor the window should be attached to
+    /// @param mode The mode that should be used
+    /// @warning This function is not properly implemented for some OSes and linux desktop envs
+    auto set_fullscreen_borderless(Monitor &monitor, Monitor::VideoMode &mode) -> void;
+
+    /// @brief Sets the window to be fullscreen
+    /// @param monitor The monitor the window should be attached to
+    /// @param mode The mode that should be used
+    auto set_fullscreen(Monitor &monitor, Monitor::VideoMode &mode) -> void;
+
+    /// @brief Sets the callback for when the window gets resized, useful for 
+    /// resizing a camera's projection matrix
+    /// @param callback The callback, param 1: new_width, param 2: new_height
+    auto set_resize_callback(std::function<void (int, int)> callback) -> void;
+
 private:
     GLFWwindow *glfw_window_;
 
     double delta_time_;
     double last_frame_;
+
+    std::function<void (int, int)> resize_callback_;
+
+    struct State
+    {
+        int x, y, width, height;
+        bool fullscreen = false;
+    } saved_state_;
+
+    auto make_nceng_monitor(GLFWmonitor *glfw_monitor) -> Monitor;
+
+    static auto framebuffer_resized_callback(GLFWwindow* glfw_window, int width, int height) -> void;
 };
 
 } // namespace NoctisEngine::Core

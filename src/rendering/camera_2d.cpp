@@ -37,6 +37,12 @@ auto Camera2D::set_position(const glm::vec2 &position) -> void
     pos_ = position;
 }
 
+auto Camera2D::update_projection_matrix(const glm::vec2 &new_half_extents) -> void
+{
+    projection_matrix_[0][0] = 1.0f / new_half_extents.x;
+    projection_matrix_[1][1] = -1.0f / new_half_extents.y;
+}
+
 auto Camera2D::update_buffers() -> void
 {
     camera_ubo_.write(get_cpu_read_view(CameraData{
