@@ -48,11 +48,11 @@ public:
     struct MotionLocks
     {
         /// @brief Locks motion on the x axis
-        bool x;
+        bool x = false;
         /// @brief Locks motion on the y axis
-        bool y;
+        bool y = false;
         /// @brief Locks rotation
-        bool rotation;
+        bool rotation = false;
     };
 
     /// @brief Gets the physics body type
