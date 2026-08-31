@@ -7,7 +7,7 @@
 namespace NoctisEngine
 {
     
-constexpr glm::vec2 UP_VEC_2D{0, -1};
+constexpr glm::vec2 UP_VEC_2D{0, 1};
 
 } // namespace NoctisEngine
 

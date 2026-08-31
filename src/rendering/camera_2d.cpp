@@ -20,7 +20,7 @@ Camera2D::Camera2D(
 {
     projection_matrix_ = glm::ortho(
         -half_extents.x, half_extents.x, 
-        half_extents.y, -half_extents.y, 
+        -half_extents.y, half_extents.y, 
         near, far
     );
 
@@ -40,7 +40,7 @@ auto Camera2D::set_position(const glm::vec2 &position) -> void
 auto Camera2D::update_projection_matrix(const glm::vec2 &new_half_extents) -> void
 {
     projection_matrix_[0][0] = 1.0f / new_half_extents.x;
-    projection_matrix_[1][1] = -1.0f / new_half_extents.y;
+    projection_matrix_[1][1] = 1.0f / new_half_extents.y;
 }
 
 auto Camera2D::update_buffers() -> void

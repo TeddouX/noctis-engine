@@ -77,7 +77,7 @@ public:
 
     /// @brief Default amount of time to simulate for physics update, 120Hz
     static constexpr float DEFAULT_TIMESTEP = 1.0f / 120.0f;
-    static constexpr glm::vec2 DEFAULT_GRAVITY{0, 9.81};
+    static constexpr glm::vec2 DEFAULT_GRAVITY{0, -9.81};
 
     /// @param world Your game's ECS world, used to create physics entities
     PhysicsSystem2D(std::shared_ptr<World> world);

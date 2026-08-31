@@ -12,6 +12,8 @@ Core::Logger ASSET_LOGGER{"Noctis Engine", "Asset"};
 
 auto load_texture(const std::filesystem::path &path, const std::string &name) -> std::optional<Rendering::Texture>
 {
+    stbi_set_flip_vertically_on_load(true);
+
     int width, height;
     int nr_channels;
 
