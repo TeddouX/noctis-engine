@@ -40,6 +40,7 @@ static auto glad_enable_disable(bool b, GLenum name) -> void
 
 Renderer::Renderer(const glm::ivec2 &framebuffer_size)
     : throw_on_err_{false}
+    , render_fence_{nullptr}
 {
     glEnable(GL_DEBUG_OUTPUT);
     glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
@@ -59,19 +60,19 @@ Renderer::Renderer(const glm::ivec2 &framebuffer_size)
         (const char *)glGetString(GL_VERSION)
     );
 
+    FrameBuffer world_fb{"world_fb", framebuffer_size.x, framebuffer_size.y};
+    FrameBuffer ui_fb{"ui_fb", framebuffer_size.x, framebuffer_size.y};
+
+    ui_fb.share_depth(world_fb);
+
     world_render_pass_ = RenderPass{
         .name = "World render pass",
-        .frame_buffer = FrameBuffer{"world_fb", framebuffer_size.x, framebuffer_size.y},
+        .frame_buffer = world_fb,
     };
 
     ui_render_pass_ = RenderPass{
         .name = "UI render pass",
-        .frame_buffer = FrameBuffer{"ui_fb", framebuffer_size.x, framebuffer_size.y},
-    };
-
-    composition_render_pass_ = RenderPass{
-        .name = "Composition render pas",
-        .frame_buffer = std::nullopt,
+        .frame_buffer = ui_fb,
     };
 
     composition_program_ = GraphicsProgram::create_helper(
@@ -137,6 +138,15 @@ auto Renderer::render_pass(DrawList &draw_list, const RenderPass &render_pass) -
         render_pass.name.size(), 
         render_pass.name.data()
     );
+
+    if (render_fence_)
+    {
+        glClientWaitSync(
+            static_cast<GLsync>(render_fence_), 
+            GL_SYNC_FLUSH_COMMANDS_BIT, 
+            GL_TIMEOUT_IGNORED
+        );
+    }
 
     auto &framebuffer = render_pass.frame_buffer;
     if (framebuffer)
@@ -407,6 +417,8 @@ auto Renderer::render_pass(DrawList &draw_list, const RenderPass &render_pass) -
     }
 
     flush_commands();
+
+    render_fence_ = glFenceSync(GL_SYNC_GPU_COMMANDS_COMPLETE, 0);
 
     if (framebuffer)
         fb_textures_.push_back(&framebuffer->color_tex());

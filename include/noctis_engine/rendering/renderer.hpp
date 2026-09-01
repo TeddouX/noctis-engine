@@ -132,7 +132,6 @@ private:
 
     RenderPass                      world_render_pass_;
     RenderPass                      ui_render_pass_;
-    RenderPass                      composition_render_pass_;
     
     GraphicsProgram                 composition_program_;
 
@@ -140,6 +139,8 @@ private:
     
     MeshManager                     quad_mesh_manager_;
     MeshView                        quad_mesh_view_;
+
+    void                           *render_fence_;
 
     bool                            throw_on_err_;
 

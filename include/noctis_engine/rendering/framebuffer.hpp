@@ -31,6 +31,11 @@ public:
     /// @return 
     auto resize(int new_width, int new_height) -> void;
 
+    /// @brief Shares the depth data with another framebuffer
+    /// @param other The other framebuffer
+    /// @warning This will delete this framebuffer's depth data 
+    auto share_depth(const FrameBuffer &other) -> void;
+    
     /// @brief Attaches a color texture to this framebuffer  
     /// @param tex The color texture
     /// @warning This deletes the old one from the GPU

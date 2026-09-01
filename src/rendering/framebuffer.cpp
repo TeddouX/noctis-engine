@@ -45,6 +45,14 @@ auto FrameBuffer::resize(int new_width, int new_height) -> void
     );
 }
 
+auto FrameBuffer::share_depth(const FrameBuffer &other) -> void
+{
+    glDeleteRenderbuffers(1, &rbo_);
+    glNamedFramebufferRenderbuffer(handle_, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, other.rbo_);
+
+    rbo_ = other.rbo_;
+}
+
 auto FrameBuffer::attach_color_tex(Texture &tex) -> void
 {
     color_tex_.delete_gpu();
