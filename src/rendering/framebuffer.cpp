@@ -7,6 +7,7 @@ namespace NoctisEngine
 {
     
 FrameBuffer::FrameBuffer(std::string_view name, std::uint32_t width, std::uint32_t height)
+    : name_{name}
 {
     glCreateFramebuffers(1, &handle_);
 
@@ -16,7 +17,7 @@ FrameBuffer::FrameBuffer(std::string_view name, std::uint32_t width, std::uint32
             .width = static_cast<int>(width),
             .height = static_cast<int>(height),
             .nr_channels = 4,
-            .name = std::string(name) + "_color_tex",
+            .name = std::string(name) + COLOR_TEX_SUFFIX,
         }
     };
     color_tex_.set_minifying_function(MinifyingFunction::LINEAR);
@@ -58,6 +59,16 @@ auto FrameBuffer::gl_handle() const -> std::uint32_t
 auto FrameBuffer::color_tex() -> Texture &
 {
     return color_tex_;
+}
+
+auto FrameBuffer::color_tex() const -> const Texture &
+{
+    return color_tex_;
+}
+
+auto FrameBuffer::name() const -> std::string_view
+{
+    return name_;
 }
 
 } // namespace NoctisEngine

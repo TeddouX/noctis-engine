@@ -11,11 +11,11 @@ struct Vertex
     /// @brief Coordinates in local space
     glm::vec3 pos;
     /// @brief The surface normal
-    glm::vec3 normal;
+    glm::vec3 normal{0};
     /// @brief The surface tangent
-    glm::vec3 tangent;
+    glm::vec3 tangent{0};
     /// @brief The texture coordinates
-    glm::vec2 tex_coords;
+    glm::vec2 tex_coords{0};
 };
 
 /// @brief This is used to draw debug shapes, it is for example used by the physics system

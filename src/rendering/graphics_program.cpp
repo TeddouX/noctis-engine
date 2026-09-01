@@ -120,9 +120,21 @@ auto GraphicsProgram::detach_shader(const Shader &shader) const -> void
     glDetachShader(handle_, shader.gl_handle());
 }
 
-
-auto GraphicsProgram::delete_gpu() const -> void
+auto GraphicsProgram::delete_gpu(bool delete_attached_shaders) const -> void
 {
+    if (delete_attached_shaders)
+    {
+        GLint num_attached;
+        glGetProgramiv(handle_, GL_ATTACHED_SHADERS, &num_attached);
+
+        std::vector<GLuint> shaders(static_cast<size_t>(num_attached));
+        GLsizei count;
+        glGetAttachedShaders(handle_, num_attached, &count, shaders.data());
+
+        for (GLsizei i = 0; i < count; i++)
+            glDeleteShader(shaders[i]);
+    }
+
     glDeleteProgram(handle_);
 }
 

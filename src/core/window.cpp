@@ -64,6 +64,7 @@ Window::Window(std::uint32_t width, std::uint32_t height, std::string_view title
     }
 
     CORE_LOGGER.debug("Initialized OpenGL context for window \"{}\"", title);
+    OGL_STATE.valid = true;
 }
 
 Window::~Window()
@@ -115,12 +116,12 @@ auto Window::set_vsync(VSyncMethod method) -> void
     glfwSwapInterval(static_cast<int>(method));
 }
 
-auto Window::get_primary_monitor() -> Monitor
+auto Window::primary_monitor() -> Monitor
 {
     return make_nceng_monitor(glfwGetPrimaryMonitor());
 }
 
-auto Window::get_all_monitors() -> std::vector<Monitor>
+auto Window::all_monitors() -> std::vector<Monitor>
 {
     std::vector<Monitor> vec;
 
@@ -235,6 +236,13 @@ auto Window::framebuffer_resized_callback(GLFWwindow* glfw_window, int width, in
     Window *window = (Window *)glfwGetWindowUserPointer(glfw_window);
     if (window->resize_callback_)
         window->resize_callback_(width, height);
+}
+
+auto Window::frambuffer_size() -> glm::ivec2
+{
+    glm::ivec2 size{};
+    glfwGetFramebufferSize(glfw_window_, &size.x, &size.y);
+    return size;
 }
 
 } // namespace NoctisEngine

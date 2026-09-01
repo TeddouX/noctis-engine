@@ -12,6 +12,8 @@ namespace NoctisEngine
 class FrameBuffer
 {
 public:
+    static constexpr std::string_view COLOR_TEX_SUFFIX = "_color_tex";
+
     /// @brief Default constructor, doesn't create anything on the GPU
     FrameBuffer() = default;
 
@@ -40,11 +42,18 @@ public:
     /// @brief Gets this frambuffer's color texture
     auto color_tex() -> Texture &;
 
-private:
-    std::uint32_t handle_;
-    std::uint32_t rbo_;
+    /// @brief Gets this frambuffer's color texture
+    auto color_tex() const -> const Texture &;
 
-    Texture color_tex_;
+    /// @brief Gets this framebuffer's name
+    auto name() const -> std::string_view;
+
+private:
+    std::uint32_t       handle_;
+    std::uint32_t       rbo_;
+    Texture             color_tex_;
+
+    std::string_view    name_;
 };
 
 } // namespace NoctisEngine

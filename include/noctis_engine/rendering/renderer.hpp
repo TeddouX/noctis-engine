@@ -1,7 +1,9 @@
 #pragma once
-#include "../math/color.hpp"
 #include "gpu_buffer.hpp"
+#include "framebuffer.hpp"
+#include "graphics_program.hpp"
 #include "mesh/mesh_manager.hpp"
+#include "../math/color.hpp"
 
 
 namespace NoctisEngine
@@ -53,12 +55,21 @@ enum class BlendFunc
     ONE_MINUS_CONSTANT_ALPHA = 0x8004
 };
 
+struct RenderPass
+{
+    std::string_view            name;
+
+    /// @brief Leave it null if this render pass should draw to the screen's framebuffer
+    std::optional<FrameBuffer>  frame_buffer;
+};
+
 /// @brief Use this class to render draw lists and to parameterize your rendering
 class Renderer
 {
 public:
     /// @brief Default constructor that initialises required buffers
-    Renderer();
+    /// @param framebuffer_size Your window's framebuffer size (use Window::framebuffer_size)
+    Renderer(const glm::ivec2 &framebuffer_size);
 
     /// @brief Backface culling skips rendering triangles whose face is pointing away from the camera
     /// (based on vertex winding order)
@@ -90,20 +101,56 @@ public:
     /// @param dest The destination framebuffer pixel
     auto set_blend_func(BlendFunc source, BlendFunc dest) const -> void;
 
-    /// @brief Renders the contents of a draw list on screen
+    /// @brief This function resizes this renderer's frambuffer, call this in your window's resize callback
+    /// @param new_fb_size The frame buffer's new size
+    auto resize_framebuffer(int new_width, int new_height) -> void;
+
+    /// @brief This sets the graphics program that merges all the render passes. 
+    /// Use this if you have custom render passes
+    /// @warning This deletes the old composition program
+    auto set_composition_program(GraphicsProgram program) -> void;
+
+    /// @brief Renders a draw list in a render pass
     /// @param draw_list The draw list that should be rendered
-    auto render(DrawList &draw_list) -> void;
+    /// @param render_pass The render pass that should be used
+    auto render_pass(DrawList &draw_list, const RenderPass &render_pass) -> void;
+
+    /// @brief Renders the contents of a draw list on screen, using the default world render pass
+    /// @param draw_list The draw list that should be rendered
+    auto render_world(DrawList &draw_list) -> void;
+
+    /// @brief Renders the contents of a draw list on screen, using the default UI render pass
+    /// @param draw_list The draw list that should be rendered
+    auto render_ui(DrawList &draw_list) -> void;
+
+    /// @brief Puts on the user's screen every render pass you've drawn
+    auto show_final_image() -> void;
 
 private:
     GPUBuffer                       objects_ssbo_;
     GPUBuffer                       command_buffer_;
 
+    RenderPass                      world_render_pass_;
+    RenderPass                      ui_render_pass_;
+    RenderPass                      composition_render_pass_;
+    GraphicsProgram                 composition_program_;
+    MeshManager                     quad_mesh_manager_;
+
+    std::vector<const Texture *>    fb_textures_;
+
+    MeshView                        default_quad_mv_;
+
     bool                            throw_on_err_;
 
-    auto check_ogl_extensions() -> void;
-
-    static void opengl_debug_message_callback(uint32_t source, uint32_t type, uint32_t id, uint32_t severity,
-        int length, const char* message, const void* userParam);
+    static auto opengl_debug_message_callback(
+        std::uint32_t source, 
+        std::uint32_t type, 
+        std::uint32_t id, 
+        std::uint32_t severity,
+        int length, 
+        const char *message, 
+        const void *userParam
+    ) -> void;
 };
 
 } // namespace NoctisEngine
