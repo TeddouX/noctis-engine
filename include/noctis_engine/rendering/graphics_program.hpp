@@ -46,8 +46,9 @@ public:
     /// OpenGL will generate an error
     auto detach_shader(const Shader &shader) const -> void;
 
-    /// @brief Deletes this program on the GPU
-    auto delete_gpu() const -> void;
+    /// @brief Deletes this program on the GPU and (optionally) its attached shaders
+    /// @param delete_attached_shaders Should this function delete this program's attached shaders
+    auto delete_gpu(bool delete_attached_shaders = true) const -> void;
 
     /// @brief Binds this graphics program to a draw list
     /// @param draw_list The draw list that it should be bound to

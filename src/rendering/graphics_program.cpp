@@ -120,9 +120,21 @@ auto GraphicsProgram::detach_shader(const Shader &shader) const -> void
     glDetachShader(handle_, shader.gl_handle());
 }
 
-
-auto GraphicsProgram::delete_gpu() const -> void
+auto GraphicsProgram::delete_gpu(bool delete_attached_shaders) const -> void
 {
+    if (delete_attached_shaders)
+    {
+        GLint num_attached;
+        glGetProgramiv(handle_, GL_ATTACHED_SHADERS, &num_attached);
+
+        std::vector<GLuint> shaders(static_cast<size_t>(num_attached));
+        GLsizei count;
+        glGetAttachedShaders(handle_, num_attached, &count, shaders.data());
+
+        for (GLsizei i = 0; i < count; i++)
+            glDeleteShader(shaders[i]);
+    }
+
     glDeleteProgram(handle_);
 }
 
@@ -170,7 +182,7 @@ auto GraphicsProgram::create_helper(
 
     if (not frag_shader.compile())
     {
-        RENDERING_LOGGER.critical("graphics program create helper: Failed to compile fragment shader for program \"{}\" ", name);
+        RENDERING_LOGGER.error("graphics program create helper: Failed to compile fragment shader for program \"{}\" ", name);
         return GraphicsProgram{};
     }
 
@@ -184,13 +196,13 @@ auto GraphicsProgram::create_helper(
 
     if (not prog.valid())
     {
-        RENDERING_LOGGER.critical("graphics program create helper: Failed to create program \"{}\" ", name);
+        RENDERING_LOGGER.error("graphics program create helper: Failed to create program \"{}\" ", name);
         return GraphicsProgram{};
     }
 
     if (not prog.link())
     {
-        RENDERING_LOGGER.critical("graphics program create helper: Failed to link program \"{}\"", name);
+        RENDERING_LOGGER.error("graphics program create helper: Failed to link program \"{}\"", name);
         return GraphicsProgram{};
     }
 

@@ -64,8 +64,20 @@ auto MeshManager::use(DrawList &draw_list) -> void
 auto MeshManager::delete_buffers() -> void
 {
     vertex_array_.delete_gpu();
+    ebo_.delete_gpu();
+    vbo_.delete_gpu();
 
     RENDERING_LOGGER.debug("Deleted mesh manager");
+}
+
+auto MeshManager::ebo_handle() -> std::uint32_t
+{
+    return ebo_.gl_handle();
+}
+
+auto MeshManager::vao_handle() -> std::uint32_t
+{
+    return vertex_array_.vao_gl_handle();
 }
 
 } // namespace NoctisEngine

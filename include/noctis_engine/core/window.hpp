@@ -4,6 +4,8 @@
 #include <vector>
 #include <functional>
 
+#include "../math/math.hpp"
+
 
 struct GLFWwindow;
 struct GLFWmonitor;
@@ -88,10 +90,10 @@ public:
     auto set_vsync(VSyncMethod method) -> void;
 
     /// @brief Gets the user's primary monitor
-    auto get_primary_monitor() -> Monitor;
+    auto primary_monitor() -> Monitor;
 
     /// @brief Gets the all the user's monitors
-    auto get_all_monitors() -> std::vector<Monitor>;
+    auto all_monitors() -> std::vector<Monitor>;
 
     /// @brief Sets the window to be a floating window
     auto set_floating() -> void;
@@ -111,6 +113,9 @@ public:
     /// resizing a camera's projection matrix
     /// @param callback The callback, param 1: new_width, param 2: new_height
     auto set_resize_callback(std::function<void (int, int)> callback) -> void;
+
+    /// @brief Gets this window's frambuffer size, useful for the renderer's constructor
+    auto frambuffer_size() -> glm::ivec2;
 
 private:
     GLFWwindow *glfw_window_;

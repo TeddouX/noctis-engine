@@ -5,7 +5,9 @@
 #include <GLFW/glfw3.h>
 
 #include <noctis_engine/core/exit.hpp>
+#include <noctis_engine/core/window.hpp>
 #include <noctis_engine/rendering/shader_bindings.hpp>
+#include <noctis_engine/rendering/default_shaders.hpp>
 
 
 namespace NoctisEngine
@@ -36,8 +38,9 @@ static auto glad_enable_disable(bool b, GLenum name) -> void
     else   glDisable(name);
 }
 
-Renderer::Renderer()
+Renderer::Renderer(const glm::ivec2 &framebuffer_size)
     : throw_on_err_{false}
+    , render_fence_{nullptr}
 {
     glEnable(GL_DEBUG_OUTPUT);
     glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
@@ -57,7 +60,39 @@ Renderer::Renderer()
         (const char *)glGetString(GL_VERSION)
     );
 
-    check_ogl_extensions();
+    FrameBuffer world_fb{"world_fb", framebuffer_size.x, framebuffer_size.y};
+    FrameBuffer ui_fb{"ui_fb", framebuffer_size.x, framebuffer_size.y};
+
+    ui_fb.share_depth(world_fb);
+
+    world_render_pass_ = RenderPass{
+        .name = "World render pass",
+        .frame_buffer = world_fb,
+    };
+
+    ui_render_pass_ = RenderPass{
+        .name = "UI render pass",
+        .frame_buffer = ui_fb,
+    };
+
+    composition_program_ = GraphicsProgram::create_helper(
+        DefaultShaders::COMPOSITION_VERT_SHADER, 
+        DefaultShaders::COMPOSITION_FRAG_SHADER, 
+        "default_composition_prog"
+    );
+
+    fb_textures_.reserve(4);
+
+    quad_mesh_view_ = quad_mesh_manager_.upload(MeshData{
+        // This quad spans the whole screen
+        {
+            Vertex{glm::vec3( 1.0f,  1.0f, 0.0f), glm::vec3(0), glm::vec3(0), glm::vec2(1, 1)},
+            Vertex{glm::vec3(-1.0f,  1.0f, 0.0f), glm::vec3(0), glm::vec3(0), glm::vec2(0, 1)},
+            Vertex{glm::vec3(-1.0f, -1.0f, 0.0f), glm::vec3(0), glm::vec3(0), glm::vec2(0, 0)},
+            Vertex{glm::vec3( 1.0f, -1.0f, 0.0f), glm::vec3(0), glm::vec3(0), glm::vec2(1, 0)},
+        },
+        {0, 1, 2, 2, 3, 0}
+    });
 }
 
 auto Renderer::set_backface_culling(bool b) const -> void 
@@ -95,8 +130,28 @@ auto Renderer::set_blend_func(BlendFunc sFactor, BlendFunc dFactor) const -> voi
     glBlendFunc(static_cast<GLenum>(sFactor), static_cast<GLenum>(dFactor));
 }
 
-auto Renderer::render(DrawList &draw_list) -> void
+auto Renderer::render_pass(DrawList &draw_list, const RenderPass &render_pass) -> void
 {
+    glPushDebugGroup(
+        GL_DEBUG_SOURCE_APPLICATION, 
+        0, 
+        render_pass.name.size(), 
+        render_pass.name.data()
+    );
+
+    if (render_fence_)
+    {
+        glClientWaitSync(
+            static_cast<GLsync>(render_fence_), 
+            GL_SYNC_FLUSH_COMMANDS_BIT, 
+            GL_TIMEOUT_IGNORED
+        );
+    }
+
+    auto &framebuffer = render_pass.frame_buffer;
+    if (framebuffer)
+        glBindFramebuffer(GL_FRAMEBUFFER, framebuffer->gl_handle());
+
     bool command_buf_resized = GPUBuffer::resize(
         command_buffer_, 
         draw_list.required_indirect_draw_cmds() * sizeof(DrawElementsIndirectCommand)
@@ -167,7 +222,7 @@ auto Renderer::render(DrawList &draw_list) -> void
                 if (last_program_id <= 0)
                 {
                     RENDERING_LOGGER.error("Shader must be bound to use a texture. Shader binding should be done before anything else in the draw list");
-                    return;
+                    break;
                 }
 
                 auto texture_cmd = reinterpret_cast<const BindTextureCmd *>(curr_cmd.base());
@@ -198,7 +253,7 @@ auto Renderer::render(DrawList &draw_list) -> void
             {
                 auto shader_cmd = reinterpret_cast<const BindProgramCmd *>(curr_cmd.base());
             
-                if (last_program_id != shader_cmd->prog)
+                if (last_program_id == 0 || last_program_id != shader_cmd->prog)
                 {
                     flush_commands();
                     glUseProgram(shader_cmd->prog);
@@ -287,7 +342,7 @@ auto Renderer::render(DrawList &draw_list) -> void
                 if (last_program_id <= 0)
                 {
                     RENDERING_LOGGER.error("Shader must be bound to draw a mesh. Shader binding should be done before anything else in the draw list");
-                    return;
+                    break;
                 }
 
                 auto draw_mesh_cmd = reinterpret_cast<const DrawMeshCmd *>(curr_cmd.base());
@@ -328,9 +383,8 @@ auto Renderer::render(DrawList &draw_list) -> void
                 }
 
                 if (clear_cmd->clear_depth)
-                {
+                {    
                     glClearDepth(clear_cmd->depth);
-
                     mask |= GL_DEPTH_BUFFER_BIT;
                 }
 
@@ -363,10 +417,90 @@ auto Renderer::render(DrawList &draw_list) -> void
     }
 
     flush_commands();
+
+    render_fence_ = glFenceSync(GL_SYNC_GPU_COMMANDS_COMPLETE, 0);
+
+    if (framebuffer)
+        fb_textures_.push_back(&framebuffer->color_tex());
+    
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glPopDebugGroup();
 }
 
-void Renderer::opengl_debug_message_callback(uint32_t source, uint32_t type, uint32_t id, uint32_t severity,
-    int length, const char* message, const void* userParam) 
+auto Renderer::render_world(DrawList &draw_list) -> void
+{
+    render_pass(draw_list, world_render_pass_);
+}
+
+auto Renderer::render_ui(DrawList &draw_list) -> void
+{
+    render_pass(draw_list, ui_render_pass_);
+}
+
+auto Renderer::present() -> void
+{
+    glPushDebugGroup(
+        GL_DEBUG_SOURCE_APPLICATION, 
+        0, 
+        -1, 
+        "Composition render pass"
+    );
+
+    glClearColor(0.f, 0.f, 0.f, 0.f);
+    glClearDepth(1.f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, quad_mesh_manager_.ebo_handle());
+    glBindVertexArray(quad_mesh_manager_.vao_handle());
+
+    glUseProgram(composition_program_.gl_handle());
+
+    for (std::size_t i = 0; i < fb_textures_.size(); i++)
+    {
+        const Texture *tex = fb_textures_[i];
+
+        glActiveTexture(GL_TEXTURE0 + i);
+        glBindTexture(GL_TEXTURE_2D, tex->gl_handle());
+    
+        int loc = glGetUniformLocation(composition_program_.gl_handle(), tex->name().data());
+        if (loc < 0) 
+        {
+            RENDERING_LOGGER.error("Composition pass: uniform for framebuffer texture \"{}\" couldn't be found", tex->name());
+            break;
+        }
+
+        glUniform1i(loc, i);
+    }
+
+    glDrawElementsInstancedBaseVertexBaseInstance(
+        GL_TRIANGLES,
+        quad_mesh_view_.indices_count,
+        GL_UNSIGNED_INT,
+        reinterpret_cast<void *>(quad_mesh_view_.indices_offset * sizeof(std::uint32_t)),
+        1,
+        quad_mesh_view_.vertices_offset,
+        0
+    );  
+
+    fb_textures_.clear();
+
+    glPopDebugGroup();
+}
+
+auto Renderer::resize_framebuffer(int new_width, int new_height) -> void
+{
+    world_render_pass_.frame_buffer->resize(new_width, new_height);
+    ui_render_pass_.frame_buffer->resize(new_width, new_height);
+}
+
+auto Renderer::opengl_debug_message_callback(        
+    std::uint32_t source, 
+    std::uint32_t type, 
+    std::uint32_t id, 
+    std::uint32_t severity,
+    int length, 
+    const char *message, 
+    const void *userParam) -> void
 {
     if (severity == GL_DEBUG_SEVERITY_LOW)
     {
@@ -390,10 +524,6 @@ void Renderer::opengl_debug_message_callback(uint32_t source, uint32_t type, uin
             exit_program_failure();
         }
     }
-}
-
-auto Renderer::check_ogl_extensions() -> void
-{
 }
 
 } // namespace NoctisEngine
