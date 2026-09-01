@@ -14,35 +14,7 @@ Texture::Texture(const Data &texture_data)
     glGenTextures(1, &handle_);
     glBindTexture(GL_TEXTURE_2D, handle_);
     glObjectLabel(GL_TEXTURE, handle_, -1, name_.c_str());
-
-    GLenum internal_format = GL_RGBA8;
-    GLenum data_format = GL_RGBA;
-
-    if (texture_data.nr_channels == 1)
-    {
-        internal_format = GL_R8;
-        data_format = GL_RED;
-    }
-    else if (texture_data.nr_channels == 3)
-    {
-        internal_format = GL_RGB8;
-        data_format = GL_RGB;
-    }
-
-    glTexImage2D(
-		GL_TEXTURE_2D, 
-		0, 
-		internal_format, 
-		width_, 
-		height_, 
-		0, 
-		data_format,
-		GL_UNSIGNED_BYTE, 
-		texture_data.data
-	);
-
-    glGenerateMipmap(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, 0);
+    set_data(texture_data);
 }
 
 auto Texture::set_minifying_function(MinifyingFunction func) const -> void
@@ -78,6 +50,43 @@ auto Texture::set_border_color(const Color &c) const -> void
 auto Texture::bind(DrawList &draw_list, std::uint32_t bind_point, std::string_view uniform_name) const -> void
 {
     draw_list.bind_texture(handle_, bind_point, uniform_name);
+}
+
+auto Texture::set_data(const Data &data) -> void
+{
+    glBindTexture(GL_TEXTURE_2D, handle_);
+
+    width_ = data.width;
+    height_ = data.height;
+
+    GLenum internal_format = GL_RGBA8;
+    GLenum data_format = GL_RGBA;
+
+    if (data.nr_channels == 1)
+    {
+        internal_format = GL_R8;
+        data_format = GL_RED;
+    }
+    else if (data.nr_channels == 3)
+    {
+        internal_format = GL_RGB8;
+        data_format = GL_RGB;
+    }
+
+    glTexImage2D(
+        GL_TEXTURE_2D, 
+		0, 
+		internal_format, 
+		data.width, 
+		data.height, 
+		0, 
+		data_format,
+		GL_UNSIGNED_BYTE, 
+		data.data
+    );
+
+    glGenerateMipmap(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 auto Texture::delete_gpu() const -> void

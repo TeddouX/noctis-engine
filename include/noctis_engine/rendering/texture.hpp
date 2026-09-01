@@ -87,6 +87,9 @@ public:
         std::string name;
     };
 
+    /// @brief Default constructor, doesn't create anything on the GPU
+    Texture() = default;
+
     /// @brief Creates a texture and uploads its data to the GPU
     /// @param texture_data The texture's data
     Texture(const Data &texture_data);
@@ -116,6 +119,11 @@ public:
     /// @param bind_point The point the texture should be bound to in the shader
     /// @param uniform_name The name of the uniform this texture should be bound to
     auto bind(DrawList &draw_list, std::uint32_t bind_point, std::string_view uniform_name) const -> void;
+
+    /// @brief Sets this texture's data to new data
+    /// @param data The new data
+    /// @warning This discards the texture's old dat 
+    auto set_data(const Data &data) -> void;
 
     /// @brief Removes this texture from the GPU, it shouldn't be used after deletion
     auto delete_gpu() const -> void;
