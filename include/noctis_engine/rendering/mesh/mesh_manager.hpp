@@ -28,6 +28,12 @@ public:
     /// @brief Deletes this mesh manager's buffers, it shouldn't be used afterwards
     auto delete_buffers() -> void;
 
+    /// @brief Gets this mesh manager's EBO handle
+    auto ebo_handle() -> std::uint32_t;
+    
+    /// @brief Gets this mesh manager's VAO handle
+    auto vao_handle() -> std::uint32_t;
+
 private:
     VertexArray vertex_array_;
     GPUBuffer   vbo_;

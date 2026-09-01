@@ -21,7 +21,7 @@ public:
     /// @param name The framebuffer's name (also used for its textures)
     /// @param width The framebuffer's width, should be the frambuffer width of your window
     /// @param height The framebuffer's height, should be the frambuffer height of your window
-    FrameBuffer(std::string_view name, std::uint32_t width, std::uint32_t height);
+    FrameBuffer(std::string_view name, int width, int height);
 
     ~FrameBuffer() = default;
 
@@ -29,7 +29,7 @@ public:
     /// @param new_width The new width
     /// @param new_height The new height
     /// @return 
-    auto resize(std::uint32_t new_width, std::uint32_t new_height) -> void;
+    auto resize(int new_width, int new_height) -> void;
 
     /// @brief Attaches a color texture to this framebuffer  
     /// @param tex The color texture

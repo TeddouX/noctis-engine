@@ -6,7 +6,7 @@
 namespace NoctisEngine
 {
     
-FrameBuffer::FrameBuffer(std::string_view name, std::uint32_t width, std::uint32_t height)
+FrameBuffer::FrameBuffer(std::string_view name, int width, int height)
     : name_{name}
 {
     glCreateFramebuffers(1, &handle_);
@@ -17,7 +17,7 @@ FrameBuffer::FrameBuffer(std::string_view name, std::uint32_t width, std::uint32
             .width = static_cast<int>(width),
             .height = static_cast<int>(height),
             .nr_channels = 4,
-            .name = std::string(name) + COLOR_TEX_SUFFIX,
+            .name = std::string(name) + std::string(COLOR_TEX_SUFFIX),
         }
     };
     color_tex_.set_minifying_function(MinifyingFunction::LINEAR);
@@ -30,7 +30,7 @@ FrameBuffer::FrameBuffer(std::string_view name, std::uint32_t width, std::uint32
     glNamedFramebufferRenderbuffer(handle_, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo_);
 }
 
-auto FrameBuffer::resize(std::uint32_t new_width, std::uint32_t new_height) -> void
+auto FrameBuffer::resize(int new_width, int new_height) -> void
 {
     glNamedRenderbufferStorage(rbo_, GL_DEPTH24_STENCIL8, new_width, new_height);
 

@@ -124,7 +124,7 @@ public:
     auto render_ui(DrawList &draw_list) -> void;
 
     /// @brief Puts on the user's screen every render pass you've drawn
-    auto show_final_image() -> void;
+    auto present() -> void;
 
 private:
     GPUBuffer                       objects_ssbo_;
@@ -133,12 +133,13 @@ private:
     RenderPass                      world_render_pass_;
     RenderPass                      ui_render_pass_;
     RenderPass                      composition_render_pass_;
+    
     GraphicsProgram                 composition_program_;
-    MeshManager                     quad_mesh_manager_;
 
     std::vector<const Texture *>    fb_textures_;
-
-    MeshView                        default_quad_mv_;
+    
+    MeshManager                     quad_mesh_manager_;
+    MeshView                        quad_mesh_view_;
 
     bool                            throw_on_err_;
 

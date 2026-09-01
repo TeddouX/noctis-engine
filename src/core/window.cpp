@@ -64,7 +64,6 @@ Window::Window(std::uint32_t width, std::uint32_t height, std::string_view title
     }
 
     CORE_LOGGER.debug("Initialized OpenGL context for window \"{}\"", title);
-    OGL_STATE.valid = true;
 }
 
 Window::~Window()

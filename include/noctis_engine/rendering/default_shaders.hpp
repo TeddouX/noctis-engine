@@ -96,7 +96,7 @@ inline std::string_view COMPOSITION_VERT_SHADER = R"(
 layout (location = 0) in vec3 aPos;
 layout (location = 3) in vec2 aTexCoord;
 
-layout (location = 0) out vec3 fsTexCoord;
+layout (location = 0) out vec2 fsTexCoord;
 
 void main()
 {
@@ -108,7 +108,7 @@ void main()
 
 /// @brief Default fragment shader for drawing 2D debug elements
 inline std::string_view COMPOSITION_FRAG_SHADER = R"(
-layout (location = 0) in vec3 fsTexCoord;
+layout (location = 0) in vec2 fsTexCoord;
 
 layout (location = 0) out vec4 FragColor;
 

@@ -182,7 +182,7 @@ auto GraphicsProgram::create_helper(
 
     if (not frag_shader.compile())
     {
-        RENDERING_LOGGER.critical("graphics program create helper: Failed to compile fragment shader for program \"{}\" ", name);
+        RENDERING_LOGGER.error("graphics program create helper: Failed to compile fragment shader for program \"{}\" ", name);
         return GraphicsProgram{};
     }
 
@@ -196,13 +196,13 @@ auto GraphicsProgram::create_helper(
 
     if (not prog.valid())
     {
-        RENDERING_LOGGER.critical("graphics program create helper: Failed to create program \"{}\" ", name);
+        RENDERING_LOGGER.error("graphics program create helper: Failed to create program \"{}\" ", name);
         return GraphicsProgram{};
     }
 
     if (not prog.link())
     {
-        RENDERING_LOGGER.critical("graphics program create helper: Failed to link program \"{}\"", name);
+        RENDERING_LOGGER.error("graphics program create helper: Failed to link program \"{}\"", name);
         return GraphicsProgram{};
     }
 

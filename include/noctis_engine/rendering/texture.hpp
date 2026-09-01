@@ -138,7 +138,7 @@ public:
     auto height() const -> int;
 
     /// @brief Gets this texture's name 
-    auto name() const -> std::string;
+    auto name() const -> const std::string &;
 
 private:
     std::uint32_t   handle_;

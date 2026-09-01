@@ -12,6 +12,7 @@ set(NCENG_SOURCES
     "rendering/mesh/mesh_manager.cpp"
     "rendering/camera_2d.cpp"
     "rendering/draw_list.cpp"
+    "rendering/framebuffer.cpp"
     "rendering/gpu_buffer.cpp"
     "rendering/graphics_program.cpp"
     "rendering/renderer.cpp"

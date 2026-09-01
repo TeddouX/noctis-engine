@@ -109,7 +109,7 @@ auto Texture::height() const -> int
     return height_;
 }
 
-auto Texture::name() const -> std::string
+auto Texture::name() const -> const std::string &
 {
     return name_;
 }
