@@ -9,7 +9,7 @@
 #include "draw_list.hpp"
 
 
-namespace NoctisEngine::Rendering
+namespace NoctisEngine
 {
 
 /// @brief The function used when shrinking the texture
@@ -154,4 +154,4 @@ constexpr std::string_view ALBEDO_NAME = "albedo";
 } // namespace TextureSlots
 
 
-} // namespace NoctisEngine::Rendering
+} // namespace NoctisEngine

@@ -6,7 +6,7 @@
 #include "draw_list.hpp"
 
 
-namespace NoctisEngine::Rendering
+namespace NoctisEngine
 {
 
 /// @brief Describes a program that links shaders used for rendering
@@ -66,4 +66,4 @@ private:
     std::uint32_t   handle_;
 };
 
-} // namespace NoctisEngine::Rendering
+} // namespace NoctisEngine

@@ -3,7 +3,7 @@
 #include <box2d/box2d.h>
 
 
-namespace NoctisEngine::ECS
+namespace NoctisEngine
 {
     
 auto PhysicsBody2D::phys_body_type() -> PhysicsBody2D::Type
@@ -202,4 +202,4 @@ auto PhysicsBody2D::mass() -> float
     return b2Body_GetMass(b2LoadBodyId(body_id));
 }
     
-} // namespace NoctisEngine::ECS
+} // namespace NoctisEngine

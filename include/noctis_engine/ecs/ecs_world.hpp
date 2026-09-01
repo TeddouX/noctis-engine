@@ -8,22 +8,22 @@
 #include "component_storage.hpp"
 
 
-namespace NoctisEngine::ECS
+namespace NoctisEngine
 {
     
 /// @brief This function holds references to all components 
 /// and entities that were created
 /// @warning Any references or pointers returned by the member functions of this class shouldn't 
 /// be stored as they can be invalidated when the world is modified 
-class World
+class ECSWorld
 {
 public:
     /// @brief Creates a world
-    World()
+    ECSWorld()
         : next_entity_id_{1}
     {}
 
-    ~World() = default;
+    ~ECSWorld() = default;
 
     /// @brief Creates an entity in this world
     /// @return The created entity
@@ -241,4 +241,4 @@ auto View<Components_...>::each(std::function<void(Entity, Components_ &...)> fu
 }
 
 
-} // namespace NoctisEngine::ECS
+} // namespace NoctisEngine

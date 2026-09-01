@@ -2,7 +2,7 @@
 #include <cstdint>
 
 
-namespace NoctisEngine::Rendering
+namespace NoctisEngine
 {
     
 /// @brief This describes a vertex attribute, used when creating a vertex array object
@@ -67,4 +67,4 @@ struct VertexAttribute
     bool normalized = false;
 };
 
-} // namespace NoctisEngine::Rendering
+} // namespace NoctisEngine

@@ -5,7 +5,7 @@
 
 
 /// @brief Default meshes that are automatically loaded by mesh managers
-namespace NoctisEngine::Rendering::DefaultMeshes
+namespace NoctisEngine::DefaultMeshes
 {
 
 /// @brief A simple flat square
@@ -20,4 +20,4 @@ inline const MeshData QUAD_MESH
     {0, 1, 2, 2, 3, 0}
 };
 
-} // namespace NoctisEngine::Rendering::DefaultMeshes
+} // namespace NoctisEngine::DefaultMeshes

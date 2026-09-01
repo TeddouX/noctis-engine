@@ -8,7 +8,7 @@
 #include <noctis_engine/rendering/shader_bindings.hpp>
 
 
-namespace NoctisEngine::Rendering
+namespace NoctisEngine
 {
     
 struct DrawElementsIndirectCommand 
@@ -387,7 +387,7 @@ void Renderer::opengl_debug_message_callback(uint32_t source, uint32_t type, uin
         if (gh->throw_on_err_)
         {
             RENDERING_LOGGER.critical("An OpenGL error was encountered, and throw_on_err is enabled.", std::stacktrace::current(1));
-            Core::exit_program_failure();
+            exit_program_failure();
         }
     }
 }
@@ -396,4 +396,4 @@ auto Renderer::check_ogl_extensions() -> void
 {
 }
 
-} // namespace NoctisEngine::Rendering
+} // namespace NoctisEngine

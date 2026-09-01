@@ -10,7 +10,7 @@
 #include "../core/logging.hpp"
 
 
-namespace NoctisEngine::Rendering
+namespace NoctisEngine
 {
 
 /// @brief Describes all targets a buffer can be bound to
@@ -284,4 +284,4 @@ private:
     BufferMapAccess     map_access_;
 };
 
-} // namespace NoctisEngine::Rendering
+} // namespace NoctisEngine

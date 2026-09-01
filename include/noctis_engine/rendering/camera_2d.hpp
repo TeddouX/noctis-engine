@@ -3,7 +3,7 @@
 #include "gpu_buffer.hpp"
 
 
-namespace NoctisEngine::Rendering
+namespace NoctisEngine
 {
     
 /// @brief Represents an orthographic projection camera, best suited for 2D games
@@ -53,4 +53,4 @@ private:
     glm::vec2 pos_;
 };
 
-} // namespace NoctisEngine::Rendering
+} // namespace NoctisEngine

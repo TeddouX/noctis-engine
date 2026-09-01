@@ -7,7 +7,7 @@
 #include "vertex_attrib.hpp"
 
 
-namespace NoctisEngine::Rendering
+namespace NoctisEngine
 {
 
 /// @brief This class is used to store vertices for drawing on the GPU
@@ -86,4 +86,4 @@ private:
     GPUBuffer       vbo_;
 };
 
-} // namespace NoctisEngine::Rendering
+} // namespace NoctisEngine

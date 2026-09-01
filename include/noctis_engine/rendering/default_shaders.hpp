@@ -3,7 +3,7 @@
 
 
 /// @brief Default shader code
-namespace NoctisEngine::Rendering::DefaultShaders
+namespace NoctisEngine::DefaultShaders
 {
 
 /// @brief Default vertex shader for drawing 2D sprites
@@ -91,4 +91,4 @@ void main()
 }
 )";
 
-} // namespace NoctisEngine::Rendering::DefaultShaders
+} // namespace NoctisEngine::DefaultShaders

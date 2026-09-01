@@ -5,7 +5,7 @@
 #include <noctis_engine/core/logging.hpp>
 
 
-namespace NoctisEngine::Core
+namespace NoctisEngine
 {
     
 auto EventStack::push_receiver(std::shared_ptr<IEventReceiver> receiver) -> void
@@ -51,4 +51,4 @@ auto EventStack::mouse_move(const MouseMouvement &mouse_movement) -> void
     }
 }
 
-} // namespace NoctisEngine::Core
+} // namespace NoctisEngine

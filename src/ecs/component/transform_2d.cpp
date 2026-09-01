@@ -3,7 +3,7 @@
 #include <noctis_engine/definitions.hpp>
 
 
-namespace NoctisEngine::ECS
+namespace NoctisEngine
 {
     
 Transform2D::Transform2D(glm::vec2 pos, float rotation_rad, glm::vec2 scale)
@@ -112,4 +112,4 @@ auto Transform2D::model_matrix() const -> const glm::mat4 &
 }
 
 
-} // namespace NoctisEngine::ECS
+} // namespace NoctisEngine

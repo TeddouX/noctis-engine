@@ -4,7 +4,7 @@
 #include "../math/color.hpp"
 
 
-namespace NoctisEngine::Rendering
+namespace NoctisEngine
 {
 
 /// @internal
@@ -104,4 +104,4 @@ struct DrawLinesCommand
     std::size_t count;
 };
 
-} // namespace NoctisEngine::Rendering
+} // namespace NoctisEngine

@@ -3,7 +3,7 @@
 #include <string>
 
 
-namespace NoctisEngine::Rendering
+namespace NoctisEngine
 {
 
 /// @brief Represents different shader types
@@ -66,4 +66,4 @@ private:
     ShaderType      type_;
 };
 
-} // namespace NoctisEngine::Rendering
+} // namespace NoctisEngine

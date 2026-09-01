@@ -6,7 +6,7 @@
 #include "camera_data.hpp"
 
 
-namespace NoctisEngine::Rendering
+namespace NoctisEngine
 {
     
 Camera2D::Camera2D(
@@ -66,4 +66,4 @@ auto Camera2D::delete_buffer() -> void
     camera_ubo_.delete_gpu();
 }
     
-} // namespace NoctisEngine::Rendering
+} // namespace NoctisEngine

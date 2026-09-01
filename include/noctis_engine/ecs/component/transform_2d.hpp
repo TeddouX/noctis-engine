@@ -2,7 +2,7 @@
 #include "../../math/math.hpp"
 
 
-namespace NoctisEngine::ECS
+namespace NoctisEngine
 {
     
 /// @brief This component is used to place an entity in the world
@@ -79,4 +79,4 @@ private:
     mutable glm::mat4   model_matrix_;
 };
 
-} // namespace NoctisEngine::ECS
+} // namespace NoctisEngine

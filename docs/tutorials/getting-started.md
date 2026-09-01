@@ -42,17 +42,17 @@ Congratulations ! You now have added Noctis Engine to your project and you can u
 
 ### The window
 
-The window is one of the most important elements of any games. Noctis Engine uses the [Window](@ref NoctisEngine::Core::Window) class as its abstraction layer over an API called GLFW. This makes windowing cross platform and easy to use.  
+The window is one of the most important elements of any games. Noctis Engine uses the [Window](@ref NoctisEngine::Window) class as its abstraction layer over an API called GLFW. This makes windowing cross platform and easy to use.  
 The window is also what holds the OpenGL context, necessary for drawing anything to the screen. Without it, calling rendering functions and using rendering objects will result in your program SEGFAULT'ing because OpenGL functions aren't initialized and point to NULL.  
-To create a window, use the [window's constructor](@ref NoctisEngine::Core::Window::Window()) defined in the noctis_engine/core/window.hpp header:
+To create a window, use the [window's constructor](@ref NoctisEngine::Window::Window()) defined in the noctis_engine/core/window.hpp header:
 
 ```cpp
-// NoctisEngine::Core::Window is included from: 
+// NoctisEngine::Window is included from: 
 #include <noctis_engine/core/window.hpp>
 
 auto main() -> int
 {
-    NoctisEngine::Core::Window my_window{800, 600, "My window's really original title"};
+    NoctisEngine::Window my_window{800, 600, "My window's really original title"};
 
     if (not window.is_valid())
     {
@@ -69,7 +69,7 @@ But if you try to run this code, you will see your window flashing on the screen
 You can fix this by adding a **RENDER LOOP**!! (this is where stuff gets _serious_):
 
 ```cpp
-// NoctisEngine::Core::Window is included from: 
+// NoctisEngine::Window is included from: 
 #include <noctis_engine/core/window.hpp>
 
 auto main() -> int
@@ -103,38 +103,38 @@ Next step is actually rendering stuff to the screen, and this is where it gets a
 
 ### Rendering
 
-Noctis Engine uses a draw list system to render things to the screen. This is handled by the [DrawList](@ref NoctisEngine::Rendering::DrawList) class.  
-The draw list is then passed to a [renderer](@ref NoctisEngine::Rendering::Renderer).  
+Noctis Engine uses a draw list system to render things to the screen. This is handled by the [DrawList](@ref NoctisEngine::DrawList) class.  
+The draw list is then passed to a [renderer](@ref NoctisEngine::Renderer).  
 There are more things required to correctly draw things to the screen, but you will see that in the code below: 
 
 ```cpp
-// NoctisEngine::Core::Window is included from: 
+// NoctisEngine::Window is included from: 
 #include <noctis_engine/core/window.hpp>
  
-// NoctisEngine::Rendering::MeshManager
-// and NoctisEngine::Rendering::MeshView are included from:
+// NoctisEngine::MeshManager
+// and NoctisEngine::MeshView are included from:
 #include <noctis_engine/rendering/mesh/mesh_manager.hpp>
  
-// NoctisEngine::Rendering::DefaultMeshes::QUAD_MESH is included from: 
+// NoctisEngine::DefaultMeshes::QUAD_MESH is included from: 
 #include <noctis_engine/rendering/mesh/default_meshes.hpp>
  
-// NoctisEngine::Rendering::Camera2D is included from: 
+// NoctisEngine::Camera2D is included from: 
 #include <noctis_engine/rendering/camera_2d.hpp>
  
-// NoctisEngine::Rendering::Renderer is included from: 
+// NoctisEngine::Renderer is included from: 
 #include <noctis_engine/rendering/renderer.hpp>
  
-// Rendering::DefaultShaders::VERT_SHADER_2D_CODE
-// and Rendering::DefaultShaders::FRAG_SHADER_2D_CODE are included from:
+// DefaultShaders::VERT_SHADER_2D_CODE
+// and DefaultShaders::FRAG_SHADER_2D_CODE are included from:
 #include <noctis_engine/rendering/default_shaders.hpp>
  
-// NoctisEngine::Rendering::GraphicsProgram is included from:
+// NoctisEngine::GraphicsProgram is included from:
 #include <noctis_engine/rendering/graphics_program.hpp>
  
-// NoctisEngine::Rendering::DrawList is included from:
+// NoctisEngine::DrawList is included from:
 #include <noctis_engine/rendering/draw_list.hpp>
  
-// NoctisEngine::Rendering::Texture is included from:
+// NoctisEngine::Texture is included from:
 #include <noctis_engine/rendering/texture.hpp>
 
 auto main() -> int
@@ -145,7 +145,7 @@ auto main() -> int
     // using namespace Rendering;
  
     // You need the window for a valid OpenGL context
-    NoctisEngine::Core::Window window{800, 600, "My window's really original title"};
+    NoctisEngine::Window window{800, 600, "My window's really original title"};
  
     // Check if the window was created successfully, exit if not
     if (not window.is_valid())
@@ -155,20 +155,20 @@ auto main() -> int
     }
  
     // This helps you to manage meshes
-    NoctisEngine::Rendering::MeshManager mesh_manager{};
+    NoctisEngine::MeshManager mesh_manager{};
  
-    NoctisEngine::Rendering::MeshView quad_mv = 
-        mesh_manager.upload(NoctisEngine::Rendering::DefaultMeshes::QUAD_MESH);
+    NoctisEngine::MeshView quad_mv = 
+        mesh_manager.upload(NoctisEngine::DefaultMeshes::QUAD_MESH);
  
     // The camera is what controls what is actually drawn on screen, it is centered on (0, 0) 
     // which is the middle of the screen.
     // The two values provided to the constructor are the frustum's half-extents, 
     // they are half of the frustum's width and height.
     // They should almost always be (window_width/2, window_height/2)
-    NoctisEngine::Rendering::Camera2D camera{glm::vec2{400, 300}};
+    NoctisEngine::Camera2D camera{glm::vec2{400, 300}};
  
     // The renderer is what makes you able to draw your draw lists to the screen
-    NoctisEngine::Rendering::Renderer renderer{};
+    NoctisEngine::Renderer renderer{};
  
     // Enables depth testing, further object appear behind closer ones
     // Should almost always be enabled
@@ -184,11 +184,11 @@ auto main() -> int
     // Here we use a helper to create the program so it doesn't take up 50 lines
     // of code. But you could and should create the program yourself if you want finer 
     // control over the GPU's memory
-    NoctisEngine::Rendering::GraphicsProgram default_graphics_prog 
-        = NoctisEngine::Rendering::GraphicsProgram::create_helper(
+    NoctisEngine::GraphicsProgram default_graphics_prog 
+        = NoctisEngine::GraphicsProgram::create_helper(
             // The default shader codes provided by the engine
-            NoctisEngine::Rendering::DefaultShaders::VERT_SHADER_2D_CODE, 
-            NoctisEngine::Rendering::DefaultShaders::FRAG_SHADER_2D_CODE, 
+            NoctisEngine::DefaultShaders::VERT_SHADER_2D_CODE, 
+            NoctisEngine::DefaultShaders::FRAG_SHADER_2D_CODE, 
             // This is our program's name
             "default_program"
         );
@@ -204,9 +204,9 @@ auto main() -> int
     std::uint8_t white_pixel[]{ 255, 255, 255, 255 };
  
     // This is just an example texture, you should use 
-    // NoctisEngine::Asset::load_texture instead of doing this
-    NoctisEngine::Rendering::Texture white_texture{
-        NoctisEngine::Rendering::Texture::Data{
+    // NoctisEngine::load_texture instead of doing this
+    NoctisEngine::Texture white_texture{
+        NoctisEngine::Texture::Data{
             .data = white_pixel,
             .width = 1,
             .height = 1,
@@ -219,7 +219,7 @@ auto main() -> int
     {
         window.poll_events();
 
-        NoctisEngine::Rendering::DrawList draw_list{};
+        NoctisEngine::DrawList draw_list{};
  
         // This command control how the screen is cleared, here its a kind of gray-ish color
         draw_list.clear_screen(NoctisEngine::Color{5, 5, 5});
@@ -236,8 +236,8 @@ auto main() -> int
         // Use your white texture
         white_texture.bind(
             draw_list, 
-            NoctisEngine::Rendering::TextureSlots::ALBEDO, 
-            NoctisEngine::Rendering::TextureSlots::ALBEDO_NAME
+            NoctisEngine::TextureSlots::ALBEDO, 
+            NoctisEngine::TextureSlots::ALBEDO_NAME
         );
 
         // Draw the mesh to the screen using the previously bound objects
@@ -264,14 +264,14 @@ You should see a 100 pixels wide and 100 pixels tall cube when running this code
 **BUT** don't draw things to the screen as you just saw above, it's a lot of boilerplate and there's a lot of places where you could get something wrong (wrong texture bound, wrong mesh used, wrong position, wrong rotation, etc...), instead use my carefully crafted ECS:
 
 ```cpp
-// NoctisEngine::ECS::Entity
-// and NoctisEngine::ECS::World are included from:
+// NoctisEngine::Entity
+// and NoctisEngine::World are included from:
 #include <noctis_engine/ecs/ecs_world.hpp>
 
-// NoctisEngine::ECS::Transform2D is included from:
+// NoctisEngine::Transform2D is included from:
 #include <noctis_engine/ecs/component/transform_2d.hpp>
 
-// NoctisEngine::ECS::Sprite is included from:
+// NoctisEngine::Sprite is included from:
 #include <noctis_engine/ecs/component/sprite.hpp>
 
 
@@ -283,17 +283,17 @@ auto main() -> int
     // The ECS world is recommended to be created as a shared pointer so it 
     // can be shared between your objects, it is also required to be a shared ptr 
     // by the engine's systems 
-    auto ecs_world = std::make_shared<NoctisEngine::ECS::World>();
+    auto ecs_world = std::make_shared<NoctisEngine::World>();
     
     // Self explanatory, creates an entity in the world
-    NoctisEngine::ECS::Entity test_entity = ecs_world->create_entity();
+    NoctisEngine::Entity test_entity = ecs_world->create_entity();
 
     // Add a sprite component to the entity, which has our created white texture
     // It will be drawn below sprites that have a draw_order > 1 and above sprites that have a draw order < 1
-    ecs_world->add_component(test_entity, NoctisEngine::ECS::Sprite{white_texture, 1});
+    ecs_world->add_component(test_entity, NoctisEngine::Sprite{white_texture, 1});
 
     // The transform is where and how the sprite is actually placed in the world
-    ecs_world->add_component(test_entity, NoctisEngine::ECS::Transform2D{
+    ecs_world->add_component(test_entity, NoctisEngine::Transform2D{
         // X position: 100, Y position: 100
         glm::vec2{100, 100}, 
         // 45 degrees rotation, in radians

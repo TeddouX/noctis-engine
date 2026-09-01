@@ -2,7 +2,7 @@
 #include "../math/math.hpp"
 #include "vertex_attrib.hpp"
 
-namespace NoctisEngine::Rendering
+namespace NoctisEngine
 {
     
 /// @brief The default vertex used by the engine
@@ -65,4 +65,4 @@ inline static std::vector<VertexAttribute> DEBUG_VERTEX_ATTRIBUTES = {
     },
 };
 
-} // namespace NoctisEngine::Rendering
+} // namespace NoctisEngine

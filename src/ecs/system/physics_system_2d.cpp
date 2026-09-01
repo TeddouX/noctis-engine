@@ -5,17 +5,17 @@
 #include <noctis_engine/rendering/default_shaders.hpp>
 
 
-namespace NoctisEngine::ECS
+namespace NoctisEngine
 {
 
-Core::Logger PHYSICS_LOGGER{"Noctis Engine", "Physics"};
+Logger PHYSICS_LOGGER{"Noctis Engine", "Physics"};
 
 auto phys_mat_to_b2_surface_mat(const PhysicsMaterial2D &phys_mat) -> b2SurfaceMaterial;
 auto glm_points_to_b2_points(const std::vector<glm::vec2> &glm_points) -> std::vector<b2Vec2>;
 auto entity_from_shape(const b2ShapeId &shape_id) -> Entity;
 
 
-PhysicsSystem2D::PhysicsSystem2D(std::shared_ptr<World> world)
+PhysicsSystem2D::PhysicsSystem2D(std::shared_ptr<ECSWorld> world)
     : world_{world}
     , accumulator_{0.0f}
 {
@@ -31,23 +31,23 @@ PhysicsSystem2D::~PhysicsSystem2D()
 
 auto PhysicsSystem2D::enable_debug_rendering() -> bool
 {
-    line_vertex_array_ = Rendering::VertexArray{
-        Rendering::DEBUG_VERTEX_ATTRIBUTES,
+    line_vertex_array_ = VertexArray{
+        DEBUG_VERTEX_ATTRIBUTES,
         "physics_line_vertex_array",
         true,
         false
     };
 
-    tri_vertex_array_ = Rendering::VertexArray{
-        Rendering::DEBUG_VERTEX_ATTRIBUTES,
+    tri_vertex_array_ = VertexArray{
+        DEBUG_VERTEX_ATTRIBUTES,
         "physics_tri_vertex_array",
         true,
         false
     };
 
-    graphics_prog_ = Rendering::GraphicsProgram::create_helper(
-        Rendering::DefaultShaders::DEBUG_VERT_SHADER_2D_CODE,
-        Rendering::DefaultShaders::DEBUG_FRAG_SHADER_2D_CODE,
+    graphics_prog_ = GraphicsProgram::create_helper(
+        DefaultShaders::DEBUG_VERT_SHADER_2D_CODE,
+        DefaultShaders::DEBUG_FRAG_SHADER_2D_CODE,
         "physics_dbg_program"
     );
 
@@ -72,7 +72,7 @@ auto PhysicsSystem2D::set_hit_event_threshold(float threshold) -> void
 
 auto PhysicsSystem2D::create_physics_entity(
     const std::vector<CollisionShape2D>    &collision_shapes,
-    Identifier                              id,
+    IdentifierComponent                              id,
     PhysicsBody2D::Type                     physics_body_type,
     const Transform2D                      &transform
 ) -> Entity
@@ -382,12 +382,12 @@ auto PhysicsSystem2D::sync_ecs_to_physics_engine() -> void
     process_sensor_events();
 }
 
-auto PhysicsSystem2D::draw_debug(Rendering::DrawList &draw_list, const DebugDrawSettings &settings) -> void
+auto PhysicsSystem2D::draw_debug(DrawList &draw_list, const DebugDrawSettings &settings) -> void
 {
     struct Context
     {
-        std::vector<Rendering::DebugVertex> lines_vertices{};
-        std::vector<Rendering::DebugVertex> tris_vertices{};
+        std::vector<DebugVertex> lines_vertices{};
+        std::vector<DebugVertex> tris_vertices{};
     } ctx;
 
     b2DebugDraw debug_draw = b2DefaultDebugDraw();
@@ -444,12 +444,12 @@ auto PhysicsSystem2D::draw_debug(Rendering::DrawList &draw_list, const DebugDraw
             b2Vec2 world_curr = b2TransformPoint(transform, vertices[i]);
             b2Vec2 world_next = b2TransformPoint(transform, vertices[next]);
 
-            ctx->lines_vertices.push_back(Rendering::DebugVertex{ 
+            ctx->lines_vertices.push_back(DebugVertex{ 
                 glm::vec3{ world_curr.x, world_curr.y, 0 } * METERS_TO_PIXELS, 
                 color_floats
             });
 
-            ctx->lines_vertices.push_back(Rendering::DebugVertex{ 
+            ctx->lines_vertices.push_back(DebugVertex{ 
                 glm::vec3{ world_next.x, world_next.y, 0 } * METERS_TO_PIXELS, 
                 color_floats
             });
@@ -484,9 +484,9 @@ auto PhysicsSystem2D::draw_debug(Rendering::DrawList &draw_list, const DebugDraw
 
         for (int i = 1; i + 1 < vertexCount; i++)
         {
-            ctx->tris_vertices.push_back(Rendering::DebugVertex{ world_verts[0],     color_floats });
-            ctx->tris_vertices.push_back(Rendering::DebugVertex{ world_verts[i],     color_floats });
-            ctx->tris_vertices.push_back(Rendering::DebugVertex{ world_verts[i + 1], color_floats });
+            ctx->tris_vertices.push_back(DebugVertex{ world_verts[0],     color_floats });
+            ctx->tris_vertices.push_back(DebugVertex{ world_verts[i],     color_floats });
+            ctx->tris_vertices.push_back(DebugVertex{ world_verts[i + 1], color_floats });
         }
     };
 
@@ -519,8 +519,8 @@ auto PhysicsSystem2D::draw_debug(Rendering::DrawList &draw_list, const DebugDraw
                 center.y + radius * glm::sin(angle_b), 0 
             };
 
-            ctx->lines_vertices.push_back(Rendering::DebugVertex{ point_a * METERS_TO_PIXELS, color_floats });
-            ctx->lines_vertices.push_back(Rendering::DebugVertex{ point_b * METERS_TO_PIXELS, color_floats });
+            ctx->lines_vertices.push_back(DebugVertex{ point_a * METERS_TO_PIXELS, color_floats });
+            ctx->lines_vertices.push_back(DebugVertex{ point_b * METERS_TO_PIXELS, color_floats });
         }
     };
 
@@ -564,14 +564,14 @@ auto PhysicsSystem2D::draw_debug(Rendering::DrawList &draw_list, const DebugDraw
         {
             int next = (i + 1) % SEGMENTS;
 
-            ctx->tris_vertices.push_back(Rendering::DebugVertex{ center_world, color_floats });
-            ctx->tris_vertices.push_back(Rendering::DebugVertex{ rim[i],       color_floats });
-            ctx->tris_vertices.push_back(Rendering::DebugVertex{ rim[next],    color_floats });
+            ctx->tris_vertices.push_back(DebugVertex{ center_world, color_floats });
+            ctx->tris_vertices.push_back(DebugVertex{ rim[i],       color_floats });
+            ctx->tris_vertices.push_back(DebugVertex{ rim[next],    color_floats });
         }
 
         // Draw a line so its easier to see rotation
-        ctx->lines_vertices.push_back(Rendering::DebugVertex{ center_world, color_floats });
-        ctx->lines_vertices.push_back(Rendering::DebugVertex{ rim[0],       color_floats });
+        ctx->lines_vertices.push_back(DebugVertex{ center_world, color_floats });
+        ctx->lines_vertices.push_back(DebugVertex{ rim[0],       color_floats });
     };
 
     debug_draw.DrawSolidCapsuleFcn = [](
@@ -631,9 +631,9 @@ auto PhysicsSystem2D::draw_debug(Rendering::DrawList &draw_list, const DebugDraw
         for (int i = 0; i < n; i++)
         {
             int next = (i + 1) % n;
-            ctx->tris_vertices.push_back(Rendering::DebugVertex{ hub,            color_floats });
-            ctx->tris_vertices.push_back(Rendering::DebugVertex{ outline[i],     color_floats });
-            ctx->tris_vertices.push_back(Rendering::DebugVertex{ outline[next],  color_floats });
+            ctx->tris_vertices.push_back(DebugVertex{ hub,            color_floats });
+            ctx->tris_vertices.push_back(DebugVertex{ outline[i],     color_floats });
+            ctx->tris_vertices.push_back(DebugVertex{ outline[next],  color_floats });
         }
     };
 
@@ -649,12 +649,12 @@ auto PhysicsSystem2D::draw_debug(Rendering::DrawList &draw_list, const DebugDraw
         glm::vec4 color_floats4 = Color::RGBA_to_floats(static_cast<std::uint32_t>(color));
         glm::vec3 color_floats{ color_floats4.r, color_floats4.g, color_floats4.b };
 
-        ctx->lines_vertices.push_back(Rendering::DebugVertex{ 
+        ctx->lines_vertices.push_back(DebugVertex{ 
             glm::vec3{ p1.x, p1.y, 0  } * METERS_TO_PIXELS, 
             color_floats 
         });
 
-        ctx->lines_vertices.push_back(Rendering::DebugVertex{ 
+        ctx->lines_vertices.push_back(DebugVertex{ 
             glm::vec3{ p2.x, p2.y, 0  } * METERS_TO_PIXELS, 
             color_floats 
         });
@@ -683,8 +683,8 @@ auto PhysicsSystem2D::draw_debug(Rendering::DrawList &draw_list, const DebugDraw
         for (int i = 0; i < NUM_CORNERS; i++)
         {
             int next = (i + 1) % NUM_CORNERS;
-            ctx->lines_vertices.push_back(Rendering::DebugVertex{ corners[i],    color_floats });
-            ctx->lines_vertices.push_back(Rendering::DebugVertex{ corners[next], color_floats });
+            ctx->lines_vertices.push_back(DebugVertex{ corners[i],    color_floats });
+            ctx->lines_vertices.push_back(DebugVertex{ corners[next], color_floats });
         }
     };
 
@@ -694,14 +694,14 @@ auto PhysicsSystem2D::draw_debug(Rendering::DrawList &draw_list, const DebugDraw
 
     line_vertex_array_.upload_vertices(
         ctx.lines_vertices.data(), 
-        ctx.lines_vertices.size() * sizeof(Rendering::DebugVertex), 
-        sizeof(Rendering::DebugVertex)
+        ctx.lines_vertices.size() * sizeof(DebugVertex), 
+        sizeof(DebugVertex)
     ); 
 
     tri_vertex_array_.upload_vertices(
         ctx.tris_vertices.data(), 
-        ctx.tris_vertices.size() * sizeof(Rendering::DebugVertex), 
-        sizeof(Rendering::DebugVertex)
+        ctx.tris_vertices.size() * sizeof(DebugVertex), 
+        sizeof(DebugVertex)
     );
 
     graphics_prog_.bind(draw_list);
@@ -853,4 +853,4 @@ auto entity_from_shape(const b2ShapeId &shape_id) -> Entity
     return Entity{static_cast<EntityID>(ptr)};
 }
 
-} // namespace NoctisEngine::ECS
+} // namespace NoctisEngine

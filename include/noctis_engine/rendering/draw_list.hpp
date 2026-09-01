@@ -10,7 +10,7 @@
 #include "../math/color.hpp"
 
 
-namespace NoctisEngine::Rendering
+namespace NoctisEngine
 {
 
 /// @brief This is used to let the renderer know what things to render to the screen and how to render them
@@ -63,9 +63,9 @@ public:
     /// @param entity The entity to draw
     /// @param world The world it belongs to
     /// @param quad_mv The quad mesh view that should be used, the mesh should be a *QUAD* and nothing else
-    /// @warning The entity is required to have a Sprite and a Transform2D components. This function also 
+    /// @warning The entity is required to have a Sprite2D and a Transform2D components. This function also 
     /// scales the sprite's transform to make it match with its texture
-    auto draw_sprite_entity(ECS::Entity entity, const ECS::World &world, const MeshView &quad_mv) -> void;
+    auto draw_sprite_entity(Entity entity, const ECSWorld &world, const MeshView &quad_mv) -> void;
 
     /// @brief Draws triandles from a previously bound VAO
     /// @param first The starting index in the bound VAO. 
@@ -107,4 +107,4 @@ private:
     }
 };
 
-} // namespace NoctisEngine::Rendering
+} // namespace NoctisEngine

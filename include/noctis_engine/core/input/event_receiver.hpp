@@ -2,7 +2,7 @@
 #include "events.hpp"
 
 
-namespace NoctisEngine::Core
+namespace NoctisEngine
 {
     
 /// @brief The interface for classes that receive events from the event stack
@@ -40,4 +40,4 @@ public:
     }
 };
 
-} // namespace NoctisEngine::Core
+} // namespace NoctisEngine

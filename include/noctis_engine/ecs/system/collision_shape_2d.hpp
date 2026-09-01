@@ -8,7 +8,7 @@
 #include "../../math/color.hpp"
 
 
-namespace NoctisEngine::ECS
+namespace NoctisEngine
 {
 
 /// @brief Describes the physical properties of a collision shape
@@ -265,4 +265,4 @@ struct CollisionShape2D
     Callbacks callbacks;
 };
 
-} // namespace NoctisEngine::ECS
+} // namespace NoctisEngine

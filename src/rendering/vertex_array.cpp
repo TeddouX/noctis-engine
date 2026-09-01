@@ -5,7 +5,7 @@
 #include <noctis_engine/rendering/buffer_utils.hpp>
 
 
-namespace NoctisEngine::Rendering
+namespace NoctisEngine
 {
     
 auto attrib_type_size_bytes(VertexAttribute::ComponentType type) -> std::size_t;
@@ -157,4 +157,4 @@ auto attrib_type_size_bytes(VertexAttribute::ComponentType type) -> std::size_t
     }
 }
 
-} // namespace NoctisEngine::Rendering
+} // namespace NoctisEngine

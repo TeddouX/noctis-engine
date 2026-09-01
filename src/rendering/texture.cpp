@@ -3,7 +3,7 @@
 #include <GL/gl.h>
 
 
-namespace NoctisEngine::Rendering
+namespace NoctisEngine
 {
     
 Texture::Texture(const Data &texture_data)
@@ -106,4 +106,4 @@ auto Texture::name() const -> std::string
 }
 
 
-} // namespace NoctisEngine::Rendering
+} // namespace NoctisEngine

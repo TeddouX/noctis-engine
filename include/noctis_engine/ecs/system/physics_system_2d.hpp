@@ -13,7 +13,7 @@
 #include "../../rendering/graphics_program.hpp"
 
 
-namespace NoctisEngine::ECS
+namespace NoctisEngine
 {
 
 /// @brief Use this system if you want physics in your game
@@ -80,7 +80,7 @@ public:
     static constexpr glm::vec2 DEFAULT_GRAVITY{0, -9.81};
 
     /// @param world Your game's ECS world, used to create physics entities
-    PhysicsSystem2D(std::shared_ptr<World> world);
+    PhysicsSystem2D(std::shared_ptr<ECSWorld> world);
     ~PhysicsSystem2D();
 
     /// @brief Enables debug rendering by creating required buffers.
@@ -106,7 +106,7 @@ public:
     /// The created entity is invalid if something went wrong during creation
     auto create_physics_entity(
         const std::vector<CollisionShape2D>    &collision_shapes,
-        Identifier                              id,
+        IdentifierComponent                              id,
         PhysicsBody2D::Type                     physics_body_type = PhysicsBody2D::Type::STATIC,
         const Transform2D                      &transform = Transform2D{}
     ) -> Entity;
@@ -144,18 +144,18 @@ public:
     /// Overrides previously bound VAOs and shaders, so be careful to when in your 
     /// rendering loop you call this function. 
     /// Default shaders must be compiled before calling this function
-    auto draw_debug(Rendering::DrawList &draw_list, const DebugDrawSettings &settings) -> void;
+    auto draw_debug(DrawList &draw_list, const DebugDrawSettings &settings) -> void;
 
 private:
-    std::shared_ptr<World>                      world_;
+    std::shared_ptr<ECSWorld>                      world_;
     // std::vector<Entity>                         physics_entities_;
     std::uint32_t                               physics_world_;
     std::deque<CollisionShape2D::Callbacks>     collision_callbacks_;
     float                                       accumulator_;
 
-    Rendering::VertexArray                      line_vertex_array_;
-    Rendering::VertexArray                      tri_vertex_array_;
-    Rendering::GraphicsProgram                  graphics_prog_;
+    VertexArray                      line_vertex_array_;
+    VertexArray                      tri_vertex_array_;
+    GraphicsProgram                  graphics_prog_;
 
   
     /// @brief This is called in sync_ecs_to_physics_engine().
@@ -167,4 +167,4 @@ private:
     auto process_sensor_events() -> void;
 };
 
-} // namespace NoctisEngine::ECS
+} // namespace NoctisEngine

@@ -5,7 +5,7 @@
 #include "mesh_info.hpp"
 
 
-namespace NoctisEngine::Rendering
+namespace NoctisEngine
 {
     
 /// @brief A class that helps you manage meshes. It stores them tightly in GPU memory only
@@ -37,4 +37,4 @@ private:
     std::size_t index_off_;
 };
 
-} // namespace NoctisEngine::Rendering
+} // namespace NoctisEngine

@@ -10,10 +10,7 @@
 
 namespace NoctisEngine
 {
-    
-namespace Core
-{
-    
+ 
 /// @brief Describes which level a log message is
 enum class LogLevel 
 {
@@ -187,15 +184,7 @@ auto Logger::log(
 }
 
 inline static Logger CORE_LOGGER{"Noctis Engine", "Core"};
-
-} // namespace Core
-
-namespace Rendering 
-{ 
-
-inline static Core::Logger RENDERING_LOGGER{"Noctis Engine", "Rendering"}; 
-
-} // namespace Rendering
+inline static Logger RENDERING_LOGGER{"Noctis Engine", "Rendering"}; 
 
 } // namespace NoctisEngine
 

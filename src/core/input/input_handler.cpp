@@ -5,7 +5,7 @@
 #include <noctis_engine/core/logging.hpp>
 
 
-namespace NoctisEngine::Core
+namespace NoctisEngine
 {
     
 auto InputHandler::key_pressed(PhysicalKey key) -> bool
@@ -35,11 +35,11 @@ auto InputHandler::key_just_pressed(PhysicalKey key) -> bool
     return key_states_[ordinal(key)].state == InputInfo::State::PRESSED;
 }
 
-auto InputHandler::key_mods(PhysicalKey key) -> Modifier
+auto InputHandler::key_mods(PhysicalKey key) -> InputModifier
 {
     if (key_pressed(key))
         return key_states_[ordinal(key)].mods;
-    return Modifier::NONE;
+    return InputModifier::NONE;
 }
 
 auto InputHandler::mouse_mouvement() -> MouseMouvement
@@ -222,7 +222,7 @@ auto InputHandler::update_state(InputInfo &state) -> bool
     if (state.state == InputInfo::State::RELEASED) 
     {
         state.state = InputInfo::State::UP;
-        state.mods = Modifier::NONE;
+        state.mods = InputModifier::NONE;
     
         return true;
     }
@@ -242,7 +242,7 @@ auto InputHandler::glfw_key_callback(GLFWwindow *window, int key, int scancode, 
         return;
 
     PhysicalKey phys_key = static_cast<PhysicalKey>(key);
-    Modifier modifiers = static_cast<Modifier>(mods);
+    InputModifier modifiers = static_cast<InputModifier>(mods);
     InputInfo::State key_state = InputInfo::State::UP;
     int key_ord = ordinal(phys_key);
     
@@ -284,7 +284,7 @@ auto InputHandler::glfw_cursor_pos_callback(GLFWwindow *window, double xPos, dou
 auto InputHandler::glfw_mouse_btn_callback(GLFWwindow *window, int button, int action, int mods) -> void
 {
     MouseButton mouse_btn = static_cast<MouseButton>(button);
-    Modifier modifiers = static_cast<Modifier>(mods);
+    InputModifier modifiers = static_cast<InputModifier>(mods);
     InputInfo::State btn_state = InputInfo::State::UP;
     int btn_ord = ordinal(mouse_btn);
     
@@ -304,4 +304,4 @@ auto InputHandler::glfw_mouse_btn_callback(GLFWwindow *window, int button, int a
     });
 }
     
-} // namespace NoctisEngine::Core
+} // namespace NoctisEngine

@@ -12,7 +12,7 @@ struct GLFWwindow;
 
 
 /// @brief This namespace containes everything implemented by the engine for input handling
-namespace NoctisEngine::Core
+namespace NoctisEngine
 {
 
 /// @brief This is the singleton that handles all input processing
@@ -50,7 +50,7 @@ public:
     /// @param key The physical key that should be checked
     /// @return None if the key isn't pressed or wasn't pressed with any modifiers, 
     /// the modifiers otherwise
-    static auto key_mods(PhysicalKey key) -> Modifier;
+    static auto key_mods(PhysicalKey key) -> InputModifier;
 
     /// @brief Gets this frame's mouse movement
     /// @return This frame's mouse movement

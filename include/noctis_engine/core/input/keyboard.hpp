@@ -4,7 +4,7 @@
 #include <string_view>
 
 
-namespace NoctisEngine::Core
+namespace NoctisEngine
 {
 
 /// @brief This represents any physical key on your keyboard

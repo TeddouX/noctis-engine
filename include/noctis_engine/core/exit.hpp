@@ -3,7 +3,7 @@
 
 
 /// @brief Namespace that contains all the things that are useful to the engine
-namespace NoctisEngine::Core
+namespace NoctisEngine
 {
     
 /// @brief Call this when your program failed with something that is unrecoverable
@@ -15,4 +15,4 @@ auto exit_program_failure(std::string_view reason = "Unrecoverable error") -> vo
 /// @brief Call this function when your program finished without any errors
 auto exit_program_success() -> void;
 
-} // namespace NoctisEngine::Core
+} // namespace NoctisEngine

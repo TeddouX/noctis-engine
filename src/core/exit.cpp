@@ -3,7 +3,7 @@
 #include <noctis_engine/core/logging.hpp>
 
 
-namespace NoctisEngine::Core
+namespace NoctisEngine
 {
     
 auto exit_program_failure(std::string_view reason) -> void
@@ -18,4 +18,4 @@ auto exit_program_success() -> void
     std::exit(EXIT_SUCCESS);
 }
 
-} // namespace NoctisEngine::Core
+} // namespace NoctisEngine

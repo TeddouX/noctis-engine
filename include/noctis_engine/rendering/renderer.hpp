@@ -4,7 +4,7 @@
 #include "mesh/mesh_manager.hpp"
 
 
-namespace NoctisEngine::Rendering
+namespace NoctisEngine
 {
     
 /// @brief Blending functions
@@ -106,4 +106,4 @@ private:
         int length, const char* message, const void* userParam);
 };
 
-} // namespace NoctisEngine::Rendering
+} // namespace NoctisEngine

@@ -5,7 +5,7 @@
 #include <noctis_engine/rendering/mesh/default_meshes.hpp>
 
 
-namespace NoctisEngine::Rendering
+namespace NoctisEngine
 {
 
 auto DrawList::bind_texture(std::uint32_t tex, std::uint32_t bind_point, std::string_view tex_name) -> void
@@ -52,16 +52,16 @@ auto DrawList::draw_mesh(const MeshView &mesh_view, const glm::mat4 &model_mat) 
     req_indirect_draw_cmds++;
 }
 
-auto DrawList::draw_sprite_entity(ECS::Entity entity, const ECS::World &world, const MeshView &quad_mv) -> void
+auto DrawList::draw_sprite_entity(Entity entity, const ECSWorld &world, const MeshView &quad_mv) -> void
 {
-    auto *sprite = world.get_component<ECS::Sprite>(entity);
+    auto *sprite = world.get_component<Sprite2D>(entity);
     if (not sprite) 
     {
-        RENDERING_LOGGER.warn("Sprite component is missing to draw a sprite entity");
+        RENDERING_LOGGER.warn("Sprite2D component is missing to draw a sprite entity");
         return;
     }
 
-    auto *transform = world.get_component<ECS::Transform2D>(entity);
+    auto *transform = world.get_component<Transform2D>(entity);
     if (not transform) 
     {
         RENDERING_LOGGER.warn("Transform2D component is missing to draw a sprite entity");
@@ -111,4 +111,4 @@ auto DrawList::required_indirect_draw_cmds() const -> std::size_t
     return req_indirect_draw_cmds;
 }
 
-} // namespace NoctisEngine::Rendering
+} // namespace NoctisEngine

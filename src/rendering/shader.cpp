@@ -7,7 +7,7 @@
 #include <noctis_engine/definitions.hpp>
 
 
-namespace NoctisEngine::Rendering
+namespace NoctisEngine
 {
     
 constexpr std::string_view SHADER_HEADER = 
@@ -70,4 +70,4 @@ auto Shader::delete_gpu() const -> void
     glDeleteShader(handle_);
 }
 
-} // namespace NoctisEngine::Rendering
+} // namespace NoctisEngine

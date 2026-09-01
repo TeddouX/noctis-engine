@@ -3,7 +3,7 @@
 #include <GL/gl.h>
 
 
-namespace NoctisEngine::Rendering
+namespace NoctisEngine
 {
     
 GraphicsProgram::GraphicsProgram(const std::vector<Shader> &shaders, std::string_view name)
@@ -150,8 +150,8 @@ auto GraphicsProgram::create_helper(
     std::string vert_shader_name = std::string(name) + "_vert_shader";
     std::string frag_shader_name = std::string(name) + "_frag_shader";
 
-    Rendering::Shader vert_shader{
-        Rendering::ShaderType::VERTEX, 
+    Shader vert_shader{
+        ShaderType::VERTEX, 
         vert_code, 
         vert_shader_name
     };
@@ -162,8 +162,8 @@ auto GraphicsProgram::create_helper(
         return GraphicsProgram{};
     }
 
-    Rendering::Shader frag_shader{
-        Rendering::ShaderType::FRAGMENT, 
+    Shader frag_shader{
+        ShaderType::FRAGMENT, 
         frag_code, 
         frag_shader_name
     };
@@ -197,4 +197,4 @@ auto GraphicsProgram::create_helper(
     return prog;
 }
 
-} // namespace NoctisEngine::Rendering
+} // namespace NoctisEngine

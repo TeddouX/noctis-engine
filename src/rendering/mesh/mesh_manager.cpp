@@ -3,7 +3,7 @@
 #include <noctis_engine/rendering/mesh/default_meshes.hpp>
 
 
-namespace NoctisEngine::Rendering
+namespace NoctisEngine
 {
     
 MeshManager::MeshManager()
@@ -68,4 +68,4 @@ auto MeshManager::delete_buffers() -> void
     RENDERING_LOGGER.debug("Deleted mesh manager");
 }
 
-} // namespace NoctisEngine::Rendering
+} // namespace NoctisEngine

@@ -1,11 +1,11 @@
 #pragma once
 
 
-namespace NoctisEngine::Core
+namespace NoctisEngine
 {
 
 /// @brief Any modifiers that can be applied when pressing a key
-enum class Modifier : int
+enum class InputModifier : int
 {
     NONE            = 0,
     SHIFT_BIT       = 0x01,
@@ -20,7 +20,7 @@ enum class Modifier : int
 /// @param modifiers The modifiers
 /// @param mod The modifier that should be checked
 /// @return True if they contain the modifier, false otherwise
-constexpr auto has_mod(Modifier modifiers, Modifier mod) -> bool 
+constexpr auto has_mod(InputModifier modifiers, InputModifier mod) -> bool 
 {
     return static_cast<int>(modifiers) & static_cast<int>(mod);
 }
@@ -45,7 +45,7 @@ struct InputInfo
     State state;
 
     /// @brief The input's modidiers
-    Modifier mods;
+    InputModifier mods;
 };
 
-} // namespace NoctisEngine::Core
+} // namespace NoctisEngine

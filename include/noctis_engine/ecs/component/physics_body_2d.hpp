@@ -4,7 +4,7 @@
 #include "../../math/math.hpp"
 
 
-namespace NoctisEngine::ECS
+namespace NoctisEngine
 {
 
 /// @brief This component should be used on an entity that is affected by physics,
@@ -19,7 +19,7 @@ private:
 
 public:
     /// @brief This is a runtime collision shape, it can be deleted, modified etc...
-    /// Do not confuse with NoctisEngine::ECS::CollisionShape2D
+    /// Do not confuse with NoctisEngine::CollisionShape2D
     struct CollisionShape
     {
     private:
@@ -198,4 +198,4 @@ public:
     auto mass() -> float;
 };
 
-} // namespace NoctisEngine::ECS
+} // namespace NoctisEngine

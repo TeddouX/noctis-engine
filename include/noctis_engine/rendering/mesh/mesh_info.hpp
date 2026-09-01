@@ -5,7 +5,7 @@
 #include "../../definitions.hpp"
 #include "../vertex.hpp"
 
-namespace NoctisEngine::Rendering
+namespace NoctisEngine
 {
 
 /// @brief Describes a mesh
@@ -18,4 +18,4 @@ struct MeshData
     std::vector<std::uint32_t> indices;
 };
 
-} // namespace NoctisEngine::Rendering
+} // namespace NoctisEngine

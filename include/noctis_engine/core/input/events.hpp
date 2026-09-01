@@ -4,7 +4,7 @@
 #include "mouse.hpp"
 
 
-namespace NoctisEngine::Core
+namespace NoctisEngine
 {
     
 /// @brief A keyboard event
@@ -31,4 +31,4 @@ struct MouseButtonEvent
     InputInfo info;
 };
 
-} // namespace NoctisEngine::Core
+} // namespace NoctisEngine

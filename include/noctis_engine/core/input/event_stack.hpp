@@ -6,7 +6,7 @@
 #include "event_receiver.hpp"
 
 
-namespace NoctisEngine::Core
+namespace NoctisEngine
 {
     
 /// @brief This singleton handles event layering
@@ -32,4 +32,4 @@ private:
     static auto mouse_move(const MouseMouvement &mouse_movement) -> void;
 };
 
-} // namespace NoctisEngine::Core
+} // namespace NoctisEngine

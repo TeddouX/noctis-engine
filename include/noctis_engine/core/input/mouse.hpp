@@ -2,7 +2,7 @@
 #include "../../math/math.hpp"
 
 
-namespace NoctisEngine::Core
+namespace NoctisEngine
 {
 
 /// @brief Represents a mouse movement event
@@ -40,4 +40,4 @@ constexpr auto ordinal(MouseButton mouse_btn) -> int
     return static_cast<int>(mouse_btn);
 }
 
-} // namespace NoctisEngine::Core
+} // namespace NoctisEngine

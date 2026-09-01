@@ -1,7 +1,7 @@
 #pragma once
 #include "gpu_buffer.hpp"
 
-namespace NoctisEngine::Rendering
+namespace NoctisEngine
 {
 
 /// @brief Creates a CPU read view from a vector
@@ -40,4 +40,4 @@ auto get_cpu_read_view(const T &val) -> CPUReadView
     return std::as_bytes(std::span{std::addressof(val), 1});
 }
 
-} // namespace NoctisEngine::Rendering
+} // namespace NoctisEngine

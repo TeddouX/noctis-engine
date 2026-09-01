@@ -8,7 +8,7 @@
 #include <noctis_engine/core/exit.hpp>
 
 
-namespace NoctisEngine::Rendering
+namespace NoctisEngine
 {
     
 static auto is_bindable_to_index(BufferTarget type) -> bool;
@@ -209,4 +209,4 @@ auto is_bindable_to_index(BufferTarget type) -> bool
     }
 }
 
-} // namespace NoctisEngine::Rendering
+} // namespace NoctisEngine

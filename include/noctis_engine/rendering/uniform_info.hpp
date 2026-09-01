@@ -3,7 +3,7 @@
 #include <variant>
 
 
-namespace NoctisEngine::Rendering
+namespace NoctisEngine
 {
 
 /// @brief Describes a uniform's type
@@ -30,4 +30,4 @@ struct UniformInfo
     std::variant<bool, int, float> val;
 };
 
-} // namespace NoctisEngine::Rendering
+} // namespace NoctisEngine

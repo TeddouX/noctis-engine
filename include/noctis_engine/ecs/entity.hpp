@@ -2,7 +2,7 @@
 #include <cstdint>
 
 
-namespace NoctisEngine::ECS
+namespace NoctisEngine
 {
 
 using EntityID = std::int32_t;
@@ -34,4 +34,4 @@ private:
     EntityID id_;
 };
 
-} // namespace NoctisEngine::ECS
+} // namespace NoctisEngine

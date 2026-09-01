@@ -9,7 +9,7 @@ struct GLFWwindow;
 struct GLFWmonitor;
 
 
-namespace NoctisEngine::Core
+namespace NoctisEngine
 {
     
 /// @brief Describes all vertical sync methodsn, used in Window::set_vsync()
@@ -131,4 +131,4 @@ private:
     static auto framebuffer_resized_callback(GLFWwindow* glfw_window, int width, int height) -> void;
 };
 
-} // namespace NoctisEngine::Core
+} // namespace NoctisEngine

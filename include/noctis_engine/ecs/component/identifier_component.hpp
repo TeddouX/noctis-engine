@@ -3,13 +3,13 @@
 #include <cstdint>
 
 
-namespace NoctisEngine::ECS
+namespace NoctisEngine
 {
     
-struct Identifier
+struct IdentifierComponent
 {
     std::string_view name;
     std::uint64_t tag;
 };
 
-} // namespace NoctisEngine::ECS
+} // namespace NoctisEngine

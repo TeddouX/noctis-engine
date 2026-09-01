@@ -8,7 +8,7 @@
 #include <noctis_engine/core/input/input_handler.hpp>
 
 
-namespace NoctisEngine::Core
+namespace NoctisEngine
 {
  
 Window::Window(std::uint32_t width, std::uint32_t height, std::string_view title)
@@ -237,4 +237,4 @@ auto Window::framebuffer_resized_callback(GLFWwindow* glfw_window, int width, in
         window->resize_callback_(width, height);
 }
 
-} // namespace NoctisEngine::Core
+} // namespace NoctisEngine

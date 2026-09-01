@@ -1,7 +1,7 @@
 #pragma once
 #include <cstddef>
 
-namespace NoctisEngine::Rendering
+namespace NoctisEngine
 {
 
 /// @brief Describes a mesh that is stored on the GPU
@@ -20,4 +20,4 @@ struct MeshView
     std::size_t indices_count;
 };
 
-} // namespace NoctisEngine::Rendering
+} // namespace NoctisEngine

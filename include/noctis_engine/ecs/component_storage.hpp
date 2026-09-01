@@ -7,7 +7,7 @@
 #include "entity.hpp"
 
 
-namespace NoctisEngine::ECS
+namespace NoctisEngine
 {
     
 class IComponentStorage

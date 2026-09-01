@@ -2,11 +2,11 @@
 #include <functional>
 
 
-namespace NoctisEngine::ECS
+namespace NoctisEngine
 {
     
 class Entity;
-class World;
+class ECSWorld;
 
 /// @brief Describes a non owning view of a world
 /// @tparam ...Components_ The components this view gets from the world
@@ -20,15 +20,15 @@ public:
     auto each(std::function<void(Entity, Components_ &...)> func) -> void;
 
 private:
-    World &world_;
+    ECSWorld &world_;
 
-    friend class World;
+    friend class ECSWorld;
 
     /// @brief Creates a view from a world
     /// @param world The world
-    explicit View(World &world)
+    explicit View(ECSWorld &world)
         : world_{world}
     {}
 };
 
-} // namespace NoctisEngine::ECS
+} // namespace NoctisEngine

@@ -5,12 +5,12 @@
 #include <noctis_engine/core/logging.hpp>
 
 
-namespace NoctisEngine::Asset
+namespace NoctisEngine
 {
     
-Core::Logger ASSET_LOGGER{"Noctis Engine", "Asset"};
+Logger ASSET_LOGGER{"Noctis Engine", "Asset"};
 
-auto load_texture(const std::filesystem::path &path, const std::string &name) -> std::optional<Rendering::Texture>
+auto load_texture(const std::filesystem::path &path, const std::string &name) -> std::optional<Texture>
 {
     stbi_set_flip_vertically_on_load(true);
 
@@ -39,7 +39,7 @@ auto load_texture(const std::filesystem::path &path, const std::string &name) ->
     if (tex_name.empty())
         tex_name = path.stem();
 
-    Rendering::Texture::Data texInfo 
+    Texture::Data texInfo 
     {
         .data = data,
         .width = width, .height = height,
@@ -47,11 +47,11 @@ auto load_texture(const std::filesystem::path &path, const std::string &name) ->
         .name = tex_name
     };
 
-    Rendering::Texture tex{texInfo};
+    Texture tex{texInfo};
 
     stbi_image_free(data);
 
     return tex;
 }
 
-} // namespace NoctisEngine::Asset
+} // namespace NoctisEngine
