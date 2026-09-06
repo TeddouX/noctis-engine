@@ -728,8 +728,14 @@ auto PhysicsSystem2D::process_contact_events() -> void
     for (std::size_t i = 0; i < events.beginCount; i++)
     {
         const b2ContactBeginTouchEvent &ev = events.beginEvents[i];
+
+        if (!b2Contact_IsValid(ev.contactId))
+            continue;
+
         if (!b2Shape_IsValid(ev.shapeIdA) || !b2Shape_IsValid(ev.shapeIdB)) 
             continue;
+
+        b2Manifold manifold = b2Contact_GetData(ev.contactId).manifold;
 
         auto invoke = [&](b2ShapeId owner, b2ShapeId other) {
             auto cb = reinterpret_cast<CollisionShape2D::Callbacks *>(b2Shape_GetUserData(owner));
@@ -737,7 +743,10 @@ auto PhysicsSystem2D::process_contact_events() -> void
             {
                 cb->on_collision_begin(
                     entity_from_shape(owner),
-                    entity_from_shape(other)
+                    entity_from_shape(other),
+                    CollisionShape2D::CollisionInfo{
+                        .normal = glm::vec2{manifold.normal.x, manifold.normal.y}
+                    }
                 );
             }
         };
@@ -749,8 +758,14 @@ auto PhysicsSystem2D::process_contact_events() -> void
     for (std::size_t i = 0; i < events.endCount; i++)
     {
         const b2ContactEndTouchEvent &ev = events.endEvents[i];
+
+        if (!b2Contact_IsValid(ev.contactId))
+            continue;
+
         if (!b2Shape_IsValid(ev.shapeIdA) || !b2Shape_IsValid(ev.shapeIdB)) 
             continue;
+
+        b2Manifold manifold = b2Contact_GetData(ev.contactId).manifold;
 
         auto invoke = [&](b2ShapeId owner, b2ShapeId other) {
             auto cb = reinterpret_cast<CollisionShape2D::Callbacks *>(b2Shape_GetUserData(owner));
@@ -758,7 +773,10 @@ auto PhysicsSystem2D::process_contact_events() -> void
             {
                 cb->on_collision_end(
                     entity_from_shape(owner),
-                    entity_from_shape(other)
+                    entity_from_shape(other),
+                    CollisionShape2D::CollisionInfo{
+                        .normal = glm::vec2{manifold.normal.x, manifold.normal.y}
+                    }
                 );
             }
         };

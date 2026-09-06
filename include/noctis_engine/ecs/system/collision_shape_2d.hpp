@@ -194,18 +194,28 @@ struct CollisionShape2D
     /// Must match the shape_type
     Shapes shape;
 
+    /// @brief Describes information about a collision
+    struct CollisionInfo
+    {
+        /// @brief The collision's normal
+        glm::vec2 normal;
+
+        /// @brief The collision's points
+        // std::array<glm::vec2, 2> points;
+    };
+
     /// @brief Describes all the callbacks that relate to collision
     struct Callbacks
     {
         /// @brief Called when a collision begins and if enable_collision_events is set to true
         /// @param 1 entity A (the one bearing this collision shape)
         /// @param 2 entity B (the one that collided)
-        std::function<void (Entity, Entity)> on_collision_begin{nullptr};
+        std::function<void (Entity, Entity, CollisionInfo)> on_collision_begin{nullptr};
 
         /// @brief Called when a collision ends and if enable_collision_events is set to true
         /// @param 1 entity A (the one bearing this collision shape)
         /// @param 2 entity B (the one that collided)
-        std::function<void (Entity, Entity)> on_collision_end{nullptr};
+        std::function<void (Entity, Entity, CollisionInfo)> on_collision_end{nullptr};
         
         /// @brief Called when a hit collision is triggered.
         /// The hit event threshold can be set in the PhysicsSystem2D.
