@@ -330,7 +330,11 @@ auto PhysicsSystem2D::create_physics_entity(
 
 auto PhysicsSystem2D::sync_physics_engine_to_ecs() -> void
 {
-    for (const auto &e : *world_->all_entities<Transform2D>())
+    auto *entities = world_->all_entities<Transform2D>();
+    if (not entities)
+        return;
+    
+    for (const auto &e : *entities)
     {
         auto e_transform = world_->get_component<Transform2D>(e);
         auto e_pb = world_->get_component<PhysicsBody2D>(e);
@@ -363,7 +367,11 @@ auto PhysicsSystem2D::update_physics(float dt, std::function<void()> callback, f
 
 auto PhysicsSystem2D::sync_ecs_to_physics_engine() -> void
 {
-    for (const auto &e : *world_->all_entities<Transform2D>())
+    auto *entities = world_->all_entities<Transform2D>();
+    if (not entities)
+        return;
+    
+    for (const auto &e : *entities)
     {
         auto e_transform = world_->get_component<Transform2D>(e);
         auto e_rb = world_->get_component<PhysicsBody2D>(e);
