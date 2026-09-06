@@ -7,11 +7,13 @@ namespace NoctisEngine
 {
     
 MeshManager::MeshManager()
-    : vertex_off_{0}
-    , index_off_{0}
 {
-    vbo_ = GPUBuffer{1, "mesh_manager_vbo", BufferFlag::DYNAMIC_STORAGE_BIT};
-    ebo_ = GPUBuffer{1, "mesh_manager_ebo", BufferFlag::DYNAMIC_STORAGE_BIT};
+    auto buffer_flags = BufferFlag::MAP_WRITE_BIT 
+        | BufferFlag::MAP_PERSISTENT_BIT 
+        | BufferFlag::MAP_COHERENT_BIT;
+    
+    vbo_ = GPUBuffer{1, "mesh_manager_vbo", buffer_flags};
+    ebo_ = GPUBuffer{1, "mesh_manager_ebo", buffer_flags};
 
     vertex_array_ = VertexArray{
         DEFAULT_VERTEX_ATTRIBUTES, 
@@ -26,16 +28,26 @@ MeshManager::MeshManager()
 
 auto MeshManager::upload(const MeshData &mesh_data) -> MeshView
 {
-    std::size_t num_vertices = mesh_data.vertices.size();
-    std::size_t vertices_size = num_vertices * sizeof(Vertex);
-    std::size_t num_indices = mesh_data.indices.size();
-    std::size_t indices_size = num_indices * sizeof(std::uint32_t);
+    MeshView mesh_view {
+        .vertices_offset    = staged_vertices_.size(),
+        .vertices_count     = mesh_data.vertices.size(),
+        .indices_offset     = staged_indices_.size(),
+        .indices_count      = mesh_data.indices.size(),
+    };
 
-    bool vbo_resized = GPUBuffer::resize(vbo_, vertices_size, true);
-    bool ebo_resized = GPUBuffer::resize(ebo_, indices_size, true);
+    staged_vertices_.insert(staged_vertices_.end(), mesh_data.vertices.begin(), mesh_data.vertices.end());
+    staged_indices_.insert(staged_indices_.end(), mesh_data.indices.begin(), mesh_data.indices.end());
 
-    vbo_.write(mesh_data.vertices.data(), vertices_size, vertex_off_);
-    ebo_.write(mesh_data.indices.data(), indices_size, index_off_);
+    return mesh_view;
+}
+
+auto MeshManager::flush() -> void
+{
+    std::size_t vertices_size = staged_vertices_.size() * sizeof(Vertex);
+    std::size_t indices_size = staged_indices_.size() * sizeof(std::uint32_t);
+
+    bool vbo_resized = GPUBuffer::resize(vbo_, vertices_size, false);
+    bool ebo_resized = GPUBuffer::resize(ebo_, indices_size, false);
 
     if (vbo_resized)
         vertex_array_.link_vbo(vbo_, sizeof(Vertex));
@@ -43,17 +55,24 @@ auto MeshManager::upload(const MeshData &mesh_data) -> MeshView
     if (ebo_resized)
         vertex_array_.link_ebo(ebo_);
 
-    MeshView mesh_view {
-        .vertices_offset    = vertex_off_ / sizeof(Vertex),
-        .vertices_count     = num_vertices,
-        .indices_offset     = index_off_ / sizeof(std::uint32_t),
-        .indices_count      = num_indices,
-    };
+    auto map_access = BufferMapAccess::MAP_WRITE_BIT 
+        | BufferMapAccess::MAP_PERSISTENT_BIT 
+        | BufferMapAccess::MAP_COHERENT_BIT;
 
-    vertex_off_ += vertices_size;
-    index_off_ += indices_size;
+    void *vbo_map = vbo_.map(map_access);
+    void *ebo_map = ebo_.map(map_access);
 
-    return mesh_view;
+    if (not vbo_map || not ebo_map)
+        return;
+
+    std::memcpy(vbo_map, staged_vertices_.data(), vertices_size);
+    std::memcpy(ebo_map, staged_indices_.data(), indices_size);
+
+    vbo_.unmap();
+    ebo_.unmap();
+
+    staged_vertices_.clear();
+    staged_indices_.clear();
 }
 
 auto MeshManager::use(DrawList &draw_list) -> void

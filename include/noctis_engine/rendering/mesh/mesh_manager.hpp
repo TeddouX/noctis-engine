@@ -21,6 +21,9 @@ public:
     /// @return The mesh view that represents the mesh on the GPU
     auto upload(const MeshData &mesh_data) -> MeshView;
 
+    /// @brief Flushes all uploaded mesh data to the GPU
+    auto flush() -> void;
+
     /// @brief Adds bind commands for this mesh manager's buffers
     /// @param draw_list The draw list that the commands should be added to
     auto use(DrawList &draw_list) -> void;
@@ -39,8 +42,8 @@ private:
     GPUBuffer   vbo_;
     GPUBuffer   ebo_;
 
-    std::size_t vertex_off_;
-    std::size_t index_off_;
+    std::vector<Vertex>         staged_vertices_;
+    std::vector<std::uint32_t>  staged_indices_;
 };
 
 } // namespace NoctisEngine

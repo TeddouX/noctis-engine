@@ -93,6 +93,7 @@ Renderer::Renderer(const glm::ivec2 &framebuffer_size)
         },
         {0, 1, 2, 2, 3, 0}
     });
+    quad_mesh_manager_.flush();
 }
 
 auto Renderer::set_backface_culling(bool b) const -> void 
