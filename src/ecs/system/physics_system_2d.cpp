@@ -3,7 +3,6 @@
 #include <box2d/box2d.h>
 
 #include <noctis_engine/rendering/default_shaders.hpp>
-#include <stacktrace>
 
 
 namespace NoctisEngine

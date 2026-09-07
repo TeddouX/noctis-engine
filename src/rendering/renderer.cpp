@@ -1,6 +1,5 @@
 #include <noctis_engine/rendering/renderer.hpp>
 
-#include <stacktrace>
 #include <GL/gl.h>
 #include <GLFW/glfw3.h>
 
