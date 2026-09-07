@@ -131,12 +131,6 @@ public:
         std::uint16_t           substep_count = 4
     ) -> void;
 
-    /// @brief Updates the transforms according to what 
-    /// the physics engine calculated.
-    /// Also processes contact and sensor events.
-    /// This should be called after calling update_physics().
-    auto sync_ecs_to_physics_engine() -> void;
-
     /// @brief Draws wireframes to the screen to debug colliders
     /// @param draw_list The draw list that should be used to draw the wireframes
     /// @param settings The draw settings
@@ -165,6 +159,8 @@ private:
     /// @brief This is called in sync_ecs_to_physics_engine().
     /// Calls callbacks in colliding collision shapes
     auto process_sensor_events() -> void;
+
+    auto sync_ecs_to_physics_engine() -> void;
 };
 
 } // namespace NoctisEngine

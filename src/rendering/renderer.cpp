@@ -227,6 +227,7 @@ auto Renderer::render_pass(DrawList &draw_list, const RenderPass &render_pass) -
                 }
 
                 auto texture_cmd = reinterpret_cast<const BindTextureCmd *>(curr_cmd.base());
+                curr_cmd += sizeof(BindTextureCmd);
                 
                 if (last_texture_id != texture_cmd->tex)
                 {
@@ -246,13 +247,13 @@ auto Renderer::render_pass(DrawList &draw_list, const RenderPass &render_pass) -
                     last_texture_id = texture_cmd->tex;
                 }
 
-                curr_cmd += sizeof(BindTextureCmd);
                 break;
             }
             
             case DrawCommandType::BIND_PROGRAM:
             {
                 auto shader_cmd = reinterpret_cast<const BindProgramCmd *>(curr_cmd.base());
+                curr_cmd += sizeof(BindProgramCmd);
             
                 if (last_program_id == 0 || last_program_id != shader_cmd->prog)
                 {
@@ -262,13 +263,13 @@ auto Renderer::render_pass(DrawList &draw_list, const RenderPass &render_pass) -
                     last_program_id = shader_cmd->prog;
                 }
 
-                curr_cmd += sizeof(BindProgramCmd);
                 break;
             }
 
             case DrawCommandType::BIND_VAO:
             {
                 auto vao_cmd = reinterpret_cast<const BindVAOCmd *>(curr_cmd.base());
+                curr_cmd += sizeof(BindVAOCmd);
                 
                 if (last_vao_id != vao_cmd->vao)
                 {
@@ -278,24 +279,24 @@ auto Renderer::render_pass(DrawList &draw_list, const RenderPass &render_pass) -
                     last_vao_id = vao_cmd->vao;
                 }
 
-                curr_cmd += sizeof(BindVAOCmd);
                 break;
             }
 
             case DrawCommandType::BIND_BUFFER:
             {
                 auto buffer_cmd = reinterpret_cast<const BindBufferCmd *>(curr_cmd.base());
+                curr_cmd += sizeof(BindBufferCmd);
                 
                 flush_commands();
                 glBindBuffer(buffer_cmd->target, buffer_cmd->buffer);
                 
-                curr_cmd += sizeof(BindBufferCmd);
                 break;
             }
             
             case DrawCommandType::BIND_BUFFER_BASE:
             {
                 auto buffer_base_cmd = reinterpret_cast<const BindBufferBaseCmd *>(curr_cmd.base());
+                curr_cmd += sizeof(BindBufferBaseCmd);
 
                 flush_commands();
                 glBindBufferBase(
@@ -304,7 +305,6 @@ auto Renderer::render_pass(DrawList &draw_list, const RenderPass &render_pass) -
                     buffer_base_cmd->buffer
                 );
 
-                curr_cmd += sizeof(BindBufferBaseCmd);
                 break;
             }
             
@@ -317,6 +317,8 @@ auto Renderer::render_pass(DrawList &draw_list, const RenderPass &render_pass) -
                 }
 
                 auto uniform_cmd = reinterpret_cast<const SetUniformCmd *>(curr_cmd.base());
+                curr_cmd += sizeof(SetUniformCmd);
+
                 const UniformInfo &info = uniform_cmd->info;
 
                 flush_commands();
@@ -334,7 +336,6 @@ auto Renderer::render_pass(DrawList &draw_list, const RenderPass &render_pass) -
                     case UniformType::FLOAT: glUniform1f(loc, std::get<float>(info.val)); break;
                 }
 
-                curr_cmd += sizeof(SetUniformCmd);
                 break;
             }
             
@@ -347,6 +348,8 @@ auto Renderer::render_pass(DrawList &draw_list, const RenderPass &render_pass) -
                 }
 
                 auto draw_mesh_cmd = reinterpret_cast<const DrawMeshCmd *>(curr_cmd.base());
+                curr_cmd += sizeof(DrawMeshCmd);
+
                 const MeshView &mv = draw_mesh_cmd->mesh_view;
 
                 command_buf_ptr[total_commands++] = DrawElementsIndirectCommand{
@@ -361,13 +364,13 @@ auto Renderer::render_pass(DrawList &draw_list, const RenderPass &render_pass) -
                     .mat = draw_mesh_cmd->model_mat
                 };
 
-                curr_cmd += sizeof(DrawMeshCmd);
                 break;
             }
             
             case DrawCommandType::CLEAR:
             {
                 auto clear_cmd = reinterpret_cast<const ClearCmd *>(curr_cmd.base());
+                curr_cmd += sizeof(ClearCmd);
                 
                 GLbitfield mask{0};
                 if (clear_cmd->clear_color)
@@ -391,27 +394,26 @@ auto Renderer::render_pass(DrawList &draw_list, const RenderPass &render_pass) -
 
                 glClear(mask);
 
-                curr_cmd += sizeof(ClearCmd);
                 break;
             }
 
             case DrawCommandType::DRAW_LINES:
             {
                 auto draw_lines_cmd = reinterpret_cast<const DrawLinesCommand *>(curr_cmd.base());
+                curr_cmd += sizeof(DrawLinesCommand);
 
                 glDrawArrays(GL_LINES, draw_lines_cmd->first, draw_lines_cmd->count);
 
-                curr_cmd += sizeof(DrawLinesCommand);
                 break;
             }
 
             case DrawCommandType::DRAW_TRIANGLES:
             {
                 auto draw_tris_cmd = reinterpret_cast<const DrawTrianglesCommand *>(curr_cmd.base());
+                curr_cmd += sizeof(DrawTrianglesCommand);
                 
                 glDrawArrays(GL_TRIANGLES, draw_tris_cmd->first, draw_tris_cmd->count);
 
-                curr_cmd += sizeof(DrawTrianglesCommand);
                 break;
             }
         }

@@ -3,6 +3,7 @@
 #include <box2d/box2d.h>
 
 #include <noctis_engine/rendering/default_shaders.hpp>
+#include <stacktrace>
 
 
 namespace NoctisEngine
@@ -354,6 +355,8 @@ auto PhysicsSystem2D::sync_physics_engine_to_ecs() -> void
 
 auto PhysicsSystem2D::update_physics(float dt, std::function<void()> callback, float time_step, std::uint16_t substep_count) -> void
 {
+    bool dirty = false;
+
     accumulator_ += dt;
     while (accumulator_ >= time_step)
     {
@@ -362,7 +365,12 @@ auto PhysicsSystem2D::update_physics(float dt, std::function<void()> callback, f
 
         b2World_Step(b2LoadWorldId(physics_world_), time_step, substep_count);
         accumulator_ -= time_step;
+        
+        dirty = true;
     }
+
+    if (dirty)
+        sync_ecs_to_physics_engine();
 }
 
 auto PhysicsSystem2D::sync_ecs_to_physics_engine() -> void
@@ -765,18 +773,13 @@ auto PhysicsSystem2D::process_contact_events() -> void
         if (!b2Shape_IsValid(ev.shapeIdA) || !b2Shape_IsValid(ev.shapeIdB)) 
             continue;
 
-        b2Manifold manifold = b2Contact_GetData(ev.contactId).manifold;
-
         auto invoke = [&](b2ShapeId owner, b2ShapeId other) {
             auto cb = reinterpret_cast<CollisionShape2D::Callbacks *>(b2Shape_GetUserData(owner));
             if (cb && cb->on_collision_end)
             {
                 cb->on_collision_end(
                     entity_from_shape(owner),
-                    entity_from_shape(other),
-                    CollisionShape2D::CollisionInfo{
-                        .normal = glm::vec2{manifold.normal.x, manifold.normal.y}
-                    }
+                    entity_from_shape(other)
                 );
             }
         };

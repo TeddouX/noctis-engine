@@ -215,7 +215,7 @@ struct CollisionShape2D
         /// @brief Called when a collision ends and if enable_collision_events is set to true
         /// @param 1 entity A (the one bearing this collision shape)
         /// @param 2 entity B (the one that collided)
-        std::function<void (Entity, Entity, CollisionInfo)> on_collision_end{nullptr};
+        std::function<void (Entity, Entity)> on_collision_end{nullptr};
         
         /// @brief Called when a hit collision is triggered.
         /// The hit event threshold can be set in the PhysicsSystem2D.
