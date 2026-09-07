@@ -28,10 +28,21 @@ public:
 
     /// @internal
     /// @brief Gets this entitie's id 
-    auto id() -> EntityID { return id_; }
+    auto id() const -> EntityID { return id_; }
+
+    auto operator==(const Entity &other) const -> bool = default;
 
 private:
     EntityID id_;
 };
 
 } // namespace NoctisEngine
+
+template<>
+struct std::hash<NoctisEngine::Entity>
+{
+    std::size_t operator()(const NoctisEngine::Entity &s) const noexcept
+    {
+        return std::hash<std::int32_t>{}(s.id());
+    }
+};
