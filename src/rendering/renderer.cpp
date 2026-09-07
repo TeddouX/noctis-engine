@@ -2,6 +2,7 @@
 
 #include <GL/gl.h>
 #include <GLFW/glfw3.h>
+#include <stacktrace>
 
 #include <noctis_engine/core/exit.hpp>
 #include <noctis_engine/core/window.hpp>
