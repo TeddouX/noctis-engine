@@ -133,6 +133,10 @@ auto Renderer::set_blend_func(BlendFunc sFactor, BlendFunc dFactor) const -> voi
 
 auto Renderer::render_pass(DrawList &draw_list, const RenderPass &render_pass) -> void
 {
+    //  --------------------------------------------------------
+    //  TODOOOOOOOOO: FRAMES IN FLIGHT TO NOT WAIT FOR THE FENCE
+    //  --------------------------------------------------------
+
     glPushDebugGroup(
         GL_DEBUG_SOURCE_APPLICATION, 
         0, 
@@ -234,15 +238,7 @@ auto Renderer::render_pass(DrawList &draw_list, const RenderPass &render_pass) -
                     flush_commands();
                     glActiveTexture(GL_TEXTURE0 + texture_cmd->bind_point);
                     glBindTexture(GL_TEXTURE_2D, texture_cmd->tex);
-
-                    int loc = glGetUniformLocation(last_program_id, texture_cmd->tex_name.data());
-                    if (loc < 0) 
-                    {
-                        RENDERING_LOGGER.error("Uniform for texture \"{}\" couldn't be found", texture_cmd->tex_name);
-                        break;
-                    }
-
-                    glUniform1i(loc, texture_cmd->bind_point);
+                    glUniform1i(texture_cmd->bind_point, texture_cmd->bind_point);
 
                     last_texture_id = texture_cmd->tex;
                 }
@@ -313,7 +309,7 @@ auto Renderer::render_pass(DrawList &draw_list, const RenderPass &render_pass) -
                 if (last_program_id <= 0)
                 {
                     RENDERING_LOGGER.error("Shader must be bound to set a uniform. Shader binding should be done before anything else in the draw list");
-                    return;
+                    break;
                 }
 
                 auto uniform_cmd = reinterpret_cast<const SetUniformCmd *>(curr_cmd.base());
@@ -331,9 +327,9 @@ auto Renderer::render_pass(DrawList &draw_list, const RenderPass &render_pass) -
 
                 switch (info.type) 
                 {
-                    case UniformType::BOOL:  glUniform1i(loc, std::get<bool>(info.val)); break;
-                    case UniformType::INT:   glUniform1i(loc, std::get<int>(info.val)); break;
-                    case UniformType::FLOAT: glUniform1f(loc, std::get<float>(info.val)); break;
+                    case UniformType::BOOL:  glUniform1i(loc, std::get<0>(info.val)); break;
+                    case UniformType::INT:   glUniform1i(loc, std::get<1>(info.val)); break;
+                    case UniformType::FLOAT: glUniform1f(loc, std::get<2>(info.val)); break;
                 }
 
                 break;
