@@ -1,3 +1,4 @@
+#include "noctis_engine/core/logging.hpp"
 #include <noctis_engine/rendering/renderer.hpp>
 
 #include <GL/gl.h>
@@ -24,7 +25,7 @@ struct DrawElementsIndirectCommand
 
 struct ObjectData
 {
-    glm::mat4 mat;
+    Mat4x4 mat;
 };
 
 constexpr BufferMapAccess BUFFER_MAP_ACCESSES = 
@@ -38,7 +39,7 @@ static auto glad_enable_disable(bool b, GLenum name) -> void
     else   glDisable(name);
 }
 
-Renderer::Renderer(const glm::ivec2 &framebuffer_size)
+Renderer::Renderer(const IVec2 &framebuffer_size)
     : throw_on_err_{false}
     , render_fence_{nullptr}
 {
@@ -86,10 +87,10 @@ Renderer::Renderer(const glm::ivec2 &framebuffer_size)
     quad_mesh_view_ = quad_mesh_manager_.upload(MeshData{
         // This quad spans the whole screen
         {
-            Vertex{glm::vec3( 1.0f,  1.0f, 0.0f), glm::vec3(0), glm::vec3(0), glm::vec2(1, 1)},
-            Vertex{glm::vec3(-1.0f,  1.0f, 0.0f), glm::vec3(0), glm::vec3(0), glm::vec2(0, 1)},
-            Vertex{glm::vec3(-1.0f, -1.0f, 0.0f), glm::vec3(0), glm::vec3(0), glm::vec2(0, 0)},
-            Vertex{glm::vec3( 1.0f, -1.0f, 0.0f), glm::vec3(0), glm::vec3(0), glm::vec2(1, 0)},
+            Vertex{Vec3( 1.0f,  1.0f, 0.0f), Vec3(0), Vec3(0), Vec2(1, 1)},
+            Vertex{Vec3(-1.0f,  1.0f, 0.0f), Vec3(0), Vec3(0), Vec2(0, 1)},
+            Vertex{Vec3(-1.0f, -1.0f, 0.0f), Vec3(0), Vec3(0), Vec2(0, 0)},
+            Vertex{Vec3( 1.0f, -1.0f, 0.0f), Vec3(0), Vec3(0), Vec2(1, 0)},
         },
         {0, 1, 2, 2, 3, 0}
     });
@@ -348,13 +349,27 @@ auto Renderer::render_pass(DrawList &draw_list, const RenderPass &render_pass) -
 
                 const MeshView &mv = draw_mesh_cmd->mesh_view;
 
-                command_buf_ptr[total_commands++] = DrawElementsIndirectCommand{
-                    .count = static_cast<GLuint>(mv.indices_count),
-                    .instance_count = 1,
-                    .first_index = static_cast<GLuint>(mv.indices_offset),
-                    .base_vertex = static_cast<GLint>(mv.vertices_offset),
-                    .base_instance = num_objects,
-                };
+                // Empty mesh view, default to a quad
+                if (mv == MeshView{})
+                {
+                    command_buf_ptr[total_commands++] = DrawElementsIndirectCommand{
+                        .count = static_cast<GLuint>(quad_mesh_view_.indices_count),
+                        .instance_count = 1,
+                        .first_index = static_cast<GLuint>(quad_mesh_view_.indices_offset),
+                        .base_vertex = static_cast<GLint>(quad_mesh_view_.vertices_offset),
+                        .base_instance = num_objects,
+                    };
+                }
+                else
+                {
+                    command_buf_ptr[total_commands++] = DrawElementsIndirectCommand{
+                        .count = static_cast<GLuint>(mv.indices_count),
+                        .instance_count = 1,
+                        .first_index = static_cast<GLuint>(mv.indices_offset),
+                        .base_vertex = static_cast<GLint>(mv.vertices_offset),
+                        .base_instance = num_objects,
+                    };
+                }
 
                 object_ssbo_ptr[num_objects++] = ObjectData{
                     .mat = draw_mesh_cmd->model_mat

@@ -3,11 +3,6 @@
 #include <string_view>
 #include <span>
 #include <vector>
-#include <stdexcept>
-#include <format>
-
-#include "../definitions.hpp"
-#include "../core/logging.hpp"
 
 
 namespace NoctisEngine

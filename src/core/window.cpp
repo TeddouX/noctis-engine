@@ -237,9 +237,9 @@ auto Window::framebuffer_resized_callback(GLFWwindow* glfw_window, int width, in
         window->resize_callback_(width, height);
 }
 
-auto Window::frambuffer_size() -> glm::ivec2
+auto Window::frambuffer_size() -> IVec2
 {
-    glm::ivec2 size{};
+    IVec2 size{};
     glfwGetFramebufferSize(glfw_window_, &size.x, &size.y);
     return size;
 }

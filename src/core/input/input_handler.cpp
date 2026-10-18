@@ -3,6 +3,7 @@
 #include <GLFW/glfw3.h>
 
 #include <noctis_engine/core/logging.hpp>
+#include <noctis_engine/core/input/event_stack.hpp>
 
 
 namespace NoctisEngine
@@ -180,20 +181,20 @@ auto InputHandler::action_held(std::string_view action_name) -> bool
 auto InputHandler::horizontal_input_vector(
     std::string_view left_action, 
     std::string_view right_action
-) -> glm::vec2
+) -> Vec2
 {
     bool left_pressed = action_pressed(left_action);
     bool right_pressed = action_pressed(right_action);
 
     if (left_pressed and right_pressed)
-        return glm::vec2{0};
+        return Vec2{0};
 
     if (left_pressed)
-        return glm::vec2{-1, 0};
+        return Vec2{-1, 0};
     else if (right_pressed)
-        return glm::vec2{1, 0};
+        return Vec2{1, 0};
     else
-        return glm::vec2{0};
+        return Vec2{0};
 }
 
 auto InputHandler::update() -> void
@@ -270,7 +271,7 @@ auto InputHandler::glfw_key_callback(GLFWwindow *window, int key, int scancode, 
 
 auto InputHandler::glfw_cursor_pos_callback(GLFWwindow *window, double xPos, double yPos) -> void
 {
-    glm::vec2 pos{xPos, yPos};
+    Vec2 pos{xPos, yPos};
 
     MouseMouvement new_mouse_mvt{};
     new_mouse_mvt.delta = pos - last_mouse_mvt_.pos;

@@ -1,6 +1,7 @@
 #include <noctis_engine/rendering/graphics_program.hpp>
 
 #include <GL/gl.h>
+#include <noctis_engine/core/logging.hpp>
 
 
 namespace NoctisEngine

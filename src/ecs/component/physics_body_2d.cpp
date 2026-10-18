@@ -18,10 +18,10 @@ auto PhysicsBody2D::set_phys_body_type(PhysicsBody2D::Type type) -> void
     b2Body_SetType(b2LoadBodyId(body_id), b2_type);
 }
 
-auto PhysicsBody2D::linear_velocity() -> glm::vec2
+auto PhysicsBody2D::linear_velocity() -> Vec2
 {
     b2Vec2 vec = b2Body_GetLinearVelocity(b2LoadBodyId(body_id));
-    return glm::vec2{ vec.x, vec.y };
+    return Vec2{ vec.x, vec.y };
 }
 
 auto PhysicsBody2D::angular_velocity() -> float
@@ -29,7 +29,7 @@ auto PhysicsBody2D::angular_velocity() -> float
     return b2Body_GetAngularVelocity(b2LoadBodyId(body_id));
 }
 
-auto PhysicsBody2D::set_linear_velocity(const glm::vec2 &vel) -> void
+auto PhysicsBody2D::set_linear_velocity(const Vec2 &vel) -> void
 {
     b2Body_SetLinearVelocity(
         b2LoadBodyId(body_id), 
@@ -42,7 +42,7 @@ auto PhysicsBody2D::set_angular_velocity(float vel) -> void
     b2Body_SetAngularVelocity(b2LoadBodyId(body_id), vel);
 }
 
-auto PhysicsBody2D::apply_force(const glm::vec2 &force, const glm::vec2 &point, bool wake) -> void
+auto PhysicsBody2D::apply_force(const Vec2 &force, const Vec2 &point, bool wake) -> void
 {
     b2Body_ApplyForce(
         b2LoadBodyId(body_id),
@@ -52,7 +52,7 @@ auto PhysicsBody2D::apply_force(const glm::vec2 &force, const glm::vec2 &point, 
     );
 }
 
-auto PhysicsBody2D::apply_force_to_center(const glm::vec2 &force, bool wake) -> void
+auto PhysicsBody2D::apply_force_to_center(const Vec2 &force, bool wake) -> void
 {
     b2Body_ApplyForceToCenter(
         b2LoadBodyId(body_id),
@@ -70,7 +70,7 @@ auto PhysicsBody2D::apply_torque(float torque, bool wake) -> void
     );
 }
 
-auto PhysicsBody2D::apply_linear_impulse(const glm::vec2 &impulse, const glm::vec2 &point, bool wake) -> void
+auto PhysicsBody2D::apply_linear_impulse(const Vec2 &impulse, const Vec2 &point, bool wake) -> void
 {
     b2Body_ApplyLinearImpulse(
         b2LoadBodyId(body_id),
@@ -80,7 +80,7 @@ auto PhysicsBody2D::apply_linear_impulse(const glm::vec2 &impulse, const glm::ve
     );
 }
 
-auto PhysicsBody2D::apply_linear_impulse_to_center(const glm::vec2 &impulse, bool wake) -> void
+auto PhysicsBody2D::apply_linear_impulse_to_center(const Vec2 &impulse, bool wake) -> void
 {
     b2Body_ApplyLinearImpulseToCenter(
         b2LoadBodyId(body_id),

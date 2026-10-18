@@ -1,5 +1,5 @@
 #pragma once
-#include <string>
+#include <string_view>
 
 
 /// @brief Namespace that contains all the things that are useful to the engine

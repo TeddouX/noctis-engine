@@ -13,10 +13,12 @@ auto attrib_type_size_bytes(VertexAttribute::ComponentType type) -> std::size_t;
 
 VertexArray::VertexArray(
     const std::vector<VertexAttribute> &vertex_attribs, 
+    std::size_t                         vertex_size,
     std::string_view                    name, 
     bool                                create_buffers,
     bool                                use_ebo)
     : use_ebo_{use_ebo}
+    , vertex_size_{vertex_size}
 {
     glGenVertexArrays(1, &vao_);
     glBindVertexArray(vao_);
@@ -61,14 +63,14 @@ VertexArray::VertexArray(
     }
 }
 
-auto VertexArray::upload_vertices(void *vertices, std::size_t size, std::size_t vertex_size) -> void
+auto VertexArray::upload_vertices(const void *vertices, std::size_t size) -> void
 {
-    bool resized = GPUBuffer::resize(vbo_, size);
+    bool resized = GPUBuffer::resize(vbo_, size * vertex_size_);
     vbo_.write(vertices, size, 0);
 
     // Relink if resized because a new buffer was created
     if (resized)
-        link_vbo(vbo_, vertex_size, 0);
+        link_vbo(vbo_, 0);
 }
 
 auto VertexArray::upload_indices(const std::vector<std::uint32_t> &indices) -> void
@@ -87,9 +89,9 @@ auto VertexArray::upload_indices(const std::vector<std::uint32_t> &indices) -> v
         link_ebo(ebo_);
 }
 
-auto VertexArray::link_vbo(const GPUBuffer &vbo_buf, std::size_t vertex_size, std::size_t first_el_off) -> void
+auto VertexArray::link_vbo(const GPUBuffer &vbo_buf, std::size_t first_el_off) -> void
 {
-    glVertexArrayVertexBuffer(vao_, 0, vbo_buf.gl_handle(), first_el_off, vertex_size);
+    glVertexArrayVertexBuffer(vao_, 0, vbo_buf.gl_handle(), first_el_off, vertex_size_);
     vbo_ = vbo_buf;
 }
 

@@ -4,7 +4,7 @@
 #include <vector>
 #include <functional>
 
-#include "../math/math.hpp"
+#include "../math/vec2.hpp"
 
 
 struct GLFWwindow;
@@ -115,7 +115,7 @@ public:
     auto set_resize_callback(std::function<void (int, int)> callback) -> void;
 
     /// @brief Gets this window's frambuffer size, useful for the renderer's constructor
-    auto frambuffer_size() -> glm::ivec2;
+    auto frambuffer_size() -> IVec2;
 
 private:
     GLFWwindow *glfw_window_;

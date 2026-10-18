@@ -15,8 +15,8 @@ public:
     virtual ~IWidget() = default;
 
     virtual auto draw() -> void {};
-    virtual auto update_layout(const Rect &available_space) -> void {};
-    virtual auto on_event(const UIEvent &event) -> bool {};
+    virtual auto update_layout(const Rect &available_space) -> void {}
+    virtual auto on_event(const UIEvent &event) -> bool { return false; }
 
     Rect                                    bounds;
     std::vector<std::shared_ptr<IWidget>>   children;

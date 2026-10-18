@@ -1,5 +1,5 @@
 #pragma once
-#include "../../math/math.hpp"
+#include "../../math/vec2.hpp"
 
 
 namespace NoctisEngine
@@ -9,11 +9,11 @@ namespace NoctisEngine
 struct MouseMouvement 
 {
     /// @brief The mouse pointer's current position
-    glm::vec2 pos{0};
+    Vec2 pos{0};
     
     /// @brief How much the mouse pointer's position changed 
     /// over the last frame
-    glm::vec2 delta{0};
+    Vec2 delta{0};
 };
 
 /// @brief Represents any recognized mouse button

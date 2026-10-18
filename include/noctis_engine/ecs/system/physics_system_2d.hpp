@@ -25,12 +25,12 @@ public:
         /// @brief World space coordinates (in pixels) that define the lower bound of 
         /// the area that should be drawn. Every thing outside this area will be culled (not drawn)
         /// It is recommended to use a margin of +100 pixels.
-        glm::vec2 lower_draw_bound;
+        Vec2 lower_draw_bound;
 
         /// @brief World space coordinates (in pixels) that define the upper bound of 
         /// the area that should be drawn. Every thing outside this area will be culled (not drawn)
         /// It is recommended to use a margin of +100 pixels.
-        glm::vec2 upper_draw_bound;
+        Vec2 upper_draw_bound;
 
         /// @brief Scale to use when drawing forces
         float force_scale;
@@ -77,7 +77,7 @@ public:
 
     /// @brief Default amount of time to simulate for physics update, 120Hz
     static constexpr float DEFAULT_TIMESTEP = 1.0f / 120.0f;
-    static constexpr glm::vec2 DEFAULT_GRAVITY{0, -9.81};
+    static constexpr Vec2 DEFAULT_GRAVITY{0., -9.81};
 
     /// @param world Your game's ECS world, used to create physics entities
     PhysicsSystem2D(std::shared_ptr<ECSWorld> world);
@@ -91,7 +91,7 @@ public:
 
     /// @brief Set the gravity vector for the physics world
     /// @param gravity The gravity vector
-    auto set_gravity(glm::vec2 gravity) -> void;
+    auto set_gravity(Vec2 gravity) -> void;
 
     /// @brief This controls the collision speed needed to generate a hit even. Usually in m/s.
     /// @param threshold The speed necessary

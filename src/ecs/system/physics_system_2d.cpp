@@ -3,6 +3,12 @@
 #include <box2d/box2d.h>
 
 #include <noctis_engine/rendering/default_shaders.hpp>
+#include <noctis_engine/core/logging.hpp>
+#include <noctis_engine/math/vec2.hpp>
+#include <noctis_engine/math/angle.hpp>
+#include <noctis_engine/math/constants.hpp>
+#include <noctis_engine/definitions.hpp>
+#include <noctis_engine/rendering/vertex.hpp>
 
 
 namespace NoctisEngine
@@ -11,7 +17,7 @@ namespace NoctisEngine
 Logger PHYSICS_LOGGER{"Noctis Engine", "Physics"};
 
 auto phys_mat_to_b2_surface_mat(const PhysicsMaterial2D &phys_mat) -> b2SurfaceMaterial;
-auto glm_points_to_b2_points(const std::vector<glm::vec2> &glm_points) -> std::vector<b2Vec2>;
+auto glm_points_to_b2_points(const std::vector<Vec2> &glm_points) -> std::vector<b2Vec2>;
 auto entity_from_shape(const b2ShapeId &shape_id) -> Entity;
 
 
@@ -33,6 +39,7 @@ auto PhysicsSystem2D::enable_debug_rendering() -> bool
 {
     line_vertex_array_ = VertexArray{
         DEBUG_VERTEX_ATTRIBUTES,
+        sizeof(DebugVertex),
         "physics_line_vertex_array",
         true,
         false
@@ -40,6 +47,7 @@ auto PhysicsSystem2D::enable_debug_rendering() -> bool
 
     tri_vertex_array_ = VertexArray{
         DEBUG_VERTEX_ATTRIBUTES,
+        sizeof(DebugVertex),
         "physics_tri_vertex_array",
         true,
         false
@@ -54,7 +62,7 @@ auto PhysicsSystem2D::enable_debug_rendering() -> bool
     return graphics_prog_.valid();
 }
 
-auto PhysicsSystem2D::set_gravity(glm::vec2 gravity) -> void
+auto PhysicsSystem2D::set_gravity(Vec2 gravity) -> void
 {
     b2World_SetGravity(
         b2LoadWorldId(physics_world_), 
@@ -136,7 +144,7 @@ auto PhysicsSystem2D::create_physics_entity(
                 b2Polygon box_polygon = b2MakeOffsetRoundedBox(
                     box_shape.half_extents.x * PIXELS_TO_METERS, box_shape.half_extents.y * PIXELS_TO_METERS, 
                     b2Vec2{box_shape.center.x * PIXELS_TO_METERS, box_shape.center.y * PIXELS_TO_METERS}, 
-                    b2MakeRot(glm::radians(box_shape.rotation_deg)), 
+                    b2MakeRot(radians(box_shape.rotation_deg)), 
                     box_shape.corner_radius * PIXELS_TO_METERS
                 );
 
@@ -389,7 +397,7 @@ auto PhysicsSystem2D::sync_ecs_to_physics_engine() -> void
             b2LoadBodyId(e_rb->body_id) 
         );
 
-        e_transform->set_position(glm::vec2{body_transform.p.x, body_transform.p.y} * METERS_TO_PIXELS);
+        e_transform->set_position(Vec2{body_transform.p.x, body_transform.p.y} * METERS_TO_PIXELS);
         e_transform->set_rotation(b2Rot_GetAngle(body_transform.q));
     }
 
@@ -445,8 +453,8 @@ auto PhysicsSystem2D::draw_debug(DrawList &draw_list, const DebugDrawSettings &s
     {
         auto ctx = reinterpret_cast<Context *>(context);
 
-        glm::vec4 color_floats4 = Color::RGBA_to_floats(static_cast<std::uint32_t>(color));
-        glm::vec3 color_floats{ color_floats4.r, color_floats4.g, color_floats4.b };
+        Vec4 color_floats4 = Color::RGBA_to_floats(static_cast<std::uint32_t>(color));
+        Vec3 color_floats{ color_floats4.x, color_floats4.y, color_floats4.z };
 
         if (vertexCount < 3)
             return;
@@ -460,12 +468,12 @@ auto PhysicsSystem2D::draw_debug(DrawList &draw_list, const DebugDrawSettings &s
             b2Vec2 world_next = b2TransformPoint(transform, vertices[next]);
 
             ctx->lines_vertices.push_back(DebugVertex{ 
-                glm::vec3{ world_curr.x, world_curr.y, 0 } * METERS_TO_PIXELS, 
+                Vec3{ world_curr.x, world_curr.y, 0.f} * METERS_TO_PIXELS, 
                 color_floats
             });
 
             ctx->lines_vertices.push_back(DebugVertex{ 
-                glm::vec3{ world_next.x, world_next.y, 0 } * METERS_TO_PIXELS, 
+                Vec3{ world_next.x, world_next.y, 0.f} * METERS_TO_PIXELS, 
                 color_floats
             });
         }
@@ -482,19 +490,19 @@ auto PhysicsSystem2D::draw_debug(DrawList &draw_list, const DebugDrawSettings &s
     {
         auto ctx = reinterpret_cast<Context *>(context);
         
-        glm::vec4 color_floats4 = Color::RGBA_to_floats(static_cast<std::uint32_t>(color));
-        glm::vec3 color_floats{ color_floats4.r, color_floats4.g, color_floats4.b };
+        Vec4 color_floats4 = Color::RGBA_to_floats(static_cast<std::uint32_t>(color));
+        Vec3 color_floats{ color_floats4.x, color_floats4.y, color_floats4.z };
 
         if (vertexCount < 3)
             return;
 
-        std::vector<glm::vec3> world_verts{};
+        std::vector<Vec3> world_verts{};
         world_verts.resize(vertexCount);
 
         for (int i = 0; i < vertexCount; i++)
         {
             b2Vec2 world = b2TransformPoint(transform, vertices[i]);
-            world_verts[i] = glm::vec3{ world.x, world.y, 0 } * METERS_TO_PIXELS;
+            world_verts[i] = Vec3{ world.x, world.y, 0.f } * METERS_TO_PIXELS;
         }
 
         for (int i = 1; i + 1 < vertexCount; i++)
@@ -514,24 +522,26 @@ auto PhysicsSystem2D::draw_debug(DrawList &draw_list, const DebugDrawSettings &s
     {
         auto ctx = reinterpret_cast<Context *>(context);
 
-        glm::vec4 color_floats4 = Color::RGBA_to_floats(static_cast<std::uint32_t>(color));
-        glm::vec3 color_floats{ color_floats4.r, color_floats4.g, color_floats4.b };
+        Vec4 color_floats4 = Color::RGBA_to_floats(static_cast<std::uint32_t>(color));
+        Vec3 color_floats{ color_floats4.x, color_floats4.y, color_floats4.z };
 
         constexpr int SEGMENTS = 24;
-        constexpr float TAU = glm::tau<float>();
+        constexpr float TAU = std::numbers::pi_v<float> * std::numbers::pi_v<float>;
 
         for (int i = 0; i < SEGMENTS; i++)
         {
             float angle_a = TAU * (float)i / SEGMENTS;
-            glm::vec3 point_a{
-                center.x + radius * glm::cos(angle_a), 
-                center.y + radius * glm::sin(angle_a), 0 
+            Vec3 point_a{
+                center.x + radius * std::cos(angle_a), 
+                center.y + radius * std::sin(angle_a),
+                0.f
             };
 
             float angle_b = TAU * (float)(i + 1) / SEGMENTS;
-            glm::vec3 point_b{
-                center.x + radius * glm::cos(angle_b), 
-                center.y + radius * glm::sin(angle_b), 0 
+            Vec3 point_b{
+                center.x + radius * std::cos(angle_b), 
+                center.y + radius * std::sin(angle_b),
+                0.f
             };
 
             ctx->lines_vertices.push_back(DebugVertex{ point_a * METERS_TO_PIXELS, color_floats });
@@ -549,30 +559,29 @@ auto PhysicsSystem2D::draw_debug(DrawList &draw_list, const DebugDrawSettings &s
     {
         auto ctx = reinterpret_cast<Context *>(context);
 
-        glm::vec4 color_floats4 = Color::RGBA_to_floats(static_cast<std::uint32_t>(color));
-        glm::vec3 color_floats{ color_floats4.r, color_floats4.g, color_floats4.b };
+        Vec4 color_floats4 = Color::RGBA_to_floats(static_cast<std::uint32_t>(color));
+        Vec3 color_floats{ color_floats4.x, color_floats4.y, color_floats4.z };
 
         constexpr int SEGMENTS = 24;
-        constexpr float TAU = glm::tau<float>();
 
         b2Vec2 center_pos = transform.p;
 
-        std::vector<glm::vec3> rim(SEGMENTS);
+        std::vector<Vec3> rim(SEGMENTS);
         for (int i = 0; i < SEGMENTS; i++)
         {
             float angle = TAU * (float)i / SEGMENTS;
 
             b2Vec2 local{ 
-                radius * glm::cos(angle), 
-                radius * glm::sin(angle) 
+                radius * std::cos(angle), 
+                radius * std::sin(angle) 
             };
 
             b2Vec2 world = b2TransformPoint(transform, local);
             
-            rim[i] = glm::vec3{ world.x, world.y, 0 } * METERS_TO_PIXELS;
+            rim[i] = Vec3{ world.x, world.y, 0.f } * METERS_TO_PIXELS;
         }
 
-        glm::vec3 center_world{ center_pos.x, center_pos.y, 0 };
+        Vec3 center_world{ center_pos.x, center_pos.y, 0.f };
         center_world *= METERS_TO_PIXELS;
 
         for (int i = 0; i < SEGMENTS; i++)
@@ -599,20 +608,19 @@ auto PhysicsSystem2D::draw_debug(DrawList &draw_list, const DebugDrawSettings &s
     {
         auto ctx = reinterpret_cast<Context *>(context);
 
-        glm::vec4 color_floats4 = Color::RGBA_to_floats(static_cast<std::uint32_t>(color));
-        glm::vec3 color_floats{ color_floats4.r, color_floats4.g, color_floats4.b };
+        Vec4 color_floats4 = Color::RGBA_to_floats(static_cast<std::uint32_t>(color));
+        Vec3 color_floats{ color_floats4.x, color_floats4.y, color_floats4.z };
 
         b2Vec2 axis = { p2.x - p1.x, p2.y - p1.y };
-        float length = glm::sqrt(axis.x * axis.x + axis.y * axis.y);
+        float length = std::sqrt(axis.x * axis.x + axis.y * axis.y);
 
         if (length < 1e-6f)
             return;
 
-        float base_angle = glm::atan(axis.y, axis.x);
+        float base_angle = std::atan2(axis.y, axis.x);
         constexpr int CAP_SEGMENTS = 12;
-        constexpr float PI = glm::pi<float>();
 
-        std::vector<glm::vec3> outline;
+        std::vector<Vec3> outline;
         outline.reserve(CAP_SEGMENTS * 2 + 2);
 
         for (int i = 0; i <= CAP_SEGMENTS; i++)
@@ -620,10 +628,10 @@ auto PhysicsSystem2D::draw_debug(DrawList &draw_list, const DebugDrawSettings &s
             float t = (float)i / CAP_SEGMENTS;
             float angle = base_angle - PI * 0.5f + PI * t;
 
-            outline.push_back(glm::vec3{
-                p2.x + radius * glm::cos(angle),
-                p2.y + radius * glm::sin(angle),
-                0
+            outline.push_back(Vec3{
+                p2.x + radius * std::cos(angle),
+                p2.y + radius * std::sin(angle),
+                0.f
             } * METERS_TO_PIXELS);
         }
 
@@ -632,14 +640,14 @@ auto PhysicsSystem2D::draw_debug(DrawList &draw_list, const DebugDrawSettings &s
             float t = (float)i / CAP_SEGMENTS;
             float angle = base_angle + PI * 0.5f + PI * t;
 
-            outline.push_back(glm::vec3{
-                p1.x + radius * glm::cos(angle),
-                p1.y + radius * glm::sin(angle),
-                0
+            outline.push_back(Vec3{
+                p1.x + radius * std::cos(angle),
+                p1.y + radius * std::sin(angle),
+                0.f
             } * METERS_TO_PIXELS);
         }
 
-        glm::vec3 hub{ (p1.x + p2.x) * 0.5f, (p1.y + p2.y) * 0.5f, 0 };
+        Vec3 hub{ (p1.x + p2.x) * 0.5f, (p1.y + p2.y) * 0.5f, 0.f };
         hub *= METERS_TO_PIXELS;
 
         int n = (int)outline.size();
@@ -661,16 +669,16 @@ auto PhysicsSystem2D::draw_debug(DrawList &draw_list, const DebugDrawSettings &s
     {
         auto ctx = reinterpret_cast<Context *>(context);
 
-        glm::vec4 color_floats4 = Color::RGBA_to_floats(static_cast<std::uint32_t>(color));
-        glm::vec3 color_floats{ color_floats4.r, color_floats4.g, color_floats4.b };
+        Vec4 color_floats4 = Color::RGBA_to_floats(static_cast<std::uint32_t>(color));
+        Vec3 color_floats{ color_floats4.x, color_floats4.y, color_floats4.z };
 
         ctx->lines_vertices.push_back(DebugVertex{ 
-            glm::vec3{ p1.x, p1.y, 0  } * METERS_TO_PIXELS, 
+            Vec3{ p1.x, p1.y, 0.f } * METERS_TO_PIXELS, 
             color_floats 
         });
 
         ctx->lines_vertices.push_back(DebugVertex{ 
-            glm::vec3{ p2.x, p2.y, 0  } * METERS_TO_PIXELS, 
+            Vec3{ p2.x, p2.y, 0.f } * METERS_TO_PIXELS, 
             color_floats 
         });
     };
@@ -683,16 +691,16 @@ auto PhysicsSystem2D::draw_debug(DrawList &draw_list, const DebugDrawSettings &s
     {
         auto ctx = reinterpret_cast<Context *>(context);
 
-        glm::vec4 color_floats4 = Color::RGBA_to_floats(static_cast<std::uint32_t>(color));
-        glm::vec3 color_floats{ color_floats4.r, color_floats4.g, color_floats4.b };
+        Vec4 color_floats4 = Color::RGBA_to_floats(static_cast<std::uint32_t>(color));
+        Vec3 color_floats{ color_floats4.x, color_floats4.y, color_floats4.z };
 
         constexpr int NUM_CORNERS = 4;
 
-        glm::vec3 corners[NUM_CORNERS] = {
-            glm::vec3{ bounds.lowerBound.x, bounds.lowerBound.y, 0 } * METERS_TO_PIXELS,
-            glm::vec3{ bounds.upperBound.x, bounds.lowerBound.y, 0 } * METERS_TO_PIXELS,
-            glm::vec3{ bounds.upperBound.x, bounds.upperBound.y, 0 } * METERS_TO_PIXELS,
-            glm::vec3{ bounds.lowerBound.x, bounds.upperBound.y, 0 } * METERS_TO_PIXELS,
+        Vec3 corners[NUM_CORNERS] = {
+            Vec3{ bounds.lowerBound.x, bounds.lowerBound.y, 0.f } * METERS_TO_PIXELS,
+            Vec3{ bounds.upperBound.x, bounds.lowerBound.y, 0.f } * METERS_TO_PIXELS,
+            Vec3{ bounds.upperBound.x, bounds.upperBound.y, 0.f } * METERS_TO_PIXELS,
+            Vec3{ bounds.lowerBound.x, bounds.upperBound.y, 0.f } * METERS_TO_PIXELS,
         };
 
         for (int i = 0; i < NUM_CORNERS; i++)
@@ -707,17 +715,8 @@ auto PhysicsSystem2D::draw_debug(DrawList &draw_list, const DebugDrawSettings &s
 
     b2World_Draw(b2LoadWorldId(physics_world_), &debug_draw);
 
-    line_vertex_array_.upload_vertices(
-        ctx.lines_vertices.data(), 
-        ctx.lines_vertices.size() * sizeof(DebugVertex), 
-        sizeof(DebugVertex)
-    ); 
-
-    tri_vertex_array_.upload_vertices(
-        ctx.tris_vertices.data(), 
-        ctx.tris_vertices.size() * sizeof(DebugVertex), 
-        sizeof(DebugVertex)
-    );
+    line_vertex_array_.upload_vertices(ctx.lines_vertices.data(), ctx.lines_vertices.size()); 
+    tri_vertex_array_.upload_vertices(ctx.tris_vertices.data(), ctx.tris_vertices.size());
 
     graphics_prog_.bind(draw_list);
     
@@ -752,7 +751,7 @@ auto PhysicsSystem2D::process_contact_events() -> void
                     entity_from_shape(owner),
                     entity_from_shape(other),
                     CollisionShape2D::CollisionInfo{
-                        .normal = glm::vec2{manifold.normal.x, manifold.normal.y}
+                        .normal = Vec2{manifold.normal.x, manifold.normal.y}
                     }
                 );
             }
@@ -800,8 +799,8 @@ auto PhysicsSystem2D::process_contact_events() -> void
                 cb->on_hit(
                     entity_from_shape(ev.shapeIdA), 
                     entity_from_shape(ev.shapeIdB),
-                    glm::vec2{ev.normal.x, ev.normal.y},
-                    glm::vec2{ev.point.x, ev.point.y},
+                    Vec2{ev.normal.x, ev.normal.y},
+                    Vec2{ev.point.x, ev.point.y},
                     ev.approachSpeed
                 );
             }
@@ -861,7 +860,7 @@ auto phys_mat_to_b2_surface_mat(const PhysicsMaterial2D &phys_mat) -> b2SurfaceM
     };
 }
 
-auto glm_points_to_b2_points(const std::vector<glm::vec2> &glm_points) -> std::vector<b2Vec2>
+auto glm_points_to_b2_points(const std::vector<Vec2> &glm_points) -> std::vector<b2Vec2>
 {
     std::vector<b2Vec2> b2_points{};
     b2_points.reserve(glm_points.size());

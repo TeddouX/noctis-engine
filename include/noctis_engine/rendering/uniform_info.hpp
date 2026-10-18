@@ -1,6 +1,6 @@
 #pragma once
-#include <string>
 #include <variant>
+#include <string_view>
 
 
 namespace NoctisEngine

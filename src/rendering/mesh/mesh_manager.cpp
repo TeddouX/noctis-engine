@@ -1,6 +1,8 @@
 #include <noctis_engine/rendering/mesh/mesh_manager.hpp>
 
 #include <noctis_engine/rendering/mesh/default_meshes.hpp>
+#include <noctis_engine/core/logging.hpp>
+#include <noctis_engine/rendering/vertex.hpp>
 
 
 namespace NoctisEngine
@@ -16,7 +18,8 @@ MeshManager::MeshManager()
     ebo_ = GPUBuffer{1, "mesh_manager_ebo", buffer_flags};
 
     vertex_array_ = VertexArray{
-        DEFAULT_VERTEX_ATTRIBUTES, 
+        DEFAULT_VERTEX_ATTRIBUTES,
+        sizeof(Vertex),
         "mesh_manager_vertex_array", 
         false, false
     };

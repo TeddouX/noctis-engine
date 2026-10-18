@@ -1,5 +1,7 @@
 #pragma once
 #include "../rendering/texture.hpp"
+#include "../rendering/vertex_array.hpp"
+#include "../rendering/graphics_program.hpp"
 #include "rect.hpp"
 
 
@@ -9,7 +11,7 @@ namespace NoctisEngine
 class UIContext
 {
 public:
-    UIContext() = default;
+    UIContext();
     ~UIContext() = default;
 
     /// @brief Enters a new context, call this function before drawing your root widget
@@ -31,12 +33,23 @@ public:
     auto draw_colored_rect(const Rect &rect, const Color &color) -> void;
 
     /// @brief UNIMPLEMENTED
-    auto draw_text(const glm::vec2 &pos, const std::string_view &text) -> void;
+    auto draw_text(const Vec2 &pos, const std::string_view &text) -> void;
 
 private:
     std::vector<DrawList>   draw_lists_;
-    std::size_t             ctx_num_;
+    std::size_t             curr_ctx_;
     bool                    has_ctx_;
+    bool                    is_reset_;
+
+    int                     fb_width_;
+    int                     fb_height_;
+
+    GraphicsProgram         ui_prog_;
+    VertexArray             vertex_array_;
+    GPUBuffer               ui_elems_ssbo_;
+
+    auto get_curr_draw_list() -> DrawList &;
+    auto add_ui_elem(const Rect &rect) -> void;
 };
 
 } // namespace NoctisEngine

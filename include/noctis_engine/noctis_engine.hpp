@@ -10,8 +10,14 @@
 #include "ecs/system/physics_system_2d.hpp"
 #include "ecs/ecs_world.hpp"
 
+#include "math/angle.hpp"
 #include "math/color.hpp"
-#include "math/math.hpp"
+#include "math/common.hpp"
+#include "math/mat4x4.hpp"
+#include "math/matrix_math.hpp"
+#include "math/vec2.hpp"
+#include "math/vec3.hpp"
+#include "math/vec4.hpp"
 
 #include "rendering/mesh/mesh_manager.hpp"
 #include "rendering/mesh/default_meshes.hpp"

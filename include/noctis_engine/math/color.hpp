@@ -1,8 +1,7 @@
 #pragma once
-#include <stdint.h>
+#include <cstdint>
 
-#include "../definitions.hpp"
-#include "math.hpp"
+#include "vec4.hpp"
 
 
 namespace NoctisEngine
@@ -38,14 +37,14 @@ public:
     /// @brief Converts a RGBA color to 4 floats (red, green, blue and alpha) in the range [0, 1]
     /// @param color The RGBA color
     /// @return The 4 floats
-    static constexpr auto RGBA_to_floats(std::uint32_t color) -> glm::vec4
+    static constexpr auto RGBA_to_floats(std::uint32_t color) -> Vec4
     {
         float r = static_cast<float>((color >> 24)  & 0xFF) / 255.0f;
         float g = static_cast<float>((color >> 16)  & 0xFF) / 255.0f;
         float b = static_cast<float>((color >> 8)   & 0xFF) / 255.0f;
         float a = static_cast<float>((color)        & 0xFF) / 255.0f;
 
-        return glm::vec4{ r, g, b, a };
+        return Vec4{ r, g, b, a };
     }
 
     /// @brief Gets this color's red component 
@@ -85,9 +84,9 @@ public:
     /// @brief Converts this color to a glm::vec4 containing all the 
     /// components' floating point values
     /// @return The glm::vec4 
-    constexpr auto to_floats() const -> glm::vec4 
+    constexpr auto to_floats() const -> Vec4 
     { 
-        return glm::vec4{red_f(), green_f(), blue_f(), alpha_f()};
+        return Vec4{red_f(), green_f(), blue_f(), alpha_f()};
     }
 
 private:

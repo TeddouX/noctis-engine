@@ -1,5 +1,7 @@
 #pragma once
 #include "gpu_buffer.hpp"
+#include "../core/logging.hpp"
+
 
 namespace NoctisEngine
 {

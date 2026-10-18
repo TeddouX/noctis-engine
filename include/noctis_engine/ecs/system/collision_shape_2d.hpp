@@ -1,11 +1,13 @@
 #pragma once
 #include <cstdint>
 #include <variant>
+#include <vector>
+#include <array>
+#include <functional>
 
-#include "../entity.hpp"
-#include "../ecs_world.hpp"
-#include "../component/physics_body_2d.hpp"
 #include "../../math/color.hpp"
+#include "../../math/vec2.hpp"
+#include "../entity.hpp"
 
 
 namespace NoctisEngine
@@ -35,16 +37,16 @@ struct CollisionManifold2D
 {
     /// @brief The unit normal vector in world space, 
     /// points from this shape to the other body.
-    glm::vec2 normal;
+    Vec2 normal;
 
     /// @brief Describes a manifold point
     struct Point
     {
         /// @brief Location of the contact point relative to shape A's origin in world space.
-        glm::vec2 anchor_a;
+        Vec2 anchor_a;
 
         /// @brief Location of the contact point relative to shape B's origin in world space.
-        glm::vec2 anchor_b;
+        Vec2 anchor_b;
 
         /// @brief The impulse along the manifold normal vector.
         float normal_impulse;
@@ -57,7 +59,7 @@ struct CollisionManifold2D
         bool persisted;
 
         /// @brief Location of the contact point in world space. Subject to precision loss at large coordinates.
-        glm::vec2 point;
+        Vec2 point;
 
         /// @brief The separation of the contact point, negative if penetrating.
         float separation;
@@ -84,10 +86,10 @@ struct CollisionShape2D
     struct Box
     {
         /// @brief The size of the box, in pixels
-        glm::vec2 half_extents;
+        Vec2 half_extents;
 
         /// @brief The local center of the box, in pixels
-        glm::vec2 center{0};
+        Vec2 center{0};
 
         /// @brief The local rotation of the box
         float rotation_deg{0};
@@ -103,17 +105,17 @@ struct CollisionShape2D
         float radius;
 
         /// @brief The local center of the circle, in pixels
-        glm::vec2 center{0};
+        Vec2 center{0};
     };
 
     /// @brief Describes a capsule collision shape
     struct Capsule
     {
         /// @brief The local center of the first semicircle, in pixels
-        glm::vec2 center_1;
+        Vec2 center_1;
         
         /// @brief The local center of the second semicircle, in pixels
-        glm::vec2 center_2;
+        Vec2 center_2;
 
         /// @brief The radius of the semicircles, in pixels
         float radius;
@@ -123,10 +125,10 @@ struct CollisionShape2D
     struct Segment
     {
         /// @brief The first point, in pixels
-        glm::vec2 point_1;
+        Vec2 point_1;
 
         /// @brief The second point, in pixels
-        glm::vec2 point_2;
+        Vec2 point_2;
     };
 
     /// @brief Describes a convex poligon shape
@@ -137,7 +139,7 @@ struct CollisionShape2D
         /// - Points mustn't be on the same line.
         /// - There should be more than 2 points.
         /// - Points are should use pixels as units
-        std::vector<glm::vec2> points;
+        std::vector<Vec2> points;
 
         float corner_radius{0.0f};
     };
@@ -155,7 +157,7 @@ struct CollisionShape2D
     {
         /// - Points should be a CCW (counter-clockwise) order
         /// - Points are should use pixels as units
-        std::vector<glm::vec2> points;
+        std::vector<Vec2> points;
         
         /// @brief true if the chain's points form a loop
         bool is_loop;
@@ -198,10 +200,10 @@ struct CollisionShape2D
     struct CollisionInfo
     {
         /// @brief The collision's normal
-        glm::vec2 normal;
+        Vec2 normal;
 
         /// @brief The collision's points
-        // std::array<glm::vec2, 2> points;
+        // std::array<Vec2, 2> points;
     };
 
     /// @brief Describes all the callbacks that relate to collision
@@ -224,7 +226,7 @@ struct CollisionShape2D
         /// @param 3 Normal vector pointing from shape A to shape B. 
         /// @param 4 Point where the shapes hit.
         /// @param 5 The speed the shapes are approaching. Always positive. Typically in m/s. 
-        std::function<void (Entity, Entity, glm::vec2, glm::vec2, float)> on_hit{nullptr};
+        std::function<void (Entity, Entity, Vec2, Vec2, float)> on_hit{nullptr};
         
         /// @brief Called when a collision begins and is_sensor is set to true
         /// @param 1 entity A (the sensor)

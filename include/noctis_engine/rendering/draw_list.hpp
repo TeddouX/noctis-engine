@@ -4,10 +4,10 @@
 
 #include "draw_commands.hpp"
 #include "gpu_buffer.hpp"
-#include "vertex.hpp"
 #include "../ecs/entity.hpp"
 #include "../ecs/ecs_world.hpp"
 #include "../math/color.hpp"
+#include "../math/mat4x4.hpp"
 
 
 namespace NoctisEngine
@@ -52,12 +52,12 @@ public:
     /// @param vao The OpenGL VAO handle
     auto bind_vao(std::uint32_t vao) -> void;
 
-    /// @brief Draws a mesh to a screen
+    /// @brief Draws a mesh to a screen, if the mesh view is empty, it will default to a quad
     /// @param mesh_view The mesh view from a mesh manager
     /// @param model_mat The model matrix describing where the mesh should be placed.
     /// This is can be gotten from a transform.
     /// @warning This requires a shader to be bound before
-    auto draw_mesh(const MeshView &mesh_view, const glm::mat4 &model_mat = glm::mat4{1}) -> void;
+    auto draw_mesh(const MeshView &mesh_view, const Mat4x4 &model_mat = Mat4x4::IDENTITY) -> void;
     
     /// @brief Draws an entity as a sprite
     /// @param entity The entity to draw

@@ -1,7 +1,8 @@
 #pragma once
 #include <cstdint>
+#include <vector>
 
-#include "../../math/math.hpp"
+#include "../../math/vec2.hpp"
 
 
 namespace NoctisEngine
@@ -65,7 +66,7 @@ public:
 
     /// @brief Gets the linear velocity of the physics body
     /// @return The linear velocity
-    auto linear_velocity() -> glm::vec2;
+    auto linear_velocity() -> Vec2;
 
     /// @brief Gets the angular velocity of the physics body
     /// @return The angular velocity
@@ -73,7 +74,7 @@ public:
 
     /// @brief Sets the linear velocity of the physics body
     /// @param vel The linear velocity
-    auto set_linear_velocity(const glm::vec2 &vel) -> void;
+    auto set_linear_velocity(const Vec2 &vel) -> void;
 
     /// @brief Sets the angular velocity of the physics body
     /// @param vel The angular velocity
@@ -84,12 +85,12 @@ public:
     /// @param force The world force vector, usually in newtons (N)
     /// @param point The world position of the point of application
     /// @param wake Option to wake up the body
-    auto apply_force(const glm::vec2 &force, const glm::vec2 &point, bool wake = true) -> void;
+    auto apply_force(const Vec2 &force, const Vec2 &point, bool wake = true) -> void;
 
     /// @brief Apply a force to the center of mass.
     /// @param force the world force vector, usually in newtons (N)
     /// @param wake Option to wake up the body
-    auto apply_force_to_center(const glm::vec2 &force, bool wake = true) -> void;
+    auto apply_force_to_center(const Vec2 &force, bool wake = true) -> void;
 
     /// @brief Apply a torque. This affects the angular velocity without affecting the linear velocity. 
     /// @param torque about the z-axis (out of the screen), usually in N*m.
@@ -103,14 +104,14 @@ public:
     /// @param wake Option to wake up the body
     /// @warning This should be used for one-shot impulses. If you need a steady force,
     /// use a force instead.
-    auto apply_linear_impulse(const glm::vec2 &impulse, const glm::vec2 &point, bool wake = true) -> void;
+    auto apply_linear_impulse(const Vec2 &impulse, const Vec2 &point, bool wake = true) -> void;
 
     /// @brief Apply an impulse to the center of mass. This immediately modifies the velocity. 
     /// @param impulse The world impulse vector, usually in N*s or kg*m/s.
     /// @param wake Option to wake up the body
     /// @warning This should be used for one-shot impulses. If you need a steady force,
     /// use a force instead.
-    auto apply_linear_impulse_to_center(const glm::vec2 &impulse, bool wake = true) -> void;
+    auto apply_linear_impulse_to_center(const Vec2 &impulse, bool wake = true) -> void;
 
     /// Apply an angular impulse.
     /// @param impulse The angular impulse, usually in units of kg*m*m/s

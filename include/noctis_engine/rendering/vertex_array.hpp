@@ -19,6 +19,7 @@ public:
 
     /// @brief Creates a VAO on the GPU
     /// @param vertex_attribs This vertex array's vertex attributes
+    /// @param vertex_size The size of one vertex
     /// @param name This vertex array's name. Default "vertex_array"
     /// @param create_buffers Specifies if the vertex array should create the VBO and, possibly (see use_ebo), 
     /// EBO buffers and link them. True by default
@@ -26,6 +27,7 @@ public:
     /// Doesn't do anything if create buffers is set to false.
     VertexArray(
         const std::vector<VertexAttribute> &vertex_attribs,
+        std::size_t                         vertex_size,
         std::string_view                    name = "vertex_array",
         bool                                create_buffers = true,
         bool                                use_ebo = true
@@ -33,11 +35,11 @@ public:
 
     /// @brief Uploads vertices to this vertex array
     /// @param vertices The type erased vertices
-    /// @param size The size in bytes of the vertices
+    /// @param size The number of vertices in the array
     /// @param vertex_size The size of one vertex
     /// @warning This should match vertex attributes provided in the constructor.
     /// Failure to do so will result in weird crashes or undefined behaviour.
-    auto upload_vertices(void *vertices, std::size_t size, std::size_t vertex_size) -> void;
+    auto upload_vertices(const void *vertices, std::size_t size) -> void;
 
     /// @brief Uploads indices linked to this vertex array
     /// @param indices The indices
@@ -51,7 +53,7 @@ public:
     /// @param vbo_buf The vertex buffer
     /// @param vertex_size The size of one vertex
     /// @param first_el_off The offset of the first element of the buffer. Default 0
-    auto link_vbo(const GPUBuffer &vbo_bu, std::size_t vertex_size, std::size_t first_el_off = 0) -> void;
+    auto link_vbo(const GPUBuffer &vbo_bu, std::size_t first_el_off = 0) -> void;
 
     /// @brief Links a element buffer object (indices) to this vertex array.
     /// Use this if you want precise memory control over your element buffer.
@@ -80,9 +82,10 @@ public:
 private:
     std::uint32_t   vao_;
 
+    std::size_t     vertex_size_;
+
     bool            use_ebo_;
     GPUBuffer       ebo_;
-    
     GPUBuffer       vbo_;
 };
 

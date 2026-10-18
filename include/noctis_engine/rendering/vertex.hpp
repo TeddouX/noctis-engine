@@ -1,6 +1,10 @@
 #pragma once
-#include "../math/math.hpp"
+#include <vector>
+
+#include "../math/vec3.hpp"
+#include "../math/vec2.hpp"
 #include "vertex_attrib.hpp"
+
 
 namespace NoctisEngine
 {
@@ -9,22 +13,22 @@ namespace NoctisEngine
 struct Vertex
 {
     /// @brief Coordinates in local space
-    glm::vec3 pos;
+    Vec3 pos;
     /// @brief The surface normal
-    glm::vec3 normal{0};
+    Vec3 normal{0};
     /// @brief The surface tangent
-    glm::vec3 tangent{0};
+    Vec3 tangent{0};
     /// @brief The texture coordinates
-    glm::vec2 tex_coords{0};
+    Vec2 tex_coords{0};
 };
 
 /// @brief This is used to draw debug shapes, it is for example used by the physics system
 struct DebugVertex
 {
     /// @brief In world space coordinates
-    glm::vec3 pos;
+    Vec3 pos;
     /// @brief In RGB format
-    glm::vec3 color;
+    Vec3 color;
 };
 
 /// @brief Vertex attributes for the default vertex

@@ -3,6 +3,8 @@
 #include <noctis_engine/ecs/component/sprite.hpp>
 #include <noctis_engine/ecs/component/transform_2d.hpp>
 #include <noctis_engine/rendering/mesh/default_meshes.hpp>
+#include <noctis_engine/core/logging.hpp>
+#include <noctis_engine/math/matrix_math.hpp>
 
 
 namespace NoctisEngine
@@ -44,7 +46,7 @@ auto DrawList::set_uniform(UniformInfo info) -> void
     write(SetUniformCmd{ info });
 }
 
-auto DrawList::draw_mesh(const MeshView &mesh_view, const glm::mat4 &model_mat) -> void
+auto DrawList::draw_mesh(const MeshView &mesh_view, const Mat4x4 &model_mat) -> void
 {
     write_cmd_type(DrawCommandType::DRAW_MESH);
     write(DrawMeshCmd{ mesh_view, model_mat });
@@ -69,8 +71,8 @@ auto DrawList::draw_sprite_entity(Entity entity, const ECSWorld &world, const Me
     }
 
     const Texture &tex = sprite->texture;
-    glm::mat4 model_mat = transform->model_matrix();
-    model_mat = glm::scale(model_mat, glm::vec3(tex.width(), tex.height(), 1));
+    Mat4x4 model_mat = transform->model_matrix();
+    model_mat = scale_matrix(model_mat, Vec3(tex.width(), tex.height(), 1));
 
     model_mat[3][2] = -sprite->draw_order;
 

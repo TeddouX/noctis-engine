@@ -4,6 +4,7 @@
 #include "graphics_program.hpp"
 #include "mesh/mesh_manager.hpp"
 #include "../math/color.hpp"
+#include "../math/vec2.hpp"
 
 
 namespace NoctisEngine
@@ -69,7 +70,7 @@ class Renderer
 public:
     /// @brief Default constructor that initialises required buffers
     /// @param framebuffer_size Your window's framebuffer size (use Window::framebuffer_size)
-    Renderer(const glm::ivec2 &framebuffer_size);
+    Renderer(const IVec2 &framebuffer_size);
 
     /// @brief Backface culling skips rendering triangles whose face is pointing away from the camera
     /// (based on vertex winding order)

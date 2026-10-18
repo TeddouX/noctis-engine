@@ -1,7 +1,5 @@
 #pragma once
 #include "mesh_info.hpp"
-#include "mesh_view.hpp"
-#include "../vertex.hpp"
 
 
 /// @brief Default meshes that are automatically loaded by mesh managers
@@ -12,10 +10,10 @@ namespace NoctisEngine::DefaultMeshes
 inline const MeshData QUAD_MESH
 {
     {
-        Vertex{glm::vec3( 0.5f,  0.5f, 0.0f), glm::vec3(0), glm::vec3(0), glm::vec2(1, 1)},
-        Vertex{glm::vec3(-0.5f,  0.5f, 0.0f), glm::vec3(0), glm::vec3(0), glm::vec2(0, 1)},
-        Vertex{glm::vec3(-0.5f, -0.5f, 0.0f), glm::vec3(0), glm::vec3(0), glm::vec2(0, 0)},
-        Vertex{glm::vec3( 0.5f, -0.5f, 0.0f), glm::vec3(0), glm::vec3(0), glm::vec2(1, 0)},
+        Vertex{Vec3( 0.5f,  0.5f, 0.0f), Vec3(0), Vec3(0), Vec2(1, 1)},
+        Vertex{Vec3(-0.5f,  0.5f, 0.0f), Vec3(0), Vec3(0), Vec2(0, 1)},
+        Vertex{Vec3(-0.5f, -0.5f, 0.0f), Vec3(0), Vec3(0), Vec2(0, 0)},
+        Vertex{Vec3( 0.5f, -0.5f, 0.0f), Vec3(0), Vec3(0), Vec2(1, 0)},
     },
     {0, 1, 2, 2, 3, 0}
 };

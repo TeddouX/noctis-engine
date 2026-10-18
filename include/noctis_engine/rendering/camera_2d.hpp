@@ -1,6 +1,8 @@
 #pragma once
 #include "draw_list.hpp"
 #include "gpu_buffer.hpp"
+#include "../math/vec2.hpp"
+#include "../math/mat4x4.hpp"
 
 
 namespace NoctisEngine
@@ -16,25 +18,25 @@ public:
     /// @param near The near clipping plane position, default -1000
     /// @param far The far clipping plane position, default 1000
     Camera2D(
-        const glm::vec2    &half_extents, 
-        const glm::vec2    &position = glm::vec2{0}, 
-        float               near = -1000.f, 
-        float               far = 1000.f
+        const Vec2 &half_extents, 
+        const Vec2 &position = Vec2{0}, 
+        float       near = -1000.f, 
+        float       far = 1000.f
     );
 
     ~Camera2D() = default;
 
     /// @brief Translates (moves) the camera by a given amount
     /// @param translation The translation vector
-    auto translate(const glm::vec2 &translation) -> void;
+    auto translate(const Vec2 &translation) -> void;
 
     /// @brief Sets the camera's position
     /// @param position The new position
-    auto set_position(const glm::vec2 &position) -> void;
+    auto set_position(const Vec2 &position) -> void;
 
     /// @brief Updates the camera's projection matrix, useful when the window gets resized
     /// @param new_half_extents The new half extents
-    auto update_projection_matrix(const glm::vec2 &new_half_extents) -> void;
+    auto update_projection_matrix(const Vec2 &new_half_extents) -> void;
 
     /// @brief Updates the camera's buffers, call this after it was moved
     auto update_buffers() -> void;
@@ -49,8 +51,8 @@ public:
 private:
     GPUBuffer camera_ubo_;
 
-    glm::mat4 projection_matrix_;
-    glm::vec2 pos_;
+    Mat4x4 projection_matrix_;
+    Vec2 pos_;
 };
 
 } // namespace NoctisEngine

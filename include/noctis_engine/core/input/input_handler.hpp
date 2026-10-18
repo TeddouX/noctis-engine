@@ -1,8 +1,10 @@
 #pragma once
+#include <string_view>
 #include <variant>
+#include <array>
+#include <vector>
 
-#include "../../math/math.hpp"
-#include "event_stack.hpp"
+#include "../../math/vec2.hpp"
 #include "keyboard.hpp"
 #include "input_info.hpp"
 #include "mouse.hpp"
@@ -125,7 +127,7 @@ public:
     static auto horizontal_input_vector(
         std::string_view left_action, 
         std::string_view right_action
-    ) -> glm::vec2;
+    ) -> Vec2;
 
 private:
     friend class Window;

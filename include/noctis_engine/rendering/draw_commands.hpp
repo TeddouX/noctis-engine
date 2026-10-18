@@ -2,6 +2,7 @@
 #include "uniform_info.hpp"
 #include "mesh/mesh_view.hpp"
 #include "../math/color.hpp"
+#include "../math/mat4x4.hpp"
 
 
 namespace NoctisEngine
@@ -58,7 +59,7 @@ struct SetUniformCmd
 struct DrawMeshCmd
 {
     MeshView mesh_view;
-    glm::mat4 model_mat;
+    Mat4x4 model_mat;
 };
 
 /// @internal

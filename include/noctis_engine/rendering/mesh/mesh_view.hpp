@@ -18,6 +18,8 @@ struct MeshView
 
     /// @brief The number of indices
     std::size_t indices_count;
+
+    auto operator==(const MeshView &other) const -> bool = default;
 };
 
 } // namespace NoctisEngine

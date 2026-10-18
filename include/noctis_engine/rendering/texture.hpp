@@ -1,12 +1,9 @@
 #pragma once
 #include <stdint.h>
 #include <string>
-#include <memory>
 
-#include "../definitions.hpp"
-#include "../math/color.hpp"
-#include "shader.hpp"
 #include "draw_list.hpp"
+#include "../math/color.hpp"
 
 
 namespace NoctisEngine

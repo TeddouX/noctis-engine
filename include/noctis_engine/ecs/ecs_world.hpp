@@ -1,7 +1,6 @@
 #pragma once
 #include <typeindex>
 #include <memory>
-#include <print>
 #include <set>
 
 #include "ecs_fwd.hpp"
