@@ -55,8 +55,7 @@ VertexArray::VertexArray(
 
     if (create_buffers)
     {
-        // Offset should have the total size of one vertex by now
-        link_vbo(vbo_, offset);
+        link_vbo(vbo_, 0);
 
         if (use_ebo_)
             link_ebo(ebo_);

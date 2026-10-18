@@ -24,7 +24,7 @@ MeshManager::MeshManager()
         false, false
     };
 
-    vertex_array_.link_vbo(vbo_, sizeof(Vertex));
+    vertex_array_.link_vbo(vbo_, 0);
     vertex_array_.link_ebo(ebo_);
     RENDERING_LOGGER.debug("Created mesh manager buffers");
 }
@@ -53,7 +53,7 @@ auto MeshManager::flush() -> void
     bool ebo_resized = GPUBuffer::resize(ebo_, indices_size, false);
 
     if (vbo_resized)
-        vertex_array_.link_vbo(vbo_, sizeof(Vertex));
+        vertex_array_.link_vbo(vbo_, 0);
 
     if (ebo_resized)
         vertex_array_.link_ebo(ebo_);

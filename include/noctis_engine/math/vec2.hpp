@@ -89,8 +89,8 @@ struct TypedVec2
     constexpr auto operator-(const TypedVec2<Ty_> &other) const -> TypedVec2<Ty_>
     {
         return TypedVec2<Ty_>{
-            other.x - this->x, 
-            other.y - this->y
+            this->x - other.x, 
+            this->y - other.y
         };
     }
 
@@ -98,8 +98,8 @@ struct TypedVec2
     constexpr auto operator-(RealNumber_ scalar) const -> TypedVec2<Ty_>
     {
         return TypedVec2<Ty_>{
-            scalar - this->x, 
-            scalar - this->y
+            this->x - scalar, 
+            this->y - scalar
         };
     }
 
@@ -122,89 +122,18 @@ struct TypedVec2
 
     constexpr auto operator/(const TypedVec2<Ty_> &other) const -> TypedVec2<float>
     {
-        return TypedVec2<Ty_>{
-            static_cast<float>(other.x) / static_cast<float>(this->x), 
-            static_cast<float>(other.y) / static_cast<float>(this->y)
+        return TypedVec2<float>{
+            static_cast<float>(this->x) / static_cast<float>(other.x), 
+            static_cast<float>(this->y) / static_cast<float>(other.y)
         };
     }
 
     template <RealNumber RealNumber_>
     constexpr auto operator/(RealNumber_ scalar) const -> TypedVec2<float>
     {
-        return TypedVec2<Ty_>{
-            static_cast<float>(scalar) / static_cast<float>(this->x), 
-            static_cast<float>(scalar) / static_cast<float>(this->y)
-        };
-    }
-
-    // Binary operators (non const)
-
-    constexpr auto operator+(const TypedVec2<Ty_> &other) -> TypedVec2<Ty_>
-    {
-        return TypedVec2<Ty_>{
-            other.x + this->x, 
-            other.y + this->y
-        };
-    }
-    
-
-    template <RealNumber RealNumber_>
-    constexpr auto operator+(RealNumber_ scalar) -> TypedVec2<Ty_>
-    {
-        return TypedVec2<Ty_>{
-            scalar + this->x,
-            scalar + this->y
-        };
-    }
-
-    constexpr auto operator-(const TypedVec2<Ty_> &other) -> TypedVec2<Ty_>
-    {
-        return TypedVec2<Ty_>{
-            other.x - this->x, 
-            other.y - this->y
-        };
-    }
-
-    template <RealNumber RealNumber_>
-    constexpr auto operator-(RealNumber_ scalar) -> TypedVec2<Ty_>
-    {
-        return TypedVec2<Ty_>{
-            scalar - this->x, 
-            scalar - this->y
-        };
-    }
-
-    constexpr auto operator*(const TypedVec2<Ty_> &other) -> TypedVec2<Ty_>
-    {
-        return TypedVec2<Ty_>{
-            other.x * this->x, 
-            other.y * this->y
-        };
-    }
-
-    template <RealNumber RealNumber_>
-    constexpr auto operator*(RealNumber_ scalar) -> TypedVec2<Ty_>
-    {
-        return TypedVec2<Ty_>{
-            scalar * this->x, 
-            scalar * this->y
-        };
-    }
-
-    constexpr auto operator/(const TypedVec2<float> &other) -> TypedVec2<float>
-    {
         return TypedVec2<float>{
-            static_cast<float>(other.x) / static_cast<float>(this->x), 
-            static_cast<float>(other.y) / static_cast<float>(this->y)
-        };
-    }
-
-    template <RealNumber RealNumber_>
-    constexpr auto operator/(RealNumber_ scalar) -> TypedVec2<float>
-    {
-        return TypedVec2<float>{
-            static_cast<float>(scalar) / static_cast<float>(this->x), 
-            static_cast<float>(scalar) / static_cast<float>(this->y)
+            static_cast<float>(this->x) / static_cast<float>(scalar), 
+            static_cast<float>(this->y) / static_cast<float>(scalar)
         };
     }
 
@@ -218,7 +147,7 @@ struct TypedVec2
     }
 
     template <RealNumber RealNumber_>
-    constexpr auto operator+=(RealNumber_ scalar) -> TypedVec2<Ty_>
+    constexpr auto operator+=(RealNumber_ scalar) -> TypedVec2<Ty_> &
     {
         this->x += scalar;
         this->y += scalar;
@@ -233,7 +162,7 @@ struct TypedVec2
     }
 
     template <RealNumber RealNumber_>
-    constexpr auto operator-=(RealNumber_ scalar) -> TypedVec2<Ty_>
+    constexpr auto operator-=(RealNumber_ scalar) -> TypedVec2<Ty_> &
     {
         this->x -= scalar;
         this->y -= scalar;
@@ -248,7 +177,7 @@ struct TypedVec2
     }
 
     template <RealNumber RealNumber_>
-    constexpr auto operator*=(RealNumber_ scalar) -> TypedVec2<Ty_>
+    constexpr auto operator*=(RealNumber_ scalar) -> TypedVec2<Ty_> &
     {
         this->x *= scalar;
         this->y *= scalar;
@@ -263,7 +192,7 @@ struct TypedVec2
     }
 
     template <RealNumber RealNumber_>
-    constexpr auto operator/=(RealNumber_ scalar) -> TypedVec2<Ty_>
+    constexpr auto operator/=(RealNumber_ scalar) -> TypedVec2<Ty_> &
     {
         this->x /= scalar;
         this->y /= scalar;
@@ -297,28 +226,42 @@ struct TypedVec2
 
 /// @brief Dot product between two 2D vectors
 template <typename Ty_>
-inline constexpr auto dot(const TypedVec2<Ty_> &x, const TypedVec2<Ty_> &y) -> float
+inline constexpr auto dot(const TypedVec2<Ty_> &a, const TypedVec2<Ty_> &b) -> Ty_
 {
-    return x.x * y.x + x.y * y.y; 
+    return a.x * b.x + a.y * b.y; 
 }
 
 /// @brief Angle between two 2D vectors
 template <typename Ty_>
-inline constexpr auto angle(const TypedVec2<Ty_> &x, const TypedVec2<Ty_> &y) -> float
+inline constexpr auto angle(const TypedVec2<Ty_> &a, const TypedVec2<Ty_> &b) -> float
 {
-    return std::acos(std::clamp(dot(x, y), static_cast<Ty_>(-1), static_cast<Ty_>(1)));
+    double denominator =
+        std::sqrt(static_cast<double>(dot(a, a))) *
+        std::sqrt(static_cast<double>(dot(b, b)));
+
+    if (denominator == 0.0)
+        return 0.0f;
+
+    double cosine = static_cast<double>(dot(a, b)) / denominator;
+    return static_cast<float>(
+        std::acos(std::clamp(cosine, -1.0, 1.0))
+    );
 }
 
 template <typename Ty_>
-inline constexpr auto distance2(const TypedVec2<Ty_> &x, const TypedVec2<Ty_> &y) -> float
+inline constexpr auto distance2(const TypedVec2<Ty_> &a, const TypedVec2<Ty_> &b) -> Ty_
 {
-    return std::pow(y.x - x.x, 2) + std::pow(y.y - x.y, 2);
+    Ty_ dx = static_cast<Ty_>(b.x) - a.x;
+    Ty_ dy = static_cast<Ty_>(b.y) - a.y;
+
+    return dx * dx + dy * dy;
+
 }
 
 template <typename Ty_>
-inline constexpr auto distance(const TypedVec2<Ty_> &x, const TypedVec2<Ty_> &y) -> float
+inline constexpr auto distance(const TypedVec2<Ty_> &a, const TypedVec2<Ty_> &b) -> Ty_
 {
-    return std::sqrt(distance2(x, y));
+    return std::sqrt(distance2(a, b));
 }
 
 } // namespace NoctisEngine

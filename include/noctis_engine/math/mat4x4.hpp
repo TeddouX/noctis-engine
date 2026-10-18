@@ -9,47 +9,47 @@ namespace NoctisEngine
 
 struct Mat4x4
 {
-    static inline constexpr std::size_t NUM_ROWS = 4;
+    static inline constexpr std::size_t NUM_COLUMNS = 4;
 
-    Vec4 row1;
-    Vec4 row2;
-    Vec4 row3;
-    Vec4 row4;
+    Vec4 column1;
+    Vec4 column2;
+    Vec4 column3;
+    Vec4 column4;
     
     constexpr Mat4x4() = default;
     
-    constexpr Mat4x4(Vec4 row1, Vec4 row2, Vec4 row3, Vec4 row4)
-        : row1{row1}
-        , row2{row2}
-        , row3{row3}
-        , row4{row4}
+    constexpr Mat4x4(Vec4 column1, Vec4 column2, Vec4 column3, Vec4 column4)
+        : column1{column1}
+        , column2{column2}
+        , column3{column3}
+        , column4{column4}
     {}
     
     static const Mat4x4 IDENTITY;
 
     constexpr auto operator[](std::size_t i) -> Vec4 &
     {
-        assert(i < NUM_ROWS && "Index out of range (i >= 4)");
+        assert(i < NUM_COLUMNS && "Index out of range (i >= 4)");
         switch (i) 
         {
             default:
-            case 0: return row1;
-            case 1: return row2;
-            case 2: return row3;
-            case 3: return row4;
+            case 0: return column1;
+            case 1: return column2;
+            case 2: return column3;
+            case 3: return column4;
         }
     }
 
     constexpr auto operator[](std::size_t i) const -> const Vec4 &
     {
-        assert(i < NUM_ROWS && "Index out of range (i >= 4)");
+        assert(i < NUM_COLUMNS && "Index out of range (i >= 4)");
         switch (i) 
         {
             default:
-            case 0: return row1;
-            case 1: return row2;
-            case 2: return row3;
-            case 3: return row4;
+            case 0: return column1;
+            case 1: return column2;
+            case 2: return column3;
+            case 3: return column4;
         }
     }
 };

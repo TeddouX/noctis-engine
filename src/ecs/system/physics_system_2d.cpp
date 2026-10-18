@@ -526,7 +526,6 @@ auto PhysicsSystem2D::draw_debug(DrawList &draw_list, const DebugDrawSettings &s
         Vec3 color_floats{ color_floats4.x, color_floats4.y, color_floats4.z };
 
         constexpr int SEGMENTS = 24;
-        constexpr float TAU = std::numbers::pi_v<float> * std::numbers::pi_v<float>;
 
         for (int i = 0; i < SEGMENTS; i++)
         {
