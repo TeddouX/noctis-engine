@@ -27,6 +27,7 @@
 #include "rendering/draw_list.hpp"
 #include "rendering/gpu_buffer.hpp"
 #include "rendering/graphics_program.hpp"
+#include "rendering/model_manager.hpp"
 #include "rendering/renderer.hpp"
 #include "rendering/shader_bindings.hpp"
 #include "rendering/shader.hpp"

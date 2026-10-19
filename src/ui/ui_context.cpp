@@ -1,5 +1,7 @@
 #include <noctis_engine/ui/ui_context.hpp>
+
 #include <noctis_engine/rendering/mesh/default_meshes.hpp>
+#include <noctis_engine/math/matrix_math.hpp>
 
 #include "ui_render_data.hpp"
 
@@ -60,22 +62,19 @@ auto UIContext::exit_ctx() -> void
     curr_ctx_--;
 }
 
-auto UIContext::draw_textured_rect(const Rect &rect, const Texture &texture) -> void
+auto UIContext::draw_textured_rect(const Vec2 &pos, const Rect &rect, const Texture &texture) -> void
 {
     auto &draw_list = get_curr_draw_list();
 
     texture.bind(draw_list, TextureSlots::ALBEDO, TextureSlots::ALBEDO_NAME);
     
-    Vec2 pos = rect.anchor;
     Vec2 scale{rect.width, rect.height};
-    float rotation = rect.rotation;
-
+    float rotation = rect.rotation;    
     
-    
-    draw_list.draw_mesh(UI_QUAD_MESH_VIEW);
+    draw_list.draw_mesh(UI_QUAD_MESH_VIEW, model_matrix_2d(pos, scale, rotation));
 }
 
-auto UIContext::draw_colored_rect(const Rect &rect, const Color &color) -> void
+auto UIContext::draw_colored_rect(const Vec2 &pos, const Rect &rect, const Color &color) -> void
 {
 
 }

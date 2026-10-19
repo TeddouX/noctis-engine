@@ -3,8 +3,8 @@
 
 #include <noctis_engine/rendering/mesh/mesh_view.hpp>
 #include <noctis_engine/rendering/vertex_attrib.hpp>
-#include <noctis_engine/math/vec2.hpp>
 #include <noctis_engine/math/vec3.hpp>
+#include <noctis_engine/math/vec4.hpp>
 
 
 namespace NoctisEngine
@@ -27,6 +27,7 @@ struct ObjectData
 {
     /// @brief x, y [0, 1] position in screen space coordinates, z depth 
     Vec3 pos_data;
+    Vec4 color;
 };
 
 static const MeshView UI_QUAD_MESH_VIEW = MeshView

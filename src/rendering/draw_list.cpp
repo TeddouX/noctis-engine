@@ -46,10 +46,10 @@ auto DrawList::set_uniform(UniformInfo info) -> void
     write(SetUniformCmd{ info });
 }
 
-auto DrawList::draw_mesh(const MeshView &mesh_view, const Mat4x4 &model_mat) -> void
+auto DrawList::draw_mesh(const MeshView &mesh_view) -> void
 {
     write_cmd_type(DrawCommandType::DRAW_MESH);
-    write(DrawMeshCmd{ mesh_view, model_mat });
+    write(DrawMeshCmd{ mesh_view });
 
     req_indirect_draw_cmds++;
 }
@@ -63,21 +63,13 @@ auto DrawList::draw_sprite_entity(Entity entity, const ECSWorld &world, const Me
         return;
     }
 
-    auto *transform = world.get_component<Transform2D>(entity);
-    if (not transform) 
-    {
-        RENDERING_LOGGER.warn("Transform2D component is missing to draw a sprite entity");
-        return;
-    }
-
-    const Texture &tex = sprite->texture;
-    Mat4x4 model_mat = transform->model_matrix();
-    model_mat = scale_matrix(model_mat, Vec3(tex.width(), tex.height(), 1));
-
-    model_mat[3][2] = -sprite->draw_order;
-
-    bind_texture(tex.gl_handle(), TextureSlots::ALBEDO, TextureSlots::ALBEDO_NAME);
-    draw_mesh(quad_mv, model_mat);
+    bind_texture(
+        sprite->texture.gl_handle(), 
+        TextureSlots::ALBEDO, 
+        TextureSlots::ALBEDO_NAME
+    );
+    
+    draw_mesh(quad_mv);
 }
 
 auto DrawList::draw_triangles(std::size_t first, std::size_t count) -> void

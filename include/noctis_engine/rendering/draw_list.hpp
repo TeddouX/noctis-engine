@@ -7,11 +7,12 @@
 #include "../ecs/entity.hpp"
 #include "../ecs/ecs_world.hpp"
 #include "../math/color.hpp"
-#include "../math/mat4x4.hpp"
 
 
 namespace NoctisEngine
 {
+
+class ModelManager;
 
 /// @brief This is used to let the renderer know what things to render to the screen and how to render them
 class DrawList
@@ -54,10 +55,9 @@ public:
 
     /// @brief Draws a mesh to a screen, if the mesh view is empty, it will default to a quad
     /// @param mesh_view The mesh view from a mesh manager
-    /// @param model_mat The model matrix describing where the mesh should be placed.
     /// This is can be gotten from a transform.
     /// @warning This requires a shader to be bound before
-    auto draw_mesh(const MeshView &mesh_view, const Mat4x4 &model_mat = Mat4x4::IDENTITY) -> void;
+    auto draw_mesh(const MeshView &mesh_view) -> void;
     
     /// @brief Draws an entity as a sprite
     /// @param entity The entity to draw

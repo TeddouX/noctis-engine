@@ -185,7 +185,7 @@ public:
     /// @brief Resizes a GPU buffer if necessary by creating a new one. The new one's size will 
     /// always be a power of two. Optionally copies data to the new buffer
     /// @param buffer The buffer that should be resized
-    /// @param req_size The buffer's new required size
+    /// @param req_size The buffer's new required size in bytes
     /// @param copy_data true if it should copy data from the old buffer to the new one
     /// @return true if the buffer was resized, false otherwise
     /// @warning This doesn't remap the buffer

@@ -128,7 +128,7 @@ public:
     auto present() -> void;
 
 private:
-    GPUBuffer                       objects_ssbo_;
+    // GPUBuffer                       objects_ssbo_;
     GPUBuffer                       command_buffer_;
 
     RenderPass                      world_render_pass_;

@@ -23,11 +23,6 @@ struct DrawElementsIndirectCommand
     std::uint32_t   base_instance;
 };
 
-struct ObjectData
-{
-    Mat4x4 mat;
-};
-
 constexpr BufferMapAccess BUFFER_MAP_ACCESSES = 
     BufferMapAccess::MAP_PERSISTENT_BIT 
     | BufferMapAccess::MAP_COHERENT_BIT 
@@ -50,10 +45,10 @@ Renderer::Renderer(const IVec2 &framebuffer_size)
 
     BufferFlag buf_flags = BufferFlag::MAP_PERSISTENT_BIT | BufferFlag::MAP_COHERENT_BIT | BufferFlag::MAP_WRITE_BIT;
     command_buffer_ = GPUBuffer(1, "renderer_command_buffer", buf_flags);
-    objects_ssbo_ = GPUBuffer(1, "renderer_object_buffer", buf_flags);
+    // objects_ssbo_ = GPUBuffer(1, "renderer_object_buffer", buf_flags);
 
     command_buffer_.map(BUFFER_MAP_ACCESSES);
-    objects_ssbo_.map(BUFFER_MAP_ACCESSES);
+    // objects_ssbo_.map(BUFFER_MAP_ACCESSES);
 
     RENDERING_LOGGER.info("GPU: Vendor: \"{}\", Renderer: \"{}\", Version: \"{}\"", 
         (const char *)glGetString(GL_VENDOR), 
@@ -163,22 +158,22 @@ auto Renderer::render_pass(DrawList &draw_list, const RenderPass &render_pass) -
         draw_list.required_indirect_draw_cmds() * sizeof(DrawElementsIndirectCommand)
     );
 
-    bool object_ssbo_resized = GPUBuffer::resize(
-        objects_ssbo_, 
-        draw_list.required_indirect_draw_cmds() * sizeof(ObjectData)
-    );
+    // bool object_ssbo_resized = GPUBuffer::resize(
+    //     objects_ssbo_, 
+    //     draw_list.required_indirect_draw_cmds() * sizeof(ObjectData)
+    // );
 
     if (command_buf_resized)
         command_buffer_.map(BUFFER_MAP_ACCESSES);
 
-    if (object_ssbo_resized)
-        objects_ssbo_.map(BUFFER_MAP_ACCESSES);
+    // if (object_ssbo_resized)
+    //     objects_ssbo_.map(BUFFER_MAP_ACCESSES);
 
-    glBindBufferBase(
-        GL_SHADER_STORAGE_BUFFER, 
-        ShaderBindings::OBJECTS_SSBO, 
-        objects_ssbo_.gl_handle()
-    );
+    // glBindBufferBase(
+    //     GL_SHADER_STORAGE_BUFFER, 
+    //     ShaderBindings::OBJECTS_SSBO, 
+    //     objects_ssbo_.gl_handle()
+    // );
 
     glBindBuffer(
         GL_DRAW_INDIRECT_BUFFER, 
@@ -186,7 +181,7 @@ auto Renderer::render_pass(DrawList &draw_list, const RenderPass &render_pass) -
     );
 
     auto command_buf_ptr = static_cast<DrawElementsIndirectCommand *>(command_buffer_.mapped_ptr());
-    auto object_ssbo_ptr = static_cast<ObjectData *>(objects_ssbo_.mapped_ptr());
+    // auto object_ssbo_ptr = static_cast<ObjectData *>(objects_ssbo_.mapped_ptr());
 
     auto curr_cmd = draw_list.data().begin();
     auto cmds_end = draw_list.data().end();
@@ -371,9 +366,11 @@ auto Renderer::render_pass(DrawList &draw_list, const RenderPass &render_pass) -
                     };
                 }
 
-                object_ssbo_ptr[num_objects++] = ObjectData{
-                    .mat = draw_mesh_cmd->model_mat
-                };
+                num_objects++;
+
+                // object_ssbo_ptr[num_objects++] = ObjectData{
+                //     .mat = draw_mesh_cmd->model_mat
+                // };
 
                 break;
             }

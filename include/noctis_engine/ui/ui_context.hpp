@@ -2,6 +2,7 @@
 #include "../rendering/texture.hpp"
 #include "../rendering/vertex_array.hpp"
 #include "../rendering/graphics_program.hpp"
+#include "../math/vec2.hpp"
 #include "rect.hpp"
 
 
@@ -29,8 +30,8 @@ public:
     /// @brief Exits the current context, call this function after drawing your root widget
     auto exit_ctx() -> void;
 
-    auto draw_textured_rect(const Rect &rect, const Texture &texture) -> void;
-    auto draw_colored_rect(const Rect &rect, const Color &color) -> void;
+    auto draw_textured_rect(const Vec2 &pos, const Rect &rect, const Texture &texture) -> void;
+    auto draw_colored_rect(const Vec2 &pos, const Rect &rect, const Color &color) -> void;
 
     /// @brief UNIMPLEMENTED
     auto draw_text(const Vec2 &pos, const std::string_view &text) -> void;

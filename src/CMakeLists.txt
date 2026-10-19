@@ -15,6 +15,7 @@ set(NCENG_SOURCES
     "rendering/framebuffer.cpp"
     "rendering/gpu_buffer.cpp"
     "rendering/graphics_program.cpp"
+    "rendering/model_manager.cpp"
     "rendering/renderer.cpp"
     "rendering/shader.cpp"
     "rendering/texture.cpp"
